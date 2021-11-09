@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,20 +12,12 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
-@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcLayout
-@import views.html.helper.CSPNonce
+package uk.gov.hmrc.taxfraudreportingfrontend.models
 
-@this(
-        appConfig: AppConfig,
-        hmrcLayout: HmrcLayout
-)
-@(pageTitle: Option[String] = None)(contentBlock: Html)(implicit request: Request[_], messages: Messages)
+sealed trait ErrorResponse { val msg: String }
 
-@hmrcLayout(
-    pageTitle = pageTitle,
-    nonce = CSPNonce.get,
-    isWelshTranslationAvailable = appConfig.welshLanguageSupportEnabled
-)(contentBlock)
+/*case object NotFoundResponse           extends ErrorResponse { val msg = "Not Found Response"  }
+case object InvalidResponse            extends ErrorResponse { val msg = "Invalid Response"    }
+case object ServiceUnavailableResponse extends ErrorResponse { val msg = "Service Unavailable" }*/
