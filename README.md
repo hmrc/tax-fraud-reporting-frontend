@@ -1,7 +1,13 @@
+# Tax Fraud reporting Frontend (RIS KANA)
 
-# tax-fraud-reporting-frontend
+This provides frontend services for the Tax Fraud reporting Frontend (RIS KANA).
 
-This is a placeholder README.md for a new repository
+## Running Locally
+To run using default port number:
+`sbt run`
+
+To run all tests:
+`./precheck.sh`
 
 ### License
 
