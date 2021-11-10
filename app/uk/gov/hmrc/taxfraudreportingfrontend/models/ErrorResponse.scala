@@ -18,6 +18,8 @@ package uk.gov.hmrc.taxfraudreportingfrontend.models
 
 sealed trait ErrorResponse { val msg: String }
 
-/*case object NotFoundResponse           extends ErrorResponse { val msg = "Not Found Response"  }
+/*
+case object NotFoundResponse           extends ErrorResponse { val msg = "Not Found Response"  }
 case object InvalidResponse            extends ErrorResponse { val msg = "Invalid Response"    }
-case object ServiceUnavailableResponse extends ErrorResponse { val msg = "Service Unavailable" }*/
+case object ServiceUnavailableResponse extends ErrorResponse { val msg = "Service Unavailable" }
+ */
