@@ -14,11 +14,16 @@
  * limitations under the License.
  *@
 
+@import views.ViewUtils._
+@import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
+
 @this(layout: Layout)
 
-@()(implicit request: Request[_], messages: Messages)
+@()(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
 
-@layout(pageTitle = Some("tax-fraud-reporting-frontend")) {
-    <h1 class="govuk-heading-xl">tax-fraud-reporting-frontend</h1>
+@layout(
+        pageTitle    = titleNoForm(messages("index.title"))
+) {
+    <h1 class="govuk-heading-xl">@{messages("index.header")}</h1>
     <p class="govuk-body">@{messages("service.text")}</p>
 }
