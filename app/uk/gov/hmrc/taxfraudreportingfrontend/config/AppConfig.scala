@@ -18,20 +18,25 @@ package uk.gov.hmrc.taxfraudreportingfrontend.config
 
 import javax.inject.{Inject, Singleton}
 import play.api.Configuration
-import play.api.i18n.Messages
+import play.api.i18n.{Lang, Messages}
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 @Singleton
-class AppConfig @Inject() (config: Configuration) {
+class AppConfig @Inject() (config: Configuration, servicesConfig: ServicesConfig) {
+
+  val appName: String     = config.get[String]("appName")
+  private val contactHost = config.get[String]("contact-frontend.host")
 
   val welshLanguageSupportEnabled: Boolean =
     config.getOptional[Boolean]("features.welsh-language-support").getOrElse(false)
 
-  private def languageKey(implicit messages: Messages) = messages.lang.language match {
-    case "cy" => "cy"
-    case _    => "en"
-  }
+  lazy val feedbackUrl: String = config.get[String]("feedback.url")
 
-  def callCharges()(implicit messages: Messages): String =
-    config.get[String](s"external-urls.call-charges-$languageKey")
+  val en: String            = "en"
+  val cy: String            = "cy"
+  val defaultLanguage: Lang = Lang(en)
+
+  lazy val assetsPrefix = config.get[String](s"assets.url") + config
+    .get[String](s"assets.version") + '/'
 
 }

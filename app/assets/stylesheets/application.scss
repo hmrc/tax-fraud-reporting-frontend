@@ -1,1 +1,6 @@
+$govuk-assets-path: "/tax-fraud-reporting-frontend/assets/lib/govuk-frontend/govuk/assets/";
+$hmrc-assets-path: "/tax-fraud-reporting-frontend/assets/lib/hmrc-frontend/hmrc/";
+@import "lib/hmrc-frontend/hmrc/all";
+@import "lib/govuk-frontend/govuk/all";
+
 @import "lib/govuk-frontend/govuk/base";

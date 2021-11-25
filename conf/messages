@@ -1,2 +1,10 @@
-service.name = tax-fraud-reporting-frontend
+service.name = Report tax fraud or evasion
+site.govuk = GOV.UK
 service.text = This is your new service
+error.title = Error
+index.title = Using this service
+index.header = Using this service
+site.back = Back
+
+error.browser.title.prefix = Error:
+error.summary.title = There is a problem

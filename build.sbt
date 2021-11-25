@@ -34,7 +34,16 @@ lazy val playSettings: Seq[Setting[_]] = Seq(
 
 
 lazy val twirlSettings: Seq[Setting[_]] = Seq(
-  TwirlKeys.templateImports ++= Seq("uk.gov.hmrc.taxfraudreportingfrontend.views.html._", "uk.gov.hmrc.taxfraudreportingfrontend.domain._")
+  TwirlKeys.templateImports ++= Seq(
+    "uk.gov.hmrc.taxfraudreportingfrontend.views.html._",
+    "uk.gov.hmrc.taxfraudreportingfrontend.domain._",
+    "play.twirl.api.HtmlFormat",
+    "play.twirl.api.HtmlFormat._",
+    "uk.gov.hmrc.govukfrontend.views.html.components._",
+    "uk.gov.hmrc.hmrcfrontend.views.html.components._",
+    "uk.gov.hmrc.hmrcfrontend.views.html.helpers._",
+    "views.ViewUtils._"
+  )
 )
 
 lazy val microservice = Project(appName, file("."))

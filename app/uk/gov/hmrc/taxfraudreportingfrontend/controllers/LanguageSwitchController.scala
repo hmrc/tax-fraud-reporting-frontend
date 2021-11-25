@@ -16,21 +16,24 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
-import uk.gov.hmrc.taxfraudreportingfrontend.views.html.HelloWorldPage
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.i18n.Lang
+import play.api.mvc.ControllerComponents
+import uk.gov.hmrc.play.language.{LanguageController, LanguageUtils}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
+import javax.inject.Singleton
 
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+import javax.inject.Inject
 
 @Singleton
-class HelloWorldController @Inject() (mcc: MessagesControllerComponents, helloWorldPage: HelloWorldPage)(implicit
-  appConfig: AppConfig
-) extends FrontendController(mcc) {
+class LanguageSwitchController @Inject() (appConfig: AppConfig, languageUtils: LanguageUtils, cc: ControllerComponents)
+    extends LanguageController(languageUtils, cc) {
+  import appConfig._
 
-  val helloWorld: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(helloWorldPage()))
-  }
+  override def fallbackURL: String =
+    "https://www.gov.uk/government/organisations/hm-revenue-customs"
+
+  override protected def languageMap: Map[String, Lang] =
+    if (appConfig.welshLanguageSupportEnabled) Map(en -> Lang(en), cy -> Lang(cy))
+    else Map(en                                       -> Lang(en))
 
 }
