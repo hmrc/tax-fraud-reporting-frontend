@@ -2,9 +2,20 @@ service.name = Report tax fraud or evasion
 site.govuk = GOV.UK
 service.text = This is your new service
 error.title = Error
-index.title = Using this service
-index.header = Using this service
 site.back = Back
+site.continue = Continue
 
 error.browser.title.prefix = Error:
 error.summary.title = There is a problem
+
+index.title = Using this service
+index.header = Using this service
+index.p1 = The information you will provide will be valuable to our investigation.
+index.p2 = By continuing, you understand that:
+index.list.item1 = any information you provide will be private and confidential
+index.list.item2 = you can provide your contact details when asked or report anonymously
+index.list.item3 = you should not try to obtain or access any evidence you do not already have
+index.inset.text = HMRC is unable to investigate police or Border Force issues.
+
+activity.type.title = What type of activity are you reporting?
+activity.type.header = What type of activity are you reporting?
