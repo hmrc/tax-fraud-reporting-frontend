@@ -2,7 +2,7 @@
 GET        /assets/*file                                 controllers.Assets.versioned(path = "/public", file: Asset)
 GET        /language/:lang                               @uk.gov.hmrc.taxfraudreportingfrontend.controllers.LanguageSwitchController.switchToLanguage(lang: String)
 
-GET        /                                             @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndexViewController.onPageLoad
+GET        /using-this-service                           @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndexViewController.onPageLoad
 
 GET        /activity-type                                @uk.gov.hmrc.taxfraudreportingfrontend.controllers.ActivityTypeController.onPageLoad
 POST       /activity-type                                @uk.gov.hmrc.taxfraudreportingfrontend.controllers.ActivityTypeController.onPageLoad
