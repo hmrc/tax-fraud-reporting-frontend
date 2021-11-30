@@ -26,7 +26,7 @@
       html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html
 )
 
-@(form: Form[_], submit: Call)(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
+@(form: Form[_])(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
 
 @layout(
         pageTitle    = titleNoForm(messages("activityType.title"))
@@ -47,8 +47,9 @@
                 id = "activityType",
                 name = "activityType",
                 inputType = "text",
-                label = "activity.type.header",
-                isPageHeading = false
+                label = "activityType.header",
+                isPageHeading = false,
+                labelHidden = true
             )
 
             @html.button("site.continue")

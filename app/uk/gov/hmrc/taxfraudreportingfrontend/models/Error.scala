@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.taxfraudreportingfrontend.viewmodels
+package uk.gov.hmrc.taxfraudreportingfrontend.models
 
-import uk.gov.hmrc.taxfraudreportingfrontend.models.ActivityType
+import play.api.libs.json.{Json, OFormat}
 
-case class ActivityTypeViewModel(activityType: String) {
+sealed trait Error
 
-/* def toModel(): ActivityType = {
-    ActivityType(activityType)
+object Error {
+
+  final case class ActivityTypeError(message: String) extends Error
+
+  object EmployeeInfoError {
+    implicit val format: OFormat[ActivityTypeError] = Json.format[ActivityTypeError]
   }
 
-
-}
-object ActivityTypeViewModel {
-  def from(activityType: ActivityType) =
-    ActivityTypeViewModel(activityType.activityType)*/
 }

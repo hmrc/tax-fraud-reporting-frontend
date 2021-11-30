@@ -5,6 +5,8 @@ error.title = Error
 site.back = Back
 site.continue = Continue
 
+unexpected.error = Unexpected Error
+
 error.browser.title.prefix = Error:
 error.summary.title = There is a problem
 

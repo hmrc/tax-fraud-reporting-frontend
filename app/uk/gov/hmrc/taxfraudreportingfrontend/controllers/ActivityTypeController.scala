@@ -16,29 +16,49 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
-import play.api.Mode
+import play.api.data.Form
+import play.api.i18n.{I18nSupport, Messages}
+import play.api.mvc._
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.ActivityTypeProvider
-import uk.gov.hmrc.taxfraudreportingfrontend.views.html.ActivityTypeView
+import uk.gov.hmrc.taxfraudreportingfrontend.models.Error.ActivityTypeError
+import uk.gov.hmrc.taxfraudreportingfrontend.viewmodels.ActivityTypeViewModel
+import uk.gov.hmrc.taxfraudreportingfrontend.views.html.{ActivityTypeView, IndexView}
 
 import javax.inject.Inject
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class ActivityTypeController @Inject() (
                                          mcc: MessagesControllerComponents,
                                          activityTypeView: ActivityTypeView,
+                                         indexView: IndexView,
                                          activityTypeProvider: ActivityTypeProvider)(implicit
-  appConfig: AppConfig
+  appConfig: AppConfig,
+                                                                                     ec: ExecutionContext
 ) extends FrontendController(mcc) {
 
   val form = activityTypeProvider()
 
-  private def onSubmitCall() = routes.ActivityTypeController.onPageLoad()
+  private def onSubmitCall() = routes.IndexViewController.onPageLoad()
 
   def onPageLoad(): Action[AnyContent] = Action { implicit request =>
-    Ok(activityTypeView(form, onSubmitCall()))
+    Ok(activityTypeView(form))
+  }
+
+  val submit: Action[AnyContent] =  { implicit request =>
+    form
+      .bindFromRequest()
+      .fold(
+        formWithErrors => {
+          Future.successful(BadRequest(activityTypeView(formWithErrors)))
+        },
+        success = {
+          Redirect(routes.IndexViewController.onPageLoad())
+        }
+      )
+
   }
 
 }
