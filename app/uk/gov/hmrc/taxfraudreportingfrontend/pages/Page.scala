@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.taxfraudreportingfrontend.views.components
+package uk.gov.hmrc.taxfraudreportingfrontend.pages
 
-import javax.inject.{Inject, Singleton}
+import scala.language.implicitConversions
 
-@Singleton
-class html @Inject() (
-  val h1: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.h1,
-  val p: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.p,
-  val ul: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.bullets,
-  val button: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.button
-)
+trait Page
+
+object Page {
+
+  implicit def toString(page: Page): String =
+    page.toString
+}

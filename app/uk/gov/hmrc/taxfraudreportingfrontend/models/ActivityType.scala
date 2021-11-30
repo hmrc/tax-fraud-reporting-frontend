@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.taxfraudreportingfrontend.views.components
+package uk.gov.hmrc.taxfraudreportingfrontend.models
 
-import javax.inject.{Inject, Singleton}
+import play.api.libs.json.{Json, OFormat}
 
-@Singleton
-class html @Inject() (
-  val h1: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.h1,
-  val p: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.p,
-  val ul: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.bullets,
-  val button: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.button
-)
+case class ActivityType(activityType: String)
+
+  object ActivityType {
+
+    implicit  val format: OFormat[ActivityType] = Json.format[ActivityType]
+
+}

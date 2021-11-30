@@ -17,18 +17,41 @@
 @import views.ViewUtils._
 @import controllers.routes._
 @import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
+@import uk.gov.hmrc.taxfraudreportingfrontend.views.components.forms
 
 @this(
       layout: Layout,
-      html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html,
+      formHelper: FormWithCSRF,
+      forms: uk.gov.hmrc.taxfraudreportingfrontend.views.components.forms,
+      html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html
 )
 
-@()(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
+@(form: Form[_], submit: Call)(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
 
 @layout(
-        pageTitle    = titleNoForm(messages("activity.type.title"))
+        pageTitle    = titleNoForm(messages("activityType.title"))
 ) {
 
-        @html.h1("activity.type.header")
+        @forms.formWithCSRF(action = submit, args = 'novalidate -> "novalidate") {
+
+            @components.error_summary(form.errors)
+
+            @html.h1("activityType.header")
+
+            @html.p {@messages("activityType.p1")}
+
+            @html.p {@messages("activityType.p2")}
+
+            @forms.inputText(
+                form = form,
+                id = "activityType",
+                name = "activityType",
+                inputType = "text",
+                label = "activity.type.header",
+                isPageHeading = false
+            )
+
+            @html.button("site.continue")
+        }
 
 }

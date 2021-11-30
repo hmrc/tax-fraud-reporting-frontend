@@ -16,20 +16,29 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
+import play.api.Mode
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
+import uk.gov.hmrc.taxfraudreportingfrontend.forms.ActivityTypeProvider
 import uk.gov.hmrc.taxfraudreportingfrontend.views.html.ActivityTypeView
 
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class ActivityTypeController @Inject() (mcc: MessagesControllerComponents, activityTypeView: ActivityTypeView)(implicit
+class ActivityTypeController @Inject() (
+                                         mcc: MessagesControllerComponents,
+                                         activityTypeView: ActivityTypeView,
+                                         activityTypeProvider: ActivityTypeProvider)(implicit
   appConfig: AppConfig
 ) extends FrontendController(mcc) {
 
-  def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(activityTypeView()))
+  val form = activityTypeProvider()
+
+  private def onSubmitCall() = routes.ActivityTypeController.onPageLoad()
+
+  def onPageLoad(): Action[AnyContent] = Action { implicit request =>
+    Ok(activityTypeView(form, onSubmitCall()))
   }
 
 }
