@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,18 +12,15 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import views.ViewUtils._
-@import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
+package uk.gov.hmrc.taxfraudreportingfrontend.views.components
 
-@this(layout: Layout)
+import javax.inject.{Inject, Singleton}
 
-@()(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
-
-@layout(
-        pageTitle    = titleNoForm(messages("index.title"))
-) {
-    <h1 class="govuk-heading-xl">@{messages("index.header")}</h1>
-    <p class="govuk-body">@{messages("service.text")}</p>
-}
+@Singleton
+class html @Inject() (
+  val h1: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.h1,
+  val p: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.p,
+  val ul: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.bullets
+)

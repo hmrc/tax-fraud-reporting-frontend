@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
-import uk.gov.hmrc.taxfraudreportingfrontend.views.html.HelloWorldPage
+import uk.gov.hmrc.taxfraudreportingfrontend.views.html.IndexView
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
@@ -25,12 +25,12 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class HelloWorldController @Inject() (mcc: MessagesControllerComponents, helloWorldPage: HelloWorldPage)(implicit
+class IndexViewController @Inject() (mcc: MessagesControllerComponents, indexView: IndexView)(implicit
   appConfig: AppConfig
 ) extends FrontendController(mcc) {
 
-  val helloWorld: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(helloWorldPage()))
+  def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
+    Future.successful(Ok(indexView()))
   }
 
 }

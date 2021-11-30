@@ -16,15 +16,16 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 import org.scalatest.{Matchers, WordSpec}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
-import play.api.http.Status
-import play.api.test.FakeRequest
-import play.api.test.Helpers._
 import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.test.FakeRequest
+import play.api.test.Helpers.{contentAsString, defaultAwaitTimeout, status}
 
-class HelloWorldControllerSpec extends WordSpec with Matchers with GuiceOneAppPerSuite {
+class ActivityTypeSpec extends WordSpec with Matchers with GuiceOneAppPerSuite {
 
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
@@ -33,18 +34,17 @@ class HelloWorldControllerSpec extends WordSpec with Matchers with GuiceOneAppPe
 
   private val fakeRequest = FakeRequest("GET", "/")
 
-  private val controller = app.injector.instanceOf[HelloWorldController]
+  private val controller = app.injector.instanceOf[ActivityTypeController]
 
-  "GET /" should {
-    "return 200" in {
-      val result = controller.helloWorld(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
+  "Activity Type views" should {
+    val result          = controller.onPageLoad()(fakeRequest)
+    val content: String = contentAsString(result)
+    val doc: Document   = Jsoup.parse(content)
 
-    "return HTML" in {
-      val result = controller.helloWorld(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+    "load the page content" in {
+
+      doc.getElementsByTag("h1").text() shouldBe "What type of activity are you reporting?"
+
     }
   }
 }
