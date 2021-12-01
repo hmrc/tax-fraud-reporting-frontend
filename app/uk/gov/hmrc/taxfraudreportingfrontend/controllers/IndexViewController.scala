@@ -19,8 +19,10 @@ package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 import uk.gov.hmrc.taxfraudreportingfrontend.views.html.IndexView
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 
+import java.util.UUID
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
@@ -30,7 +32,7 @@ class IndexViewController @Inject() (mcc: MessagesControllerComponents, indexVie
 ) extends FrontendController(mcc) {
 
   def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(indexView()))
+    Future.successful(Ok(indexView()).addingToSession(SessionKeys.sessionId -> UUID.randomUUID.toString))
   }
 
 }

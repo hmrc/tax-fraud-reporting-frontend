@@ -8,7 +8,8 @@ object AppDependencies {
     "uk.gov.hmrc"             %% "bootstrap-frontend-play-28"     % "5.16.0",
     "uk.gov.hmrc"             %% "play-frontend-hmrc"             % "1.22.0-play-28",
     "uk.gov.hmrc"             %% "tracking-consent-models"        % "1.1.0-play-28",
-    "uk.gov.hmrc"             %% "http-caching-client"            % "9.5.0-play-28"
+    "uk.gov.hmrc"             %% "http-caching-client"            % "9.5.0-play-28",
+    "uk.gov.hmrc"             %% "mongo-caching"              % "7.0.0-play-28"
 
   )
 
