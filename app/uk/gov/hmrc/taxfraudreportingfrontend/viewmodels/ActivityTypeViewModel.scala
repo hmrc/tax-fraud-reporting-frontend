@@ -20,13 +20,14 @@ import uk.gov.hmrc.taxfraudreportingfrontend.models.ActivityType
 
 case class ActivityTypeViewModel(activityType: String) {
 
-/* def toModel(): ActivityType = {
+  def toModel(): ActivityType =
     ActivityType(activityType)
-  }
-
 
 }
+
 object ActivityTypeViewModel {
+
   def from(activityType: ActivityType) =
-    ActivityTypeViewModel(activityType.activityType)*/
+    ActivityTypeViewModel(activityType.activityType)
+
 }

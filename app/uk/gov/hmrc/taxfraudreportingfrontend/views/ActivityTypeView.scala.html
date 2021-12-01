@@ -26,7 +26,7 @@
       html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html
 )
 
-@(form: Form[_])(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
+@(form: Form[_], submit: Call)(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
 
 @layout(
         pageTitle    = titleNoForm(messages("activityType.title"))
@@ -38,13 +38,16 @@
 
             @html.h1("activityType.header")
 
-            @html.p {@messages("activityType.p1")}
-
-            @html.p {@messages("activityType.p2")}
+            <div id="first-para">
+                @html.p {@messages("activityType.p1")}
+            </div>
+            <div id="hint-text">
+                @html.p {@messages("activityType.p2")}
+            </div>
 
             @forms.inputText(
                 form = form,
-                id = "activityType",
+                id= "activityType",
                 name = "activityType",
                 inputType = "text",
                 label = "activityType.header",

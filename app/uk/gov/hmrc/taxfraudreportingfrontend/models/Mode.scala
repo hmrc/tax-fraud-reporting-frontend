@@ -14,11 +14,24 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.taxfraudreportingfrontend.pages
+package uk.gov.hmrc.taxfraudreportingfrontend.models
 
-import uk.gov.hmrc.taxfraudreportingfrontend.models.ActivityType
-import play.api.libs.json.JsPath
+import play.api.mvc.JavascriptLiteral
 
-case object ActivityTypePage extends {
-  //override def path: JsPath = JsPath \ "activityType"
+sealed trait Mode
+
+case object CheckMode  extends Mode
+case object NormalMode extends Mode
+
+object Mode {
+
+  implicit val jsLiteral: JavascriptLiteral[Mode] = new JavascriptLiteral[Mode] {
+
+    override def to(value: Mode): String = value match {
+      case NormalMode => "NormalMode"
+      case CheckMode  => "CheckMode"
+    }
+
+  }
+
 }

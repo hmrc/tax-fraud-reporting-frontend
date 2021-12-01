@@ -21,11 +21,17 @@ import org.jsoup.nodes.Document
 import org.scalatest.{Matchers, WordSpec}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
+import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{contentAsString, defaultAwaitTimeout, status}
+import play.api.test.Helpers.baseApplicationBuilder.injector
+import play.api.test.Helpers.{contentAsString, defaultAwaitTimeout}
 
 class ActivityTypeSpec extends WordSpec with Matchers with GuiceOneAppPerSuite {
+
+  def messages: Messages = messagesApi.preferred(fakeRequest)
+
+  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
@@ -43,8 +49,19 @@ class ActivityTypeSpec extends WordSpec with Matchers with GuiceOneAppPerSuite {
 
     "load the page content" in {
 
-      doc.getElementsByTag("h1").text() shouldBe "What type of activity are you reporting?"
+      doc.getElementsByTag("h1").text() shouldBe messages("activityType.header")
+
+      doc.getElementById("first-para").text() shouldBe messages("activityType.p1")
+
+      doc.getElementById("hint-text").text() shouldBe messages("activityType.p2")
 
     }
+
+    /*"must return Error when the submitted value is invalid" in {
+
+      doc.getElementsByClass("govuk-input--error").text() shouldBe messages(
+        "activityType.error.invalid"
+      ).isEmpty shouldBe false
+    }*/
   }
 }

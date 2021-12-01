@@ -16,49 +16,39 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
-import play.api.data.Form
-import play.api.i18n.{I18nSupport, Messages}
-import play.api.mvc._
+import uk.gov.hmrc.taxfraudreportingfrontend.models.{Mode, NormalMode}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.ActivityTypeProvider
-import uk.gov.hmrc.taxfraudreportingfrontend.models.Error.ActivityTypeError
-import uk.gov.hmrc.taxfraudreportingfrontend.viewmodels.ActivityTypeViewModel
 import uk.gov.hmrc.taxfraudreportingfrontend.views.html.{ActivityTypeView, IndexView}
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class ActivityTypeController @Inject() (
-                                         mcc: MessagesControllerComponents,
-                                         activityTypeView: ActivityTypeView,
-                                         indexView: IndexView,
-                                         activityTypeProvider: ActivityTypeProvider)(implicit
-  appConfig: AppConfig,
-                                                                                     ec: ExecutionContext
-) extends FrontendController(mcc) {
+  mcc: MessagesControllerComponents,
+  activityTypeView: ActivityTypeView,
+  indexView: IndexView,
+  activityTypeProvider: ActivityTypeProvider
+)(implicit appConfig: AppConfig, ec: ExecutionContext)
+    extends FrontendController(mcc) {
 
   val form = activityTypeProvider()
 
-  private def onSubmitCall() = routes.IndexViewController.onPageLoad()
+  private def onSubmitCall() = routes.ActivityTypeController.onSubmit()
 
-  def onPageLoad(): Action[AnyContent] = Action { implicit request =>
-    Ok(activityTypeView(form))
+  def onPageLoad(): Action[AnyContent] = Action {
+    implicit request =>
+      Ok(activityTypeView(form, onSubmitCall()))
   }
 
-  val submit: Action[AnyContent] =  { implicit request =>
-    form
-      .bindFromRequest()
-      .fold(
-        formWithErrors => {
-          Future.successful(BadRequest(activityTypeView(formWithErrors)))
-        },
-        success = {
-          Redirect(routes.IndexViewController.onPageLoad())
-        }
+  def onSubmit(mode: Mode = NormalMode): Action[AnyContent] = Action.async {
+    implicit request =>
+      form.bindFromRequest().fold(
+        formWithErrors => Future.successful(BadRequest(activityTypeView(formWithErrors, onSubmitCall()))),
+        activityType => Future.successful(Ok(indexView()))
       )
-
   }
 
 }

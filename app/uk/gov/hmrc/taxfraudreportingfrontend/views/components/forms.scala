@@ -19,9 +19,9 @@ package uk.gov.hmrc.taxfraudreportingfrontend.views.components
 import javax.inject.{Inject, Singleton}
 
 @Singleton
-class forms @Inject()(
-                        val formWithCSRF: uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF,
-                        val fieldset: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.fieldset,
-                        val inputText: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.inputText,
-                        val errorSummary: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.errorSummary
-                      )
+class forms @Inject() (
+  val formWithCSRF: uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF,
+  val fieldset: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.fieldset,
+  val inputText: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.inputText,
+  val errorSummary: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.errorSummary
+)
