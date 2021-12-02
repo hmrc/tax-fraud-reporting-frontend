@@ -29,7 +29,7 @@
 @(form: Form[_], submit: Call)(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
 
 @layout(
-        pageTitle    = titleNoForm(messages("activityType.title"))
+        pageTitle    = s"${errorPrefix(form)}${titleNoForm(messages("activityType.title"))}"
 ) {
 
         @forms.formWithCSRF(action = submit, args = 'novalidate -> "novalidate") {
