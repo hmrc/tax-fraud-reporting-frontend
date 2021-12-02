@@ -16,30 +16,50 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers.forms
 
+import org.scalatest.Matchers
 import org.scalatest.MustMatchers.convertToAnyMustWrapper
-import org.scalatest.{Matchers, WordSpec}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import uk.gov.hmrc.auth.core.Nino
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.ActivityTypeProvider
+import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
-class ActivityTypeProviderSpec extends WordSpec with Matchers with GuiceOneAppPerSuite {
+class ActivityTypeProviderSpec extends BaseSpec with Matchers with GuiceOneAppPerSuite {
 
   val provider = new ActivityTypeProvider
 
   "ActivityTypeProvider" should {
 
-    "validate with issues" when {
+    "validate with no issues" when {
 
-      "Activity type has invalid entry" in {
-        val safeInputPattern = "^(|[a-zA-Z][a-zA-Z0-9 / '-]+)$?"
-        val data             = Map("activityType" -> safeInputPattern)
+      "activityType provided with space" in {
+        val data = Map("activityType" -> "Fraud related to furlough")
 
-        val errors = provider().bind(data).errors
-        //errors must have size(1)
-        errors.head.message mustBe "activityType.error.invalid"
+        provider().bind(data).hasErrors mustBe false
       }
 
-    }
+      "activityType provided with hyphens" in {
+        val data = Map("activityType" -> "Fraud-related-to-furlough")
 
+        provider().bind(data).hasErrors mustBe false
+      }
+
+      "validate with issues" when {
+
+        "activity type has invalid entry" in {
+          val safeInputPattern = "^(|[a-zA-Z][a-zA-Z0-9 / '-]+)$?"
+          val data             = Map("activityType" -> safeInputPattern)
+
+          val errors = provider().bind(data).errors
+          errors.head.message mustBe "activityType.error.invalid"
+        }
+
+        "activity type has invalid entry as numbers" in {
+          val data = Map("activityType" -> "123456")
+
+          val errors = provider().bind(data).errors
+          provider().bind(data).hasErrors mustBe true
+        }
+
+      }
+    }
   }
 }

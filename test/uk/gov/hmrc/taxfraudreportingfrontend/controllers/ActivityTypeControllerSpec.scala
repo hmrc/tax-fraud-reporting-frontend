@@ -18,27 +18,35 @@ package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.Matchers
+import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
-import play.api.i18n.{Messages, MessagesApi}
+import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.mvc.Result
 import play.api.test.FakeRequest
-import play.api.test.Helpers.baseApplicationBuilder.injector
-import play.api.test.Helpers.{contentAsString, defaultAwaitTimeout}
+import play.api.test.Helpers.{
+  contentAsString,
+  defaultAwaitTimeout,
+  route,
+  status,
+  writeableOf_AnyContentAsFormUrlEncoded
+}
+import uk.gov.hmrc.taxfraudreportingfrontend.forms.mappings.Mappings
+import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
-class ActivityTypeSpec extends WordSpec with Matchers with GuiceOneAppPerSuite {
+import scala.concurrent.Future
 
-  def messages: Messages = messagesApi.preferred(fakeRequest)
-
-  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
+class ActivityTypeControllerSpec
+    extends BaseSpec with Matchers with Mappings with GuiceOneAppPerSuite with MockitoSugar {
 
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
       .configure("metrics.jvm" -> false, "metrics.enabled" -> false)
       .build()
 
-  private val fakeRequest = FakeRequest("GET", "/")
+  val fakeRequest = FakeRequest("GET", "/")
 
   private val controller = app.injector.instanceOf[ActivityTypeController]
 
@@ -57,11 +65,29 @@ class ActivityTypeSpec extends WordSpec with Matchers with GuiceOneAppPerSuite {
 
     }
 
-    /*"must return Error when the submitted value is invalid" in {
+    "return bad request when given invalid activity type" in {
 
-      doc.getElementsByClass("govuk-input--error").text() shouldBe messages(
-        "activityType.error.invalid"
-      ).isEmpty shouldBe false
-    }*/
+      implicit val request =
+        EnhancedFakeRequest("POST", "/report-tax-fraud/type-activity").withFormUrlEncodedBody(
+          ("activityType" -> "234567")
+        )
+
+      val response: Future[Result] = route(app, request).get
+
+      status(response) shouldBe BAD_REQUEST
+
+    }
+
+    "return 200 OK response when given valid activity type" in {
+
+      implicit val request =
+        EnhancedFakeRequest("POST", "/report-tax-fraud/type-activity").withFormUrlEncodedBody(("activityType" -> ""))
+
+      val response: Future[Result] = route(app, request).get
+
+      status(response) shouldBe OK
+
+    }
+
   }
 }

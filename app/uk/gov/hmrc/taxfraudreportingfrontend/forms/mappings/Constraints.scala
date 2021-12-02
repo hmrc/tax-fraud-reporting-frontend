@@ -18,8 +18,6 @@ package uk.gov.hmrc.taxfraudreportingfrontend.forms.mappings
 
 import play.api.data.validation.{Constraint, Invalid, Valid}
 
-import java.time.LocalDate
-
 trait Constraints {
 
   protected def firstError[A](constraints: Constraint[A]*): Constraint[A] =
@@ -53,17 +51,6 @@ trait Constraints {
           Invalid(errorKey, maximum)
     }
 
-  protected def inRange[A](minimum: A, maximum: A, errorKey: String)(implicit ev: Ordering[A]): Constraint[A] =
-    Constraint {
-      input =>
-        import ev._
-
-        if (input >= minimum && input <= maximum)
-          Valid
-        else
-          Invalid(errorKey, minimum, maximum)
-    }
-
   protected def regexp(regex: String, errorKey: String): Constraint[String] =
     Constraint {
       case str if str.matches(regex) =>
@@ -78,30 +65,6 @@ trait Constraints {
         Valid
       case _ =>
         Invalid(errorKey, maximum)
-    }
-
-  protected def maxDate(maximum: LocalDate, errorKey: String, args: Any*): Constraint[LocalDate] =
-    Constraint {
-      case date if date.isAfter(maximum) =>
-        Invalid(errorKey, args: _*)
-      case _ =>
-        Valid
-    }
-
-  protected def minDate(minimum: LocalDate, errorKey: String, args: Any*): Constraint[LocalDate] =
-    Constraint {
-      case date if date.isBefore(minimum) =>
-        Invalid(errorKey, args: _*)
-      case _ =>
-        Valid
-    }
-
-  protected def nonEmptySet(errorKey: String): Constraint[Set[_]] =
-    Constraint {
-      case set if set.nonEmpty =>
-        Valid
-      case _ =>
-        Invalid(errorKey)
     }
 
 }

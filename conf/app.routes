@@ -5,5 +5,5 @@ GET        /language/:lang                               @uk.gov.hmrc.taxfraudre
 GET        /using-this-service                           @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndexViewController.onPageLoad
 
 GET        /type-activity                                @uk.gov.hmrc.taxfraudreportingfrontend.controllers.ActivityTypeController.onPageLoad()
-POST       /type-activity                                @uk.gov.hmrc.taxfraudreportingfrontend.controllers.ActivityTypeController.onSubmit(mode: Mode = NormalMode)
+POST       /type-activity                                @uk.gov.hmrc.taxfraudreportingfrontend.controllers.ActivityTypeController.onSubmit()
 
