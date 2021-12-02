@@ -17,7 +17,7 @@
 package uk.gov.hmrc.taxfraudreportingfrontend.forms
 
 import play.api.data.{Form, Forms}
-import play.api.data.Forms.{mapping}
+import play.api.data.Forms.mapping
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.mappings.Mappings
 import uk.gov.hmrc.taxfraudreportingfrontend.viewmodels.ActivityTypeViewModel
 
@@ -27,7 +27,7 @@ class ActivityTypeProvider @Inject() extends Mappings {
 
   val safeInputPattern = "^(|[a-zA-Z][a-zA-Z0-9 / '-]+)$?"
 
-  def apply() =
+  def apply(): Form[ActivityTypeViewModel] =
     Form(
       mapping("activityType" -> Forms.text.verifying(regexp(safeInputPattern, "activityType.error.invalid")))(
         ActivityTypeViewModel.apply

@@ -27,7 +27,7 @@ class ActivityTypeViewModelSpec extends WordSpec with Matchers {
 
   ".toModel" should {
     "convert an ActivityTypeViewModel to an ActivityType model" in {
-      activityTypeViewModel.toModel() mustBe activityType
+      activityTypeViewModel.toModel mustBe activityType
     }
   }
 

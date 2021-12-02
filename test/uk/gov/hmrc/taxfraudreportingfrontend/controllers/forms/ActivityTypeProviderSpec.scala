@@ -52,13 +52,6 @@ class ActivityTypeProviderSpec extends BaseSpec with Matchers with GuiceOneAppPe
           errors.head.message mustBe "activityType.error.invalid"
         }
 
-        "activity type has invalid entry as numbers" in {
-          val data = Map("activityType" -> "123456")
-
-          val errors = provider().bind(data).errors
-          provider().bind(data).hasErrors mustBe true
-        }
-
       }
     }
   }
