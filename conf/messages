@@ -5,6 +5,8 @@ error.title = Error
 site.back = Back
 site.continue = Continue
 
+unexpected.error = Unexpected Error
+
 error.browser.title.prefix = Error:
 error.summary.title = There is a problem
 
@@ -17,5 +19,11 @@ index.list.item2 = you can provide your contact details when asked or report ano
 index.list.item3 = you should not try to obtain or access any evidence you do not already have
 index.inset.text = HMRC is unable to investigate police or Border Force issues.
 
-activity.type.title = What type of activity are you reporting?
-activity.type.header = What type of activity are you reporting?
+activityType.title = What type of activity are you reporting?
+activityType.header = What type of activity are you reporting?
+activityType.p1 = Search for the best description of the activity. Use keywords rather than full sentences. The closest matches to what you type will appear as options in the box.
+activityType.p2 = If you are unable to find a closest match, leave the box blank.
+activityType.error.invalid = Enter the type of activity using letters a to z, hyphens, spaces and apostrophes
+
+reportingType.title = Are you reporting a person or a business?
+reportingType.header = Are you reporting a person or a business?

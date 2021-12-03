@@ -29,6 +29,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.api.{inject, Application, Configuration, Environment}
 import uk.gov.hmrc.auth.core.AuthConnector
+import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import uk.gov.hmrc.taxfraudreportingfrontend.cache.{SessionCache, UserAnswersCache}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
@@ -83,5 +84,11 @@ trait BaseSpec extends WordSpec with MockitoSugar with Matchers with Injector {
     inject.bind[SessionCache].to(mockSessionCache),
     inject.bind[UserAnswersCache].to(mockUserAnswersCache)
   ).configure("auditing.enabled" -> "false", "metrics.jvm" -> false, "metrics.enabled" -> false).build()
+
+  private def addToken[T](fakeRequest: FakeRequest[T])(implicit app: Application) =
+    fakeRequest.withSession(SessionKeys.sessionId -> "fakesessionid")
+
+  def EnhancedFakeRequest(method: String, uri: String)(implicit app: Application): FakeRequest[AnyContentAsEmpty.type] =
+    addToken(FakeRequest(method, uri))
 
 }
