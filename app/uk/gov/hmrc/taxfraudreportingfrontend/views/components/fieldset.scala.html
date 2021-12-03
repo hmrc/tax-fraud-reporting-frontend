@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,16 +12,17 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package uk.gov.hmrc.taxfraudreportingfrontend.views.components
+@this(govukFieldset: GovukFieldset)
 
-import javax.inject.{Inject, Singleton}
+@(legend: String, asHeading: Boolean = true)(content: Html)(implicit messages: Messages)
 
-@Singleton
-class html @Inject() (
-  val h1: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.h1,
-  val p: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.p,
-  val ul: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.bullets,
-  val button: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.button
-)
+@govukFieldset(Fieldset(
+  legend = Some(Legend(
+   content = Text(messages(legend)),
+   classes = if(asHeading) "govuk-label govuk-label--xl" else "",
+   isPageHeading = asHeading
+  )),
+  html = content
+))
