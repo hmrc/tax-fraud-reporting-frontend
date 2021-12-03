@@ -21,6 +21,8 @@ import play.api.Configuration
 import play.api.i18n.{Lang, Messages}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
+import scala.concurrent.duration.Duration
+
 @Singleton
 class AppConfig @Inject() (config: Configuration, servicesConfig: ServicesConfig) {
 
@@ -38,5 +40,7 @@ class AppConfig @Inject() (config: Configuration, servicesConfig: ServicesConfig
 
   lazy val assetsPrefix = config.get[String](s"assets.url") + config
     .get[String](s"assets.version") + '/'
+
+  val cacheTtl: Duration = Duration.create(config.get[String]("tax-fraud-reporting-cache.ttl"))
 
 }

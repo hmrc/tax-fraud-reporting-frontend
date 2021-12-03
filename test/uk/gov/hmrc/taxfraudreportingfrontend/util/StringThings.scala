@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.taxfraudreportingfrontend.views.components
+package uk.gov.hmrc.taxfraudreportingfrontend.util
 
-import javax.inject.{Inject, Singleton}
+object StringThings {
 
-@Singleton
-class forms @Inject() (
-  val formWithCSRF: uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF,
-  val fieldSet: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.fieldset,
-  val inputText: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.inputText,
-  val errorSummary: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.errorSummary
-)
+  implicit class FilledString(val howMany: Int) {
+
+    def spaces: String = of(" ")
+
+    def of: String => String = what => List.fill(howMany)(what).mkString
+  }
+
+}

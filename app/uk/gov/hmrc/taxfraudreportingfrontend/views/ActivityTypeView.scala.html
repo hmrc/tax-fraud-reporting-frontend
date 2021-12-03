@@ -29,7 +29,7 @@
 @(form: Form[_], submit: Call)(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
 
 @layout(
-        pageTitle    = titleNoForm(messages("activityType.title"))
+        pageTitle    = s"${errorPrefix(form)}${titleNoForm(messages("activityType.title"))}"
 ) {
 
         @forms.formWithCSRF(action = submit, args = 'novalidate -> "novalidate") {
@@ -38,20 +38,23 @@
 
             @html.h1("activityType.header")
 
-            @html.p {@messages("activityType.p1")}
-
-            @html.p {@messages("activityType.p2")}
+            <div id="first-para">
+                @html.p {@messages("activityType.p1")}
+            </div>
+            <div id="hint-text">
+                @html.p {@messages("activityType.p2")}
+            </div>
 
             @forms.inputText(
                 form = form,
-                id = "activityType",
+                id= "activityType",
                 name = "activityType",
                 inputType = "text",
-                label = "activity.type.header",
-                isPageHeading = false
+                label = "activityType.header",
+                isPageHeading = false,
+                labelHidden = true
             )
 
             @html.button("site.continue")
         }
-
 }

@@ -20,8 +20,8 @@ import play.api.libs.json.{Json, OFormat}
 
 case class ActivityType(activityType: String)
 
-  object ActivityType {
+object ActivityType {
 
-    implicit  val format: OFormat[ActivityType] = Json.format[ActivityType]
+  implicit val format: OFormat[ActivityType] = Json.format[ActivityType]
 
 }

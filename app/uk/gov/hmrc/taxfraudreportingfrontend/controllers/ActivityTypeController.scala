@@ -16,29 +16,39 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
-import play.api.Mode
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.ActivityTypeProvider
-import uk.gov.hmrc.taxfraudreportingfrontend.views.html.ActivityTypeView
+import uk.gov.hmrc.taxfraudreportingfrontend.views.html.{ActivityTypeView, IndexView}
 
 import javax.inject.Inject
 import scala.concurrent.Future
 
 class ActivityTypeController @Inject() (
-                                         mcc: MessagesControllerComponents,
-                                         activityTypeView: ActivityTypeView,
-                                         activityTypeProvider: ActivityTypeProvider)(implicit
-  appConfig: AppConfig
-) extends FrontendController(mcc) {
+  mcc: MessagesControllerComponents,
+  activityTypeView: ActivityTypeView,
+  indexView: IndexView,
+  activityTypeProvider: ActivityTypeProvider
+)(implicit appConfig: AppConfig)
+    extends FrontendController(mcc) {
 
   val form = activityTypeProvider()
 
-  private def onSubmitCall() = routes.ActivityTypeController.onPageLoad()
+  private def onSubmitCall() = routes.ActivityTypeController.onSubmit()
 
-  def onPageLoad(): Action[AnyContent] = Action { implicit request =>
-    Ok(activityTypeView(form, onSubmitCall()))
+  def onPageLoad(): Action[AnyContent] = Action {
+    implicit request =>
+      Ok(activityTypeView(form, onSubmitCall()))
+  }
+
+  def onSubmit(): Action[AnyContent] = Action.async {
+    implicit request =>
+      val boundForm = form.bindFromRequest()
+      boundForm.fold(
+        formWithErrors => Future.successful(BadRequest(activityTypeView(formWithErrors, onSubmitCall()))),
+        activityType => Future.successful(Ok("next page is not ready"))
+      )
   }
 
 }

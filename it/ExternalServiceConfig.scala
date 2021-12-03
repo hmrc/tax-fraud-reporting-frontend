@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.taxfraudreportingfrontend.pages
-
-import uk.gov.hmrc.taxfraudreportingfrontend.models.ActivityType
-import play.api.libs.json.JsPath
-
-case object ActivityTypePage extends {
-  //override def path: JsPath = JsPath \ "activityType"
+object ExternalServiceConfig {
+  val Port: Int              = sys.env.getOrElse("WIREMOCK_SERVICE_LOCATOR_PORT", "11111").toInt
+  val Host                   = "localhost"
+  val sessionCacheDomain     = "test-only/keystore"
+  val shortLivedCacheDomain  = "test-only/save4later"
 }

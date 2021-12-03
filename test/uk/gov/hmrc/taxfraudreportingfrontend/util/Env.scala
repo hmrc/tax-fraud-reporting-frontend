@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.taxfraudreportingfrontend.pages
+package uk.gov.hmrc.taxfraudreportingfrontend.util
 
-import scala.language.implicitConversions
+case class GGCredentials(userId: String, password: String, oid: Option[String])
 
-trait Page
+object Env {
 
-object Page {
+  lazy val port: Int = Option(System.getProperty("port")).fold(6751)(_.toInt)
 
-  implicit def toString(page: Page): String =
-    page.toString
+  lazy val frontendHost: String = Option(System.getProperty("host")).getOrElse("http://localhost:" + port)
+
 }

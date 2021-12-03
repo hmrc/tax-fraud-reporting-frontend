@@ -14,14 +14,21 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.taxfraudreportingfrontend.views.components
+package uk.gov.hmrc.taxfraudreportingfrontend.cache
+
+import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.{Inject, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class forms @Inject() (
-  val formWithCSRF: uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF,
-  val fieldSet: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.fieldset,
-  val inputText: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.inputText,
-  val errorSummary: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.errorSummary
-)
+class UserAnswersCache @Inject() (sessionCache: SessionCache)(implicit ec: ExecutionContext) {
+
+  /*TODO cache test method is for the reference - once first method is implemented this can be deleted*/
+  def testCache(testVal: String)(implicit hc: HeaderCarrier): Future[Boolean] =
+    sessionCache.testCache(testVal)
+
+  def getTestCache()(implicit hc: HeaderCarrier): Future[String] =
+    sessionCache.getTestCache map (_.get)
+
+}

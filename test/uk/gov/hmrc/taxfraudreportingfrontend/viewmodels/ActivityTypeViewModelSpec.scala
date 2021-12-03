@@ -16,18 +16,25 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.viewmodels
 
+import org.scalatest.MustMatchers.convertToAnyMustWrapper
+import org.scalatest.{Matchers, WordSpec}
 import uk.gov.hmrc.taxfraudreportingfrontend.models.ActivityType
 
-case class ActivityTypeViewModel(activityType: String) {
+class ActivityTypeViewModelSpec extends WordSpec with Matchers {
 
-  def toModel: ActivityType =
-    ActivityType(activityType)
+  val activityType: ActivityType                   = ActivityType("Fraud related to furlough")
+  val activityTypeViewModel: ActivityTypeViewModel = ActivityTypeViewModel("Fraud related to furlough")
 
-}
+  ".toModel" should {
+    "convert an ActivityTypeViewModel to an ActivityType model" in {
+      activityTypeViewModel.toModel mustBe activityType
+    }
+  }
 
-object ActivityTypeViewModel {
-
-  def from(activityType: ActivityType): ActivityTypeViewModel =
-    ActivityTypeViewModel(activityType.activityType)
+  ".from" should {
+    "convert an ActivityType to an ActivityTypeViewModel model" in {
+      ActivityTypeViewModel.from(activityType) mustBe activityTypeViewModel
+    }
+  }
 
 }

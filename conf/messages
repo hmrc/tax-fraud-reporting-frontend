@@ -5,6 +5,8 @@ error.title = Error
 site.back = Back
 site.continue = Continue
 
+unexpected.error = Unexpected Error
+
 error.browser.title.prefix = Error:
 error.summary.title = There is a problem
 
@@ -21,5 +23,7 @@ activityType.title = What type of activity are you reporting?
 activityType.header = What type of activity are you reporting?
 activityType.p1 = Search for the best description of the activity. Use keywords rather than full sentences. The closest matches to what you type will appear as options in the box.
 activityType.p2 = If you are unable to find a closest match, leave the box blank.
-activityType.error.required = cannot be blank
-activityType.error.invalid = invalid
+activityType.error.invalid = Enter the type of activity using letters a to z, hyphens, spaces and apostrophes
+
+reportingType.title = Are you reporting a person or a business?
+reportingType.header = Are you reporting a person or a business?
