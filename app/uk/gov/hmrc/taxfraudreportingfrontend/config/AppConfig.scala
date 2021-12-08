@@ -16,11 +16,11 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.config
 
-import javax.inject.{Inject, Singleton}
 import play.api.Configuration
-import play.api.i18n.{Lang, Messages}
+import play.api.i18n.Lang
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.duration.Duration
 
 @Singleton

@@ -22,9 +22,9 @@ import org.scalatest.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
-import play.api.http.Status.{BAD_REQUEST, OK}
+import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.mvc.Result
+import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Result}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{
   contentAsString,
@@ -46,7 +46,7 @@ class ActivityTypeControllerSpec
       .configure("metrics.jvm" -> false, "metrics.enabled" -> false)
       .build()
 
-  val fakeRequest = FakeRequest("GET", "/")
+  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
 
   private val controller = app.injector.instanceOf[ActivityTypeController]
 
@@ -67,9 +67,9 @@ class ActivityTypeControllerSpec
 
     "return bad request when given invalid activity type" in {
 
-      implicit val request =
+      implicit val request: FakeRequest[AnyContentAsFormUrlEncoded] =
         EnhancedFakeRequest("POST", "/report-tax-fraud/type-activity").withFormUrlEncodedBody(
-          ("activityType" -> "234567")
+          "activityType" -> "234567"
         )
 
       val response: Future[Result] = route(app, request).get
@@ -78,14 +78,14 @@ class ActivityTypeControllerSpec
 
     }
 
-    "return 200 OK response when given valid activity type" in {
+    "redirect to next page when given valid activity type" in {
 
-      implicit val request =
-        EnhancedFakeRequest("POST", "/report-tax-fraud/type-activity").withFormUrlEncodedBody(("activityType" -> ""))
+      implicit val request: FakeRequest[AnyContentAsFormUrlEncoded] =
+        EnhancedFakeRequest("POST", "/report-tax-fraud/type-activity").withFormUrlEncodedBody("activityType" -> "")
 
       val response: Future[Result] = route(app, request).get
 
-      status(response) shouldBe OK
+      status(response) shouldBe SEE_OTHER
 
     }
 

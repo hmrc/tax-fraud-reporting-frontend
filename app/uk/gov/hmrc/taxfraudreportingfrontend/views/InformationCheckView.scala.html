@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,17 +12,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package uk.gov.hmrc.taxfraudreportingfrontend.views.components
+@import controllers.routes._
+@import views.ViewUtils._
+@import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 
-import javax.inject.{Inject, Singleton}
-
-@Singleton
-class html @Inject() (
-  val h1: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.h1,
-  val h2: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.h2,
-  val p: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.p,
-  val ul: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.bullets,
-  val button: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.button
+@this(
+      layout: Layout,
+      html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html
 )
+
+@()(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
+
+@layout(
+        pageTitle    = titleNoForm(messages("informationCheck.title"))
+) {
+
+        @html.h1("informationCheck.header")
+
+}
