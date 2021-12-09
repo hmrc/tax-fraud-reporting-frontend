@@ -14,15 +14,20 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.taxfraudreportingfrontend.views.components
+package uk.gov.hmrc.taxfraudreportingfrontend.viewmodels
 
-import javax.inject.{Inject, Singleton}
+import org.scalatest.MustMatchers.convertToAnyMustWrapper
+import org.scalatest.{Matchers, WordSpec}
 
-@Singleton
-class html @Inject() (
-  val h1: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.h1,
-  val h2: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.h2,
-  val p: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.p,
-  val ul: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.bullets,
-  val button: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.button
-)
+class RadioOptionSpec extends WordSpec with Matchers {
+
+  "Radio Option must" should {
+    "build correctly from a key prefix and option" in {
+      val radioOption = RadioOption("prefix", "option")
+      radioOption.id mustBe "prefix.option"
+      radioOption.value mustBe "option"
+      radioOption.messageKey mustBe "prefix.option"
+    }
+  }
+
+}

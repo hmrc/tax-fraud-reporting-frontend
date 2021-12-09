@@ -26,3 +26,9 @@ activityType.error.invalid = (W)Enter the type of activity using letters a to z,
 
 reportingType.title = (W)Are you reporting a person or a business?(W)
 reportingType.header = (W)Are you reporting a person or a business?(W)
+reportingType.Person = (W)Person(W)
+reportingType.Business = (W)Business(W)
+reportingType.error.required = (W)Select if you are reporting a person or a business(W)
+
+informationCheck.title = (W)What information do you know about the ?(W)
+informationCheck.header = (W)What information do you know about the ?(W)

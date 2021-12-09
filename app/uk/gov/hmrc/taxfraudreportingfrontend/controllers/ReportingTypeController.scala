@@ -20,37 +20,38 @@ import play.api.data.Form
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
-import uk.gov.hmrc.taxfraudreportingfrontend.forms.ActivityTypeProvider
-import uk.gov.hmrc.taxfraudreportingfrontend.viewmodels.ActivityTypeViewModel
-import uk.gov.hmrc.taxfraudreportingfrontend.views.html.ActivityTypeView
+import uk.gov.hmrc.taxfraudreportingfrontend.forms.ReportingTypeProvider
+import uk.gov.hmrc.taxfraudreportingfrontend.models.ReportingType
+import uk.gov.hmrc.taxfraudreportingfrontend.views.html.ReportingTypeView
 
 import javax.inject.Inject
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-class ActivityTypeController @Inject() (
+class ReportingTypeController @Inject() (
   mcc: MessagesControllerComponents,
-  activityTypeView: ActivityTypeView,
-  activityTypeProvider: ActivityTypeProvider
-)(implicit appConfig: AppConfig)
+  reportingTypeView: ReportingTypeView,
+  formProvider: ReportingTypeProvider
+)(implicit appConfig: AppConfig, executionContext: ExecutionContext)
     extends FrontendController(mcc) {
 
-  val form: Form[ActivityTypeViewModel] = activityTypeProvider()
+  val form: Form[ReportingType] = formProvider()
 
-  private def onSubmitActivityType() = routes.ActivityTypeController.onSubmit()
+  private def onSubmitReportingType() = routes.ReportingTypeController.onSubmit()
 
-  def onPageLoad(): Action[AnyContent] = Action {
+  def onPageLoad(): Action[AnyContent] = Action.async {
+
     implicit request =>
-      Ok(activityTypeView(form, onSubmitActivityType()))
+      Future.successful(Ok(reportingTypeView(form, onSubmitReportingType())))
+
   }
 
   def onSubmit(): Action[AnyContent] = Action.async {
     implicit request =>
-      val boundForm = form.bindFromRequest()
-      boundForm.fold(
-        formWithErrors => Future.successful(BadRequest(activityTypeView(formWithErrors, onSubmitActivityType()))),
+      form.bindFromRequest().fold(
+        formWithErrors => Future.successful(BadRequest(reportingTypeView(formWithErrors, onSubmitReportingType()))),
         _ =>
           Future.successful(
-            Redirect(uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.ReportingTypeController.onPageLoad())
+            Redirect(uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.InformationCheckController.onPageLoad())
           )
       )
   }

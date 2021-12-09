@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.taxfraudreportingfrontend.views.components
+package uk.gov.hmrc.taxfraudreportingfrontend.viewmodels
 
-import javax.inject.{Inject, Singleton}
+case class RadioOption(id: String, value: String, messageKey: String)
 
-@Singleton
-class html @Inject() (
-  val h1: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.h1,
-  val h2: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.h2,
-  val p: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.p,
-  val ul: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.bullets,
-  val button: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.button
-)
+object RadioOption {
+
+  def apply(keyPrefix: String, option: String): RadioOption =
+    RadioOption(s"$keyPrefix.$option", option, s"$keyPrefix.$option")
+
+}

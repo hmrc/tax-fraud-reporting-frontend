@@ -23,5 +23,6 @@ class forms @Inject() (
   val formWithCSRF: uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF,
   val fieldSet: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.fieldset,
   val inputText: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.inputText,
+  val inputRadio: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.inputRadio,
   val errorSummary: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.errorSummary
 )

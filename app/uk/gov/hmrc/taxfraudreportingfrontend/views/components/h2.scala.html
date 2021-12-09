@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,17 +12,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package uk.gov.hmrc.taxfraudreportingfrontend.views.components
+@this()
 
-import javax.inject.{Inject, Singleton}
+@(msg: String, classes: String = "govuk-heading-m", optId: Option[String] = None)(implicit messages: Messages)
 
-@Singleton
-class html @Inject() (
-  val h1: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.h1,
-  val h2: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.h2,
-  val p: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.p,
-  val ul: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.bullets,
-  val button: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.button
-)
+<h2 @optId.map(value => s"id=$value") class="@classes">@messages(msg)</h2>

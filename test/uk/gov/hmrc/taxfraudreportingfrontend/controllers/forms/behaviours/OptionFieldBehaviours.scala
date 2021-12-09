@@ -14,15 +14,20 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.taxfraudreportingfrontend.views.components
+package uk.gov.hmrc.taxfraudreportingfrontend.controllers.forms.behaviours
 
-import javax.inject.{Inject, Singleton}
+import play.api.data.{Form, FormError}
 
-@Singleton
-class html @Inject() (
-  val h1: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.h1,
-  val h2: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.h2,
-  val p: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.p,
-  val ul: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.bullets,
-  val button: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.button
-)
+class OptionFieldBehaviours extends FieldBehaviours {
+
+  def optionsField[T](form: Form[_], fieldName: String, validValues: Seq[T], invalidError: FormError): Unit =
+    "bind all valid values" in {
+
+      for (value <- validValues) {
+
+        val result = form.bind(Map(fieldName -> value.toString)).apply(fieldName)
+        result.value.value shouldEqual value.toString
+      }
+    }
+
+}
