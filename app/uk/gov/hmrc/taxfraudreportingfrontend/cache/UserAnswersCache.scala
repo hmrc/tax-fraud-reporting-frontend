@@ -17,6 +17,7 @@
 package uk.gov.hmrc.taxfraudreportingfrontend.cache
 
 import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -24,11 +25,16 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class UserAnswersCache @Inject() (sessionCache: SessionCache)(implicit ec: ExecutionContext) {
 
-  /*TODO cache test method is for the reference - once first method is implemented this can be deleted*/
-  def testCache(testVal: String)(implicit hc: HeaderCarrier): Future[Boolean] =
-    sessionCache.testCache(testVal)
+  def saveFraudReportDetails(
+    insertNewDetails: FraudReportDetails => FraudReportDetails
+  )(implicit hc: HeaderCarrier): Future[Boolean] = sessionCache.fraudReportDetails flatMap { details =>
+    sessionCache.saveFraudReportDetails(insertNewDetails(details))
+  }
 
-  def getTestCache()(implicit hc: HeaderCarrier): Future[String] =
-    sessionCache.getTestCache map (_.get)
+  def cacheActivityType(activityType: String)(implicit hc: HeaderCarrier): Future[Boolean] =
+    saveFraudReportDetails(sd => sd.copy(activityType = Some(activityType)))
+
+  def getActivityType()(implicit hc: HeaderCarrier): Future[Option[String]] =
+    sessionCache.fraudReportDetails map (_.activityType)
 
 }

@@ -18,22 +18,25 @@ package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.when
 import org.scalatest.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import play.api.Application
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
-import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Result}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{
   contentAsString,
   defaultAwaitTimeout,
   route,
+  running,
   status,
   writeableOf_AnyContentAsFormUrlEncoded
 }
+import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.mappings.Mappings
+import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
 import scala.concurrent.Future
@@ -41,27 +44,72 @@ import scala.concurrent.Future
 class ActivityTypeControllerSpec
     extends BaseSpec with Matchers with Mappings with GuiceOneAppPerSuite with MockitoSugar {
 
-  override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
-      .configure("metrics.jvm" -> false, "metrics.enabled" -> false)
-      .build()
-
-  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
+  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] =
+    FakeRequest("GET", "/").withSession(SessionKeys.sessionId -> "fakesessionid")
 
   private val controller = app.injector.instanceOf[ActivityTypeController]
 
   "Activity Type views" should {
-    val result          = controller.onPageLoad()(fakeRequest)
-    val content: String = contentAsString(result)
-    val doc: Document   = Jsoup.parse(content)
 
     "load the page content" in {
 
-      doc.getElementsByTag("h1").text() shouldBe messages("activityType.header")
+      running(application) {
+        when(mockSessionCache.isCachePresent(any[String])).thenReturn(Future.successful(false))
+        when(mockUserAnswersCache.getActivityType()(hc)).thenReturn(Future.successful(None))
 
-      doc.getElementById("first-para").text() shouldBe messages("activityType.p1")
+        val result          = controller.onPageLoad()(fakeRequest)
+        val content: String = contentAsString(result)
+        val doc: Document   = Jsoup.parse(content)
 
-      doc.getElementById("hint-text").text() shouldBe messages("activityType.p2")
+        doc.getElementsByTag("h1").text() shouldBe messages("activityType.header")
+
+        doc.getElementById("first-para").text() shouldBe messages("activityType.p1")
+
+        doc.getElementById("hint-text").text() shouldBe messages("activityType.p2")
+
+      }
+
+    }
+
+    "load the page content from cache activity type is empty" in {
+
+      running(application) {
+
+        when(mockSessionCache.isCacheNotPresentCreateOne("fakesessionidNew")(hc)).thenReturn(
+          Future.successful(FraudReportDetails(activityType = None))
+        )
+
+        val result =
+          controller.onPageLoad()(FakeRequest("GET", "/").withSession(SessionKeys.sessionId -> "fakesessionidNew"))
+        val content: String = contentAsString(result)
+        val doc: Document   = Jsoup.parse(content)
+
+        doc.getElementsByTag("h1").text() shouldBe messages("activityType.header")
+
+        doc.getElementById("first-para").text() shouldBe messages("activityType.p1")
+
+        doc.getElementById("hint-text").text() shouldBe messages("activityType.p2")
+
+      }
+
+    }
+
+    "load the page content with cache" in {
+
+      running(application) {
+        when(mockSessionCache.isCachePresent(any[String])).thenReturn(Future.successful(true))
+
+        val result          = controller.onPageLoad()(fakeRequest)
+        val content: String = contentAsString(result)
+        val doc: Document   = Jsoup.parse(content)
+
+        doc.getElementsByTag("h1").text() shouldBe messages("activityType.header")
+
+        doc.getElementById("first-para").text() shouldBe messages("activityType.p1")
+
+        doc.getElementById("hint-text").text() shouldBe messages("activityType.p2")
+
+      }
 
     }
 

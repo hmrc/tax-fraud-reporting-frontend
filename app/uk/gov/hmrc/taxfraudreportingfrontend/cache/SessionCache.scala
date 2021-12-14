@@ -23,21 +23,28 @@ import uk.gov.hmrc.cache._
 import uk.gov.hmrc.cache.model.{Cache, Id}
 import uk.gov.hmrc.cache.repository.CacheMongoRepository
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.taxfraudreportingfrontend.cache.CachedData._
+import uk.gov.hmrc.taxfraudreportingfrontend.cache.CachedData.{emptyRegistrationDetails, fraudReportDetailsKey}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
+import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NoStackTrace
 
-sealed case class CachedData(
-  /*TODO test value and its reference has to be removed from source code after implementing the first page*/
-  test: Option[String] = None
-) {}
+sealed case class CachedData(fraudReportDetails: Option[FraudReportDetails] = None) {
+
+  def getRegistrationDetails: FraudReportDetails =
+    fraudReportDetails.getOrElse(emptyRegistrationDetails())
+
+}
 
 object CachedData {
+  val fraudReportDetailsKey                = "fraudReportDetails"
   implicit val format: OFormat[CachedData] = Json.format[CachedData]
-  val testKey                              = "test"
+
+  def emptyRegistrationDetails(): FraudReportDetails =
+    FraudReportDetails(None)
+
 }
 
 @Singleton
@@ -46,15 +53,29 @@ class SessionCache @Inject() (appConfig: AppConfig, mongo: ReactiveMongoComponen
 
   private val eccLogger: Logger = Logger(this.getClass)
 
-  private def sessionId(implicit hc: HeaderCarrier): Id =
+  def sessionId(implicit hc: HeaderCarrier): Id =
     hc.sessionId match {
       case None =>
         throw new IllegalStateException("Session id is not available")
       case Some(sessionId) => model.Id(sessionId.value)
     }
 
-  def testCache(testString: String)(implicit hc: HeaderCarrier): Future[Boolean] =
-    createOrUpdate(sessionId, testKey, Json.toJson(testString)) map (_ => true)
+  def saveFraudReportDetails(rdh: FraudReportDetails)(implicit hc: HeaderCarrier): Future[Boolean] =
+    createOrUpdate(sessionId, fraudReportDetailsKey, Json.toJson(rdh)) map {
+      case wr if wr.writeResult.inError => throw new IllegalStateException("Not able to create cache in Mongo")
+      case _                            => true
+    }
+
+  def isCachePresent(sessionId: String): Future[Boolean] = findById(sessionId) map {
+    _ exists { cache => cache.data.isDefined }
+  }
+
+  def isCacheNotPresentCreateOne(sessionId: String)(implicit hc: HeaderCarrier): Future[FraudReportDetails] =
+    isCachePresent(sessionId) flatMap {
+      case true => fraudReportDetails
+      case false =>
+        saveFraudReportDetails(FraudReportDetails(None)) flatMap (_ => fraudReportDetails)
+    }
 
   private def getCached[T](sessionId: Id, t: (CachedData, Id) => T): Future[T] =
     findById(sessionId.id).map {
@@ -74,8 +95,8 @@ class SessionCache @Inject() (appConfig: AppConfig, mongo: ReactiveMongoComponen
       // $COVERAGE-ON
     }
 
-  def getTestCache(implicit hc: HeaderCarrier): Future[Option[String]] =
-    getCached[Option[String]](sessionId, (cachedData, _) => cachedData.test)
+  def fraudReportDetails(implicit hc: HeaderCarrier): Future[FraudReportDetails] =
+    getCached[FraudReportDetails](sessionId, (cachedData, _) => cachedData.getRegistrationDetails)
 
   def remove(implicit hc: HeaderCarrier): Future[Boolean] =
     removeById(sessionId.id) map (x => x.writeErrors.isEmpty && x.writeConcernError.isEmpty)
