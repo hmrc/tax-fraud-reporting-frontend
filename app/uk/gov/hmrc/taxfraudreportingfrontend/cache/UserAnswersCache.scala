@@ -28,14 +28,14 @@ class UserAnswersCache @Inject() (sessionCache: SessionCache)(implicit ec: Execu
 
   def saveFraudReportDetails(
     insertNewDetails: FraudReportDetails => FraudReportDetails
-  )(implicit hc: HeaderCarrier): Future[Boolean] = sessionCache.fraudReportDetails flatMap { details =>
+  )(implicit hc: HeaderCarrier): Future[FraudReportDetails] = sessionCache.getFraudReportDetails flatMap { details =>
     sessionCache.saveFraudReportDetails(insertNewDetails(details))
   }
 
-  def cacheActivityType(activityType: ActivityType)(implicit hc: HeaderCarrier): Future[Boolean] =
+  def cacheActivityType(activityType: ActivityType)(implicit hc: HeaderCarrier): Future[FraudReportDetails] =
     saveFraudReportDetails(sd => sd.copy(activityType = Some(activityType)))
 
   def getActivityType()(implicit hc: HeaderCarrier): Future[Option[ActivityType]] =
-    sessionCache.fraudReportDetails map (_.activityType)
+    sessionCache.getFraudReportDetails map (_.activityType)
 
 }

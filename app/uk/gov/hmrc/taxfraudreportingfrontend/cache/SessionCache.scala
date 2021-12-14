@@ -23,7 +23,7 @@ import uk.gov.hmrc.cache._
 import uk.gov.hmrc.cache.model.{Cache, Id}
 import uk.gov.hmrc.cache.repository.CacheMongoRepository
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.taxfraudreportingfrontend.cache.CachedData.{emptyRegistrationDetails, fraudReportDetailsKey}
+import uk.gov.hmrc.taxfraudreportingfrontend.cache.CachedData.fraudReportDetailsKey
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 
@@ -33,18 +33,14 @@ import scala.util.control.NoStackTrace
 
 sealed case class CachedData(fraudReportDetails: Option[FraudReportDetails] = None) {
 
-  def getRegistrationDetails: FraudReportDetails =
-    fraudReportDetails.getOrElse(emptyRegistrationDetails())
+  def getFraudReportDetails: FraudReportDetails =
+    fraudReportDetails getOrElse FraudReportDetails()
 
 }
 
 object CachedData {
   val fraudReportDetailsKey                = "fraudReportDetails"
-  implicit val format: OFormat[CachedData] = Json.format[CachedData]
-
-  def emptyRegistrationDetails(): FraudReportDetails =
-    FraudReportDetails(None)
-
+  implicit val format: OFormat[CachedData] = Json.format
 }
 
 @Singleton
@@ -53,32 +49,38 @@ class SessionCache @Inject() (appConfig: AppConfig, mongo: ReactiveMongoComponen
 
   private val eccLogger: Logger = Logger(this.getClass)
 
-  def sessionId(implicit hc: HeaderCarrier): Id =
-    hc.sessionId match {
+  def sessionId(implicit headerCarrier: HeaderCarrier): Id =
+    headerCarrier.sessionId match {
       case None =>
         throw new IllegalStateException("Session id is not available")
       case Some(sessionId) => model.Id(sessionId.value)
     }
 
-  def saveFraudReportDetails(rdh: FraudReportDetails)(implicit hc: HeaderCarrier): Future[Boolean] =
-    createOrUpdate(sessionId, fraudReportDetailsKey, Json.toJson(rdh)) map {
-      case wr if wr.writeResult.inError => throw new IllegalStateException("Not able to create cache in Mongo")
-      case _                            => true
-    }
+  def saveFraudReportDetails(
+    fraudReportDetails: FraudReportDetails
+  )(implicit hc: HeaderCarrier): Future[FraudReportDetails] =
+    createOrUpdate(sessionId, fraudReportDetailsKey, Json.toJson(fraudReportDetails)) map { _ => fraudReportDetails }
 
   def isCachePresent(sessionId: String): Future[Boolean] = findById(sessionId) map {
     _ exists { cache => cache.data.isDefined }
   }
 
   def isCacheNotPresentCreateOne(sessionId: String)(implicit hc: HeaderCarrier): Future[FraudReportDetails] =
-    isCachePresent(sessionId) flatMap {
-      case true => fraudReportDetails
-      case false =>
-        saveFraudReportDetails(FraudReportDetails(None)) flatMap (_ => fraudReportDetails)
+    isCachePresent(sessionId) flatMap { isPresent =>
+      if (isPresent)
+        getFraudReportDetails
+      else
+        saveFraudReportDetails(FraudReportDetails(None))
     }
 
+  def getFraudReportDetails(implicit hc: HeaderCarrier): Future[FraudReportDetails] =
+    getCached(sessionId, (cachedData, _) => cachedData.getFraudReportDetails)
+
+  def remove(implicit hc: HeaderCarrier): Future[Boolean] =
+    removeById(sessionId.id) map (x => x.writeErrors.isEmpty && x.writeConcernError.isEmpty)
+
   private def getCached[T](sessionId: Id, t: (CachedData, Id) => T): Future[T] =
-    findById(sessionId.id).map {
+    findById(sessionId.id) map {
       case Some(Cache(_, Some(data), _, _)) =>
         Json.fromJson[CachedData](data) match {
           case d: JsSuccess[CachedData] => t(d.value, sessionId)
@@ -94,12 +96,6 @@ class SessionCache @Inject() (appConfig: AppConfig, mongo: ReactiveMongoComponen
         throw SessionTimeOutException(s"No match session id for signed in user with session : ${sessionId.id}")
       // $COVERAGE-ON
     }
-
-  def fraudReportDetails(implicit hc: HeaderCarrier): Future[FraudReportDetails] =
-    getCached[FraudReportDetails](sessionId, (cachedData, _) => cachedData.getRegistrationDetails)
-
-  def remove(implicit hc: HeaderCarrier): Future[Boolean] =
-    removeById(sessionId.id) map (x => x.writeErrors.isEmpty && x.writeConcernError.isEmpty)
 
 }
 

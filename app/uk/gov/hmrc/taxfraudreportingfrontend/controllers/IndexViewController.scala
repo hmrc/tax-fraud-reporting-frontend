@@ -16,11 +16,11 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
-import uk.gov.hmrc.taxfraudreportingfrontend.views.html.IndexView
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.http.SessionKeys
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
+import uk.gov.hmrc.taxfraudreportingfrontend.views.html.IndexView
 
 import java.util.UUID
 import javax.inject.{Inject, Singleton}

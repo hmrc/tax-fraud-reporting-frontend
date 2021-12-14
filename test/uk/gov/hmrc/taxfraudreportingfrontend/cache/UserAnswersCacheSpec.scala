@@ -47,9 +47,9 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
     reset(mockSessionCache)
 
     when(mockSessionCache.saveFraudReportDetails(any[FraudReportDetails])(any[HeaderCarrier]))
-      .thenReturn(Future.successful(true))
+      .thenReturn(Future.successful(FraudReportDetails(Some(mockActivityType))))
 
-    when(mockSessionCache.fraudReportDetails(any[HeaderCarrier])).thenReturn(
+    when(mockSessionCache.getFraudReportDetails(any[HeaderCarrier])).thenReturn(
       Future.successful(FraudReportDetails(Some(mockActivityType)))
     )
 
@@ -72,7 +72,7 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
 
     "get empty activityType Details from cache" in {
 
-      when(mockSessionCache.fraudReportDetails(any[HeaderCarrier])).thenReturn(
+      when(mockSessionCache.getFraudReportDetails(any[HeaderCarrier])).thenReturn(
         Future.successful(FraudReportDetails(None))
       )
 

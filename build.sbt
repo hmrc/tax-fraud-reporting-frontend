@@ -13,17 +13,19 @@ lazy val scoverageSettings = {
 
   Seq(
     // Semicolon-separated list of regexs matching classes to exclude
-    ScoverageKeys.coverageExcludedPackages := List("<empty>",
+    ScoverageKeys.coverageExcludedPackages := List(
+      "<empty>",
       "Reverse.*",
       "uk\\.gov\\.hmrc\\.taxfraudreportingfrontend\\.views.*",
       "uk\\.gov\\.hmrc\\.taxfraudreportingfrontend\\.config.*",
       "uk\\.gov\\.hmrc\\.taxfraudreportingfrontend\\.models.audit.*",
       "logger.*\\(.*\\)",
-      ".*(AuthService|BuildInfo|Routes|TestOnly).*").mkString(";"),
+      ".*(AuthService|BuildInfo|Routes|TestOnly).*"
+    ).mkString(";"),
     ScoverageKeys.coverageMinimum := 90,
     ScoverageKeys.coverageFailOnMinimum := true,
     ScoverageKeys.coverageHighlighting := true,
-    parallelExecution in Test := false
+    Test / parallelExecution := false
   )
 }
 
@@ -31,7 +33,6 @@ lazy val playSettings: Seq[Setting[_]] = Seq(
   routesImport ++= Seq("uk.gov.hmrc.taxfraudreportingfrontend.domain._"),
   RoutesKeys.routesImport += "uk.gov.hmrc.taxfraudreportingfrontend.models._"
 )
-
 
 lazy val twirlSettings: Seq[Setting[_]] = Seq(
   TwirlKeys.templateImports ++= Seq(
@@ -45,14 +46,17 @@ lazy val twirlSettings: Seq[Setting[_]] = Seq(
     "views.ViewUtils._"
   )
 )
+
 Concat.groups := Seq(
   "javascripts/application.js" ->
-    group(Seq(
-      "lib/govuk-frontend/govuk/all.js",
-      "javascripts/jquery.min.js",
-      "javascripts/app.js",
-      "javascripts/autocomplete.js"
-    ))
+    group(
+      Seq(
+        "lib/govuk-frontend/govuk/all.js",
+        "javascripts/jquery.min.js",
+        "javascripts/app.js",
+        "javascripts/autocomplete.js"
+      )
+    )
 )
 
 lazy val microservice = Project(appName, file("."))

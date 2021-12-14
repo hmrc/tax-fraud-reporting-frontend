@@ -400,12 +400,13 @@ class ActivityTypeServiceSpec extends BaseSpec with Matchers with Mappings with 
   "return the Activity by Activity Name" should {
 
     "get a activityType by its code" in {
-      activityTypeService.getActivityByName("activityType.name.furlough") shouldBe ActivityType(
-        "22030000",
-        "activityType.name.furlough",
-        List("CJRS", "Furlough", "COVID", "Corona", "Coronavirus Job Retention Scheme")
+      activityTypeService.getActivityByName("activityType.name.furlough") shouldBe Some(
+        ActivityType(
+          "22030000",
+          "activityType.name.furlough",
+          List("CJRS", "Furlough", "COVID", "Corona", "Coronavirus Job Retention Scheme")
+        )
       )
-
     }
   }
 
