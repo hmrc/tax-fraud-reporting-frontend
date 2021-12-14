@@ -28,6 +28,7 @@ import play.api.test.Helpers._
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.Result
 import play.api.test.Helpers.baseApplicationBuilder.injector
+import uk.gov.hmrc.http.SessionKeys
 
 import scala.concurrent.Future
 
@@ -49,6 +50,11 @@ class IndexViewControllerSpec extends WordSpec with Matchers with GuiceOneAppPer
   "GET /" should {
     "return 200" in {
       val result = controller.onPageLoad()(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return 200 wit session Id" in {
+      val result = controller.onPageLoad()(fakeRequest.withSession(SessionKeys.sessionId -> "fakesessionid"))
       status(result) shouldBe Status.OK
     }
 

@@ -24,15 +24,19 @@ import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 
 import java.util.UUID
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.ExecutionContext
 
 @Singleton
-class IndexViewController @Inject() (mcc: MessagesControllerComponents, indexView: IndexView)(implicit
-  appConfig: AppConfig
+class IndexViewController @Inject() (mcc: MessagesControllerComponents, indexView: IndexView)(
+  implicit appConfig: AppConfig,
+  implicit val ec: ExecutionContext
 ) extends FrontendController(mcc) {
 
-  def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(indexView()).addingToSession(SessionKeys.sessionId -> UUID.randomUUID.toString))
+  def onPageLoad(): Action[AnyContent] = Action { implicit request =>
+    val response = Ok(indexView())
+
+    if (request.session.data contains SessionKeys.sessionId) response
+    else response.addingToSession(SessionKeys.sessionId -> UUID.randomUUID.toString)
   }
 
 }

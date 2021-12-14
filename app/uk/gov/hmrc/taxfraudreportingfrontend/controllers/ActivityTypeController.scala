@@ -17,30 +17,40 @@
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
 import play.api.data.Form
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+
+import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import uk.gov.hmrc.taxfraudreportingfrontend.cache.{SessionCache, UserAnswersCache}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.ActivityTypeProvider
 import uk.gov.hmrc.taxfraudreportingfrontend.viewmodels.ActivityTypeViewModel
 import uk.gov.hmrc.taxfraudreportingfrontend.views.html.ActivityTypeView
 
 import javax.inject.Inject
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class ActivityTypeController @Inject() (
   mcc: MessagesControllerComponents,
   activityTypeView: ActivityTypeView,
-  activityTypeProvider: ActivityTypeProvider
-)(implicit appConfig: AppConfig)
+  activityTypeProvider: ActivityTypeProvider,
+  userAnswersCache: UserAnswersCache,
+  sessionCache: SessionCache
+)(implicit appConfig: AppConfig, ec: ExecutionContext)
     extends FrontendController(mcc) {
 
   val form: Form[ActivityTypeViewModel] = activityTypeProvider()
 
-  private def onSubmitActivityType() = routes.ActivityTypeController.onSubmit()
+  private def onSubmitActivityType(): Call = routes.ActivityTypeController.onSubmit()
 
-  def onPageLoad(): Action[AnyContent] = Action {
+  def onPageLoad(): Action[AnyContent] = Action.async {
     implicit request =>
-      Ok(activityTypeView(form, onSubmitActivityType()))
+      sessionCache.isCacheNotPresentCreateOne(hc.sessionId.get.value) map { fraudReport =>
+        val filledForm = fraudReport.activityType map { activityType =>
+          form.fill(ActivityTypeViewModel(activityType))
+        } getOrElse form
+
+        Ok(activityTypeView(filledForm, onSubmitActivityType()))
+      }
   }
 
   def onSubmit(): Action[AnyContent] = Action.async {
@@ -48,9 +58,9 @@ class ActivityTypeController @Inject() (
       val boundForm = form.bindFromRequest()
       boundForm.fold(
         formWithErrors => Future.successful(BadRequest(activityTypeView(formWithErrors, onSubmitActivityType()))),
-        _ =>
-          Future.successful(
-            Redirect(uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.ReportingTypeController.onPageLoad())
+        activityType =>
+          userAnswersCache.cacheActivityType(activityType.activityType) map (
+            _ => Redirect(uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.ReportingTypeController.onPageLoad())
           )
       )
   }

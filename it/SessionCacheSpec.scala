@@ -23,6 +23,7 @@ import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
 import uk.gov.hmrc.mongo.{MongoConnector, MongoSpecSupport}
 import uk.gov.hmrc.taxfraudreportingfrontend.cache.{CachedData, SessionCache}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
+import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 
 import java.util.UUID
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -39,27 +40,27 @@ class SessionCacheSpec extends IntegrationTestSpec with MockitoSugar with MongoS
 
   val hc: HeaderCarrier = mock[HeaderCarrier]
 
-  val testCacheData: String = "testCacheData"
+  val testCacheData: FraudReportDetails = FraudReportDetails(activityType = Some("activityType"))
 
   "Session cache" should {
 
-    "store, fetch and update test data correctly" in {
+    "store, fetch and update activity type data correctly" in {
       val sessionId: SessionId = setupSession
 
-      await(sessionCache.testCache(testCacheData)(hc))
+      await(sessionCache.saveFraudReportDetails(testCacheData)(hc))
 
-      val expectedJson                     = toJson(CachedData(test = Some(testCacheData)))
+      val expectedJson                     = toJson(CachedData(fraudReportDetails = Some(testCacheData)))
       val cache                            = await(sessionCache.findById(Id(sessionId.value)))
       val Some(Cache(_, Some(json), _, _)) = cache
       json mustBe expectedJson
 
-      await(sessionCache.getTestCache(hc)) mustBe Some(testCacheData)
+      await(sessionCache.fraudReportDetails(hc)) mustBe testCacheData
 
-      val updatedTest = "updatedTestCacheData"
+      val updatedTest = FraudReportDetails(activityType = Some("updatedActivityType"))
 
-      await(sessionCache.testCache(updatedTest)(hc))
+      await(sessionCache.saveFraudReportDetails(updatedTest)(hc))
 
-      val expectedUpdatedJson                     = toJson(CachedData(test = Some(updatedTest)))
+      val expectedUpdatedJson                     = toJson(CachedData(fraudReportDetails = Some(updatedTest)))
       val updatedCache                            = await(sessionCache.findById(Id(sessionId.value)))
       val Some(Cache(_, Some(updatedJson), _, _)) = updatedCache
       updatedJson mustBe expectedUpdatedJson
@@ -67,7 +68,7 @@ class SessionCacheSpec extends IntegrationTestSpec with MockitoSugar with MongoS
 
     "remove from the cache" in {
       val sessionId: SessionId = setupSession
-      await(sessionCache.testCache("testCacheData")(hc))
+      await(sessionCache.saveFraudReportDetails(FraudReportDetails(activityType = Some("activityType")))(hc))
 
       await(sessionCache.remove(hc))
 
@@ -75,17 +76,34 @@ class SessionCacheSpec extends IntegrationTestSpec with MockitoSugar with MongoS
       cached mustBe None
     }
 
+    "is cache present in DB" in {
+      await(sessionCache.saveFraudReportDetails(FraudReportDetails(activityType = Some("activityType")))(hc))
+
+      await(sessionCache.isCachePresent(hc.sessionId.get.value)) mustBe true
+
+      await(sessionCache.remove(hc))
+
+      await(sessionCache.isCachePresent(hc.sessionId.get.value)) mustBe false
+    }
+
+    "if cache present is not present in DB create new one" in {
+      await(sessionCache.remove(hc))
+
+      await(sessionCache.isCacheNotPresentCreateOne(hc.sessionId.get.value)(hc)) mustBe FraudReportDetails(None)
+
+    }
+
     "return None when testData requested and not available in cache" in {
       val s = setupSession
       await(sessionCache.insert(Cache(Id(s.value), data = Some(toJson(CachedData())))))
-      await(sessionCache.getTestCache(hc)) mustBe None
+      await(sessionCache.fraudReportDetails(hc)) mustBe FraudReportDetails(None)
     }
 
     "throw IllegalStateException when session id is not retrieved from hc" in {
       when(hc.sessionId).thenReturn(None)
 
       val e1 = intercept[IllegalStateException] {
-        await(sessionCache.getTestCache(hc))
+        await(sessionCache.fraudReportDetails(hc))
       }
       e1.getMessage mustBe "Session id is not available"
     }

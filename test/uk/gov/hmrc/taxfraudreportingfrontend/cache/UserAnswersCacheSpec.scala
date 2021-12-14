@@ -21,6 +21,7 @@ import org.mockito.Mockito.{reset, verify, when}
 import org.mockito.{ArgumentCaptor, ArgumentMatchers}
 import org.scalatest.BeforeAndAfterEach
 import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -29,7 +30,7 @@ import scala.concurrent.{Await, Future}
 
 class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
 
-  implicit val hc: HeaderCarrier = mock[HeaderCarrier]
+  override implicit val hc: HeaderCarrier = mock[HeaderCarrier]
 
   private val testCache =
     new UserAnswersCache(mockSessionCache)
@@ -37,27 +38,38 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
   protected override def beforeEach: Unit = {
     reset(mockSessionCache)
 
-    when(mockSessionCache.testCache(any[String])(any[HeaderCarrier]))
+    when(mockSessionCache.saveFraudReportDetails(any[FraudReportDetails])(any[HeaderCarrier]))
       .thenReturn(Future.successful(true))
 
-    when(mockSessionCache.getTestCache(any[HeaderCarrier])).thenReturn(Future.successful(Some("existingData")))
+    when(mockSessionCache.fraudReportDetails(any[HeaderCarrier])).thenReturn(
+      Future.successful(FraudReportDetails(activityType = Some("existingActivityType")))
+    )
 
   }
 
-  /*TODO this should be the reference for all user answer cache test cases*/
   "Calling userAnswersCache" should {
-    "save test Details in frontend cache" in {
+    "save activityType Details in frontend cache" in {
 
-      Await.result(testCache.testCache("testString"), Duration.Inf)
-      val requestCaptor = ArgumentCaptor.forClass(classOf[String])
+      Await.result(testCache.cacheActivityType("testString"), Duration.Inf)
+      val requestCaptor = ArgumentCaptor.forClass(classOf[FraudReportDetails])
 
-      verify(mockSessionCache).testCache(requestCaptor.capture())(ArgumentMatchers.eq(hc))
-      val holder: String = requestCaptor.getValue
-      holder shouldBe "testString"
+      verify(mockSessionCache).saveFraudReportDetails(requestCaptor.capture())(ArgumentMatchers.eq(hc))
+      val holder: FraudReportDetails = requestCaptor.getValue
+      holder.activityType.get shouldBe "testString"
 
-      val testCacheData: String = Await.result(testCache.getTestCache(), Duration.Inf)
-      testCacheData shouldBe "existingData"
+      val testCacheData: Option[String] = Await.result(testCache.getActivityType(), Duration.Inf)
+      testCacheData.get shouldBe "existingActivityType"
 
+    }
+
+    "get empty activityType Details from cache" in {
+
+      when(mockSessionCache.fraudReportDetails(any[HeaderCarrier])).thenReturn(
+        Future.successful(FraudReportDetails(None))
+      )
+
+      val testCacheData: Option[String] = Await.result(testCache.getActivityType(), Duration.Inf)
+      testCacheData shouldBe None
     }
   }
 }
