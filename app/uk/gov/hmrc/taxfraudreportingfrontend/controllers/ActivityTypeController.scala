@@ -49,7 +49,7 @@ class ActivityTypeController @Inject() (
     implicit request =>
       sessionCache.isCacheNotPresentCreateOne(hc.sessionId.get.value) map { fraudReport =>
         val filledForm = fraudReport.activityType map { activityType =>
-          form.fill(ActivityTypeViewModel(activityType.code, activityType.activityName, activityType.activitySynonyms))
+          form.fill(ActivityTypeViewModel from activityType)
         } getOrElse form
 
         Ok(activityTypeView(filledForm, onSubmitActivityType(), activityTypeService.activities))

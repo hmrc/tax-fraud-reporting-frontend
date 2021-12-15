@@ -16,22 +16,24 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.{components => hmrcComponent}
 @import uk.gov.hmrc.govukfrontend.views.html.components.{toClasses => govukToClasses}
+@import uk.gov.hmrc.taxfraudreportingfrontend.viewmodels.ActivityTypeViewModel
+
 @this(select: GovukSelect)
 
-
-@(form:
-        Form[_],
-        id: String,
-        name: String,
-        label: String,
-        isPageHint: Boolean = true,
-        isPageHeading: Boolean = true,
-        headingMessageArgs: Seq[String] = Seq(),
-        hint: String,
-        hintText: String,
-        list: Seq[(String, String)],
-        jsonData: String,
-        labelClass: Boolean = false)(implicit messages: Messages)
+@(
+  form: Form[ActivityTypeViewModel],
+  id: String,
+  name: String,
+  label: String,
+  isPageHint: Boolean = true,
+  isPageHeading: Boolean = true,
+  headingMessageArgs: Seq[String] = Seq(),
+  hint: String,
+  hintText: String,
+  list: Seq[(String, String)],
+  jsonData: String,
+  labelClass: Boolean = false
+)(implicit messages: Messages)
 
 <link href='@controllers.routes.Assets.versioned("stylesheets/components/autocomplete.css")' media="all" rel="stylesheet" type="text/css" />
 
@@ -54,20 +56,21 @@
 }
 
 @if(isPageHint){    <span id="@id-hint" class="govuk-hint">@hint</span> }
-        @select(hmrcComponent.Select(
-            id = id,
-            name = name,
-            describedBy = if(hint) {Some(id + s"-hint")} else {None},
-            errorMessage = form(id).error.map(fe ⇒ ErrorMessage(content = HtmlContent(messages(fe.message)))),
-            items = Seq(SelectItem(value = Some(""), text=(hintText))) ++ list.map {
-            case (k,v) ⇒ SelectItem(
-            value = Some(k),
-            text = v,
-            selected = k == form(id).value.getOrElse(""),
-            attributes = Map("id" → (id + s"-$k")))
-        },
-            formGroupClasses = "form-field-group"
-        ))
+@select(hmrcComponent.Select(
+  id = id,
+  name = name,
+  describedBy = if(hint) {Some(id + s"-hint")} else {None},
+  errorMessage = form(id).error.map(fe ⇒ ErrorMessage(content = HtmlContent(messages(fe.message)))),
+  items = Seq(SelectItem(value = Some(""), text=(hintText))) ++ list.map {
+    case (k,v) ⇒ SelectItem(
+      value = Some(k),
+      text = v,
+      selected = k == (form.value map {_.code} getOrElse ""),
+      attributes = Map("id" → (id + s"-$k"))
+    )
+  },
+  formGroupClasses = "form-field-group"
+))
 
 <script src="@controllers.routes.Assets.versioned("javascripts/autocomplete.js")" ></script>
 <script src="@controllers.routes.Assets.versioned("javascripts/jquery.min.js")" ></script>
