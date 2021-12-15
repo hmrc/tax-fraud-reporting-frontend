@@ -21,6 +21,7 @@ import org.mockito.Mockito.{reset, verify, when}
 import org.mockito.{ArgumentCaptor, ArgumentMatchers}
 import org.scalatest.BeforeAndAfterEach
 import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.taxfraudreportingfrontend.models.ActivityType
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
@@ -35,6 +36,13 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
   private val testCache =
     new UserAnswersCache(mockSessionCache)
 
+  private val mockActivityType =
+    ActivityType(
+      "22030000",
+      "activityType.name.mock_name",
+      Seq("CJRS", "Furlough", "COVID", "Corona", "Coronavirus Job Retention Scheme")
+    )
+
   protected override def beforeEach: Unit = {
     reset(mockSessionCache)
 
@@ -42,7 +50,7 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
       .thenReturn(Future.successful(true))
 
     when(mockSessionCache.fraudReportDetails(any[HeaderCarrier])).thenReturn(
-      Future.successful(FraudReportDetails(activityType = Some("existingActivityType")))
+      Future.successful(FraudReportDetails(Some(mockActivityType)))
     )
 
   }
@@ -50,15 +58,15 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
   "Calling userAnswersCache" should {
     "save activityType Details in frontend cache" in {
 
-      Await.result(testCache.cacheActivityType("testString"), Duration.Inf)
+      Await.result(testCache.cacheActivityType(mockActivityType), Duration.Inf)
       val requestCaptor = ArgumentCaptor.forClass(classOf[FraudReportDetails])
 
       verify(mockSessionCache).saveFraudReportDetails(requestCaptor.capture())(ArgumentMatchers.eq(hc))
       val holder: FraudReportDetails = requestCaptor.getValue
-      holder.activityType.get shouldBe "testString"
+      holder.activityType.get.code shouldBe "22030000"
 
-      val testCacheData: Option[String] = Await.result(testCache.getActivityType(), Duration.Inf)
-      testCacheData.get shouldBe "existingActivityType"
+      val testCacheData: Option[ActivityType] = Await.result(testCache.getActivityType(), Duration.Inf)
+      testCacheData.get.code shouldBe "22030000"
 
     }
 
@@ -68,7 +76,7 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
         Future.successful(FraudReportDetails(None))
       )
 
-      val testCacheData: Option[String] = Await.result(testCache.getActivityType(), Duration.Inf)
+      val testCacheData: Option[ActivityType] = Await.result(testCache.getActivityType(), Duration.Inf)
       testCacheData shouldBe None
     }
   }

@@ -17,6 +17,7 @@
 package uk.gov.hmrc.taxfraudreportingfrontend.cache
 
 import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.taxfraudreportingfrontend.models.ActivityType
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 
 import javax.inject.{Inject, Singleton}
@@ -31,10 +32,10 @@ class UserAnswersCache @Inject() (sessionCache: SessionCache)(implicit ec: Execu
     sessionCache.saveFraudReportDetails(insertNewDetails(details))
   }
 
-  def cacheActivityType(activityType: String)(implicit hc: HeaderCarrier): Future[Boolean] =
+  def cacheActivityType(activityType: ActivityType)(implicit hc: HeaderCarrier): Future[Boolean] =
     saveFraudReportDetails(sd => sd.copy(activityType = Some(activityType)))
 
-  def getActivityType()(implicit hc: HeaderCarrier): Future[Option[String]] =
+  def getActivityType()(implicit hc: HeaderCarrier): Future[Option[ActivityType]] =
     sessionCache.fraudReportDetails map (_.activityType)
 
 }

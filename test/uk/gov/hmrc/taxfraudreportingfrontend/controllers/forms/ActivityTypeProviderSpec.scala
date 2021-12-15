@@ -19,40 +19,23 @@ package uk.gov.hmrc.taxfraudreportingfrontend.controllers.forms
 import org.scalatest.Matchers
 import org.scalatest.MustMatchers.convertToAnyMustWrapper
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import uk.gov.hmrc.taxfraudreportingfrontend.forms.ActivityTypeProvider
+import uk.gov.hmrc.taxfraudreportingfrontend.services.ActivityTypeService
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
 class ActivityTypeProviderSpec extends BaseSpec with Matchers with GuiceOneAppPerSuite {
 
-  val provider = new ActivityTypeProvider
+  val service = new ActivityTypeService
 
   "ActivityTypeProvider" should {
 
     "validate with no issues" when {
 
-      "activityType provided with space" in {
-        val data = Map("activityType" -> "Fraud related to furlough")
+      "activityType code provided with" in {
 
-        provider().bind(data).hasErrors mustBe false
-      }
-
-      "activityType provided with hyphens" in {
-        val data = Map("activityType" -> "Fraud-related-to-furlough")
-
-        provider().bind(data).hasErrors mustBe false
-      }
-
-      "validate with issues" when {
-
-        "activity type has invalid entry" in {
-          val safeInputPattern = "^(|[a-zA-Z][a-zA-Z0-9 / '-]+)$?"
-          val data             = Map("activityType" -> safeInputPattern)
-
-          val errors = provider().bind(data).errors
-          errors.head.message mustBe "activityType.error.invalid"
-        }
+        assert(service isValidActivityTypeCode "22030000")
 
       }
+
     }
   }
 }

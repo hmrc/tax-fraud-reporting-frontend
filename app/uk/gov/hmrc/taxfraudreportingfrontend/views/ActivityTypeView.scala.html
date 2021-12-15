@@ -16,6 +16,9 @@
 
 @import views.ViewUtils._
 @import controllers.routes._
+@import uk.gov.hmrc.taxfraudreportingfrontend.models._
+@import uk.gov.hmrc.taxfraudreportingfrontend.models.ActivityType
+@import play.api.libs.json.{JsObject, Json}
 @import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 @import uk.gov.hmrc.taxfraudreportingfrontend.views.components.forms
 
@@ -26,35 +29,39 @@
       html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html
 )
 
-@(form: Form[_], submit: Call)(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
+@(form: Form[_], submit: Call, activities: Seq[ActivityType])(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
 
 @layout(
         pageTitle    = s"${errorPrefix(form)}${titleNoForm(messages("activityType.title"))}"
 ) {
 
-        @forms.formWithCSRF(action = submit, args = 'novalidate -> "novalidate") {
+      @forms.formWithCSRF(action = submit, args = 'novalidate -> "novalidate") {
 
-            @components.error_summary(form.errors)
+      @components.error_summary(form.errors)
 
-            @html.h1("activityType.header")
+      @html.h1("activityType.header")
 
-            <div id="first-para">
-                @html.p {@messages("activityType.p1")}
-            </div>
-            <div id="hint-text">
-                @html.p {@messages("activityType.p2")}
-            </div>
+      <div id="first-para">
+          @html.p {@messages("activityType.p1")}
+      </div>
+      <div id="hint-text">
+          @html.p {@messages("activityType.p2")}
+      </div>
 
-            @forms.inputText(
-                form = form,
-                id= "activityType",
-                name = "activityType",
-                inputType = "text",
-                label = "activityType.header",
-                isPageHeading = false,
-                labelHidden = true
-            )
+
+         @forms.autocomplete(
+            form = form,
+            id = "activityType",
+            name = "activityType",
+            isPageHint = false,
+            hint = "",
+            isPageHeading = false,
+            label = messages("activityType.header"),
+            hintText = "",
+            list = ("","") +: activities.map(c => (c.code ,messages(c.activityName))),
+            jsonData = Json.toJson(activities.map(_.toAutoCompleteJson)).toString
+         )
 
             @html.button("site.continue")
-        }
+      }
 }

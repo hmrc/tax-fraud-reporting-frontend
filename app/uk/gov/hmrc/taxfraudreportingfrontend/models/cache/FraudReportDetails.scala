@@ -17,8 +17,9 @@
 package uk.gov.hmrc.taxfraudreportingfrontend.models.cache
 
 import play.api.libs.json.{Format, Json}
+import uk.gov.hmrc.taxfraudreportingfrontend.models.ActivityType
 
-case class FraudReportDetails(activityType: Option[String] = None)
+case class FraudReportDetails(activityType: Option[ActivityType] = None)
 
 object FraudReportDetails {
   implicit val format: Format[FraudReportDetails] = Json.format[FraudReportDetails]
