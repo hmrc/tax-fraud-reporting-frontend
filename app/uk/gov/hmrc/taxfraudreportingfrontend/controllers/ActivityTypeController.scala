@@ -67,9 +67,20 @@ class ActivityTypeController @Inject() (
         activityType =>
           userAnswersCache.cacheActivityType(
             ActivityType(activityType.code, activityType.activityName, activityType.activitySynonyms)
-          ) map (
-            _ => Redirect(uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.ReportingTypeController.onPageLoad())
-          )
+          ) map {
+            val nonHMRCActivities = List("activityType.name.activity-related-drugs" ,
+              "activityType.name.human-trafficking",
+              "activityType.name.smuggling",
+              "activityType.name.human-trafficking",
+              "activityType.name.illegal-immigration",
+              "activityType.name.border-crime")
+            if (nonHMRCActivities contains activityType.activityName) {
+              _ => Redirect(uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.ShouldNotUseServiceController.onPageLoad(activityType.activityName))
+            }
+            else {
+              _ => Redirect(uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.ReportingTypeController.onPageLoad())
+            }
+          }
       )
   }
 

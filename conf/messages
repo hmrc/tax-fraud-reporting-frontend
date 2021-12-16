@@ -77,3 +77,14 @@ activityType.name.universal-credit-fraud = Universal credit fraud
 activityType.name.human-trafficking = Human trafficking
 activityType.name.illegal-immigration = Illegal immigration
 activityType.name.border-crime = Border crime
+
+serviceNotUse.title = You should not use this service to report this activity
+serviceNotUse.header = You should not use this service to report this activity
+serviceNotUse.p1 = HRMC is unable to investigate this activity.
+serviceNotUse.report-link = You should <a class="govuk-link" href="https://www.gov.uk/report-immigration-crime/">report immigration or border crime to the Home Office.</a>
+serviceNotUse.p1.activity-related-to-drugs = HMRC is unable to investigate this activity.
+serviceNotUse.p2.activity-related-to-drugs = You should report activity related to drugs to the police. Call 999 if it’s an emergency, or 101 if it’s not urgent.
+serviceNotUse.p1.smuggling = HMRC is unable to investigate this activity
+serviceNotUse.p2.smuggling = You should <a class="govuk-link" href="https://www.gov.uk/report-smuggling">report smuggling to the Home Office</a>.
+serviceNotUse.p1.human-trafficking = HMRC is unable to investigate this activity.
+serviceNotUse.p2.human-trafficking = You should report human trafficking to the police. Call 999 if it’s an emergency, or 101 if it’s not urgent.
