@@ -22,8 +22,17 @@ import uk.gov.hmrc.taxfraudreportingfrontend.models.ActivityType
 
 class ActivityTypeViewModelSpec extends WordSpec with Matchers {
 
-  val activityType: ActivityType                   = ActivityType("Fraud related to furlough")
-  val activityTypeViewModel: ActivityTypeViewModel = ActivityTypeViewModel("Fraud related to furlough")
+  val activityType: ActivityType = ActivityType(
+    "22030000",
+    "activityType.name.furlough",
+    List("CJRS", "Furlough", "COVID", "Corona", "Coronavirus Job Retention Scheme")
+  )
+
+  val activityTypeViewModel: ActivityTypeViewModel = ActivityTypeViewModel(
+    "22030000",
+    "activityType.name.furlough",
+    List("CJRS", "Furlough", "COVID", "Corona", "Coronavirus Job Retention Scheme")
+  )
 
   ".toModel" should {
     "convert an ActivityTypeViewModel to an ActivityType model" in {

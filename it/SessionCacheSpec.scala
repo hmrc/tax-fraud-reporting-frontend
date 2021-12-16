@@ -23,6 +23,7 @@ import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
 import uk.gov.hmrc.mongo.{MongoConnector, MongoSpecSupport}
 import uk.gov.hmrc.taxfraudreportingfrontend.cache.{CachedData, SessionCache}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
+import uk.gov.hmrc.taxfraudreportingfrontend.models.ActivityType
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 
 import java.util.UUID
@@ -40,7 +41,7 @@ class SessionCacheSpec extends IntegrationTestSpec with MockitoSugar with MongoS
 
   val hc: HeaderCarrier = mock[HeaderCarrier]
 
-  val testCacheData: FraudReportDetails = FraudReportDetails(activityType = Some("activityType"))
+  val testCacheData: FraudReportDetails = FraudReportDetails(Some(ActivityType("22030000", "activityType.name.furlough", Seq("CJRS", "Furlough", "COVID", "Corona", "Coronavirus Job Retention Scheme"))))
 
   "Session cache" should {
 
@@ -56,7 +57,7 @@ class SessionCacheSpec extends IntegrationTestSpec with MockitoSugar with MongoS
 
       await(sessionCache.fraudReportDetails(hc)) mustBe testCacheData
 
-      val updatedTest = FraudReportDetails(activityType = Some("updatedActivityType"))
+      val updatedTest = FraudReportDetails(activityType = Some(ActivityType("22030000", "activityType.name.furlough", Seq("CJRS", "Furlough", "COVID", "Corona", "Coronavirus Job Retention Scheme"))))
 
       await(sessionCache.saveFraudReportDetails(updatedTest)(hc))
 
@@ -68,7 +69,7 @@ class SessionCacheSpec extends IntegrationTestSpec with MockitoSugar with MongoS
 
     "remove from the cache" in {
       val sessionId: SessionId = setupSession
-      await(sessionCache.saveFraudReportDetails(FraudReportDetails(activityType = Some("activityType")))(hc))
+      await(sessionCache.saveFraudReportDetails(FraudReportDetails(Some(ActivityType("22030000", "activityType.name.furlough", Seq("CJRS", "Furlough", "COVID", "Corona", "Coronavirus Job Retention Scheme")))))(hc))
 
       await(sessionCache.remove(hc))
 
@@ -77,7 +78,7 @@ class SessionCacheSpec extends IntegrationTestSpec with MockitoSugar with MongoS
     }
 
     "is cache present in DB" in {
-      await(sessionCache.saveFraudReportDetails(FraudReportDetails(activityType = Some("activityType")))(hc))
+      await(sessionCache.saveFraudReportDetails(FraudReportDetails(Some(ActivityType("22030000", "activityType.name.furlough", Seq("CJRS", "Furlough", "COVID", "Corona", "Coronavirus Job Retention Scheme")))))(hc))
 
       await(sessionCache.isCachePresent(hc.sessionId.get.value)) mustBe true
 

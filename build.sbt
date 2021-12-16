@@ -45,6 +45,15 @@ lazy val twirlSettings: Seq[Setting[_]] = Seq(
     "views.ViewUtils._"
   )
 )
+Concat.groups := Seq(
+  "javascripts/application.js" ->
+    group(Seq(
+      "lib/govuk-frontend/govuk/all.js",
+      "javascripts/jquery.min.js",
+      "javascripts/app.js",
+      "javascripts/autocomplete.js"
+    ))
+)
 
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(play.sbt.PlayScala, SbtDistributablesPlugin)

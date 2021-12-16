@@ -24,5 +24,6 @@ class forms @Inject() (
   val fieldSet: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.fieldset,
   val inputText: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.inputText,
   val inputRadio: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.inputRadio,
+  val autocomplete: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.autocomplete,
   val errorSummary: uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.errorSummary
 )

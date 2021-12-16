@@ -18,16 +18,16 @@ package uk.gov.hmrc.taxfraudreportingfrontend.viewmodels
 
 import uk.gov.hmrc.taxfraudreportingfrontend.models.ActivityType
 
-case class ActivityTypeViewModel(activityType: String) {
+case class ActivityTypeViewModel(code: String, activityName: String, activitySynonyms: Seq[String]) {
 
   def toModel: ActivityType =
-    ActivityType(activityType)
+    ActivityType(code, activityName, activitySynonyms)
 
 }
 
 object ActivityTypeViewModel {
 
   def from(activityType: ActivityType): ActivityTypeViewModel =
-    ActivityTypeViewModel(activityType.activityType)
+    ActivityTypeViewModel(activityType.code, activityType.activityName, activityType.activitySynonyms)
 
 }

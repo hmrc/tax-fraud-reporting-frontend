@@ -129,7 +129,9 @@ class ActivityTypeControllerSpec
     "redirect to next page when given valid activity type" in {
 
       implicit val request: FakeRequest[AnyContentAsFormUrlEncoded] =
-        EnhancedFakeRequest("POST", "/report-tax-fraud/type-activity").withFormUrlEncodedBody("activityType" -> "")
+        EnhancedFakeRequest("POST", "/report-tax-fraud/type-activity").withFormUrlEncodedBody(
+          "activityType" -> "22030000"
+        )
 
       val response: Future[Result] = route(app, request).get
 

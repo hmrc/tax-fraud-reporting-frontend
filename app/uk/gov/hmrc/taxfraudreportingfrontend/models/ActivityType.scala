@@ -16,9 +16,15 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.models
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.i18n.Messages
+import play.api.libs.json.{JsObject, Json, OFormat}
 
-case class ActivityType(activityType: String)
+case class ActivityType(code: String, activityName: String, activitySynonyms: Seq[String]) {
+
+  def toAutoCompleteJson(implicit messages: Messages): JsObject =
+    Json.obj("code" -> code, "activityName" -> messages(activityName), "synonyms" -> activitySynonyms)
+
+}
 
 object ActivityType {
 
