@@ -45,15 +45,18 @@ class ActivityTypeController @Inject() (
 
   private def onSubmitActivityType(): Call = routes.ActivityTypeController.onSubmit()
 
-  def onPageLoad(): Action[AnyContent] = Action.async {
-    implicit request =>
-      sessionCache.isCacheNotPresentCreateOne(hc.sessionId.get.value) map { fraudReport =>
+  def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
+    hc.sessionId map { sessionID =>
+      sessionCache.isCacheNotPresentCreateOne(sessionID.value) map { fraudReport =>
         val filledForm = fraudReport.activityType map { activityType =>
           form.fill(ActivityTypeViewModel from activityType)
         } getOrElse form
 
         Ok(activityTypeView(filledForm, onSubmitActivityType(), activityTypeService.activities))
       }
+    } getOrElse Future.successful {
+      Redirect(routes.IndexViewController.onPageLoad())
+    }
   }
 
   def onSubmit(): Action[AnyContent] = Action.async {

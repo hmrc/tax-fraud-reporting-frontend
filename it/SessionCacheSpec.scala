@@ -55,7 +55,7 @@ class SessionCacheSpec extends IntegrationTestSpec with MockitoSugar with MongoS
       val Some(Cache(_, Some(json), _, _)) = cache
       json mustBe expectedJson
 
-      await(sessionCache.fraudReportDetails(hc)) mustBe testCacheData
+      await(sessionCache.getFraudReportDetails(hc)) mustBe testCacheData
 
       val updatedTest = FraudReportDetails(activityType = Some(ActivityType("22030000", "activityType.name.furlough", Seq("CJRS", "Furlough", "COVID", "Corona", "Coronavirus Job Retention Scheme"))))
 
@@ -97,14 +97,14 @@ class SessionCacheSpec extends IntegrationTestSpec with MockitoSugar with MongoS
     "return None when testData requested and not available in cache" in {
       val s = setupSession
       await(sessionCache.insert(Cache(Id(s.value), data = Some(toJson(CachedData())))))
-      await(sessionCache.fraudReportDetails(hc)) mustBe FraudReportDetails(None)
+      await(sessionCache.getFraudReportDetails(hc)) mustBe FraudReportDetails(None)
     }
 
     "throw IllegalStateException when session id is not retrieved from hc" in {
       when(hc.sessionId).thenReturn(None)
 
       val e1 = intercept[IllegalStateException] {
-        await(sessionCache.fraudReportDetails(hc))
+        await(sessionCache.getFraudReportDetails(hc))
       }
       e1.getMessage mustBe "Session id is not available"
     }
