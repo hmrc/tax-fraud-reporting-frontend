@@ -139,5 +139,18 @@ class ActivityTypeControllerSpec
 
     }
 
+    "redirect to should not use service page with dynamic page content" in {
+
+      implicit val request: FakeRequest[AnyContentAsFormUrlEncoded] =
+        EnhancedFakeRequest("POST", "/report-tax-fraud/type-activity").withFormUrlEncodedBody(
+          "activityType" -> "22030037"
+        )
+
+      val response: Future[Result] = route(app, request).get
+
+      status(response) shouldBe SEE_OTHER
+
+    }
+
   }
 }

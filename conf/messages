@@ -70,13 +70,18 @@ activityType.name.not-paying-tax-when-winding-up-company = Not paying tax when w
 activityType.name.importing-goods = Importing goods VAT-free and then charging customers VAT
 activityType.name.suspicious-hmrc-emails-text-messages-phone = Suspicious HMRC emails, text messages, and phone calls
 activityType.name.not-being-paid-minimum-wage = Not being paid minimum wage
-activityType.name.activity-related-drugs = Activity related to drugs
-activityType.name.smuggling = Smuggling
-activityType.name.benefit-fraud = Benefit fraud (not including child benefit or tax credits)
-activityType.name.universal-credit-fraud = Universal credit fraud
-activityType.name.human-trafficking = Human trafficking
-activityType.name.illegal-immigration = Illegal immigration
-activityType.name.border-crime = Border crime
+
+activity-related-drugs = Activity related to drugs
+human-trafficking = Human trafficking
+smuggling = Smuggling
+benefit-fraud = Benefit fraud (not including child benefit or tax credits)
+universal-credit-fraud = Universal credit fraud
+illegal-immigration = Illegal immigration
+border-crime = Border crime
+
+activityType.activityName.not-found.title = Type of activity can’t be found
+activityType.activityName.not-found.header = Type of activity can’t be found
+activityType.activityName.not-found.p1 = Please check the type of activity
 
 serviceNotUse.title = You should not use this service to report this activity
 serviceNotUse.header = You should not use this service to report this activity
@@ -84,7 +89,11 @@ serviceNotUse.p1 = HRMC is unable to investigate this activity.
 serviceNotUse.report-link = You should <a class="govuk-link" href="https://www.gov.uk/report-immigration-crime/">report immigration or border crime to the Home Office.</a>
 serviceNotUse.p1.activity-related-to-drugs = HMRC is unable to investigate this activity.
 serviceNotUse.p2.activity-related-to-drugs = You should report activity related to drugs to the police. Call 999 if it’s an emergency, or 101 if it’s not urgent.
-serviceNotUse.p1.smuggling = HMRC is unable to investigate this activity
+serviceNotUse.p1.smuggling = HMRC is unable to investigate this activity.
 serviceNotUse.p2.smuggling = You should <a class="govuk-link" href="https://www.gov.uk/report-smuggling">report smuggling to the Home Office</a>.
+serviceNotUse.p1.benefit-fraud-and-universal-credit = HMRC is unable to investigate any benefit fraud other than Child Benefit or Tax Credit fraud.
+serviceNotUse.p2.benefit-fraud-and-universal-credit = You should <a class="govuk-link" href="https://www.gov.uk/report-benefit-fraud">report all other benefit fraud</a> to the Department for Work and Pensions.
 serviceNotUse.p1.human-trafficking = HMRC is unable to investigate this activity.
 serviceNotUse.p2.human-trafficking = You should report human trafficking to the police. Call 999 if it’s an emergency, or 101 if it’s not urgent.
+serviceNotUse.p1.immigration-border-crime = HMRC is unable to investigate this activity.
+serviceNotUse.p2.immigration-border-crime = You should <a class="govuk-link" href="https://www.gov.uk/report-immigration-crime">report immigration or border crime to the Home Office</a>

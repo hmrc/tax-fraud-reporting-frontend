@@ -25,13 +25,15 @@ import play.api.Application
 import play.api.data.Form
 import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.mvc.AnyContentAsEmpty
+import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Result}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.ReportingTypeProvider
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.mappings.Mappings
 import uk.gov.hmrc.taxfraudreportingfrontend.models.ReportingType
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
+
+import scala.concurrent.Future
 
 class ReportingTypeControllerSpec extends BaseSpec with Matchers with Mappings with GuiceOneAppPerSuite {
 
@@ -65,8 +67,6 @@ class ReportingTypeControllerSpec extends BaseSpec with Matchers with Mappings w
 
       val resultOption = route(app, request).value
 
-      val form = new ReportingTypeProvider().apply().withError("value", "reportingType.error.required")
-
       resultOption foreach { result => status(result) shouldBe BAD_REQUEST }
 
     }
@@ -76,6 +76,17 @@ class ReportingTypeControllerSpec extends BaseSpec with Matchers with Mappings w
       val result = controller.onPageLoad()(fakeRequest)
 
       status(result) shouldBe Status.OK
+
+    }
+
+    "redirect to next page when given valid reposting type" in {
+
+      implicit val request: FakeRequest[AnyContentAsFormUrlEncoded] =
+        EnhancedFakeRequest("POST", "/report-tax-fraud/person-or-business").withFormUrlEncodedBody("value" -> "Person")
+
+      val response: Future[Result] = route(app, request).get
+
+      status(response) shouldBe SEE_OTHER
 
     }
 

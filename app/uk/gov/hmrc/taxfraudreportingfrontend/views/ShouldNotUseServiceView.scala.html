@@ -35,25 +35,31 @@
 
         @html.h1("serviceNotUse.header")
 
-        @if(activityName == "activityType.name.activity-related-drugs") {
+        @if(activityName == "activity-related-drugs") {
             @html.p {@messages("serviceNotUse.p1.activity-related-to-drugs")}
 
             @html.p {@messages("serviceNotUse.p2.activity-related-to-drugs")}
         }
-        @if(activityName == "activityType.name.smuggling") {
+        @if(activityName == "smuggling") {
             @html.p {@messages("serviceNotUse.p1.smuggling")}
 
             @html.p {@Html(messages("serviceNotUse.p2.smuggling"))}
         }
-        @if(activityName == "activityType.name.human-trafficking") {
+        @if(activityName == "benefit-fraud" || activityName == "universal-credit-fraud") {
+
+            @html.p {@messages("serviceNotUse.p1.benefit-fraud-and-universal-credit")}
+
+            @html.p {@Html(messages("serviceNotUse.p2.benefit-fraud-and-universal-credit"))}
+        }
+        @if(activityName == "human-trafficking") {
             @html.p {@messages("serviceNotUse.p1.human-trafficking")}
 
             @html.p {@Html(messages("serviceNotUse.p2.human-trafficking"))}
         }
-        @if(activityName == "activityType.name.human-trafficking") {
-            @html.p {@messages("serviceNotUse.p1.human-trafficking")}
+        @if(activityName == "illegal-immigration"  || activityName == "border-crime") {
+            @html.p {@messages("serviceNotUse.p1.immigration-border-crime")}
 
-            @html.p {@Html(messages("serviceNotUse.p2.human-trafficking"))}
+            @html.p {@Html(messages("serviceNotUse.p2.immigration-border-crime"))}
         }
 
 }

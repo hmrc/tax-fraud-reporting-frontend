@@ -17,7 +17,7 @@
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
 import play.api.data.Form
-import play.api.i18n.I18nSupport
+import play.api.i18n._
 import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.taxfraudreportingfrontend.cache.{SessionCache, UserAnswersCache}
@@ -45,15 +45,18 @@ class ActivityTypeController @Inject() (
 
   private def onSubmitActivityType(): Call = routes.ActivityTypeController.onSubmit()
 
-  def onPageLoad(): Action[AnyContent] = Action.async {
-    implicit request =>
-      sessionCache.isCacheNotPresentCreateOne(hc.sessionId.get.value) map { fraudReport =>
+  def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
+    hc.sessionId map { sessionID =>
+      sessionCache.isCacheNotPresentCreateOne(sessionID.value) map { fraudReport =>
         val filledForm = fraudReport.activityType map { activityType =>
           form.fill(ActivityTypeViewModel from activityType)
         } getOrElse form
 
         Ok(activityTypeView(filledForm, onSubmitActivityType(), activityTypeService.activities))
       }
+    } getOrElse Future.successful {
+      Redirect(routes.IndexViewController.onPageLoad())
+    }
   }
 
   def onSubmit(): Action[AnyContent] = Action.async {
@@ -68,17 +71,17 @@ class ActivityTypeController @Inject() (
           userAnswersCache.cacheActivityType(
             ActivityType(activityType.code, activityType.activityName, activityType.activitySynonyms)
           ) map {
-            val nonHMRCActivities = List("activityType.name.activity-related-drugs" ,
-              "activityType.name.human-trafficking",
-              "activityType.name.smuggling",
-              "activityType.name.human-trafficking",
-              "activityType.name.illegal-immigration",
-              "activityType.name.border-crime")
-            if (nonHMRCActivities contains activityType.activityName) {
-              _ => Redirect(uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.ShouldNotUseServiceController.onPageLoad(activityType.activityName))
-            }
-            else {
-              _ => Redirect(uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.ReportingTypeController.onPageLoad())
+
+            if (activityTypeService.nonHMRCActivities contains activityType.activityName) {
+              _ =>
+                Redirect(
+                  uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.ShouldNotUseServiceController.onPageLoad(
+                    activityType.activityName
+                  )
+                )
+            } else {
+              _ =>
+                Redirect(uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.ReportingTypeController.onPageLoad())
             }
           }
       )

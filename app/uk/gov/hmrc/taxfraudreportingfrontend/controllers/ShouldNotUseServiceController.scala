@@ -16,22 +16,37 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
-import uk.gov.hmrc.taxfraudreportingfrontend.views.html.ShouldNotUseServiceView
+import uk.gov.hmrc.taxfraudreportingfrontend.services.ActivityTypeService
+import uk.gov.hmrc.taxfraudreportingfrontend.views.html.{ErrorTemplate, ShouldNotUseServiceView}
 
 import javax.inject.Inject
 import scala.concurrent.Future
 
 class ShouldNotUseServiceController @Inject() (
-                                                mcc: MessagesControllerComponents,
-                                                serviceNotUseView: ShouldNotUseServiceView
-                                              ) (implicit  appConfig: AppConfig) extends FrontendController(mcc) {
+  mcc: MessagesControllerComponents,
+  serviceNotUseView: ShouldNotUseServiceView,
+  activityTypeService: ActivityTypeService,
+  errorTemplate: ErrorTemplate
+)(implicit appConfig: AppConfig)
+    extends FrontendController(mcc) with I18nSupport {
 
-def onPageLoad(activityName: String) : Action[AnyContent] = Action.async { implicit  request =>
-  Future.successful(Ok(serviceNotUseView(activityName)))
-}
-
+  def onPageLoad(activityName: String): Action[AnyContent] = Action.async { implicit request =>
+    if (activityTypeService.nonHMRCActivities contains activityName)
+      Future.successful(Ok(serviceNotUseView(activityName)))
+    else
+      Future.successful(
+        NotFound(
+          errorTemplate(
+            "activityType.activityName.not-found.title",
+            "activityType.activityName.not-found.header",
+            "activityType.activityName.not-found.p1"
+          )
+        )
+      )
+  }
 
 }

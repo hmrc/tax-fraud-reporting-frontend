@@ -30,7 +30,7 @@ class AppConfig @Inject() (config: Configuration, servicesConfig: ServicesConfig
   private val contactHost = config.get[String]("contact-frontend.host")
 
   val welshLanguageSupportEnabled: Boolean =
-    config.getOptional[Boolean]("features.welsh-language-support").getOrElse(false)
+    config.getOptional[Boolean]("features.welsh-language-support") getOrElse false
 
   lazy val feedbackUrl: String = config.get[String]("feedback.url")
 
@@ -38,9 +38,8 @@ class AppConfig @Inject() (config: Configuration, servicesConfig: ServicesConfig
   val cy: String            = "cy"
   val defaultLanguage: Lang = Lang(en)
 
-  lazy val assetsPrefix = config.get[String](s"assets.url") + config
-    .get[String](s"assets.version") + '/'
+  lazy val assetsPrefix: String = config.get[String]("assets.url") + config.get[String]("assets.version") + '/'
 
-  val cacheTtl: Duration = Duration.create(config.get[String]("tax-fraud-reporting-cache.ttl"))
+  val cacheTtl: Duration = Duration(config.get[String]("tax-fraud-reporting-cache.ttl"))
 
 }

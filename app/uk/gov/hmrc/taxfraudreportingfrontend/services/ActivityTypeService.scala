@@ -23,18 +23,15 @@ import javax.inject.Singleton
 @Singleton
 class ActivityTypeService {
 
-  def getActivityTypeByCode(code: String): Option[ActivityType] = activities.find(c => c.code == code)
+  def getActivityTypeByCode(code: String): Option[ActivityType] = activities find (_.code == code)
 
   def isValidActivityTypeCode(code: String): Boolean = getActivityTypeByCode(code).isDefined
 
-  def getActivityNameByCode(code: String): Option[String] = for (c <- activities.find(c => c.code == code))
-    yield c.activityName
+  def getActivityNameByCode(code: String): Option[String] = getActivityTypeByCode(code) map (_.activityName)
 
-  def getActivityByName(name: String): ActivityType = activities.find(c => c.activityName == name).get
+  def getActivityByName(name: String): Option[ActivityType] = activities find (_.activityName == name)
 
-  def getCodeByActivityName(activityName: String): Option[String] = for (
-    c <- activities.find(c => c.activityName == activityName)
-  ) yield c.code
+  def getCodeByActivityName(name: String): Option[String] = getActivityByName(name) map { _.code }
 
   val activities = Seq(
     ActivityType(
@@ -349,7 +346,7 @@ class ActivityTypeService {
     ),
     ActivityType(
       "22030036",
-      "activityType.name.activity-related-drugs",
+      "activity-related-drugs",
       List(
         "Heroin",
         "Cocaine",
@@ -371,24 +368,34 @@ class ActivityTypeService {
         "Mushrooms"
       )
     ),
-    ActivityType("22030037", "activityType.name.smuggling", List("Smuggle", "People", "Goods")),
+    ActivityType("22030037", "smuggling", List("Smuggle", "People", "Goods")),
     ActivityType(
       "22030038",
-      "activityType.name.benefit-fraud",
+      "benefit-fraud",
       List("Universal Credit", "Claiming", "Disability", "Carer", "Savings", "Abroad", "Living alone", "Working")
     ),
     ActivityType(
       "22030039",
-      "activityType.name.universal-credit-fraud",
+      "universal-credit-fraud",
       List("Benefit", "Claiming", "Disability", "Carer", "Savings", "Abroad", "Living alone", "Working")
     ),
-    ActivityType("22030040", "activityType.name.human-trafficking", List("Human", "People", "Harbouring", "Exploit")),
+    ActivityType("22030040", "human-trafficking", List("Human", "People", "Harbouring", "Exploit")),
     ActivityType(
       "22030041",
-      "activityType.name.illegal-immigration",
+      "illegal-immigration",
       List("Immigrant", "Illegal", "Refugee", "Asylum", "Seeker", "Migrant")
     ),
-    ActivityType("22030042", "activityType.name.border-crime", List("Port", "Ferry", "Plane", "Force"))
+    ActivityType("22030042", "border-crime", List("Port", "Ferry", "Plane", "Force"))
+  )
+
+  val nonHMRCActivities = List(
+    "activity-related-drugs",
+    "human-trafficking",
+    "smuggling",
+    "benefit-fraud",
+    "universal-credit-fraud",
+    "illegal-immigration",
+    "border-crime"
   )
 
 }

@@ -33,7 +33,6 @@ class ActivityTypeProvider @Inject() (activityTypeService: ActivityTypeService) 
         "activityType" -> Forms.text.verifying(
           "activityType.error.invalid",
           code => activityTypeService.isValidActivityTypeCode(code)
-
         )
       )(code => ActivityTypeViewModel from (activityTypeService getActivityTypeByCode code get))(
         model => Some(model.code)
