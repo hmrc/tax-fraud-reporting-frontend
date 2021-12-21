@@ -346,7 +346,7 @@ class ActivityTypeService {
     ),
     ActivityType(
       "22030036",
-      "activityType.name.activity-related-drugs",
+      "activity-related-drugs",
       List(
         "Heroin",
         "Cocaine",
@@ -368,24 +368,34 @@ class ActivityTypeService {
         "Mushrooms"
       )
     ),
-    ActivityType("22030037", "activityType.name.smuggling", List("Smuggle", "People", "Goods")),
+    ActivityType("22030037", "smuggling", List("Smuggle", "People", "Goods")),
     ActivityType(
       "22030038",
-      "activityType.name.benefit-fraud",
+      "benefit-fraud",
       List("Universal Credit", "Claiming", "Disability", "Carer", "Savings", "Abroad", "Living alone", "Working")
     ),
     ActivityType(
       "22030039",
-      "activityType.name.universal-credit-fraud",
+      "universal-credit-fraud",
       List("Benefit", "Claiming", "Disability", "Carer", "Savings", "Abroad", "Living alone", "Working")
     ),
-    ActivityType("22030040", "activityType.name.human-trafficking", List("Human", "People", "Harbouring", "Exploit")),
+    ActivityType("22030040", "human-trafficking", List("Human", "People", "Harbouring", "Exploit")),
     ActivityType(
       "22030041",
-      "activityType.name.illegal-immigration",
+      "illegal-immigration",
       List("Immigrant", "Illegal", "Refugee", "Asylum", "Seeker", "Migrant")
     ),
-    ActivityType("22030042", "activityType.name.border-crime", List("Port", "Ferry", "Plane", "Force"))
+    ActivityType("22030042", "border-crime", List("Port", "Ferry", "Plane", "Force"))
+  )
+
+  val otherDepartments = Map(
+    "activity-related-drugs" -> "activity-related-to-drugs",
+    "human-trafficking"      -> "human-trafficking",
+    "smuggling"              -> "smuggling",
+    "benefit-fraud"          -> "benefit-fraud-and-universal-credit",
+    "universal-credit-fraud" -> "benefit-fraud-and-universal-credit",
+    "illegal-immigration"    -> "immigration-border-crime",
+    "border-crime"           -> "immigration-border-crime"
   )
 
 }

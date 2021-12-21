@@ -12,3 +12,5 @@ POST       /person-or-business                           @uk.gov.hmrc.taxfraudre
 
 GET        /information-check                            @uk.gov.hmrc.taxfraudreportingfrontend.controllers.InformationCheckController.onPageLoad
 
+GET        /should-not-use-service/:activityName         @uk.gov.hmrc.taxfraudreportingfrontend.controllers.ShouldNotUseServiceController.onPageLoad(activityName: String)
+
