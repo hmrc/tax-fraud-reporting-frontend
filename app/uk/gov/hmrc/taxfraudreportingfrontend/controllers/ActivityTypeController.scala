@@ -23,7 +23,6 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.taxfraudreportingfrontend.cache.{SessionCache, UserAnswersCache}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.ActivityTypeProvider
-import uk.gov.hmrc.taxfraudreportingfrontend.models.ActivityType
 import uk.gov.hmrc.taxfraudreportingfrontend.services.ActivityTypeService
 import uk.gov.hmrc.taxfraudreportingfrontend.viewmodels.ActivityTypeViewModel
 import uk.gov.hmrc.taxfraudreportingfrontend.views.html.ActivityTypeView
@@ -68,11 +67,14 @@ class ActivityTypeController @Inject() (
             BadRequest(activityTypeView(formWithErrors, onSubmitActivityType(), activityTypeService.activities))
           ),
         activityType =>
-          userAnswersCache.cacheActivityType(
-            ActivityType(activityType.code, activityType.activityName, activityType.activitySynonyms)
-          ) map (
-            _ => Redirect(uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.ReportingTypeController.onPageLoad())
-          )
+          userAnswersCache.cacheActivityType(activityType.toModel) map { _ =>
+            Redirect(
+              if (activityTypeService.otherDepartments contains activityType.activityName)
+                routes.ShouldNotUseServiceController.onPageLoad(activityType.activityName)
+              else
+                routes.ReportingTypeController.onPageLoad()
+            )
+          }
       )
   }
 
