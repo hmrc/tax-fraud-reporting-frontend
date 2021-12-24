@@ -19,19 +19,17 @@ package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
-import uk.gov.hmrc.taxfraudreportingfrontend.views.html.InformationCheckView
+import uk.gov.hmrc.taxfraudreportingfrontend.views.html.IndividualNameView
 
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class InformationCheckController @Inject() (
-  mcc: MessagesControllerComponents,
-  informationCheckView: InformationCheckView
-)(implicit appConfig: AppConfig)
-    extends FrontendController(mcc) {
+class NameController @Inject() (mcc: MessagesControllerComponents, nameView: IndividualNameView)(implicit
+  appConfig: AppConfig
+) extends FrontendController(mcc) {
 
   def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(informationCheckView()))
+    Future.successful(Ok(nameView()))
   }
 
 }

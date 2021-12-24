@@ -21,8 +21,9 @@ import org.mockito.Mockito.{reset, verify, when}
 import org.mockito.{ArgumentCaptor, ArgumentMatchers}
 import org.scalatest.BeforeAndAfterEach
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.taxfraudreportingfrontend.models.ActivityType
+import uk.gov.hmrc.taxfraudreportingfrontend.models.IndividualInformationCheck.{Address, Age, Contact, NINO, Name}
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
+import uk.gov.hmrc.taxfraudreportingfrontend.models.{ActivityType, IndividualInformationCheck}
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -42,6 +43,10 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
       "activityType.name.mock_name",
       Seq("CJRS", "Furlough", "COVID", "Corona", "Coronavirus Job Retention Scheme")
     )
+
+  private val mockIndividualInformationCheck: Set[IndividualInformationCheck] = Set(Name, Age, Address, Contact, NINO)
+  // private val mockIndividualInformationCheck = Set[IndividualInformationCheck]
+  //Enumerable(values.map(v => v.toString -> v): _*)
 
   protected override def beforeEach: Unit = {
     reset(mockSessionCache)
@@ -79,5 +84,32 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
       val testCacheData: Option[ActivityType] = Await.result(testCache.getActivityType(), Duration.Inf)
       testCacheData shouldBe None
     }
+
+    "save individual information check Details in frontend cache" in {
+
+      Await.result(testCache.cacheIndividualInformationCheck(mockIndividualInformationCheck), Duration.Inf)
+      val requestCaptor = ArgumentCaptor.forClass(classOf[FraudReportDetails])
+
+      verify(mockSessionCache).saveFraudReportDetails(requestCaptor.capture())(ArgumentMatchers.eq(hc))
+      val holder: FraudReportDetails = requestCaptor.getValue
+      holder.individualInformationCheck shouldBe Set(Name, Age, Address, Contact, NINO)
+
+      val testCacheData: Set[IndividualInformationCheck] =
+        Await.result(testCache.getIndividualInformationCheck(), Duration.Inf)
+      testCacheData shouldBe Set.empty
+
+    }
+
+    "get empty individual information check Details from cache" in {
+
+      when(mockSessionCache.getFraudReportDetails(any[HeaderCarrier])).thenReturn(
+        Future.successful(FraudReportDetails(None))
+      )
+
+      val testCacheData: Set[IndividualInformationCheck] =
+        Await.result(testCache.getIndividualInformationCheck(), Duration.Inf)
+      testCacheData shouldBe Set.empty
+    }
+
   }
 }

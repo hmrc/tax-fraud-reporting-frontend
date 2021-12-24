@@ -18,36 +18,31 @@ package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.Matchers
+import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import play.api.i18n.{Messages, MessagesApi}
+import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.test.Helpers.baseApplicationBuilder.injector
+import play.api.test.Helpers.{contentAsString, defaultAwaitTimeout}
+import uk.gov.hmrc.http.SessionKeys
+import uk.gov.hmrc.taxfraudreportingfrontend.forms.mappings.Mappings
+import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
-class InformationCheckControllerSpec extends WordSpec with Matchers with GuiceOneAppPerSuite {
+class NameControllerSpec extends BaseSpec with Matchers with Mappings with GuiceOneAppPerSuite with MockitoSugar {
 
-  def messages: Messages = messagesApi.preferred(fakeRequest)
+  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] =
+    FakeRequest("GET", "/").withSession(SessionKeys.sessionId -> "fakesessionid")
 
-  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
+  private val controller = app.injector.instanceOf[NameController]
 
-  new GuiceApplicationBuilder()
-    .configure("metrics.jvm" -> false, "metrics.enabled" -> false)
-    .build()
-
-  private val fakeRequest = FakeRequest("GET", "/")
-
-  private val controller = app.injector.instanceOf[InformationCheckController]
-
-  "Information Checker VIew" should {
+  "Individual's name page view" should {
     val result          = controller.onPageLoad()(fakeRequest)
     val content: String = contentAsString(result)
     val doc: Document   = Jsoup.parse(content)
 
     "load the page content" in {
 
-      doc.getElementsByTag("h1").text() shouldBe messages("informationCheck.header")
+      doc.getElementsByTag("h1").text() shouldBe messages("individualName.header")
 
     }
   }

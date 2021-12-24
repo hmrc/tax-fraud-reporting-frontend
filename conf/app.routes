@@ -8,9 +8,11 @@ GET        /type-activity                                @uk.gov.hmrc.taxfraudre
 POST       /type-activity                                @uk.gov.hmrc.taxfraudreportingfrontend.controllers.ActivityTypeController.onSubmit()
 
 GET        /person-or-business                           @uk.gov.hmrc.taxfraudreportingfrontend.controllers.ReportingTypeController.onPageLoad()
-POST       /person-or-business                           @uk.gov.hmrc.taxfraudreportingfrontend.controllers.ReportingTypeController.onSubmit()
+POST       /person-or-business                           @uk.gov.hmrc.taxfraudreportingfrontend.controllers.ReportingTypeController.onSubmit
 
-GET        /information-check                            @uk.gov.hmrc.taxfraudreportingfrontend.controllers.InformationCheckController.onPageLoad
+GET        /individual-information-check                 @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualInformationCheckController.onPageLoad
+POST       /individual-information-check                 @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualInformationCheckController.onSubmit()
 
 GET        /should-not-use-service/:activityName         @uk.gov.hmrc.taxfraudreportingfrontend.controllers.ShouldNotUseServiceController.onPageLoad(activityName: String)
 
+GET        /name                                         @uk.gov.hmrc.taxfraudreportingfrontend.controllers.NameController.onPageLoad()

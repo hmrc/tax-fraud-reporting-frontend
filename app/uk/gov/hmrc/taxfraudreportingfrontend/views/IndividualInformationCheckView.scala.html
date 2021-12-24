@@ -1,0 +1,84 @@
+@*
+ * Copyright 2021 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import controllers.routes._
+@import views.ViewUtils._
+@import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
+
+@this(
+      layout: Layout,
+      formHelper: FormWithCSRF,
+      forms: uk.gov.hmrc.taxfraudreportingfrontend.views.components.forms,
+      html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html,
+)
+
+@(form: Form[_], submit: Call)(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
+
+@layout(
+        pageTitle    = titleNoForm(messages("individual.informationCheck.title"))
+) {
+
+<div id="individual-check">
+    @forms.formWithCSRF(action = submit, args = 'novalidate -> "novalidate") {
+
+        @components.error_summary(form.errors)
+
+        @forms.inputCheckboxes(
+            form = form,
+            idPrefix = Some("value"),
+            name = Some("value[]"),
+            items = Seq(
+                CheckboxItem(
+                    name = Some("value[]"),
+                    value = "name",
+                    content = Text(messages("individual.informationCheck.name")),
+                    checked = form.data.values.exists(_ == "name")
+                ),
+                CheckboxItem(
+                    name = Some("value[]"),
+                    value = "age",
+                    content = Text(messages("individual.informationCheck.age")),
+                    checked = form.data.values.exists(_ == "age")
+                ),
+                    CheckboxItem(
+                    name = Some("value[]"),
+                    value = "address",
+                    content = Text(messages("individual.informationCheck.address")),
+                    checked = form.data.values.exists(_ == "address")
+                ),
+                    CheckboxItem(
+                    name = Some("value[]"),
+                    value = "contact",
+                    content = Text(messages("individual.informationCheck.contact")),
+                    checked = form.data.values.exists(_ == "contact")
+                ),
+                    CheckboxItem(
+                    name = Some("value[]"),
+                    value = "nino",
+                    content = Text(messages("individual.informationCheck.nino")),
+                    checked = form.data.values.exists(_ == "nino")
+                )
+            ),
+            legendAsHeading = true,
+            legend = messages("individual.informationCheck.header"),
+            hint = Some(Html(messages("individual.informationCheck.p1")))
+        )
+
+        @html.button("site.continue")
+
+    }
+</div>
+}

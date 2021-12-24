@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,23 +12,21 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import controllers.routes._
-@import views.ViewUtils._
-@import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
+package uk.gov.hmrc.taxfraudreportingfrontend.models
 
-@this(
-      layout: Layout,
-      html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html
-)
+import org.scalatest.MustMatchers.convertToAnyMustWrapper
+import org.scalatest.{FreeSpec, Matchers}
 
-@()(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
+class WithNameSpec extends FreeSpec with Matchers {
 
-@layout(
-        pageTitle    = titleNoForm(messages("informationCheck.title"))
-) {
+  object Foo extends WithName("bar")
 
-        @html.h1("informationCheck.header")
+  ".toString" - {
 
+    "must return the correct string" in {
+      Foo.toString mustEqual "bar"
+    }
+  }
 }
