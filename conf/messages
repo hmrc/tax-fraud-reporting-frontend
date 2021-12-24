@@ -27,12 +27,9 @@ activityType.error.invalid = Enter the type of activity
 
 reportingType.title = Are you reporting a person or a business?
 reportingType.header = Are you reporting a person or a business?
-reportingType.Person = Person
+reportingType.Person = Individual
 reportingType.Business = Business
 reportingType.error.required = Select if you are reporting a person or a business
-
-informationCheck.title = What information do you know about the ?
-informationCheck.header = What information do you know about the ?
 
 activityType.name.furlough = Fraud related to furlough
 activityType.name.defrauding-self-employment = Defrauding the Self-Employment Income Support Scheme
@@ -97,3 +94,24 @@ serviceNotUse.p1.human-trafficking = HMRC is unable to investigate this activity
 serviceNotUse.p2.human-trafficking = You should report human trafficking to the police. Call 999 if it’s an emergency, or 101 if it’s not urgent.
 serviceNotUse.p1.immigration-border-crime = HMRC is unable to investigate this activity.
 serviceNotUse.p2.immigration-border-crime = You should <a class="govuk-link" href="https://www.gov.uk/report-immigration-crime">report immigration or border crime to the Home Office</a>
+
+individual.informationCheck.title = What do you know about the individual?
+individual.informationCheck.header = What do you know about the individual?
+individual.informationCheck.p1 = You will be asked to provide details based on your selection.
+individual.informationCheck.name = Name
+individual.informationCheck.age = Age(approximate)
+individual.informationCheck.address = Address
+individual.informationCheck.contact = Contact details
+individual.informationCheck.nino = National Insurance Number
+individual.informationCheck.error.required = Select the information you know about the individual
+informationCheck.business.title = What do you know about the business?
+informationCheck.business.header = What do you know about the business?
+informationCheck.business.name-of-business = Name of the business
+informationCheck.business.type = Type of business
+informationCheck.business.address = Address
+informationCheck.business.contact = Contact details
+informationCheck.business.business-ref = Business reference numbers
+informationCheck.business.business-ref-hint = For example VAT number or Employee Reference number
+
+individualName.title = Next page is work in progress
+individualName.header = Next page is work in progress

@@ -53,7 +53,7 @@ class IndexViewControllerSpec extends WordSpec with Matchers with GuiceOneAppPer
       status(result) shouldBe Status.OK
     }
 
-    "return 200 wit session Id" in {
+    "return 200 with session Id" in {
       val result = controller.onPageLoad()(fakeRequest.withSession(SessionKeys.sessionId -> "fakesessionid"))
       status(result) shouldBe Status.OK
     }

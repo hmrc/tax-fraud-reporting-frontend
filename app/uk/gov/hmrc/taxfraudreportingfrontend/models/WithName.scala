@@ -14,17 +14,6 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.taxfraudreportingfrontend.models.cache
+package uk.gov.hmrc.taxfraudreportingfrontend.models
 
-import play.api.libs.json.{Format, Json}
-import uk.gov.hmrc.taxfraudreportingfrontend.models.{ActivityType, IndividualInformationCheck, ReportingType}
-
-case class FraudReportDetails(
-  activityType: Option[ActivityType] = None,
-  reportingType: Option[ReportingType] = None,
-  individualInformationCheck: Set[IndividualInformationCheck] = Set.empty
-)
-
-object FraudReportDetails {
-  implicit val format: Format[FraudReportDetails] = Json.format[FraudReportDetails]
-}
+abstract class WithName(override val toString: String) {}

@@ -49,9 +49,14 @@ class ReportingTypeController @Inject() (
     implicit request =>
       form.bindFromRequest().fold(
         formWithErrors => Future.successful(BadRequest(reportingTypeView(formWithErrors, onSubmitReportingType()))),
-        _ =>
+        reportingType =>
           Future.successful(
-            Redirect(uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.InformationCheckController.onPageLoad())
+            if (ReportingType.Person == reportingType)
+              Redirect(
+                uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.IndividualInformationCheckController.onPageLoad()
+              )
+            else
+              Redirect(uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.NameController.onPageLoad())
           )
       )
   }

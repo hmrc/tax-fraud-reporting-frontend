@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,19 +12,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package uk.gov.hmrc.taxfraudreportingfrontend.models.cache
+@import controllers.routes._
+@import views.ViewUtils._
+@import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 
-import play.api.libs.json.{Format, Json}
-import uk.gov.hmrc.taxfraudreportingfrontend.models.{ActivityType, IndividualInformationCheck, ReportingType}
-
-case class FraudReportDetails(
-  activityType: Option[ActivityType] = None,
-  reportingType: Option[ReportingType] = None,
-  individualInformationCheck: Set[IndividualInformationCheck] = Set.empty
+@this(
+      layout: Layout,
+      html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html
 )
 
-object FraudReportDetails {
-  implicit val format: Format[FraudReportDetails] = Json.format[FraudReportDetails]
+@()(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
+
+@layout(
+        pageTitle    = titleNoForm(messages("informationCheck.title"))
+) {
+
+        @html.h1("individualName.header")
+
 }
