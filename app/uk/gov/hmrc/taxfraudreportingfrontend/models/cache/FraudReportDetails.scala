@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,18 @@
 package uk.gov.hmrc.taxfraudreportingfrontend.models.cache
 
 import play.api.libs.json.{Format, Json}
-import uk.gov.hmrc.taxfraudreportingfrontend.models.{ActivityType, IndividualInformationCheck, ReportingType}
+import uk.gov.hmrc.taxfraudreportingfrontend.models.{
+  ActivityType,
+  IndividualInformationCheck,
+  IndividualName,
+  ReportingType
+}
 
 case class FraudReportDetails(
   activityType: Option[ActivityType] = None,
   reportingType: Option[ReportingType] = None,
-  individualInformationCheck: Set[IndividualInformationCheck] = Set.empty
+  individualInformationCheck: Set[IndividualInformationCheck] = Set.empty,
+  individualName: Option[IndividualName] = None
 )
 
 object FraudReportDetails {

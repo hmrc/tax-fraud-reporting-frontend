@@ -113,5 +113,34 @@ informationCheck.business.contact = Contact details
 informationCheck.business.business-ref = Business reference numbers
 informationCheck.business.business-ref-hint = For example VAT number or Employee Reference number
 
-individualName.title = Next page is work in progress
-individualName.header = Next page is work in progress
+individualName.title = What is the individual's name?
+individualName.header = What is the individual's name?
+individualName.hint = Enter as much as you are able to.
+individualName.label.forename = First name
+individualName.label.middle_Name = Middle name
+individualName.label.surname = Last name
+individualName.label.alias = Aliases or nicknames
+individualName.error.required = Enter either the individual’s first name, middle name, last name or nick name.
+individualName.error.forename.invalid = First name fields should only allow, letters, hyphens, apostrophes and spaces
+individualName.error.surname.invalid = Last name fields should only allow, letters, hyphens, apostrophes and spaces
+individualName.error.middle_Name.invalid = Middle name fields should only allow, letters, hyphens, apostrophes and spaces
+individualName.error.alias.invalid = Nickname fields should only allow, letters, hyphens, apostrophes and spaces
+
+individualAge.title = How old is the person?
+individualAge.header = How old is the person?
+individualAge.hint = Enter their date of birth. For example, 31 3 1980.
+individualAge.label.day= Day
+individualAge.label.month = Month
+individualAge.label.year = Year
+individualAge.separator.text= or
+individualAge.label.years= Enter their approximate age
+
+individualAddress.title= What is the individual's address?
+individualAddress.header= What is the individual's address?
+individualAddress.label.post-code = Postcode
+
+individualContact.title = What are the individual's contact details?
+individualContact.header = What are the individual's contact details?
+
+individualNino.title = What is the individual's National Insurance Number?
+individualNino.header = What is the individual's National Insurance Number?

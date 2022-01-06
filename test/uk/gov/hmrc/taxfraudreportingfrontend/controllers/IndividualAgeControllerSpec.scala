@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,23 +28,22 @@ import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.mappings.Mappings
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
-class NameControllerSpec extends BaseSpec with Matchers with Mappings with GuiceOneAppPerSuite with MockitoSugar {
+class IndividualAgeControllerSpec
+    extends BaseSpec with Matchers with Mappings with GuiceOneAppPerSuite with MockitoSugar {
 
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest("GET", "/").withSession(SessionKeys.sessionId -> "fakesessionid")
 
-  private val controller = app.injector.instanceOf[NameController]
+  private val controller = app.injector.instanceOf[IndividualAgeController]
 
-  "Individual's name page view" should {
+  "Individual's Age page view" should {
     val result          = controller.onPageLoad()(fakeRequest)
     val content: String = contentAsString(result)
     val doc: Document   = Jsoup.parse(content)
 
     "load the page content" in {
 
-      doc.getElementsByTag("h1").text() shouldBe messages("individualName.header")
-
+      doc.getElementsByTag("h1").text() shouldBe messages("individualAge.header")
     }
   }
-
 }

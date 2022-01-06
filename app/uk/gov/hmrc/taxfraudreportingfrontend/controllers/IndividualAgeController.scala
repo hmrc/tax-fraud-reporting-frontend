@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,17 +19,19 @@ package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
-import uk.gov.hmrc.taxfraudreportingfrontend.views.html.IndividualNameView
+import uk.gov.hmrc.taxfraudreportingfrontend.views.html.IndividualAgeView
 
 import javax.inject.Inject
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-class NameController @Inject() (mcc: MessagesControllerComponents, nameView: IndividualNameView)(implicit
-  appConfig: AppConfig
+class IndividualAgeController @Inject() (mcc: MessagesControllerComponents, ageView: IndividualAgeView)(implicit
+  appConfig: AppConfig,
+  executionContext: ExecutionContext
 ) extends FrontendController(mcc) {
 
   def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(nameView()))
+    Future.successful(Ok(ageView()))
+
   }
 
 }

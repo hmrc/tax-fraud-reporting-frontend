@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
 package uk.gov.hmrc.taxfraudreportingfrontend.cache
 
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.taxfraudreportingfrontend.models.{ActivityType, IndividualInformationCheck}
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
+import uk.gov.hmrc.taxfraudreportingfrontend.models.{ActivityType, IndividualInformationCheck, IndividualName}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -45,5 +45,13 @@ class UserAnswersCache @Inject() (sessionCache: SessionCache)(implicit ec: Execu
 
   def getIndividualInformationCheck()(implicit hc: HeaderCarrier): Future[Set[IndividualInformationCheck]] =
     sessionCache.getFraudReportDetails map (_.individualInformationCheck)
+
+  def cacheIndividualName(
+    individualName: Some[IndividualName]
+  )(implicit hc: HeaderCarrier): Future[FraudReportDetails] =
+    saveFraudReportDetails(sd => sd.copy(individualName = individualName))
+
+  def getIndividualName()(implicit hc: HeaderCarrier): Future[Option[IndividualName]] =
+    sessionCache.getFraudReportDetails map (_.individualName)
 
 }
