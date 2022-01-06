@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,14 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
+import play.api.data.Form
 import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.taxfraudreportingfrontend.cache.{SessionCache, UserAnswersCache}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.IndividualInformationCheckProvider
-import uk.gov.hmrc.taxfraudreportingfrontend.views.html.{IndividualInformationCheckView, IndividualNameView}
+import uk.gov.hmrc.taxfraudreportingfrontend.models.IndividualInformationCheck
+import uk.gov.hmrc.taxfraudreportingfrontend.views.html.IndividualInformationCheckView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
@@ -31,12 +33,11 @@ class IndividualInformationCheckController @Inject() (
   informationCheckView: IndividualInformationCheckView,
   formProvider: IndividualInformationCheckProvider,
   userAnswersCache: UserAnswersCache,
-  sessionCache: SessionCache,
-  nameView: IndividualNameView
+  sessionCache: SessionCache
 )(implicit appConfig: AppConfig, executionContext: ExecutionContext)
     extends FrontendController(mcc) {
 
-  val form = formProvider()
+  private val form: Form[Set[IndividualInformationCheck]] = formProvider()
 
   private def onSubmitIndividualCheck(): Call = routes.IndividualInformationCheckController.onSubmit()
 
@@ -59,7 +60,8 @@ class IndividualInformationCheckController @Inject() (
           Future.successful(BadRequest(informationCheckView(formWithErrors, onSubmitIndividualCheck()))),
         individualInformationCheck =>
           userAnswersCache.cacheIndividualInformationCheck(individualInformationCheck) map { _ =>
-            Redirect(routes.NameController.onPageLoad())
+            //TODO when refactoring the code
+            Redirect(individualInformationCheck.head.route)
           }
       )
   }

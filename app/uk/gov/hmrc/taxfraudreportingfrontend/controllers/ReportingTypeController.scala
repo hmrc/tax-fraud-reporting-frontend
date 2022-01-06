@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@ class ReportingTypeController @Inject() (
                 uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.IndividualInformationCheckController.onPageLoad()
               )
             else
-              Redirect(uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.NameController.onPageLoad())
+              Redirect(uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.IndividualNameController.onPageLoad())
           )
       )
   }

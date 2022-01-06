@@ -15,4 +15,13 @@ POST       /individual-information-check                 @uk.gov.hmrc.taxfraudre
 
 GET        /should-not-use-service/:activityName         @uk.gov.hmrc.taxfraudreportingfrontend.controllers.ShouldNotUseServiceController.onPageLoad(activityName: String)
 
-GET        /name                                         @uk.gov.hmrc.taxfraudreportingfrontend.controllers.NameController.onPageLoad()
+GET        /name                                         @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualNameController.onPageLoad()
+POST       /name                                         @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualNameController.onSubmit()
+
+GET        /age                                          @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualAgeController.onPageLoad()
+
+GET        /address                                      @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualAddressController.onPageLoad()
+
+GET        /contact-details                              @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualContactController.onPageLoad()
+
+GET        /national-insurance-number                    @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualNinoController.onPageLoad()

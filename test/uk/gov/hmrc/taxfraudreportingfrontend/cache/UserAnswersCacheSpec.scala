@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import org.scalatest.BeforeAndAfterEach
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.taxfraudreportingfrontend.models.IndividualInformationCheck.{Address, Age, Contact, NINO, Name}
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
-import uk.gov.hmrc.taxfraudreportingfrontend.models.{ActivityType, IndividualInformationCheck}
+import uk.gov.hmrc.taxfraudreportingfrontend.models.{ActivityType, IndividualInformationCheck, IndividualName}
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -45,8 +45,8 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
     )
 
   private val mockIndividualInformationCheck: Set[IndividualInformationCheck] = Set(Name, Age, Address, Contact, NINO)
-  // private val mockIndividualInformationCheck = Set[IndividualInformationCheck]
-  //Enumerable(values.map(v => v.toString -> v): _*)
+
+  private val mockIndividualName = IndividualName("Joe", "Edd", "Bloggs", "Blog")
 
   protected override def beforeEach: Unit = {
     reset(mockSessionCache)
@@ -109,6 +109,32 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
       val testCacheData: Set[IndividualInformationCheck] =
         Await.result(testCache.getIndividualInformationCheck(), Duration.Inf)
       testCacheData shouldBe Set.empty
+    }
+
+    "save individual name details in frontend cache" in {
+
+      Await.result(testCache.cacheIndividualName(Some(mockIndividualName)), Duration.Inf)
+      val requestCaptor = ArgumentCaptor.forClass(classOf[FraudReportDetails])
+
+      verify(mockSessionCache).saveFraudReportDetails(requestCaptor.capture())(ArgumentMatchers.eq(hc))
+      val holder: FraudReportDetails = requestCaptor.getValue
+      holder.individualName.get.forename shouldBe "Joe"
+
+      val testCacheData: Option[IndividualName] =
+        Await.result(testCache.getIndividualName(), Duration.Inf)
+      testCacheData shouldBe None
+
+    }
+
+    "get empty individual name details from cache" in {
+
+      when(mockSessionCache.getFraudReportDetails(any[HeaderCarrier])).thenReturn(
+        Future.successful(FraudReportDetails(None))
+      )
+
+      val testCacheData: Option[IndividualName] =
+        Await.result(testCache.getIndividualName(), Duration.Inf)
+      testCacheData shouldBe None
     }
 
   }

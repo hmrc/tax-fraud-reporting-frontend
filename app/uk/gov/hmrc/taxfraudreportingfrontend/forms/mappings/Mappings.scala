@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,11 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.forms.mappings
 
-import play.api.data.FieldMapping
+import play.api.data.{FieldMapping, FormError}
 import play.api.data.Forms.of
+import play.api.data.format.Formatter
 import uk.gov.hmrc.taxfraudreportingfrontend.models.Enumerable
+import scala.language.postfixOps
 
 trait Mappings extends Formatters with Constraints {
 
@@ -46,5 +48,20 @@ trait Mappings extends Formatters with Constraints {
     args: Seq[String] = Seq.empty
   )(implicit ev: Enumerable[A]): FieldMapping[A] =
     of(enumerableFormatter[A](requiredKey, invalidKey, args))
+
+  protected def atLeastOneOf(fields: Seq[String], msg: String): FieldMapping[String] =
+    of(new Formatter[String] {
+
+      def bind(key: String, data: Map[String, String]): Either[Seq[FormError], String] = {
+        val values = fields flatMap { data get _ map (_.trim) } flatten
+
+        if (values.isEmpty)
+          Left(Seq(FormError(key, msg, Nil)))
+        else
+          Right(data.getOrElse(key, "").trim)
+      }
+
+      def unbind(key: String, value: String): Map[String, String] = Map(key -> value.trim)
+    })
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,18 +18,20 @@ package uk.gov.hmrc.taxfraudreportingfrontend.models
 
 import play.api.data.Form
 import play.api.i18n.Messages
+import play.api.mvc.Call
 import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+import uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes
 
-sealed abstract class IndividualInformationCheck(toString: String) extends WithName(toString)
+sealed abstract class IndividualInformationCheck(toString: String, val route: Call) extends WithName(toString)
 
 object IndividualInformationCheck extends Enumerable.Implicits {
 
-  case object Name    extends IndividualInformationCheck("name")
-  case object Age     extends IndividualInformationCheck("age")
-  case object Address extends IndividualInformationCheck("address")
-  case object Contact extends IndividualInformationCheck("contact")
-  case object NINO    extends IndividualInformationCheck("nino")
+  case object Name    extends IndividualInformationCheck("name", routes.IndividualNameController.onPageLoad())
+  case object Age     extends IndividualInformationCheck("age", routes.IndividualAgeController.onPageLoad())
+  case object Address extends IndividualInformationCheck("address", routes.IndividualAddressController.onPageLoad())
+  case object Contact extends IndividualInformationCheck("contact", routes.IndividualContactController.onPageLoad())
+  case object NINO    extends IndividualInformationCheck("nino", routes.IndividualNinoController.onPageLoad())
 
   val values: Seq[IndividualInformationCheck] = Seq(Name, Age, Address, Contact, NINO)
 
