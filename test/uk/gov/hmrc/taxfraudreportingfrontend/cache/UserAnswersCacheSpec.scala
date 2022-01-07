@@ -23,7 +23,12 @@ import org.scalatest.BeforeAndAfterEach
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.taxfraudreportingfrontend.models.IndividualInformationCheck.{Address, Age, Contact, NINO, Name}
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
-import uk.gov.hmrc.taxfraudreportingfrontend.models.{ActivityType, IndividualInformationCheck, IndividualName}
+import uk.gov.hmrc.taxfraudreportingfrontend.models.{
+  ActivityType,
+  IndividualContact,
+  IndividualInformationCheck,
+  IndividualName
+}
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -47,6 +52,8 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
   private val mockIndividualInformationCheck: Set[IndividualInformationCheck] = Set(Name, Age, Address, Contact, NINO)
 
   private val mockIndividualName = IndividualName("Joe", "Edd", "Bloggs", "Blog")
+
+  private val mockIndividualContact = IndividualContact("01632960001", "07700 900 982", "joe@gmail.com")
 
   protected override def beforeEach: Unit = {
     reset(mockSessionCache)
@@ -134,6 +141,32 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
 
       val testCacheData: Option[IndividualName] =
         Await.result(testCache.getIndividualName(), Duration.Inf)
+      testCacheData shouldBe None
+    }
+
+    "save individual contact details in frontend cache" in {
+
+      Await.result(testCache.cacheIndividualContact(Some(mockIndividualContact)), Duration.Inf)
+      val requestCaptor = ArgumentCaptor.forClass(classOf[FraudReportDetails])
+
+      verify(mockSessionCache).saveFraudReportDetails(requestCaptor.capture())(ArgumentMatchers.eq(hc))
+      val holder: FraudReportDetails = requestCaptor.getValue
+      holder.individualContact.get.email_Address shouldBe "joe@gmail.com"
+
+      val testCacheData: Option[IndividualContact] =
+        Await.result(testCache.getIndividualContact(), Duration.Inf)
+      testCacheData shouldBe None
+
+    }
+
+    "get empty individual contact details from cache" in {
+
+      when(mockSessionCache.getFraudReportDetails(any[HeaderCarrier])).thenReturn(
+        Future.successful(FraudReportDetails(None))
+      )
+
+      val testCacheData: Option[IndividualContact] =
+        Await.result(testCache.getIndividualContact(), Duration.Inf)
       testCacheData shouldBe None
     }
 

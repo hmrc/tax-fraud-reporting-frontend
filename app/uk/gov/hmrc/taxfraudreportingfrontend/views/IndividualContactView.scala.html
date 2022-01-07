@@ -16,19 +16,68 @@
 
 @import controllers.routes._
 @import views.ViewUtils._
+@import uk.gov.hmrc.taxfraudreportingfrontend.models._
 @import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 
 @this(
-layout: Layout,
-html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html
+      layout: Layout,
+      html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html,
+      formHelper: FormWithCSRF,
+      forms: uk.gov.hmrc.taxfraudreportingfrontend.views.components.forms
 )
 
-@()(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
+@(form: Form[_], submit: Call)(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
 
 @layout(
-        pageTitle    = titleNoForm(messages("individualContact.titlee"))
+        pageTitle    = s"${errorPrefix(form)}${titleNoForm(messages("individualContact.title"))}"
 ) {
 
-        @html.h1("individualContact.header")
+        @forms.formWithCSRF(action = submit, args = 'novalidate -> "novalidate") {
+
+        @components.error_summary(form.errors)
+
+           @forms.fieldSet(
+                   legend = "individualContact.header"
+           ) {
+                <div id="value-hint" class="govuk-hint">
+                    @messages("individualContact.hint")
+                </div>
+
+           @forms.inputText(
+                  form = form,
+                  id = "landlineNumber",
+                  name = "landlineNumber",
+                  label = "individualContact.land-line",
+                  isPageHeading = false,
+                  isInFieldset = true,
+                  attributes = Map("autocomplete" -> "off")
+           )
+
+           @forms.inputText(
+                 form = form,
+                 id = "mobileNumber",
+                 name = "mobileNumber",
+                 label = "individualContact.mobile-line",
+                 isPageHeading = false,
+                 isInFieldset = true,
+                 attributes = Map(
+                 "autocomplete" -> "off" )
+           )
+
+           @forms.inputText(
+                form = form,
+                id = "emailAddress",
+                name = "emailAddress",
+                label = "individualContact.email",
+                isPageHeading = false,
+                isInFieldset = true,
+                attributes = Map(
+                "autocomplete" -> "off" )
+           )
+
+                @html.button("site.continue")
+           }
+
+        }
 
 }

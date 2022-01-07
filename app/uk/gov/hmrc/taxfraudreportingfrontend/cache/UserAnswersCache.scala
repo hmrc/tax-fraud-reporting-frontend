@@ -18,7 +18,12 @@ package uk.gov.hmrc.taxfraudreportingfrontend.cache
 
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
-import uk.gov.hmrc.taxfraudreportingfrontend.models.{ActivityType, IndividualInformationCheck, IndividualName}
+import uk.gov.hmrc.taxfraudreportingfrontend.models.{
+  ActivityType,
+  IndividualContact,
+  IndividualInformationCheck,
+  IndividualName
+}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -53,5 +58,13 @@ class UserAnswersCache @Inject() (sessionCache: SessionCache)(implicit ec: Execu
 
   def getIndividualName()(implicit hc: HeaderCarrier): Future[Option[IndividualName]] =
     sessionCache.getFraudReportDetails map (_.individualName)
+
+  def cacheIndividualContact(
+    individualContact: Some[IndividualContact]
+  )(implicit hc: HeaderCarrier): Future[FraudReportDetails] =
+    saveFraudReportDetails(sd => sd.copy(individualContact = individualContact))
+
+  def getIndividualContact()(implicit hc: HeaderCarrier): Future[Option[IndividualContact]] =
+    sessionCache.getFraudReportDetails map (_.individualContact)
 
 }

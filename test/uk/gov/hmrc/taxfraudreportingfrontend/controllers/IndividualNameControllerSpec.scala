@@ -24,23 +24,15 @@ import org.scalatest.Matchers
 import org.scalatest.MustMatchers.convertToAnyMustWrapper
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import play.api.data.Form
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{
-  contentAsString,
-  defaultAwaitTimeout,
-  route,
-  running,
-  status,
-  writeableOf_AnyContentAsEmpty,
-  writeableOf_AnyContentAsFormUrlEncoded,
-  GET,
-  POST
-}
+import play.api.test.Helpers.{GET, POST, contentAsString, defaultAwaitTimeout, route, running, status, writeableOf_AnyContentAsEmpty, writeableOf_AnyContentAsFormUrlEncoded}
 import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.IndividualNameProvider
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.mappings.Mappings
+import uk.gov.hmrc.taxfraudreportingfrontend.models.IndividualName
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
 import scala.concurrent.Future
@@ -51,10 +43,10 @@ class IndividualNameControllerSpec
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest("GET", "/").withSession(SessionKeys.sessionId -> "fakesessionid")
 
-  lazy val individualNameRoute = routes.IndividualNameController.onPageLoad().url
+  lazy val individualNameRoute: String = routes.IndividualNameController.onPageLoad().url
 
   val formProvider = new IndividualNameProvider()
-  val form         = formProvider()
+  val form: Form[IndividualName] = formProvider()
 
   private val controller = app.injector.instanceOf[IndividualNameController]
 

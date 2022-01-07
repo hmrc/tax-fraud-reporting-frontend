@@ -139,8 +139,16 @@ individualAddress.title= What is the individual's address?
 individualAddress.header= What is the individual's address?
 individualAddress.label.post-code = Postcode
 
-individualContact.title = What are the individual's contact details?
-individualContact.header = What are the individual's contact details?
+individualContact.title = What are the person's contact details?
+individualContact.header = What are the person's contact details?
+individualContact.hint = Enter as much as you are able to.
+individualContact.land-line = Landline number
+individualContact.mobile-line = Mobile number
+individualContact.email = Email address
+individualContact.error.required = Enter the individual's contact details
+individualContact.error.landline_Number.invalid = Enter a Landline number, like 01632 960 001
+individualContact.error.mobile_Number.invalid = Enter a mobile number, like 07700 900 982 or 44 808 157 0192
+individualContact.error.email_Address.invalid = Enter an email address in the correct format, like name@example.com
 
 individualNino.title = What is the individual's National Insurance Number?
 individualNino.header = What is the individual's National Insurance Number?

@@ -62,7 +62,7 @@ class IndividualNameController @Inject() (
         individualName =>
           userAnswersCache.cacheIndividualName(Some(individualName)) map { _ =>
             //TODO when refactoring the code
-            Redirect("/report-tax-fraud/age")
+            Redirect(routes.IndividualInformationCheckController.onPageLoad())
           }
       )
   }
