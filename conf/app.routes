@@ -23,5 +23,6 @@ GET        /age                                          @uk.gov.hmrc.taxfraudre
 GET        /address                                      @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualAddressController.onPageLoad()
 
 GET        /contact-details                              @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualContactController.onPageLoad()
+POST       /contact-details                              @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualContactController.onSubmit()
 
 GET        /national-insurance-number                    @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualNinoController.onPageLoad()

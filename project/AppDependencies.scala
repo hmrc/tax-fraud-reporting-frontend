@@ -9,11 +9,12 @@ object AppDependencies {
     "uk.gov.hmrc"             %% "play-frontend-hmrc"             % "1.22.0-play-28",
     "uk.gov.hmrc"             %% "tracking-consent-models"        % "1.1.0-play-28",
     "uk.gov.hmrc"             %% "http-caching-client"            % "9.5.0-play-28",
-    "uk.gov.hmrc"             %% "mongo-caching"              % "7.0.0-play-28"
+    "uk.gov.hmrc.mongo"       %% "hmrc-mongo-play-28"             % "0.56.0",
 
   )
 
   val test = Seq(
+    "uk.gov.hmrc.mongo"       %% "hmrc-mongo-test-play-28"    % "0.59.0"            % "test, it" excludeAll(ExclusionRule(organization = "org.scalatest")),
     "org.scalatest"           %% "scalatest"                  % "3.0.8"             % "test,it",
     "com.typesafe.play"       %% "play-test"                  % PlayVersion.current % "test,it",
     "org.scalatestplus.play"  %% "scalatestplus-play"         % "5.0.0"             % "test,it",
@@ -24,6 +25,5 @@ object AppDependencies {
     "us.codecraft"            % "xsoup"                       % "0.3.1"             % "test,it",
     "org.mockito"             % "mockito-core"                % "3.0.0"             % "test,it",
     "org.pegdown"             % "pegdown"                     % "1.6.0",
-    "uk.gov.hmrc"             %% "reactivemongo-test"         % "5.0.0-play-28"     % "test, it"
   )
 }

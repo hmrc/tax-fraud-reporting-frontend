@@ -20,22 +20,21 @@ import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.common.ConsoleNotifier
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration._
 
-
 trait WireMockRunner {
 
   lazy val wireMockUrl    = s"http://$Host:$Port"
   lazy val wireMockServer = new WireMockServer(wireMockConfig().port(Port).notifier(new ConsoleNotifier(false)))
 
-  def startMockServer() {
+  def startMockServer(): Unit = {
     if (!wireMockServer.isRunning) wireMockServer.start()
     WireMock.configureFor(Host, Port)
   }
 
-  def resetMockServer() {
+  def resetMockServer(): Unit = {
     WireMock.reset()
   }
 
-  def stopMockServer() {
+  def stopMockServer(): Unit = {
     wireMockServer.stop()
   }
 

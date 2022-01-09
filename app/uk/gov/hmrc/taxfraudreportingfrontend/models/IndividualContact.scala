@@ -14,27 +14,13 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.taxfraudreportingfrontend.controllers.forms
+package uk.gov.hmrc.taxfraudreportingfrontend.models
 
-import org.scalatest.Matchers
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import uk.gov.hmrc.taxfraudreportingfrontend.services.ActivityTypeService
-import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
+import play.api.libs.json.{Json, OFormat}
 
-class ActivityTypeProviderSpec extends BaseSpec with Matchers with GuiceOneAppPerSuite {
+case class IndividualContact(landline_Number: String, mobile_Number: String, email_Address: String)
 
-  val service = new ActivityTypeService
+object IndividualContact {
 
-  "ActivityTypeProvider" should {
-
-    "validate with no issues" when {
-
-      "activityType code provided with" in {
-
-        assert(service isValidActivityTypeCode "22030000")
-
-      }
-
-    }
-  }
+  implicit val format: OFormat[IndividualContact] = Json.format[IndividualContact]
 }

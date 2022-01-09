@@ -42,11 +42,11 @@ class IndividualNameController @Inject() (
 
   def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
     hc.sessionId map { sessionID =>
-      sessionCache.isCacheNotPresentCreateOne(sessionID.value) map { fraudReport =>
-        val filledForm = fraudReport.individualName map { individualName =>
-          form.fill(individualName)
-        } getOrElse form
-
+      sessionCache.get map { fraudReport =>
+        val filledForm = fraudReport match {
+          case Some(f) if f.individualName.nonEmpty => form.fill(f.individualName.get)
+          case _                                    => form
+        }
         Ok(nameView(filledForm, onNameSubmit()))
       }
     } getOrElse Future.successful {
@@ -62,7 +62,7 @@ class IndividualNameController @Inject() (
         individualName =>
           userAnswersCache.cacheIndividualName(Some(individualName)) map { _ =>
             //TODO when refactoring the code
-            Redirect("/report-tax-fraud/age")
+            Redirect(routes.IndividualInformationCheckController.onPageLoad())
           }
       )
   }

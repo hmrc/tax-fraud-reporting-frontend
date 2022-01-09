@@ -15,8 +15,8 @@
  */
 
 object ExternalServiceConfig {
-  val Port: Int              = sys.env.getOrElse("WIREMOCK_SERVICE_LOCATOR_PORT", "11111").toInt
-  val Host                   = "localhost"
-  val sessionCacheDomain     = "test-only/keystore"
-  val shortLivedCacheDomain  = "test-only/save4later"
+  val Port: Int             = sys.env.getOrElse("WIREMOCK_SERVICE_LOCATOR_PORT", "11111").toInt
+  val Host                  = "localhost"
+  val sessionCacheDomain    = "test-only/keystore"
+  val shortLivedCacheDomain = "test-only/save4later"
 }

@@ -18,12 +18,12 @@ package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatest.Matchers
 import org.scalatest.MustMatchers.convertToAnyMustWrapper
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import play.api.data.Form
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
@@ -41,6 +41,7 @@ import play.api.test.Helpers.{
 import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.IndividualNameProvider
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.mappings.Mappings
+import uk.gov.hmrc.taxfraudreportingfrontend.models.IndividualName
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
 import scala.concurrent.Future
@@ -51,10 +52,10 @@ class IndividualNameControllerSpec
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest("GET", "/").withSession(SessionKeys.sessionId -> "fakesessionid")
 
-  lazy val individualNameRoute = routes.IndividualNameController.onPageLoad().url
+  lazy val individualNameRoute: String = routes.IndividualNameController.onPageLoad().url
 
-  val formProvider = new IndividualNameProvider()
-  val form         = formProvider()
+  val formProvider               = new IndividualNameProvider()
+  val form: Form[IndividualName] = formProvider()
 
   private val controller = app.injector.instanceOf[IndividualNameController]
 
@@ -65,8 +66,7 @@ class IndividualNameControllerSpec
 
     "load the page content" in {
 
-      when(mockSessionCache.isCachePresent(any[String])).thenReturn(Future.successful(false))
-      when(mockUserAnswersCache.getIndividualName()(hc)).thenReturn(Future.successful(None))
+      when(mockUserAnswersCache.getIndividualName()(getRequest)).thenReturn(Future.successful(None))
 
       doc.getElementsByTag("h1").text() shouldBe messages("individualName.header")
 

@@ -16,23 +16,55 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents, Request}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import uk.gov.hmrc.taxfraudreportingfrontend.cache.{SessionCache, UserAnswersCache}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
+import uk.gov.hmrc.taxfraudreportingfrontend.forms.IndividualContactProvider
 import uk.gov.hmrc.taxfraudreportingfrontend.views.html.IndividualContactView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class IndividualContactController @Inject() (mcc: MessagesControllerComponents, contactView: IndividualContactView)(
-  implicit
-  appConfig: AppConfig,
-  executionContext: ExecutionContext
-) extends FrontendController(mcc) {
+class IndividualContactController @Inject() (
+  mcc: MessagesControllerComponents,
+  contactView: IndividualContactView,
+  formProvider: IndividualContactProvider,
+  userAnswersCache: UserAnswersCache,
+  sessionCache: SessionCache
+)(implicit appConfig: AppConfig, executionContext: ExecutionContext, messages: MessagesApi)
+    extends FrontendController(mcc) with I18nSupport {
+
+  private def form(implicit req: Request[AnyContent]) = formProvider()
+
+  private def onContactSubmit(): Call = routes.IndividualContactController.onSubmit()
 
   def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(contactView()))
+    hc.sessionId map { _ =>
+      sessionCache.get map { fraudReport =>
+        val filledForm = fraudReport match {
+          case Some(f) if f.individualContact.nonEmpty => form.fill(f.individualContact.get)
+          case _                                       => form
+        }
+        Ok(contactView(filledForm, onContactSubmit()))
+      }
+    } getOrElse Future.successful {
+      Redirect(routes.IndividualContactController.onPageLoad())
+    }
+  }
 
+  def onSubmit(): Action[AnyContent] = Action.async {
+    implicit request =>
+      val boundForm = form.bindFromRequest()
+      boundForm.fold(
+        formWithErrors => Future.successful(BadRequest(contactView(formWithErrors, onContactSubmit()))),
+        individualContact =>
+          userAnswersCache.cacheIndividualContact(Some(individualContact)) map { _ =>
+            //TODO when refactoring the code
+            Redirect(routes.IndividualInformationCheckController.onPageLoad())
+          }
+      )
   }
 
 }

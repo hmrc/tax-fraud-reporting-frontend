@@ -14,27 +14,14 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.taxfraudreportingfrontend.controllers.forms
+package uk.gov.hmrc.taxfraudreportingfrontend.forms
 
-import org.scalatest.Matchers
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import uk.gov.hmrc.taxfraudreportingfrontend.services.ActivityTypeService
-import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
+import java.util.regex.Pattern
 
-class ActivityTypeProviderSpec extends BaseSpec with Matchers with GuiceOneAppPerSuite {
+object Validation {
 
-  val service = new ActivityTypeService
+  val safeInputPattern                 = "^(|[a-zA-Z][a-zA-Z0-9 / '-]+)$?"
+  val phoneNumberRegexPattern: Pattern = Pattern.compile("^[+]?[0-9 ]*$")
+  val emailPattern                     = "^(.+@.+\\..+)?$"
 
-  "ActivityTypeProvider" should {
-
-    "validate with no issues" when {
-
-      "activityType code provided with" in {
-
-        assert(service isValidActivityTypeCode "22030000")
-
-      }
-
-    }
-  }
 }

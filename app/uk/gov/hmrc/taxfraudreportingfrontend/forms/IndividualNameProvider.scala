@@ -26,10 +26,9 @@ import javax.inject.Inject
 import scala.language.postfixOps
 
 class IndividualNameProvider @Inject() extends Mappings {
-  private val safeInputPattern = "^(|[a-zA-Z][a-zA-Z0-9 / '-]+)$?"
 
   private def nameConstraint(mapping: FieldMapping[String], field: String) =
-    mapping.verifying(regexp(safeInputPattern, s"individualName.error.$field.invalid"))
+    mapping.verifying(regexp(Validation.safeInputPattern, s"individualName.error.$field.invalid"))
 
   private def atLeastOneName(message: String = "") =
     atLeastOneOf("firstName,lastName,middleName,nickName" split ',', message)
