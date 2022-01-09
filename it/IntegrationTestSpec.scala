@@ -21,9 +21,10 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
+import scala.language.implicitConversions
 
 class IntegrationTestSpec
-    extends PlaySpec  with BeforeAndAfter with BeforeAndAfterAll with Eventually with IntegrationPatience
+    extends PlaySpec with BeforeAndAfter with BeforeAndAfterAll with Eventually with IntegrationPatience
     with GuiceOneAppPerSuite with WireMockRunner {
 
   implicit val defaultTimeout: FiniteDuration = 5 seconds

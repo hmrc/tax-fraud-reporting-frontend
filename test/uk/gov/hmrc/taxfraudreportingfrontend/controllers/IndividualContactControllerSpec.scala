@@ -57,8 +57,7 @@ class IndividualContactControllerSpec
 
   "Individual's Contact page view" should {
 
-    when(mockSessionCache.isCachePresent(any[String])).thenReturn(Future.successful(false))
-    when(mockUserAnswersCache.getIndividualContact()(hc)).thenReturn(Future.successful(None))
+    when(mockUserAnswersCache.getIndividualContact()(getRequest)).thenReturn(Future.successful(None))
 
     val result          = controller.onPageLoad()(fakeRequest)
     val content: String = contentAsString(result)
@@ -76,10 +75,6 @@ class IndividualContactControllerSpec
 
       running(application) {
 
-        when(mockSessionCache.isCacheNotPresentCreateOne("fakesessionidNew")(hc)).thenReturn(
-          Future.successful(FraudReportDetails(individualContact = None))
-        )
-
         val result =
           controller.onPageLoad()(FakeRequest("GET", "/").withSession(SessionKeys.sessionId -> "fakesessionidNew"))
         val content: String = contentAsString(result)
@@ -96,7 +91,6 @@ class IndividualContactControllerSpec
     "load the individual contact page content with cache" in {
 
       running(application) {
-        when(mockSessionCache.isCachePresent(any[String])).thenReturn(Future.successful(true))
 
         val result          = controller.onPageLoad()(fakeRequest)
         val content: String = contentAsString(result)

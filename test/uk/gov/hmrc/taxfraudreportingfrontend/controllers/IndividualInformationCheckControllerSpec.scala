@@ -18,12 +18,12 @@ package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatest.Matchers
 import org.scalatest.MustMatchers.convertToAnyMustWrapper
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -31,7 +31,6 @@ import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.IndividualInformationCheckProvider
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.mappings.Mappings
 import uk.gov.hmrc.taxfraudreportingfrontend.models.IndividualInformationCheck
-import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
 import scala.concurrent.Future
@@ -44,10 +43,11 @@ class IndividualInformationCheckControllerSpec
 
   private val controller = app.injector.instanceOf[IndividualInformationCheckController]
 
-  lazy val individualInformationCheckControllerRoute = routes.IndividualInformationCheckController.onPageLoad().url
+  lazy val individualInformationCheckControllerRoute: String =
+    routes.IndividualInformationCheckController.onPageLoad().url
 
-  val formProvider = new IndividualInformationCheckProvider()
-  val form         = formProvider()
+  val formProvider                                = new IndividualInformationCheckProvider()
+  val form: Form[Set[IndividualInformationCheck]] = formProvider()
 
   "Information Checker VIew" should {
     val result          = controller.onPageLoad()(fakeRequest)
@@ -56,8 +56,7 @@ class IndividualInformationCheckControllerSpec
 
     "load the page content" in {
 
-      when(mockSessionCache.isCachePresent(any[String])).thenReturn(Future.successful(false))
-      when(mockUserAnswersCache.getIndividualInformationCheck()(hc)).thenReturn(
+      when(mockUserAnswersCache.getIndividualInformationCheck()(getRequest)).thenReturn(
         Future.successful(Set.empty[IndividualInformationCheck])
       )
 
@@ -69,9 +68,7 @@ class IndividualInformationCheckControllerSpec
 
       running(application) {
 
-        when(mockSessionCache.isCacheNotPresentCreateOne("fakesessionidNew")(hc)).thenReturn(
-          Future.successful(FraudReportDetails(individualInformationCheck = Set.empty))
-        )
+        when(mockSessionCache.createCacheIfNotPresent()(getRequest)).thenReturn(Future.successful(true))
 
         val result =
           controller.onPageLoad()(FakeRequest("GET", "/").withSession(SessionKeys.sessionId -> "fakesessionidNew"))

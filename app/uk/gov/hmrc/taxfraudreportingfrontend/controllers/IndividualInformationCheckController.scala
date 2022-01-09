@@ -42,9 +42,12 @@ class IndividualInformationCheckController @Inject() (
   private def onSubmitIndividualCheck(): Call = routes.IndividualInformationCheckController.onSubmit()
 
   def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
-    hc.sessionId map { sessionID =>
-      sessionCache.isCacheNotPresentCreateOne(sessionID.value) map { fraudReport =>
-        val filledForm = form fill fraudReport.individualInformationCheck
+    hc.sessionId map { _ =>
+      sessionCache.get map { fraudReport =>
+        val filledForm = fraudReport match {
+          case Some(f) if f.individualInformationCheck.nonEmpty => form.fill(f.individualInformationCheck)
+          case _                                                => form
+        }
         Ok(informationCheckView(filledForm, onSubmitIndividualCheck()))
       }
     } getOrElse Future.successful {

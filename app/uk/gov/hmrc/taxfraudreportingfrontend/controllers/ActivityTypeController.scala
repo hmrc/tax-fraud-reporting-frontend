@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
+import play.api.Logger
 import play.api.data.Form
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
@@ -40,21 +41,20 @@ class ActivityTypeController @Inject() (
 )(implicit appConfig: AppConfig, ec: ExecutionContext)
     extends FrontendController(mcc) with I18nSupport {
 
-  private val form: Form[ActivityTypeViewModel] = activityTypeProvider()
+  private val logger: Logger            = Logger(this.getClass)
+  val form: Form[ActivityTypeViewModel] = activityTypeProvider()
 
   private def onSubmitActivityType(): Call = routes.ActivityTypeController.onSubmit()
 
   def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
-    hc.sessionId map { sessionID =>
-      sessionCache.isCacheNotPresentCreateOne(sessionID.value) map { fraudReport =>
-        val filledForm = fraudReport.activityType map { activityType =>
-          form.fill(ActivityTypeViewModel from activityType)
-        } getOrElse form
-
+    sessionCache.createCacheIfNotPresent flatMap { _ =>
+      sessionCache.get map { fraudReport =>
+        val filledForm = fraudReport match {
+          case Some(f) if f.activityType.isDefined => form.fill(ActivityTypeViewModel from f.activityType.get)
+          case _                                   => form
+        }
         Ok(activityTypeView(filledForm, onSubmitActivityType(), activityTypeService.activities))
       }
-    } getOrElse Future.successful {
-      Redirect(routes.IndexViewController.onPageLoad())
     }
   }
 

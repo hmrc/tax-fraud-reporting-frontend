@@ -16,14 +16,10 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.cache
 
-import play.api.Logger
-import play.api.libs.json.{JsError, JsSuccess, Json, OFormat}
-import play.modules.reactivemongo.ReactiveMongoComponent
-import uk.gov.hmrc.cache._
-import uk.gov.hmrc.cache.model.{Cache, Id}
-import uk.gov.hmrc.cache.repository.CacheMongoRepository
-import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.taxfraudreportingfrontend.cache.CachedData.fraudReportDetailsKey
+import play.api.mvc.Request
+import uk.gov.hmrc.http.SessionKeys
+import uk.gov.hmrc.mongo.{CurrentTimestampSupport, MongoComponent}
+import uk.gov.hmrc.mongo.cache.{DataKey, SessionCacheRepository}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 
@@ -31,72 +27,42 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NoStackTrace
 
-sealed case class CachedData(fraudReportDetails: Option[FraudReportDetails] = None) {
-
-  def getFraudReportDetails: FraudReportDetails =
-    fraudReportDetails getOrElse FraudReportDetails()
-
-}
-
-object CachedData {
-  val fraudReportDetailsKey                = "fraudReportDetails"
-  implicit val format: OFormat[CachedData] = Json.format
-}
-
 @Singleton
-class SessionCache @Inject() (appConfig: AppConfig, mongo: ReactiveMongoComponent)(implicit ec: ExecutionContext)
-    extends CacheMongoRepository("session-cache", appConfig.cacheTtl.toSeconds)(mongo.mongoConnector.db, ec) {
+class SessionCache @Inject() (appConfig: AppConfig, mongo: MongoComponent)(implicit ec: ExecutionContext)
+    extends SessionCacheRepository(
+      mongoComponent = mongo,
+      collectionName = "session-cache",
+      ttl = appConfig.cacheTtl,
+      timestampSupport = new CurrentTimestampSupport,
+      sessionIdKey = SessionKeys.sessionId
+    ) {
 
-  private val eccLogger: Logger = Logger(this.getClass)
+  private def getSessionId(implicit request: Request[_]): String = request.session.get(SessionKeys.sessionId) match {
+    case Some(id) => id
+    case _        => throw SessionCacheException(s"No Session data is cached for the sessionId ")
+  }
 
-  def sessionId(implicit headerCarrier: HeaderCarrier): Id =
-    headerCarrier.sessionId match {
-      case None =>
-        throw new IllegalStateException("Session id is not available")
-      case Some(sessionId) => model.Id(sessionId.value)
+  def get()(implicit request: Request[_]): Future[Option[FraudReportDetails]] =
+    getFromSession[FraudReportDetails](DataKey(getSessionId))
+
+  def store(sessionData: FraudReportDetails)(implicit request: Request[_]): Future[Option[FraudReportDetails]] =
+    putSession[FraudReportDetails](DataKey(getSessionId), sessionData) flatMap { _ => get() }
+
+  def createCacheIfNotPresent()(implicit request: Request[_]): Future[Boolean] =
+    get() flatMap {
+      case Some(_) => Future.successful(true)
+      case _       => store(FraudReportDetails(None)) map (_.isDefined)
     }
 
   def saveFraudReportDetails(
     fraudReportDetails: FraudReportDetails
-  )(implicit hc: HeaderCarrier): Future[FraudReportDetails] =
-    createOrUpdate(sessionId, fraudReportDetailsKey, Json.toJson(fraudReportDetails)) map { _ => fraudReportDetails }
+  )(implicit request: Request[_]): Future[FraudReportDetails] =
+    store(fraudReportDetails) map (
+      result => result.getOrElse(throw SessionCacheException(s"No match session id for signed in user with session"))
+    )
 
-  def isCachePresent(sessionId: String): Future[Boolean] = findById(sessionId) map {
-    _ exists { cache => cache.data.isDefined }
-  }
-
-  def isCacheNotPresentCreateOne(sessionId: String)(implicit hc: HeaderCarrier): Future[FraudReportDetails] =
-    isCachePresent(sessionId) flatMap { isPresent =>
-      if (isPresent)
-        getFraudReportDetails
-      else
-        saveFraudReportDetails(FraudReportDetails(None))
-    }
-
-  def getFraudReportDetails(implicit hc: HeaderCarrier): Future[FraudReportDetails] =
-    getCached(sessionId, (cachedData, _) => cachedData.getFraudReportDetails)
-
-  def remove(implicit hc: HeaderCarrier): Future[Boolean] =
-    removeById(sessionId.id) map (x => x.writeErrors.isEmpty && x.writeConcernError.isEmpty)
-
-  private def getCached[T](sessionId: Id, t: (CachedData, Id) => T): Future[T] =
-    findById(sessionId.id) map {
-      case Some(Cache(_, Some(data), _, _)) =>
-        Json.fromJson[CachedData](data) match {
-          case d: JsSuccess[CachedData] => t(d.value, sessionId)
-          case _: JsError               =>
-            // $COVERAGE-OFF$Loggers
-            eccLogger.error(s"No Session data is cached for the sessionId : ${sessionId.id}")
-            throw SessionTimeOutException(s"No Session data is cached for the sessionId : ${sessionId.id}")
-          // $COVERAGE-ON
-        }
-      case _ =>
-        // $COVERAGE-OFF$Loggers
-        eccLogger.info(s"No match session id for signed in user with session: ${sessionId.id}")
-        throw SessionTimeOutException(s"No match session id for signed in user with session : ${sessionId.id}")
-      // $COVERAGE-ON
-    }
+  def getFraudReportDetails(implicit request: Request[_]): Future[FraudReportDetails] = get map (_.get)
 
 }
 
-case class SessionTimeOutException(errorMessage: String) extends NoStackTrace
+case class SessionCacheException(errorMessage: String) extends NoStackTrace

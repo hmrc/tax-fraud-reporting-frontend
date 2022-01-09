@@ -17,7 +17,6 @@
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers.forms
 
 import org.scalatest.Matchers
-import org.scalatest.MustMatchers.convertToAnyMustWrapper
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import uk.gov.hmrc.taxfraudreportingfrontend.services.ActivityTypeService
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec

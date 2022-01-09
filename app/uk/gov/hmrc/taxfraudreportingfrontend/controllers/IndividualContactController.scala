@@ -41,12 +41,12 @@ class IndividualContactController @Inject() (
   private def onContactSubmit(): Call = routes.IndividualContactController.onSubmit()
 
   def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
-    hc.sessionId map { sessionID =>
-      sessionCache.isCacheNotPresentCreateOne(sessionID.value) map { fraudReport =>
-        val filledForm = fraudReport.individualContact map { individualContact =>
-          form.fill(individualContact)
-        } getOrElse form
-
+    hc.sessionId map { _ =>
+      sessionCache.get map { fraudReport =>
+        val filledForm = fraudReport match {
+          case Some(f) if f.individualContact.nonEmpty => form.fill(f.individualContact.get)
+          case _                                       => form
+        }
         Ok(contactView(filledForm, onContactSubmit()))
       }
     } getOrElse Future.successful {

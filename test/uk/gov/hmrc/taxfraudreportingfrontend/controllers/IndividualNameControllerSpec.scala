@@ -18,7 +18,6 @@ package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatest.Matchers
 import org.scalatest.MustMatchers.convertToAnyMustWrapper
@@ -28,7 +27,17 @@ import play.api.data.Form
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, POST, contentAsString, defaultAwaitTimeout, route, running, status, writeableOf_AnyContentAsEmpty, writeableOf_AnyContentAsFormUrlEncoded}
+import play.api.test.Helpers.{
+  contentAsString,
+  defaultAwaitTimeout,
+  route,
+  running,
+  status,
+  writeableOf_AnyContentAsEmpty,
+  writeableOf_AnyContentAsFormUrlEncoded,
+  GET,
+  POST
+}
 import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.IndividualNameProvider
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.mappings.Mappings
@@ -45,7 +54,7 @@ class IndividualNameControllerSpec
 
   lazy val individualNameRoute: String = routes.IndividualNameController.onPageLoad().url
 
-  val formProvider = new IndividualNameProvider()
+  val formProvider               = new IndividualNameProvider()
   val form: Form[IndividualName] = formProvider()
 
   private val controller = app.injector.instanceOf[IndividualNameController]
@@ -57,8 +66,7 @@ class IndividualNameControllerSpec
 
     "load the page content" in {
 
-      when(mockSessionCache.isCachePresent(any[String])).thenReturn(Future.successful(false))
-      when(mockUserAnswersCache.getIndividualName()(hc)).thenReturn(Future.successful(None))
+      when(mockUserAnswersCache.getIndividualName()(getRequest)).thenReturn(Future.successful(None))
 
       doc.getElementsByTag("h1").text() shouldBe messages("individualName.header")
 

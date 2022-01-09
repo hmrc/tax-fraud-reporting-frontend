@@ -14,107 +14,81 @@
  * limitations under the License.
  */
 
-import org.mockito.Mockito.when
+import org.scalatest.BeforeAndAfterEach
 import org.scalatestplus.mockito.MockitoSugar
-import play.api.libs.json.Json.toJson
-import play.modules.reactivemongo.ReactiveMongoComponent
-import uk.gov.hmrc.cache.model.{Cache, Id}
-import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
-import uk.gov.hmrc.mongo.{MongoConnector, MongoSpecSupport}
-import uk.gov.hmrc.taxfraudreportingfrontend.cache.{CachedData, SessionCache}
+import play.api.Application
+import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.mvc.AnyContentAsEmpty
+import play.api.test.FakeRequest
+import play.api.test.Helpers.running
+import uk.gov.hmrc.http.SessionKeys
+import uk.gov.hmrc.mongo.cache.DataKey
+import uk.gov.hmrc.taxfraudreportingfrontend.cache.SessionCache
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 import uk.gov.hmrc.taxfraudreportingfrontend.models.ActivityType
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 
-import java.util.UUID
-import scala.concurrent.ExecutionContext.Implicits.global
-
-class SessionCacheSpec extends IntegrationTestSpec with MockitoSugar with MongoSpecSupport {
+class SessionCacheSpec extends IntegrationTestSpec with MockitoSugar with BeforeAndAfterEach {
 
   lazy val appConfig: AppConfig = app.injector.instanceOf[AppConfig]
 
-  private val reactiveMongoComponent = new ReactiveMongoComponent {
-    override def mongoConnector: MongoConnector = mongoConnectorForTest
+  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] =
+    FakeRequest("GET", "/").withSession(SessionKeys.sessionId -> "fakesessionid")
+
+  override def afterEach(): Unit = {
+    val app: Application         = new GuiceApplicationBuilder().build()
+    val repository: SessionCache = app.injector.instanceOf[SessionCache]
+    running(app) {
+      await(repository.deleteFromSession(DataKey("fakesessionid"))(fakeRequest))
+    }
   }
 
-  val sessionCache = new SessionCache(appConfig, reactiveMongoComponent)
-
-  val hc: HeaderCarrier = mock[HeaderCarrier]
-
-  val testCacheData: FraudReportDetails = FraudReportDetails(Some(ActivityType("22030000", "activityType.name.furlough", Seq("CJRS", "Furlough", "COVID", "Corona", "Coronavirus Job Retention Scheme"))))
+  val testCacheData: FraudReportDetails = FraudReportDetails(
+    Some(
+      ActivityType(
+        "22030000",
+        "activityType.name.furlough",
+        Seq("CJRS", "Furlough", "COVID", "Corona", "Coronavirus Job Retention Scheme")
+      )
+    )
+  )
 
   "Session cache" should {
 
-    "store, fetch and update activity type data correctly" in {
-      val sessionId: SessionId = setupSession
-
-      await(sessionCache.saveFraudReportDetails(testCacheData)(hc))
-
-      val expectedJson                     = toJson(CachedData(fraudReportDetails = Some(testCacheData)))
-      val cache                            = await(sessionCache.findById(Id(sessionId.value)))
-      val Some(Cache(_, Some(json), _, _)) = cache
-      json mustBe expectedJson
-
-      await(sessionCache.getFraudReportDetails(hc)) mustBe testCacheData
-
-      val updatedTest = FraudReportDetails(activityType = Some(ActivityType("22030000", "activityType.name.furlough", Seq("CJRS", "Furlough", "COVID", "Corona", "Coronavirus Job Retention Scheme"))))
-
-      await(sessionCache.saveFraudReportDetails(updatedTest)(hc))
-
-      val expectedUpdatedJson                     = toJson(CachedData(fraudReportDetails = Some(updatedTest)))
-      val updatedCache                            = await(sessionCache.findById(Id(sessionId.value)))
-      val Some(Cache(_, Some(updatedJson), _, _)) = updatedCache
-      updatedJson mustBe expectedUpdatedJson
-    }
-
-    "remove from the cache" in {
-      val sessionId: SessionId = setupSession
-      await(sessionCache.saveFraudReportDetails(FraudReportDetails(Some(ActivityType("22030000", "activityType.name.furlough", Seq("CJRS", "Furlough", "COVID", "Corona", "Coronavirus Job Retention Scheme")))))(hc))
-
-      await(sessionCache.remove(hc))
-
-      val cached = await(sessionCache.findById(Id(sessionId.value)))
-      cached mustBe None
-    }
-
-    "is cache present in DB" in {
-      await(sessionCache.saveFraudReportDetails(FraudReportDetails(Some(ActivityType("22030000", "activityType.name.furlough", Seq("CJRS", "Furlough", "COVID", "Corona", "Coronavirus Job Retention Scheme")))))(hc))
-
-      await(sessionCache.isCachePresent(hc.sessionId.get.value)) mustBe true
-
-      await(sessionCache.remove(hc))
-
-      await(sessionCache.isCachePresent(hc.sessionId.get.value)) mustBe false
-    }
-
-    "if cache present is not present in DB create new one" in {
-      await(sessionCache.remove(hc))
-
-      await(sessionCache.isCacheNotPresentCreateOne(hc.sessionId.get.value)(hc)) mustBe FraudReportDetails(None)
-
-    }
-
-    "return None when testData requested and not available in cache" in {
-      val s = setupSession
-      await(sessionCache.insert(Cache(Id(s.value), data = Some(toJson(CachedData())))))
-      await(sessionCache.getFraudReportDetails(hc)) mustBe FraudReportDetails(None)
-    }
-
-    "throw IllegalStateException when session id is not retrieved from hc" in {
-      when(hc.sessionId).thenReturn(None)
-
-      val e1 = intercept[IllegalStateException] {
-        await(sessionCache.getFraudReportDetails(hc))
+    "store, fetch and update activity type data correctly" in new Setup {
+      running(app) {
+        await(repository.store(testCacheData)(fakeRequest))
+        val reportFromCache = await(repository.get()(fakeRequest))
+        reportFromCache.get mustBe testCacheData
       }
-      e1.getMessage mustBe "Session id is not available"
+    }
+
+    "if cache present is not present in DB create new one" in new Setup {
+      running(app) {
+        val response = await(repository.createCacheIfNotPresent()(fakeRequest))
+        response mustBe true
+        val reportFromCache = await(repository.get()(fakeRequest))
+        reportFromCache.get.activityType mustBe Option.empty
+      }
+    }
+
+    "return None when testData requested and not available in cache" in new Setup {
+      await(repository.createCacheIfNotPresent()(fakeRequest))
+      val reportFromCache: Option[FraudReportDetails] = await(repository.get()(fakeRequest))
+      reportFromCache.get mustBe FraudReportDetails(None)
+    }
+
+    "throw IllegalStateException when session id is not retrieved from hc" in new Setup {
+      intercept[uk.gov.hmrc.taxfraudreportingfrontend.cache.SessionCacheException] {
+        await(repository.get()(FakeRequest("GET", "/")))
+      }
     }
 
   }
 
-  private def setupSession: SessionId = {
-    val sessionId = SessionId("sessionId-" + UUID.randomUUID())
-    when(hc.sessionId).thenReturn(Some(sessionId))
-    sessionId
+  trait Setup {
+    val app: Application         = new GuiceApplicationBuilder().build()
+    val repository: SessionCache = app.injector.instanceOf[SessionCache]
   }
 
 }

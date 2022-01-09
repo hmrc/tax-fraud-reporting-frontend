@@ -18,7 +18,6 @@ package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatest.Matchers
 import org.scalatestplus.mockito.MockitoSugar
@@ -36,7 +35,6 @@ import play.api.test.Helpers.{
 }
 import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.mappings.Mappings
-import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
 import scala.concurrent.Future
@@ -54,8 +52,8 @@ class ActivityTypeControllerSpec
     "load the page content" in {
 
       running(application) {
-        when(mockSessionCache.isCachePresent(any[String])).thenReturn(Future.successful(false))
-        when(mockUserAnswersCache.getActivityType()(hc)).thenReturn(Future.successful(None))
+
+        when(mockUserAnswersCache.getActivityType()(getRequest)).thenReturn(Future.successful(None))
 
         val result          = controller.onPageLoad()(fakeRequest)
         val content: String = contentAsString(result)
@@ -75,9 +73,11 @@ class ActivityTypeControllerSpec
 
       running(application) {
 
-        when(mockSessionCache.isCacheNotPresentCreateOne("fakesessionidNew")(hc)).thenReturn(
-          Future.successful(FraudReportDetails(activityType = None))
-        )
+        when(
+          mockSessionCache.createCacheIfNotPresent()(
+            getRequest.withSession(SessionKeys.sessionId -> "fakesessionidNew")
+          )
+        ).thenReturn(Future.successful(true))
 
         val result =
           controller.onPageLoad()(FakeRequest("GET", "/").withSession(SessionKeys.sessionId -> "fakesessionidNew"))
@@ -97,7 +97,6 @@ class ActivityTypeControllerSpec
     "load the page content with cache" in {
 
       running(application) {
-        when(mockSessionCache.isCachePresent(any[String])).thenReturn(Future.successful(true))
 
         val result          = controller.onPageLoad()(fakeRequest)
         val content: String = contentAsString(result)

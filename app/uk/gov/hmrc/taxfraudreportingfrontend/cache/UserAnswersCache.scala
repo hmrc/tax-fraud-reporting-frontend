@@ -16,7 +16,8 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.cache
 
-import uk.gov.hmrc.http.HeaderCarrier
+import play.api.mvc.Request
+import uk.gov.hmrc.taxfraudreportingfrontend.models.{ActivityType, IndividualInformationCheck}
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 import uk.gov.hmrc.taxfraudreportingfrontend.models.{
   ActivityType,
@@ -33,38 +34,38 @@ class UserAnswersCache @Inject() (sessionCache: SessionCache)(implicit ec: Execu
 
   def saveFraudReportDetails(
     insertNewDetails: FraudReportDetails => FraudReportDetails
-  )(implicit hc: HeaderCarrier): Future[FraudReportDetails] = sessionCache.getFraudReportDetails flatMap { details =>
+  )(implicit request: Request[_]): Future[FraudReportDetails] = sessionCache.getFraudReportDetails flatMap { details =>
     sessionCache.saveFraudReportDetails(insertNewDetails(details))
   }
 
-  def cacheActivityType(activityType: ActivityType)(implicit hc: HeaderCarrier): Future[FraudReportDetails] =
+  def cacheActivityType(activityType: ActivityType)(implicit request: Request[_]): Future[FraudReportDetails] =
     saveFraudReportDetails(sd => sd.copy(activityType = Some(activityType)))
 
-  def getActivityType()(implicit hc: HeaderCarrier): Future[Option[ActivityType]] =
+  def getActivityType()(implicit request: Request[_]): Future[Option[ActivityType]] =
     sessionCache.getFraudReportDetails map (_.activityType)
 
   def cacheIndividualInformationCheck(
     individualInformationCheck: Set[IndividualInformationCheck]
-  )(implicit hc: HeaderCarrier): Future[FraudReportDetails] =
+  )(implicit request: Request[_]): Future[FraudReportDetails] =
     saveFraudReportDetails(sd => sd.copy(individualInformationCheck = individualInformationCheck))
 
-  def getIndividualInformationCheck()(implicit hc: HeaderCarrier): Future[Set[IndividualInformationCheck]] =
+  def getIndividualInformationCheck()(implicit request: Request[_]): Future[Set[IndividualInformationCheck]] =
     sessionCache.getFraudReportDetails map (_.individualInformationCheck)
 
   def cacheIndividualName(
     individualName: Some[IndividualName]
-  )(implicit hc: HeaderCarrier): Future[FraudReportDetails] =
+  )(implicit request: Request[_]): Future[FraudReportDetails] =
     saveFraudReportDetails(sd => sd.copy(individualName = individualName))
 
-  def getIndividualName()(implicit hc: HeaderCarrier): Future[Option[IndividualName]] =
+  def getIndividualName()(implicit request: Request[_]): Future[Option[IndividualName]] =
     sessionCache.getFraudReportDetails map (_.individualName)
 
   def cacheIndividualContact(
     individualContact: Some[IndividualContact]
-  )(implicit hc: HeaderCarrier): Future[FraudReportDetails] =
+  )(implicit request: Request[_]): Future[FraudReportDetails] =
     saveFraudReportDetails(sd => sd.copy(individualContact = individualContact))
 
-  def getIndividualContact()(implicit hc: HeaderCarrier): Future[Option[IndividualContact]] =
+  def getIndividualContact()(implicit request: Request[_]): Future[Option[IndividualContact]] =
     sessionCache.getFraudReportDetails map (_.individualContact)
 
 }
