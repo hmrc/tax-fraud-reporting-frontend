@@ -41,6 +41,10 @@
           legend = "individualName.header"
         ) {
 
+            <div id="value-hint" class="govuk-hint">
+                @messages("individualName.hint")
+            </div>
+
             @forms.inputText(
                 form = form,
                 id = "firstName",
