@@ -48,7 +48,7 @@ class IndividualNameProviderSpec extends WordSpec with Matchers with GuiceOneApp
       form().bind(data).hasErrors mustBe true
 
       val errors = form().bind(data).errors
-      errors.head.message mustBe "Enter either the individual’s first name, middle name, last name or nick name."
+      errors.head.message mustBe messages("individualName.error.required")
     }
 
   }
