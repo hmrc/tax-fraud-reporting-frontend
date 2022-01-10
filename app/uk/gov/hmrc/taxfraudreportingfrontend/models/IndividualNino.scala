@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,23 +12,16 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import controllers.routes._
-@import views.ViewUtils._
-@import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
+package uk.gov.hmrc.taxfraudreportingfrontend.models
 
-@this(
-layout: Layout,
-html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html
-)
+import play.api.libs.json.{Json, OFormat}
 
-@()(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
+case class IndividualNino(Nino: String)
 
-@layout(
-        pageTitle    = titleNoForm(messages("individualContact.title"))
-) {
+object IndividualNino {
 
-       @html.h1("individualNino.header")
+  implicit val format: OFormat[IndividualNino] = Json.format[IndividualNino]
 
 }

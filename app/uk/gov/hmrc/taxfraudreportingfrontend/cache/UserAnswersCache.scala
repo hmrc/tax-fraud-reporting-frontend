@@ -17,14 +17,8 @@
 package uk.gov.hmrc.taxfraudreportingfrontend.cache
 
 import play.api.mvc.Request
-import uk.gov.hmrc.taxfraudreportingfrontend.models.{ActivityType, IndividualInformationCheck}
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
-import uk.gov.hmrc.taxfraudreportingfrontend.models.{
-  ActivityType,
-  IndividualContact,
-  IndividualInformationCheck,
-  IndividualName
-}
+import uk.gov.hmrc.taxfraudreportingfrontend.models._
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -67,5 +61,11 @@ class UserAnswersCache @Inject() (sessionCache: SessionCache)(implicit ec: Execu
 
   def getIndividualContact()(implicit request: Request[_]): Future[Option[IndividualContact]] =
     sessionCache.getFraudReportDetails map (_.individualContact)
+
+  def cacheNino(individualNino: Some[IndividualNino])(implicit request: Request[_]): Future[FraudReportDetails] =
+    saveFraudReportDetails(sd => sd.copy(individualNino = individualNino))
+
+  def getNino()(implicit request: Request[_]): Future[Option[IndividualNino]] =
+    sessionCache.getFraudReportDetails map (_.individualNino)
 
 }

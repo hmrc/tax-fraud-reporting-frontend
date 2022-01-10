@@ -22,6 +22,7 @@ import uk.gov.hmrc.taxfraudreportingfrontend.models.{
   IndividualContact,
   IndividualInformationCheck,
   IndividualName,
+  IndividualNino,
   ReportingType
 }
 
@@ -30,7 +31,8 @@ case class FraudReportDetails(
   reportingType: Option[ReportingType] = None,
   individualInformationCheck: Set[IndividualInformationCheck] = Set.empty,
   individualName: Option[IndividualName] = None,
-  individualContact: Option[IndividualContact] = None
+  individualContact: Option[IndividualContact] = None,
+  individualNino: Option[IndividualNino] = None
 )
 
 object FraudReportDetails {

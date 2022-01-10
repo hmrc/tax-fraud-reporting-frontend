@@ -31,7 +31,7 @@ object IndividualInformationCheck extends Enumerable.Implicits {
   case object Age     extends IndividualInformationCheck("age", routes.IndividualAgeController.onPageLoad())
   case object Address extends IndividualInformationCheck("address", routes.IndividualAddressController.onPageLoad())
   case object Contact extends IndividualInformationCheck("contact", routes.IndividualContactController.onPageLoad())
-  case object NINO    extends IndividualInformationCheck("nino", routes.IndividualNinoController.onPageLoad())
+  case object NINO    extends IndividualInformationCheck("nino", routes.NinoController.onPageLoad())
 
   val values: Seq[IndividualInformationCheck] = Seq(Name, Age, Address, Contact, NINO)
 

@@ -150,5 +150,8 @@ individualContact.error.landline_Number.invalid = Enter a Landline number, like 
 individualContact.error.mobile_Number.invalid = Enter a mobile number, like 07700 900 982 or 44 808 157 0192
 individualContact.error.email_Address.invalid = Enter an email address in the correct format, like name@example.com
 
-individualNino.title = What is the individual''s National Insurance Number?
-individualNino.header = What is the individual''s National Insurance Number?
+nino.title = What is the individual''s National Insurance Number?
+nino.header = What is the individual''s National Insurance Number?
+nino.hint = For example, ‘QQ 12 34 56 C’.
+nino.error.required = Enter the individual''s National Insurance Number
+nino.error.invalidFormat = Enter the individual''s National Insurance number that is 2 letters, 6 numbers, then A, B, C or D, like QQ123456C
