@@ -28,7 +28,8 @@ import uk.gov.hmrc.taxfraudreportingfrontend.models.{
   ActivityType,
   IndividualContact,
   IndividualInformationCheck,
-  IndividualName
+  IndividualName,
+  IndividualNino
 }
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
@@ -55,6 +56,8 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
   private val mockIndividualName = IndividualName("Joe", "Edd", "Bloggs", "Blog")
 
   private val mockIndividualContact = IndividualContact("01632960001", "07700 900 982", "joe@gmail.com")
+
+  private val mockNino = IndividualNino("AB 12 34 56 C")
 
   protected override def beforeEach: Unit = {
     reset(mockSessionCache)
@@ -168,6 +171,32 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
 
       val testCacheData: Option[IndividualContact] =
         Await.result(testCache.getIndividualContact()(getRequest), Duration.Inf)
+      testCacheData shouldBe None
+    }
+
+    "save nino details in frontend cache" in {
+
+      Await.result(testCache.cacheNino(Some(mockNino))(getRequest), Duration.Inf)
+      val requestCaptor = ArgumentCaptor.forClass(classOf[FraudReportDetails])
+
+      verify(mockSessionCache).saveFraudReportDetails(requestCaptor.capture())(ArgumentMatchers.eq(getRequest))
+      val holder: FraudReportDetails = requestCaptor.getValue
+      holder.individualNino.get.Nino shouldBe "AB 12 34 56 C"
+
+      val testCacheData: Option[IndividualNino] =
+        Await.result(testCache.getNino()(getRequest), Duration.Inf)
+      testCacheData shouldBe None
+
+    }
+
+    "get empty nino details from cache" in {
+
+      when(mockSessionCache.getFraudReportDetails(any[Request[_]])).thenReturn(
+        Future.successful(FraudReportDetails(None))
+      )
+
+      val testCacheData: Option[IndividualNino] =
+        Await.result(testCache.getNino()(getRequest), Duration.Inf)
       testCacheData shouldBe None
     }
 
