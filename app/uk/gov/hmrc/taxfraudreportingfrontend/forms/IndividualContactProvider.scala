@@ -28,7 +28,7 @@ import scala.language.postfixOps
 class IndividualContactProvider @Inject() extends Mappings {
 
   private def phoneConstraint(mapping: FieldMapping[String], field: String) =
-    mapping.verifying(regexp(Validation.phoneNumberRegexPattern.pattern(), s"individualContact.error.$field.invalid"))
+    mapping.verifying(regexp(Validation.phoneNumberRegexPattern, s"individualContact.error.$field.invalid"))
 
   private def emailConstraint(mapping: FieldMapping[String], field: String) =
     mapping.verifying(regexp(Validation.emailPattern, s"individualContact.error.$field.invalid"))

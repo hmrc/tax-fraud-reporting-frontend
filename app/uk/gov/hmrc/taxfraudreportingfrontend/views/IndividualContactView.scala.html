@@ -47,32 +47,33 @@
                   form = form,
                   id = "landlineNumber",
                   name = "landlineNumber",
+                  inputType = "tel",
                   label = "individualContact.land-line",
                   isPageHeading = false,
                   isInFieldset = true,
-                  attributes = Map("autocomplete" -> "off")
+                  autocomplete = Some("tel")
            )
 
            @forms.inputText(
                  form = form,
                  id = "mobileNumber",
                  name = "mobileNumber",
+                 inputType = "tel",
                  label = "individualContact.mobile-line",
                  isPageHeading = false,
                  isInFieldset = true,
-                 attributes = Map(
-                 "autocomplete" -> "off" )
+                 autocomplete = Some("tel")
            )
 
            @forms.inputText(
                 form = form,
                 id = "emailAddress",
                 name = "emailAddress",
+                inputType = "email",
                 label = "individualContact.email",
                 isPageHeading = false,
                 isInFieldset = true,
-                attributes = Map(
-                "autocomplete" -> "off" )
+                autocomplete = Some("email")
            )
 
                 @html.button("site.continue")
