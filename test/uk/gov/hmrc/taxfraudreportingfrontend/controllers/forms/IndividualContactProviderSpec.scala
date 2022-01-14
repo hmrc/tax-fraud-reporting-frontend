@@ -17,12 +17,12 @@
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers.forms
 
 import org.scalatest.MustMatchers.convertToAnyMustWrapper
-import org.scalatest.{Matchers, WordSpec}
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import org.scalatest.{Matchers, OptionValues, WordSpec}
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.IndividualContactProvider
+import uk.gov.hmrc.taxfraudreportingfrontend.models.IndividualContact
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
-class IndividualContactProviderSpec extends WordSpec with Matchers with GuiceOneAppPerSuite with BaseSpec {
+class IndividualContactProviderSpec extends WordSpec with Matchers with BaseSpec with OptionValues {
 
   val form = new IndividualContactProvider()
 
@@ -30,40 +30,80 @@ class IndividualContactProviderSpec extends WordSpec with Matchers with GuiceOne
 
     "return no errors with valid data" in {
       val data =
-        Map("landlineNumber" -> "01632960001", "mobileNumber" -> "07700900982", "emailAddress" -> "joe@gmail.com")
-
-      form().bind(data).hasErrors mustBe false
+        Map("landlineNumber" -> "123", "mobileNumber" -> "456", "emailAddress" -> "joe@example.com")
+      val result = form().bind(data)
+      result.hasErrors mustEqual false
+      result.get mustEqual IndividualContact(Some("123"), Some("456"), Some("joe@example.com"))
     }
 
     "accept input if only landlineNumber is present" in {
-      val data = Map("landlineNumber" -> "01632960001", "mobileNumber" -> "", "emailAddress" -> "")
+      List("abc", "1" * 15).foreach { value =>
+        val data = Map("landlineNumber" -> value)
+        val result = form().bind(data)
+        result.hasErrors mustEqual false
+        result.get mustEqual IndividualContact(Some(value), None, None)
+      }
+    }
 
-      form().bind(data).hasErrors mustBe false
+    "accept input if only mobileNumber is present" in {
+      List("abc", "1" * 15).foreach { value =>
+        val data = Map("mobileNumber" -> value)
+        val result = form().bind(data)
+        result.hasErrors mustEqual false
+        result.get mustEqual IndividualContact(None, Some(value), None)
+      }
+    }
+
+    "accept input if only emailAddress is present" in {
+      val data = Map("emailAddress" -> "joe@example.com")
+      val result = form().bind(data)
+      result.hasErrors mustEqual false
+      result.get mustEqual IndividualContact(None, None, Some("joe@example.com"))
     }
 
     "return errors with invalid data" in {
-      val data =
-        Map("landlineNumber" -> "01632 960 001Abc", "mobileNumber" -> "07700 900 982", "emailAddress" -> "joe.com")
 
-      form().bind(data).hasErrors mustBe true
+      val data = Map(
+        "landlineNumber" -> "1" * 16,
+        "mobileNumber" -> "2" * 16,
+        "emailAddress" -> "joe.com"
+      )
+
+      val boundForm = form().bind(data)
+      val errors = boundForm.errors
+      errors.length mustEqual 3
+        
+      boundForm("landlineNumber").error.value.message mustEqual "individualContact.error.landline_Number.invalid"
+      boundForm("mobileNumber").error.value.message mustEqual "individualContact.error.mobile_Number.invalid"
+      boundForm("emailAddress").error.value.message mustEqual "individualContact.error.email_Address.invalid"
     }
 
-    "error if telephone number invalid" in {
-
-      val data =
-        Map("landlineNumber" -> "&$01632960001")
-
-      form().bind(data).hasErrors mustBe true
+    "error if landline number is invalid" in {
+      val data = Map("landlineNumber" -> "1" * 16)
+      val boundForm = form().bind(data)
+      boundForm.errors.length mustEqual 1
+      boundForm("landlineNumber").error.value.message mustEqual "individualContact.error.landline_Number.invalid"
     }
 
-    "error if email address invalid" in {
-
-      val data =
-        Map("email_Address" -> "&*joe.com")
-
-      form().bind(data).hasErrors mustBe true
+    "error if mobile number is invalid" in {
+      val data = Map("mobileNumber" -> "1" * 16)
+      val errors = form().bind(data).errors
+      val boundForm = form().bind(data)
+      boundForm.errors.length mustEqual 1
+      boundForm("mobileNumber").error.value.message mustEqual "individualContact.error.mobile_Number.invalid"
     }
 
+    "error if email address is invalid" in {
+      val data = Map("emailAddress" -> "&*joe.com")
+      val boundForm = form().bind(data)
+      boundForm.errors.length mustEqual 1
+      boundForm("emailAddress").error.value.message mustEqual "individualContact.error.email_Address.invalid"
+    }
+
+    "error if there are no fields present" in {
+      val boundForm = form().bind(Map.empty[String, String])
+      boundForm.errors.length mustEqual 1
+      boundForm("").error.value.message mustEqual "individualContact.error.required"
+    }
   }
-
 }

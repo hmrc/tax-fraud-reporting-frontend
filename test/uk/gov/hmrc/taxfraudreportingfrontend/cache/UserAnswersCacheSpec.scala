@@ -55,7 +55,7 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
 
   private val mockIndividualName = IndividualName("Joe", "Edd", "Bloggs", "Blog")
 
-  private val mockIndividualContact = IndividualContact("01632960001", "07700 900 982", "joe@gmail.com")
+  private val mockIndividualContact = IndividualContact(Some("123"), Some("456"), Some("joe@example.com"))
 
   private val mockNino = IndividualNino("AB 12 34 56 C")
 
@@ -155,7 +155,7 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
 
       verify(mockSessionCache).saveFraudReportDetails(requestCaptor.capture())(ArgumentMatchers.eq(getRequest))
       val holder: FraudReportDetails = requestCaptor.getValue
-      holder.individualContact.get.email_Address shouldBe "joe@gmail.com"
+      holder.individualContact.get.email_Address shouldBe Some("joe@example.com")
 
       val testCacheData: Option[IndividualContact] =
         Await.result(testCache.getIndividualContact()(getRequest), Duration.Inf)

@@ -36,21 +36,19 @@ class IndividualContactController @Inject() (
 )(implicit appConfig: AppConfig, executionContext: ExecutionContext, messages: MessagesApi)
     extends FrontendController(mcc) with I18nSupport {
 
-  private def form(implicit req: Request[AnyContent]) = formProvider()
-
-  private def onContactSubmit(): Call = routes.IndividualContactController.onSubmit()
+  private def form = formProvider()
 
   def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
     hc.sessionId map { _ =>
       sessionCache.get map { fraudReport =>
-        val filledForm = fraudReport match {
-          case Some(f) if f.individualContact.nonEmpty => form.fill(f.individualContact.get)
-          case _                                       => form
-        }
-        Ok(contactView(filledForm, onContactSubmit()))
+        val filledForm = (for {
+          report            <- fraudReport
+          individualContact <- report.individualContact
+        } yield form.fill(individualContact)).getOrElse(form)
+        Ok(contactView(filledForm))
       }
     } getOrElse Future.successful {
-      Redirect(routes.IndividualContactController.onPageLoad())
+      Redirect(routes.IndexViewController.onPageLoad())
     }
   }
 
@@ -58,7 +56,7 @@ class IndividualContactController @Inject() (
     implicit request =>
       val boundForm = form.bindFromRequest()
       boundForm.fold(
-        formWithErrors => Future.successful(BadRequest(contactView(formWithErrors, onContactSubmit()))),
+        formWithErrors => Future.successful(BadRequest(contactView(formWithErrors))),
         individualContact =>
           userAnswersCache.cacheIndividualContact(Some(individualContact)) map { _ =>
             //TODO when refactoring the code
@@ -66,5 +64,4 @@ class IndividualContactController @Inject() (
           }
       )
   }
-
 }

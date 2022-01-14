@@ -18,7 +18,7 @@ package uk.gov.hmrc.taxfraudreportingfrontend.models
 
 import play.api.libs.json.{Json, OFormat}
 
-case class IndividualContact(landline_Number: String, mobile_Number: String, email_Address: String)
+final case class IndividualContact(landline_Number: Option[String], mobile_Number: Option[String], email_Address: Option[String])
 
 object IndividualContact {
 
