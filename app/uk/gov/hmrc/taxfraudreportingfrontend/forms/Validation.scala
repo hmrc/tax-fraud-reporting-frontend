@@ -19,7 +19,5 @@ package uk.gov.hmrc.taxfraudreportingfrontend.forms
 object Validation {
 
   val safeInputPattern                 = "^(|[a-zA-Z][a-zA-Z0-9 / '-]+)$?"
-  val phoneNumberRegexPattern          = "(|(\\d ?){10,11}\\d)"
   val emailPattern                     = "^(.+@.+\\..+)?$"
-
 }
