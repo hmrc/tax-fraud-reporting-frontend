@@ -14,70 +14,67 @@
  * limitations under the License.
  *@
 
-@import controllers.routes._
 @import views.ViewUtils._
 @import uk.gov.hmrc.taxfraudreportingfrontend.models._
 @import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
+@import uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes
+@import uk.gov.hmrc.taxfraudreportingfrontend.views.html.components.FieldsetPageHeading
 
 @this(
-      layout: Layout,
-      html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html,
-      formHelper: FormWithCSRF,
-      forms: uk.gov.hmrc.taxfraudreportingfrontend.views.components.forms
+        layout: Layout,
+        html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html,
+        formHelper: FormWithCSRF,
+        forms: uk.gov.hmrc.taxfraudreportingfrontend.views.components.forms,
+        fieldset: FieldsetPageHeading
 )
+@(form: Form[_])(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
 
-@(form: Form[_], submit: Call)(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
+    @layout(
+        pageTitle = s"${errorPrefix(form)}${titleNoForm(messages("individualContact.title"))}"
+    ) {
 
-@layout(
-        pageTitle    = s"${errorPrefix(form)}${titleNoForm(messages("individualContact.title"))}"
-) {
+        @forms.formWithCSRF(action = routes.IndividualContactController.onSubmit(), args = 'novalidate -> "novalidate") {
 
-        @forms.formWithCSRF(action = submit, args = 'novalidate -> "novalidate") {
+            @forms.errorSummary(form.errors, None, Some("landlineNumber"))
 
-        @components.error_summary(form.errors)
+            @fieldset(
+                legend = "individualContact.header",
+                field = form(""),
+                hint = Some("individualContact.hint")
+            ) {
+                @forms.inputText(
+                    form = form,
+                    id = "landlineNumber",
+                    name = "landlineNumber",
+                    inputType = "tel",
+                    label = "individualContact.land-line",
+                    isPageHeading = false,
+                    isInFieldset = true
+                )
 
-           @forms.fieldSet(
-                   legend = "individualContact.header"
-           ) {
-                <div id="value-hint" class="govuk-hint">
-                    @messages("individualContact.hint")
-                </div>
+                @forms.inputText(
+                    form = form,
+                    id = "mobileNumber",
+                    name = "mobileNumber",
+                    inputType = "tel",
+                    label = "individualContact.mobile-line",
+                    isPageHeading = false,
+                    isInFieldset = true
+                )
 
-           @forms.inputText(
-                  form = form,
-                  id = "landlineNumber",
-                  name = "landlineNumber",
-                  label = "individualContact.land-line",
-                  isPageHeading = false,
-                  isInFieldset = true,
-                  attributes = Map("autocomplete" -> "off")
-           )
+                @forms.inputText(
+                    form = form,
+                    id = "emailAddress",
+                    name = "emailAddress",
+                    inputType = "email",
+                    label = "individualContact.email",
+                    isPageHeading = false,
+                    isInFieldset = true
+                )
+            }
 
-           @forms.inputText(
-                 form = form,
-                 id = "mobileNumber",
-                 name = "mobileNumber",
-                 label = "individualContact.mobile-line",
-                 isPageHeading = false,
-                 isInFieldset = true,
-                 attributes = Map(
-                 "autocomplete" -> "off" )
-           )
-
-           @forms.inputText(
-                form = form,
-                id = "emailAddress",
-                name = "emailAddress",
-                label = "individualContact.email",
-                isPageHeading = false,
-                isInFieldset = true,
-                attributes = Map(
-                "autocomplete" -> "off" )
-           )
-
-                @html.button("site.continue")
-           }
+            @html.button("site.continue")
 
         }
 
-}
+    }

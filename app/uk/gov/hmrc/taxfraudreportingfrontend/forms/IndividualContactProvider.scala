@@ -16,44 +16,24 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.forms
 
-import play.api.data.Forms.mapping
-import play.api.data.{FieldMapping, Form}
-import play.api.i18n.Messages
+import play.api.data.Form
+import play.api.data.Forms.{mapping, optional}
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.mappings.Mappings
 import uk.gov.hmrc.taxfraudreportingfrontend.models.IndividualContact
 
 import javax.inject.Inject
-import scala.language.postfixOps
 
 class IndividualContactProvider @Inject() extends Mappings {
 
-  private def phoneConstraint(mapping: FieldMapping[String], field: String) =
-    mapping.verifying(regexp(Validation.phoneNumberRegexPattern.pattern(), s"individualContact.error.$field.invalid"))
-
-  private def emailConstraint(mapping: FieldMapping[String], field: String) =
-    mapping.verifying(regexp(Validation.emailPattern, s"individualContact.error.$field.invalid"))
-
-  private def atLeastOneContact(message: String = "") =
-    atLeastOneOf("landlineNumber,mobileNumber,emailAddress" split ',', message)
-
-  def apply()(implicit messages: Messages): Form[IndividualContact] =
+  def apply(): Form[IndividualContact] =
     Form(
       mapping(
-        "landlineNumber" -> phoneConstraint(
-          atLeastOneContact(messages(s"individualContact.error.required")),
-          "landline_Number"
-        ),
-        "mobileNumber" -> phoneConstraint(atLeastOneContact(), "mobile_Number"),
-        "emailAddress" -> emailConstraint(atLeastOneContact(), "email_Address")
-      )(IndividualContact.apply)(IndividualContact.unapply).verifying(
-        messages(s"individualContact.error.required"),
-        individualContact =>
-          Seq(
-            individualContact.landline_Number,
-            individualContact.mobile_Number,
-            individualContact.email_Address
-          ) flatMap { _.trim } nonEmpty
-      )
+        "landlineNumber" -> optional(text().verifying("individualContact.error.landline_Number.invalid", _.trim.length <= 15)),
+        "mobileNumber" -> optional(text().verifying("individualContact.error.mobile_Number.invalid", _.trim.length <= 15)),
+        "emailAddress" -> optional(text().verifying(regexp(Validation.emailPattern, "individualContact.error.email_Address.invalid")))
+      )(IndividualContact.apply)(IndividualContact.unapply)
+        .verifying("individualContact.error.required", individualContact =>
+          List(individualContact.landline_Number, individualContact.mobile_Number, individualContact.email_Address).flatten.nonEmpty
+        )
     )
-
 }

@@ -16,118 +16,71 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatest.Matchers
+import org.mockito.ArgumentMatchers.{any, eq => eqTo}
+import org.mockito.Mockito._
 import org.scalatest.MustMatchers.convertToAnyMustWrapper
+import org.scalatest.{Matchers, OptionValues}
 import org.scalatestplus.mockito.MockitoSugar
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{
-  contentAsString,
-  defaultAwaitTimeout,
-  route,
-  running,
-  status,
-  writeableOf_AnyContentAsEmpty,
-  writeableOf_AnyContentAsFormUrlEncoded,
-  GET,
-  POST
-}
+import play.api.test.Helpers._
 import uk.gov.hmrc.http.SessionKeys
-import uk.gov.hmrc.taxfraudreportingfrontend.forms.mappings.Mappings
+import uk.gov.hmrc.taxfraudreportingfrontend.models.IndividualContact
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
 import scala.concurrent.Future
 
 class IndividualContactControllerSpec
-    extends BaseSpec with Matchers with Mappings with GuiceOneAppPerSuite with MockitoSugar {
+  extends BaseSpec with Matchers with MockitoSugar with OptionValues {
 
-  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] =
+  val request: FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest("GET", "/").withSession(SessionKeys.sessionId -> "fakesessionid")
 
   lazy val individualContactRoute: String = routes.IndividualContactController.onPageLoad().url
 
-  private val controller = app.injector.instanceOf[IndividualContactController]
+  private val controller = application.injector.instanceOf[IndividualContactController]
 
   "Individual's Contact page view" should {
 
-    when(mockUserAnswersCache.getIndividualContact()(getRequest)).thenReturn(Future.successful(None))
-
-    val result          = controller.onPageLoad()(fakeRequest)
-    val content: String = contentAsString(result)
-    val doc: Document   = Jsoup.parse(content)
-
-    "load the page content" in {
-
-      doc.getElementsByTag("h1").text() shouldBe messages("individualContact.header")
-
-      doc.getElementById("value-hint").text() shouldBe messages("individualContact.hint")
-
-    }
-
-    "load the page content from cache individual contact is empty" in {
-
-      running(application) {
-
-        val result =
-          controller.onPageLoad()(FakeRequest("GET", "/").withSession(SessionKeys.sessionId -> "fakesessionidNew"))
-        val content: String = contentAsString(result)
-        val doc: Document   = Jsoup.parse(content)
-
-        doc.getElementsByTag("h1").text() shouldBe messages("individualContact.header")
-
-        doc.getElementById("value-hint").text() shouldBe messages("individualContact.hint")
-
-      }
-
-    }
-
-    "load the individual contact page content with cache" in {
-
-      running(application) {
-
-        val result          = controller.onPageLoad()(fakeRequest)
-        val content: String = contentAsString(result)
-        val doc: Document   = Jsoup.parse(content)
-
-        doc.getElementsByTag("h1").text() shouldBe messages("individualContact.header")
-
-        doc.getElementById("value-hint").text() shouldBe messages("individualContact.hint")
-
-      }
-
-    }
-
-    "return a Bad Request and errors when invalid data is submitted" in {
-
-      running(application) {
-
-        val request =
-          FakeRequest(POST, individualContactRoute)
-            .withFormUrlEncodedBody(("email_Address", "&*joe.com"))
-
-        val result = route(application, request).get
-
-        status(result) shouldBe BAD_REQUEST
-
-        application.stop()
-      }
-    }
-
-    "return to individual Concat view page" in {
-
-      val request = FakeRequest(GET, routes.IndividualContactController.onPageLoad().url)
-
-      val result = route(application, request).get
-
+    "redirect to the index page when there is no session id" in {
+      val result = controller.onPageLoad()(FakeRequest())
       status(result) mustEqual SEE_OTHER
+      redirectLocation(result).value mustEqual routes.IndexViewController.onPageLoad().url
+    }
 
+    "return OK when there is no session" in {
+      when(mockSessionCache.get()(any())).thenReturn(Future.successful(None))
+      val result = controller.onPageLoad()(request)
+      status(result) mustEqual OK
+    }
+
+    "return OK when there is no individual contact details" in {
+      when(mockSessionCache.get()(any())).thenReturn(Future.successful(Some(FraudReportDetails())))
+      val result = controller.onPageLoad()(request)
+      status(result) mustEqual OK
+    }
+
+    "return a Bad Request when invalid data is submitted" in {
+      val request =
+        FakeRequest(POST, individualContactRoute)
+          .withFormUrlEncodedBody(("emailAddress" -> "&*joe.com"))
+      val result = controller.onSubmit()(request)
+      status(result) mustEqual BAD_REQUEST
+    }
+
+    // TODO this should be un-ignored when routing is complete
+    "redirect to individual contact page when valid data is submitted" ignore {
+      val expectedData = IndividualContact(
+        landline_Number = None, mobile_Number = None, email_Address = Some("joe@example.com")
+      )
+      when(mockUserAnswersCache.cacheIndividualContact(eqTo(Some(expectedData)))(any())).thenReturn(Future.successful(FraudReportDetails()))
+      val request = FakeRequest(POST, individualContactRoute)
+        .withFormUrlEncodedBody("emailAddress" -> "joe@example.com")
+      val result = controller.onSubmit()(request)
+      status(result) mustEqual SEE_OTHER
+      redirectLocation(result).value mustEqual individualContactRoute
     }
   }
 }
