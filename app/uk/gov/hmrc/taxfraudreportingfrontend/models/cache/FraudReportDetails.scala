@@ -19,6 +19,7 @@ package uk.gov.hmrc.taxfraudreportingfrontend.models.cache
 import play.api.libs.json.{Format, Json}
 import uk.gov.hmrc.taxfraudreportingfrontend.models.{
   ActivityType,
+  ConnectionType,
   IndividualContact,
   IndividualInformationCheck,
   IndividualName,
@@ -32,7 +33,8 @@ case class FraudReportDetails(
   individualInformationCheck: Set[IndividualInformationCheck] = Set.empty,
   individualName: Option[IndividualName] = None,
   individualContact: Option[IndividualContact] = None,
-  individualNino: Option[IndividualNino] = None
+  individualNino: Option[IndividualNino] = None,
+  connectionType: Option[ConnectionType] = None
 )
 
 object FraudReportDetails {

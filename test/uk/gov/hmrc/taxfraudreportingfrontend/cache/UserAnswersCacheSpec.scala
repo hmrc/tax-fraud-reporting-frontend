@@ -23,14 +23,9 @@ import org.scalatest.BeforeAndAfterEach
 import play.api.mvc.Request
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.taxfraudreportingfrontend.models.IndividualInformationCheck.{Address, Age, Contact, NINO, Name}
+import uk.gov.hmrc.taxfraudreportingfrontend.models.PersonConnectionType.partner
+import uk.gov.hmrc.taxfraudreportingfrontend.models._
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
-import uk.gov.hmrc.taxfraudreportingfrontend.models.{
-  ActivityType,
-  IndividualContact,
-  IndividualInformationCheck,
-  IndividualName,
-  IndividualNino
-}
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -58,6 +53,8 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
   private val mockIndividualContact = IndividualContact(Some("123"), Some("456"), Some("joe@example.com"))
 
   private val mockNino = IndividualNino("AB 12 34 56 C")
+
+  private val mockPersonConnection = ConnectionType(PersonConnectionType.values.head, Option("otherConnection"))
 
   protected override def beforeEach: Unit = {
     reset(mockSessionCache)
@@ -197,6 +194,32 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
 
       val testCacheData: Option[IndividualNino] =
         Await.result(testCache.getNino()(getRequest), Duration.Inf)
+      testCacheData shouldBe None
+    }
+
+    "save person connect type data in frontend cache" in {
+
+      Await.result(testCache.cacheConnection(Some(mockPersonConnection))(getRequest), Duration.Inf)
+      val requestCaptor = ArgumentCaptor.forClass(classOf[FraudReportDetails])
+
+      verify(mockSessionCache).saveFraudReportDetails(requestCaptor.capture())(ArgumentMatchers.eq(getRequest))
+      val holder: FraudReportDetails = requestCaptor.getValue
+      holder.connectionType.get.personConnectionType shouldBe partner
+
+      val testCacheData: Option[ConnectionType] =
+        Await.result(testCache.getConnection()(getRequest), Duration.Inf)
+      testCacheData shouldBe None
+
+    }
+
+    "get person connect type data from cache" in {
+
+      when(mockSessionCache.getFraudReportDetails(any[Request[_]])).thenReturn(
+        Future.successful(FraudReportDetails(None))
+      )
+
+      val testCacheData: Option[ConnectionType] =
+        Await.result(testCache.getConnection()(getRequest), Duration.Inf)
       testCacheData shouldBe None
     }
 

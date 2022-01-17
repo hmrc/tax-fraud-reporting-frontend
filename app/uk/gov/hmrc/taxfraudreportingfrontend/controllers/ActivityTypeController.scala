@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
-import play.api.Logger
 import play.api.data.Form
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
@@ -41,7 +40,6 @@ class ActivityTypeController @Inject() (
 )(implicit appConfig: AppConfig, ec: ExecutionContext)
     extends FrontendController(mcc) with I18nSupport {
 
-  private val logger: Logger            = Logger(this.getClass)
   val form: Form[ActivityTypeViewModel] = activityTypeProvider()
 
   private def onSubmitActivityType(): Call = routes.ActivityTypeController.onSubmit()

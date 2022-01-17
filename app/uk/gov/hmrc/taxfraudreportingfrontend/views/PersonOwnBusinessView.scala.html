@@ -18,16 +18,16 @@
 @import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 
 @this(
-layout: Layout,
-html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html
+        layout: Layout,
+        html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html
 )
 
 @()(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
 
 @layout(
-        pageTitle    = titleNoForm(messages("individualAge.title"))
+        pageTitle    = titleNoForm(messages("personOwnBusiness.title"))
 ) {
 
-    @html.h1("individualAge.header")
+   @html.h1("personOwnBusiness.header")
 
 }

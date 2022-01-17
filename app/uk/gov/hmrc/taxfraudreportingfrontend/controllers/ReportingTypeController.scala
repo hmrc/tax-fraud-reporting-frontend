@@ -25,13 +25,13 @@ import uk.gov.hmrc.taxfraudreportingfrontend.models.ReportingType
 import uk.gov.hmrc.taxfraudreportingfrontend.views.html.ReportingTypeView
 
 import javax.inject.Inject
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 class ReportingTypeController @Inject() (
   mcc: MessagesControllerComponents,
   reportingTypeView: ReportingTypeView,
   formProvider: ReportingTypeProvider
-)(implicit appConfig: AppConfig, executionContext: ExecutionContext)
+)(implicit appConfig: AppConfig)
     extends FrontendController(mcc) {
 
   val form: Form[ReportingType] = formProvider()
