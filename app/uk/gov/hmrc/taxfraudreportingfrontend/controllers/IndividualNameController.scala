@@ -62,7 +62,7 @@ class IndividualNameController @Inject() (
         individualName =>
           userAnswersCache.cacheIndividualName(Some(individualName)) map { _ =>
             //TODO when refactoring the code
-            Redirect(routes.IndividualInformationCheckController.onPageLoad())
+            Redirect(routes.PersonConnectionTypeController.onPageLoad())
           }
       )
   }

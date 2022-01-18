@@ -16,23 +16,23 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.models
 
-sealed trait PersonConnectionType
+sealed abstract class PersonConnectionType(toString: String) extends WithName(toString)
 
 object PersonConnectionType extends Enumerable.Implicits {
 
-  case object Partner            extends WithName("partner") with PersonConnectionType
-  case object ExPartner          extends WithName("exPartner") with PersonConnectionType
-  case object FamilyMember       extends WithName("familyMember") with PersonConnectionType
-  case object BusinessPartner    extends WithName("businessPartner") with PersonConnectionType
-  case object Employer           extends WithName("employer") with PersonConnectionType
-  case object ExEmployer         extends WithName("exEmployer") with PersonConnectionType
-  case object Employee           extends WithName("employee") with PersonConnectionType
-  case object Colleague          extends WithName("colleague") with PersonConnectionType
-  case object Friend             extends WithName("friend") with PersonConnectionType
-  case object Neighbour          extends WithName("neighbour") with PersonConnectionType
-  case object Customer           extends WithName("customer") with PersonConnectionType
-  case object BusinessCompetitor extends WithName("businessCompetitor") with PersonConnectionType
-  case object Other              extends WithName("other") with PersonConnectionType
+  case object Partner            extends PersonConnectionType("partner")
+  case object ExPartner          extends PersonConnectionType("exPartner")
+  case object FamilyMember       extends PersonConnectionType("familyMember")
+  case object BusinessPartner    extends PersonConnectionType("businessPartner")
+  case object Employer           extends PersonConnectionType("employer")
+  case object ExEmployer         extends PersonConnectionType("exEmployer")
+  case object Employee           extends PersonConnectionType("employee")
+  case object Colleague          extends PersonConnectionType("colleague")
+  case object Friend             extends PersonConnectionType("friend")
+  case object Neighbour          extends PersonConnectionType("neighbour")
+  case object Customer           extends PersonConnectionType("customer")
+  case object BusinessCompetitor extends PersonConnectionType("businessCompetitor")
+  case object Other              extends PersonConnectionType("other")
 
   val values: Seq[PersonConnectionType] = Seq(
     Partner,
