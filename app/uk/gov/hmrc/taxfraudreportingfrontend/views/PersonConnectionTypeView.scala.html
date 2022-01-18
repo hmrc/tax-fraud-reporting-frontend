@@ -16,6 +16,7 @@
 
 @import views.ViewUtils._
 @import uk.gov.hmrc.taxfraudreportingfrontend.models._
+@import uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes
 @import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 @import uk.gov.hmrc.taxfraudreportingfrontend.views.components.forms
 
@@ -26,13 +27,27 @@
       html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html
 )
 
-@(form: Form[_], submit: Call)(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
+@(form: Form[_])(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
+
+@conditionalContent = {
+        @forms.inputText(
+        form = form,
+        id = "otherConnection",
+        name = "otherConnection",
+        label = "selectConnection.conditional.text.label",
+        classes = Some("govuk-!-width-two-thirds"),
+        isPageHeading = false,
+        isInFieldset = false,
+        attributes = Map("autocomplete" -> "off")
+        )
+}
+
 
 @layout(
         pageTitle    = s"${errorPrefix(form)}${titleNoForm(messages("selectConnection.title"))}"
 ) {
 
-        @forms.formWithCSRF(action = submit, args = 'novalidate -> "novalidate") {
+        @forms.formWithCSRF(action = routes.PersonConnectionTypeController.onSubmit(), args = 'novalidate -> "novalidate") {
 
         @components.error_summary(form.errors)
 
@@ -40,7 +55,62 @@
             form = form,
             idPrefix = "value",
             name = "value",
-            items = PersonConnectionType.options(form),
+            items = Seq(
+                RadioItem(
+                    value = Some("partner"),
+                    content = Text(messages("selectConnection.partner")),
+                ),
+                RadioItem(
+                    value = Some("exPartner"),
+                    content = Text(messages("selectConnection.exPartner")),
+                ),
+                RadioItem(
+                    value = Some("familyMember"),
+                    content = Text(messages("selectConnection.familyMember")),
+                ),
+                RadioItem(
+                    value = Some("businessPartner"),
+                    content = Text(messages("selectConnection.businessPartner")),
+                ),
+                RadioItem(
+                    value = Some("employer"),
+                    content = Text(messages("selectConnection.employer")),
+                ),
+                RadioItem(
+                    value = Some("exEmployer"),
+                    content = Text(messages("selectConnection.exEmployer")),
+                ),
+                RadioItem(
+                    value = Some("employee"),
+                    content = Text(messages("selectConnection.employee")),
+                ),
+                RadioItem(
+                    value = Some("colleague"),
+                    content = Text(messages("selectConnection.colleague")),
+                ),
+                RadioItem(
+                    value = Some("friend"),
+                    content = Text(messages("selectConnection.friend")),
+                ),
+                RadioItem(
+                    value = Some("neighbour"),
+                    content = Text(messages("selectConnection.neighbour")),
+                ),
+                RadioItem(
+                    value = Some("customer"),
+                    content = Text(messages("selectConnection.customer")),
+                ),
+                RadioItem(
+                    value = Some("businessCompetitor"),
+                    content = Text(messages("selectConnection.businessCompetitor")),
+                ),
+                RadioItem(
+                    value = Some("other"),
+                    content = Text(messages("selectConnection.other")),
+                    checked = form.data.values.exists(_ == "other"),
+                    conditionalHtml = Some(conditionalContent)
+                )
+            ),
             inline = false,
             legendAsHeading = true,
             legend = Some(messages("selectConnection.header")),

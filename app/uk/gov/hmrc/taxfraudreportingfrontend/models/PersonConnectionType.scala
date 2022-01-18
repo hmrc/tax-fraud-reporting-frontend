@@ -16,84 +16,39 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.models
 
-import play.api.data.Form
-import play.api.i18n.Messages
-import uk.gov.hmrc.govukfrontend.views.Aliases.{ErrorMessage, Label}
-import uk.gov.hmrc.govukfrontend.views.html.components.{GovukErrorMessage, GovukHint, GovukInput, GovukLabel}
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
-import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
-
-sealed abstract class PersonConnectionType
+sealed trait PersonConnectionType
 
 object PersonConnectionType extends Enumerable.Implicits {
 
-  case object partner            extends PersonConnectionType
-  case object exPartner          extends PersonConnectionType
-  case object familyMember       extends PersonConnectionType
-  case object businessPartner    extends PersonConnectionType
-  case object employer           extends PersonConnectionType
-  case object exEmployer         extends PersonConnectionType
-  case object employee           extends PersonConnectionType
-  case object colleague          extends PersonConnectionType
-  case object friend             extends PersonConnectionType
-  case object neighbour          extends PersonConnectionType
-  case object customer           extends PersonConnectionType
-  case object businessCompetitor extends PersonConnectionType
-  case object other              extends PersonConnectionType
-
-  private val govukErrorMessage: GovukErrorMessage = new GovukErrorMessage()
-  private val govukHint: GovukHint                 = new GovukHint()
-  private val govukLabel: GovukLabel               = new GovukLabel()
+  case object Partner            extends WithName("partner") with PersonConnectionType
+  case object ExPartner          extends WithName("exPartner") with PersonConnectionType
+  case object FamilyMember       extends WithName("familyMember") with PersonConnectionType
+  case object BusinessPartner    extends WithName("businessPartner") with PersonConnectionType
+  case object Employer           extends WithName("employer") with PersonConnectionType
+  case object ExEmployer         extends WithName("exEmployer") with PersonConnectionType
+  case object Employee           extends WithName("employee") with PersonConnectionType
+  case object Colleague          extends WithName("colleague") with PersonConnectionType
+  case object Friend             extends WithName("friend") with PersonConnectionType
+  case object Neighbour          extends WithName("neighbour") with PersonConnectionType
+  case object Customer           extends WithName("customer") with PersonConnectionType
+  case object BusinessCompetitor extends WithName("businessCompetitor") with PersonConnectionType
+  case object Other              extends WithName("other") with PersonConnectionType
 
   val values: Seq[PersonConnectionType] = Seq(
-    partner,
-    exPartner,
-    familyMember,
-    businessPartner,
-    employer,
-    exEmployer,
-    employee,
-    colleague,
-    friend,
-    neighbour,
-    customer,
-    businessCompetitor,
-    other
+    Partner,
+    ExPartner,
+    FamilyMember,
+    BusinessPartner,
+    Employer,
+    ExEmployer,
+    Employee,
+    Colleague,
+    Friend,
+    Neighbour,
+    Customer,
+    BusinessCompetitor,
+    Other
   )
-
-  def options(form: Form[_])(implicit messages: Messages): Seq[RadioItem] = values.map {
-    value =>
-      RadioItem(
-        value = Some(value.toString),
-        content = Text(messages(s"selectConnection.${value.toString}")),
-        checked =
-          if (form.value.isEmpty)
-            form("value").value.contains(value.toString)
-          else
-            form.value.head.asInstanceOf[ConnectionType].personConnectionType == value,
-        conditionalHtml =
-          if (value.toString.equals("other"))
-            Some(
-              new GovukInput(govukErrorMessage, govukHint, govukLabel)(
-                Input(
-                  id = "otherConnection",
-                  value = form("otherConnection").value,
-                  label =
-                    Label(content = Text(messages("selectConnection.conditional.text.label")), isPageHeading = false),
-                  errorMessage =
-                    if (form("otherConnection").hasErrors)
-                      Some(ErrorMessage(content = Text(messages(form("otherConnection").errors.head.message))))
-                    else None,
-                  name = "otherConnection",
-                  classes = "govuk-!-width-two-thirds",
-                  attributes = Map("autocomplete" -> "off")
-                )
-              )
-            )
-          else None
-      )
-  }
 
   implicit val enumerable: Enumerable[PersonConnectionType] =
     Enumerable(values.map(v => v.toString -> v): _*)

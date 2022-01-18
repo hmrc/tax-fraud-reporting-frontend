@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.taxfraudreportingfrontend.cache.{SessionCache, UserAnswersCache}
@@ -64,4 +64,5 @@ class IndividualContactController @Inject() (
           }
       )
   }
+
 }

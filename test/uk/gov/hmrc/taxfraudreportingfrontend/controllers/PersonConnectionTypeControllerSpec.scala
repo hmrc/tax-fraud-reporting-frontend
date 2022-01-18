@@ -24,7 +24,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{defaultAwaitTimeout, redirectLocation, status, POST}
+import play.api.test.Helpers.{defaultAwaitTimeout, route, status, writeableOf_AnyContentAsEmpty, GET, POST}
 import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
@@ -43,9 +43,9 @@ class PersonConnectionTypeControllerSpec extends BaseSpec with Matchers with Moc
   "Person connection type page view" should {
 
     "redirect to the page when there is no session id" in {
-      val result = controller.onPageLoad()(FakeRequest())
+      val request = FakeRequest(GET, routes.PersonConnectionTypeController.onPageLoad().url)
+      val result  = route(application, request).get
       status(result) mustEqual SEE_OTHER
-      redirectLocation(result).value mustEqual "/report-tax-fraud/select-connection"
     }
 
     "return OK when there is no session" in {

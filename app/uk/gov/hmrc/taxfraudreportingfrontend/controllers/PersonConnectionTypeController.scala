@@ -16,13 +16,11 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
-import play.api.data.Form
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.taxfraudreportingfrontend.cache.{SessionCache, UserAnswersCache}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 import uk.gov.hmrc.taxfraudreportingfrontend.forms.PersonConnectionTypeProvider
-import uk.gov.hmrc.taxfraudreportingfrontend.models.ConnectionType
 import uk.gov.hmrc.taxfraudreportingfrontend.views.html.PersonConnectionTypeView
 
 import javax.inject.Inject
@@ -37,18 +35,16 @@ class PersonConnectionTypeController @Inject() (
 )(implicit appConfig: AppConfig, executionContext: ExecutionContext)
     extends FrontendController(mcc) {
 
-  private val form: Form[ConnectionType] = formProvider()
-
-  private def onSubmitConnection() = routes.PersonConnectionTypeController.onSubmit()
+  private val form = formProvider()
 
   def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
     hc.sessionId map { _ =>
       sessionCache.get map { fraudReport =>
-        val filledForm = fraudReport match {
-          case Some(f) if f.connectionType.nonEmpty => form.fill(f.connectionType.get)
-          case _                                    => form
-        }
-        Ok(connectionView(filledForm, onSubmitConnection()))
+        val filledForm = (for {
+          report         <- fraudReport
+          connectionType <- report.connectionType
+        } yield form.fill(connectionType)).getOrElse(form)
+        Ok(connectionView(filledForm))
       }
     } getOrElse Future.successful {
       Redirect(routes.PersonConnectionTypeController.onPageLoad())
@@ -59,7 +55,7 @@ class PersonConnectionTypeController @Inject() (
     implicit request =>
       val boundForm = form.bindFromRequest()
       boundForm.fold(
-        formWithErrors => Future.successful(BadRequest(connectionView(formWithErrors, onSubmitConnection()))),
+        formWithErrors => Future.successful(BadRequest(connectionView(formWithErrors))),
         connectionType =>
           userAnswersCache.cacheConnection(Some(connectionType)) map { _ =>
             Redirect(routes.PersonOwnBusinessController.onPageLoad())
