@@ -32,8 +32,7 @@ import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
 import scala.concurrent.Future
 
-class IndividualContactControllerSpec
-  extends BaseSpec with Matchers with MockitoSugar with OptionValues {
+class IndividualContactControllerSpec extends BaseSpec with Matchers with MockitoSugar with OptionValues {
 
   val request: FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest("GET", "/").withSession(SessionKeys.sessionId -> "fakesessionid")
@@ -72,8 +71,10 @@ class IndividualContactControllerSpec
 
     // TODO this should be un-ignored when routing is complete
     "redirect to individual contact page when valid data is submitted" ignore {
-      val expectedData = IndividualContact(
-        landline_Number = None, mobile_Number = None, email_Address = Some("joe@example.com")
+      val expectedData =
+        IndividualContact(landline_Number = None, mobile_Number = None, email_Address = Some("joe@example.com"))
+      when(mockUserAnswersCache.cacheIndividualContact(eqTo(Some(expectedData)))(any())).thenReturn(
+        Future.successful(FraudReportDetails())
       )
       val request = FakeRequest(POST, individualContactRoute)
         .withFormUrlEncodedBody("emailAddress" -> "joe@example.com")

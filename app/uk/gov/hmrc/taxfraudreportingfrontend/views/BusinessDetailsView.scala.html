@@ -17,6 +17,7 @@
 @import views.ViewUtils._
 @import uk.gov.hmrc.taxfraudreportingfrontend.models._
 @import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
+@import uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes
 
 @this(
         layout: Layout,
@@ -25,13 +26,13 @@
         html: uk.gov.hmrc.taxfraudreportingfrontend.views.components.html
 )
 
-@(form: Form[_], submit: Call)(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
+@(form: Form[_])(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
 
 @layout(
         pageTitle    = s"${errorPrefix(form)}${titleNoForm(messages("businessDetails.title"))}"
 ) {
 
-        @forms.formWithCSRF(action = submit, args = 'novalidate -> "novalidate") {
+        @forms.formWithCSRF(action = routes.BusinessDetailsController.onSubmit(), args = 'novalidate -> "novalidate") {
 
             @components.error_summary(form.errors)
 

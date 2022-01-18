@@ -42,4 +42,25 @@ class PersonConnectionTypeProviderSpec extends OptionFieldBehaviours {
     behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
   }
 
+  "otherConnection" must {
+
+    val fieldName   = "otherConnection"
+    val requiredKey = "selectConnection.otherConnection.error.required"
+
+    behave like fieldThatBindsValidData(form, fieldName, requiredKey)
+
+    behave like mandatoryField(
+      form.bind(Map(radioFieldName -> "other")),
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
+
+    "fail to bind a value" in {
+      val result        = form.bind(Map(radioFieldName -> "other")).bind(Map(fieldName -> "")).apply(fieldName)
+      val expectedError = error(fieldName, requiredKey)
+
+      result.errors shouldEqual expectedError
+    }
+  }
+
 }
