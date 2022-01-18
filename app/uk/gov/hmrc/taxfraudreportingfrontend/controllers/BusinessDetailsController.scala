@@ -39,16 +39,14 @@ class BusinessDetailsController @Inject() (
 
   private val form: Form[BusinessDetails] = formProvider()
 
-  private def onSubmitDetails() = routes.BusinessDetailsController.onSubmit()
-
   def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
     hc.sessionId map { _ =>
       sessionCache.get map { fraudReport =>
-        val filledForm = fraudReport match {
-          case Some(f) if f.businessDetails.nonEmpty => form.fill(f.businessDetails.get)
-          case _                                     => form
-        }
-        Ok(view(filledForm, onSubmitDetails()))
+        val filledForm = (for {
+          report          <- fraudReport
+          businessDetails <- report.businessDetails
+        } yield form.fill(businessDetails)).getOrElse(form)
+        Ok(view(filledForm))
       }
     } getOrElse Future.successful {
       Redirect(routes.BusinessDetailsController.onPageLoad())
@@ -59,7 +57,7 @@ class BusinessDetailsController @Inject() (
     implicit request =>
       val boundForm = form.bindFromRequest()
       boundForm.fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, onSubmitDetails()))),
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors))),
         businessDetails =>
           userAnswersCache.cacheBusinessDetails(Some(businessDetails)) map { _ =>
             Redirect(routes.AddAnotherPersonController.onPageLoad())

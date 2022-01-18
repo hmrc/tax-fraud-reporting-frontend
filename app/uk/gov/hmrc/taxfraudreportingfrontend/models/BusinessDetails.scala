@@ -21,15 +21,15 @@ import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
 
-sealed trait BusinessDetails
+sealed abstract class BusinessDetails(toString: String) extends WithName(toString)
 
 object BusinessDetails extends Enumerable.Implicits {
 
-  case object yes        extends BusinessDetails
-  case object no         extends BusinessDetails
-  case object donNotKnow extends BusinessDetails
+  case object Yes        extends BusinessDetails("yes")
+  case object No         extends BusinessDetails("no")
+  case object DonNotKnow extends BusinessDetails("donNotKnow")
 
-  val values: Seq[BusinessDetails] = Seq(yes, no, donNotKnow)
+  val values: Seq[BusinessDetails] = Seq(Yes, No, DonNotKnow)
 
   def options(form: Form[_])(implicit messages: Messages): Seq[RadioItem] = values.map {
     value =>

@@ -22,7 +22,7 @@ import org.mockito.{ArgumentCaptor, ArgumentMatchers}
 import org.scalatest.BeforeAndAfterEach
 import play.api.mvc.Request
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.taxfraudreportingfrontend.models.BusinessDetails.yes
+import uk.gov.hmrc.taxfraudreportingfrontend.models.BusinessDetails.Yes
 import uk.gov.hmrc.taxfraudreportingfrontend.models.IndividualInformationCheck.{Address, Age, Contact, NINO, Name}
 import uk.gov.hmrc.taxfraudreportingfrontend.models.PersonConnectionType.Partner
 import uk.gov.hmrc.taxfraudreportingfrontend.models._
@@ -235,7 +235,7 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
 
       verify(mockSessionCache).saveFraudReportDetails(requestCaptor.capture())(ArgumentMatchers.eq(getRequest))
       val holder: FraudReportDetails = requestCaptor.getValue
-      holder.businessDetails.get shouldBe yes
+      holder.businessDetails.get shouldBe Yes
 
       val testCacheData: Option[BusinessDetails] =
         Await.result(testCache.getBusinessDetails()(getRequest), Duration.Inf)
