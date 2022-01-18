@@ -19,12 +19,12 @@ package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
-import uk.gov.hmrc.taxfraudreportingfrontend.views.html.PersonOwnBusinessView
+import uk.gov.hmrc.taxfraudreportingfrontend.views.html.AddAnotherPersonView
 
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class PersonOwnBusinessController @Inject() (mcc: MessagesControllerComponents, view: PersonOwnBusinessView)(implicit
+class AddAnotherPersonController @Inject() (mcc: MessagesControllerComponents, view: AddAnotherPersonView)(implicit
   appConfig: AppConfig
 ) extends FrontendController(mcc) {
 

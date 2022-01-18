@@ -16,38 +16,36 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
-import org.mockito.ArgumentMatchers.{any, eq => eqTo}
-import org.mockito.Mockito._
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.when
 import org.scalatest.MustMatchers.convertToAnyMustWrapper
 import org.scalatest.{Matchers, OptionValues}
 import org.scalatestplus.mockito.MockitoSugar
-import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
+import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.{defaultAwaitTimeout, redirectLocation, running, status, POST}
 import uk.gov.hmrc.http.SessionKeys
-import uk.gov.hmrc.taxfraudreportingfrontend.models.IndividualContact
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
 import scala.concurrent.Future
 
-class IndividualContactControllerSpec
-  extends BaseSpec with Matchers with MockitoSugar with OptionValues {
+class BusinessDetailsControllerSpec extends BaseSpec with Matchers with MockitoSugar with OptionValues {
 
   val request: FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest("GET", "/").withSession(SessionKeys.sessionId -> "fakesessionid")
 
-  lazy val individualContactRoute: String = routes.IndividualContactController.onPageLoad().url
+  private val controller = application.injector.instanceOf[BusinessDetailsController]
 
-  private val controller = application.injector.instanceOf[IndividualContactController]
+  lazy val businessDetailsRoute: String = routes.BusinessDetailsController.onPageLoad().url
 
-  "Individual's Contact page view" should {
+  "does person own business page view" should {
 
-    "redirect to the index page when there is no session id" in {
+    "redirect to the page when there is no session id" in {
       val result = controller.onPageLoad()(FakeRequest())
       status(result) mustEqual SEE_OTHER
-      redirectLocation(result).value mustEqual routes.IndexViewController.onPageLoad().url
+      redirectLocation(result).value mustEqual "/report-tax-fraud/does-person-own-business"
     }
 
     "return OK when there is no session" in {
@@ -56,7 +54,19 @@ class IndividualContactControllerSpec
       status(result) mustEqual OK
     }
 
-    "return OK when there is no individual contact details" in {
+    "load the page content from cache business details date is empty" in {
+
+      running(application) {
+
+        when(mockUserAnswersCache.getBusinessDetails()(getRequest)).thenReturn(Future.successful(None))
+        val result = controller.onPageLoad()(request)
+        status(result) mustEqual OK
+
+      }
+
+    }
+
+    "return OK when there is no business details data" in {
       when(mockSessionCache.get()(any())).thenReturn(Future.successful(Some(FraudReportDetails())))
       val result = controller.onPageLoad()(request)
       status(result) mustEqual OK
@@ -64,22 +74,11 @@ class IndividualContactControllerSpec
 
     "return a Bad Request when invalid data is submitted" in {
       val request =
-        FakeRequest(POST, individualContactRoute)
-          .withFormUrlEncodedBody(("emailAddress" -> "&*joe.com"))
+        FakeRequest(POST, businessDetailsRoute)
+          .withFormUrlEncodedBody(("yes" -> ""))
       val result = controller.onSubmit()(request)
-      status(result) mustEqual BAD_REQUEST
+      status(result) shouldBe BAD_REQUEST
     }
 
-    // TODO this should be un-ignored when routing is complete
-    "redirect to individual contact page when valid data is submitted" ignore {
-      val expectedData = IndividualContact(
-        landline_Number = None, mobile_Number = None, email_Address = Some("joe@example.com")
-      )
-      val request = FakeRequest(POST, individualContactRoute)
-        .withFormUrlEncodedBody("emailAddress" -> "joe@example.com")
-      val result = controller.onSubmit()(request)
-      status(result) mustEqual SEE_OTHER
-      redirectLocation(result).value mustEqual individualContactRoute
-    }
   }
 }

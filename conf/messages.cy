@@ -180,3 +180,13 @@ personOwnBusiness.title = (W) Does the individual have business details that you
 personOwnBusiness.header = (W) Does the individual have business details that you can provide?(W)
 personOwnBusiness.hint = (W) For example, the business''s name, address or contact details.(W)
 
+businessDetails.title = (W) Does the individual have business details that you can provide?(W)
+businessDetails.header = (W) Does the individual have business details that you can provide?(W)
+businessDetails.hint = (W) For example, the business''s name, address or contact details.(W)
+businessDetails.yes = (W) Yes(W)
+businessDetails.no = (W) No(W)
+businessDetails.donNotKnow = (W) I don''t know(W)
+businessDetails.error.required = (W) Select yes if the individual owns or runs a business that you can provide details about(W)
+
+addAnotherPerson.title = (W) Are there additional people involved in this activity you want to tell us about?(W)
+addAnotherPerson.header = (W) Are there additional people involved in this activity you want to tell us about?(W)

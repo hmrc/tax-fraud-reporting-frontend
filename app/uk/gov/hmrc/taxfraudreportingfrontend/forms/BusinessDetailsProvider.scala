@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.taxfraudreportingfrontend.models
+package uk.gov.hmrc.taxfraudreportingfrontend.forms
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.data.Form
+import uk.gov.hmrc.taxfraudreportingfrontend.forms.mappings.Mappings
+import uk.gov.hmrc.taxfraudreportingfrontend.models.BusinessDetails
 
-final case class IndividualContact(
-  landline_Number: Option[String],
-  mobile_Number: Option[String],
-  email_Address: Option[String]
-)
+import javax.inject.Inject
 
-object IndividualContact {
+class BusinessDetailsProvider @Inject() extends Mappings {
 
-  implicit val format: OFormat[IndividualContact] = Json.format[IndividualContact]
+  def apply(): Form[BusinessDetails] =
+    Form("value" -> enumerable[BusinessDetails]("businessDetails.error.required"))
+
 }

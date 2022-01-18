@@ -30,14 +30,14 @@ import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
 import scala.concurrent.Future
 
-class PersonOwnBusinessControllerSpec extends BaseSpec with Matchers with MockitoSugar with OptionValues {
+class AddAnotherPersonControllerSpec extends BaseSpec with Matchers with MockitoSugar with OptionValues {
 
   val request: FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest("GET", "/").withSession(SessionKeys.sessionId -> "fakesessionid")
 
-  private val controller = application.injector.instanceOf[PersonOwnBusinessController]
+  private val controller = application.injector.instanceOf[AddAnotherPersonController]
 
-  "does person own business page view" should {
+  "add another person page view" should {
 
     "return OK when there is no session" in {
       when(mockSessionCache.get()(any())).thenReturn(Future.successful(None))
@@ -46,4 +46,5 @@ class PersonOwnBusinessControllerSpec extends BaseSpec with Matchers with Mockit
     }
 
   }
+
 }
