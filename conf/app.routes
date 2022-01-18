@@ -31,4 +31,7 @@ POST       /national-insurance-number                    @uk.gov.hmrc.taxfraudre
 GET        /select-connection                            @uk.gov.hmrc.taxfraudreportingfrontend.controllers.PersonConnectionTypeController.onPageLoad()
 POST       /select-connection                            @uk.gov.hmrc.taxfraudreportingfrontend.controllers.PersonConnectionTypeController.onSubmit
 
-GET        /does-person-own-business                     @uk.gov.hmrc.taxfraudreportingfrontend.controllers.PersonOwnBusinessController.onPageLoad()
+GET        /does-person-own-business                     @uk.gov.hmrc.taxfraudreportingfrontend.controllers.BusinessDetailsController.onPageLoad()
+POST       /does-person-own-business                     @uk.gov.hmrc.taxfraudreportingfrontend.controllers.BusinessDetailsController.onSubmit
+
+GET        /add-another-person                           @uk.gov.hmrc.taxfraudreportingfrontend.controllers.AddAnotherPersonController.onPageLoad()

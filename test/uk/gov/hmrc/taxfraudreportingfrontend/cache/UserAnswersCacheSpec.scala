@@ -22,6 +22,7 @@ import org.mockito.{ArgumentCaptor, ArgumentMatchers}
 import org.scalatest.BeforeAndAfterEach
 import play.api.mvc.Request
 import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.taxfraudreportingfrontend.models.BusinessDetails.yes
 import uk.gov.hmrc.taxfraudreportingfrontend.models.IndividualInformationCheck.{Address, Age, Contact, NINO, Name}
 import uk.gov.hmrc.taxfraudreportingfrontend.models.PersonConnectionType.Partner
 import uk.gov.hmrc.taxfraudreportingfrontend.models._
@@ -55,6 +56,8 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
   private val mockNino = IndividualNino("AB 12 34 56 C")
 
   private val mockPersonConnection = ConnectionType(PersonConnectionType.values.head, Option("otherConnection"))
+
+  private val mockBusinessDetails = BusinessDetails.values.head
 
   protected override def beforeEach: Unit = {
     reset(mockSessionCache)
@@ -222,6 +225,32 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
 
       val testCacheData: Option[ConnectionType] =
         Await.result(testCache.getConnection()(getRequest), Duration.Inf)
+      testCacheData shouldBe None
+    }
+
+    "save business details data in frontend cache" in {
+
+      Await.result(testCache.cacheBusinessDetails(Some(mockBusinessDetails))(getRequest), Duration.Inf)
+      val requestCaptor = ArgumentCaptor.forClass(classOf[FraudReportDetails])
+
+      verify(mockSessionCache).saveFraudReportDetails(requestCaptor.capture())(ArgumentMatchers.eq(getRequest))
+      val holder: FraudReportDetails = requestCaptor.getValue
+      holder.businessDetails.get shouldBe yes
+
+      val testCacheData: Option[BusinessDetails] =
+        Await.result(testCache.getBusinessDetails()(getRequest), Duration.Inf)
+      testCacheData shouldBe None
+
+    }
+
+    "get business details data from cache" in {
+
+      when(mockSessionCache.getFraudReportDetails(any[Request[_]])).thenReturn(
+        Future.successful(FraudReportDetails(None))
+      )
+
+      val testCacheData: Option[BusinessDetails] =
+        Await.result(testCache.getBusinessDetails()(getRequest), Duration.Inf)
       testCacheData shouldBe None
     }
 
