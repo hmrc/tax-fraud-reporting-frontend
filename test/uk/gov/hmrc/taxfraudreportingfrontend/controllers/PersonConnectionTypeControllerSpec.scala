@@ -16,37 +16,36 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
-import org.mockito.ArgumentMatchers.{any, eq => eqTo}
-import org.mockito.Mockito._
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.when
 import org.scalatest.MustMatchers.convertToAnyMustWrapper
 import org.scalatest.{Matchers, OptionValues}
 import org.scalatestplus.mockito.MockitoSugar
-import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
+import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.{defaultAwaitTimeout, route, status, writeableOf_AnyContentAsEmpty, GET, POST}
 import uk.gov.hmrc.http.SessionKeys
-import uk.gov.hmrc.taxfraudreportingfrontend.models.IndividualContact
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
 import scala.concurrent.Future
 
-class IndividualContactControllerSpec extends BaseSpec with Matchers with MockitoSugar with OptionValues {
+class PersonConnectionTypeControllerSpec extends BaseSpec with Matchers with MockitoSugar with OptionValues {
 
   val request: FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest("GET", "/").withSession(SessionKeys.sessionId -> "fakesessionid")
 
-  lazy val individualContactRoute: String = routes.IndividualContactController.onPageLoad().url
+  private val controller = application.injector.instanceOf[PersonConnectionTypeController]
 
-  private val controller = application.injector.instanceOf[IndividualContactController]
+  lazy val selectConnectionRoute: String = routes.PersonConnectionTypeController.onPageLoad().url
 
-  "Individual's Contact page view" should {
+  "Person connection type page view" should {
 
-    "redirect to the index page when there is no session id" in {
-      val result = controller.onPageLoad()(FakeRequest())
+    "redirect to the page when there is no session id" in {
+      val request = FakeRequest(GET, routes.PersonConnectionTypeController.onPageLoad().url)
+      val result  = route(application, request).get
       status(result) mustEqual SEE_OTHER
-      redirectLocation(result).value mustEqual routes.IndexViewController.onPageLoad().url
     }
 
     "return OK when there is no session" in {
@@ -55,7 +54,7 @@ class IndividualContactControllerSpec extends BaseSpec with Matchers with Mockit
       status(result) mustEqual OK
     }
 
-    "return OK when there is no individual contact details" in {
+    "return OK when there is no person connection type data" in {
       when(mockSessionCache.get()(any())).thenReturn(Future.successful(Some(FraudReportDetails())))
       val result = controller.onPageLoad()(request)
       status(result) mustEqual OK
@@ -63,24 +62,12 @@ class IndividualContactControllerSpec extends BaseSpec with Matchers with Mockit
 
     "return a Bad Request when invalid data is submitted" in {
       val request =
-        FakeRequest(POST, individualContactRoute)
-          .withFormUrlEncodedBody(("emailAddress" -> "&*joe.com"))
+        FakeRequest(POST, selectConnectionRoute)
+          .withFormUrlEncodedBody(("otherConnection" -> "FŔĘĘ"))
       val result = controller.onSubmit()(request)
-      status(result) mustEqual BAD_REQUEST
+      status(result) shouldBe BAD_REQUEST
     }
 
-    // TODO this should be un-ignored when routing is complete
-    "redirect to individual contact page when valid data is submitted" ignore {
-      val expectedData =
-        IndividualContact(landline_Number = None, mobile_Number = None, email_Address = Some("joe@example.com"))
-      when(mockUserAnswersCache.cacheIndividualContact(eqTo(Some(expectedData)))(any())).thenReturn(
-        Future.successful(FraudReportDetails())
-      )
-      val request = FakeRequest(POST, individualContactRoute)
-        .withFormUrlEncodedBody("emailAddress" -> "joe@example.com")
-      val result = controller.onSubmit()(request)
-      status(result) mustEqual SEE_OTHER
-      redirectLocation(result).value mustEqual individualContactRoute
-    }
   }
+
 }

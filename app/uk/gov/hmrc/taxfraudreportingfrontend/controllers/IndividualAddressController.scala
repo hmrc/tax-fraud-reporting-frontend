@@ -22,12 +22,10 @@ import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
 import uk.gov.hmrc.taxfraudreportingfrontend.views.html.IndividualAddressView
 
 import javax.inject.Inject
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 class IndividualAddressController @Inject() (mcc: MessagesControllerComponents, addressView: IndividualAddressView)(
-  implicit
-  appConfig: AppConfig,
-  executionContext: ExecutionContext
+  implicit appConfig: AppConfig
 ) extends FrontendController(mcc) {
 
   def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>

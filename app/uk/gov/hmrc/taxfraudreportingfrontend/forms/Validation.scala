@@ -18,6 +18,6 @@ package uk.gov.hmrc.taxfraudreportingfrontend.forms
 
 object Validation {
 
-  val safeInputPattern                 = "^(|[a-zA-Z][a-zA-Z0-9 / '-]+)$?"
-  val emailPattern                     = "^(.+@.+\\..+)?$"
+  val safeInputPattern = "^(|[a-zA-Z][a-zA-Z0-9 / '-]+)$?"
+  val emailPattern     = "^(.+@.+\\..+)?$"
 }

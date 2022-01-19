@@ -68,4 +68,10 @@ class UserAnswersCache @Inject() (sessionCache: SessionCache)(implicit ec: Execu
   def getNino()(implicit request: Request[_]): Future[Option[IndividualNino]] =
     sessionCache.getFraudReportDetails map (_.individualNino)
 
+  def cacheConnection(connectionType: Some[ConnectionType])(implicit request: Request[_]): Future[FraudReportDetails] =
+    saveFraudReportDetails(sd => sd.copy(connectionType = connectionType))
+
+  def getConnection()(implicit request: Request[_]): Future[Option[ConnectionType]] =
+    sessionCache.getFraudReportDetails map (_.connectionType)
+
 }

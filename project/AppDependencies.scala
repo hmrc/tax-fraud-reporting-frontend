@@ -11,6 +11,7 @@ object AppDependencies {
     "uk.gov.hmrc"             %% "http-caching-client"            % "9.5.0-play-28",
     "uk.gov.hmrc"             %% "domain"                         % "6.0.0-play-28",
     "uk.gov.hmrc.mongo"       %% "hmrc-mongo-play-28"             % "0.56.0",
+    "uk.gov.hmrc"             %% "play-conditional-form-mapping"  % "1.9.0-play-28"
 
   )
 

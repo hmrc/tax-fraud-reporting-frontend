@@ -16,25 +16,24 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
-import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.taxfraudreportingfrontend.cache.{SessionCache, UserAnswersCache}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
-import uk.gov.hmrc.taxfraudreportingfrontend.forms.IndividualContactProvider
-import uk.gov.hmrc.taxfraudreportingfrontend.views.html.IndividualContactView
+import uk.gov.hmrc.taxfraudreportingfrontend.forms.PersonConnectionTypeProvider
+import uk.gov.hmrc.taxfraudreportingfrontend.views.html.PersonConnectionTypeView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class IndividualContactController @Inject() (
+class PersonConnectionTypeController @Inject() (
   mcc: MessagesControllerComponents,
-  contactView: IndividualContactView,
-  formProvider: IndividualContactProvider,
+  connectionView: PersonConnectionTypeView,
+  formProvider: PersonConnectionTypeProvider,
   userAnswersCache: UserAnswersCache,
   sessionCache: SessionCache
 )(implicit appConfig: AppConfig, executionContext: ExecutionContext)
-    extends FrontendController(mcc) with I18nSupport {
+    extends FrontendController(mcc) {
 
   private val form = formProvider()
 
@@ -42,13 +41,13 @@ class IndividualContactController @Inject() (
     hc.sessionId map { _ =>
       sessionCache.get map { fraudReport =>
         val filledForm = (for {
-          report            <- fraudReport
-          individualContact <- report.individualContact
-        } yield form.fill(individualContact)).getOrElse(form)
-        Ok(contactView(filledForm))
+          report         <- fraudReport
+          connectionType <- report.connectionType
+        } yield form.fill(connectionType)).getOrElse(form)
+        Ok(connectionView(filledForm))
       }
     } getOrElse Future.successful {
-      Redirect(routes.IndexViewController.onPageLoad())
+      Redirect(routes.PersonConnectionTypeController.onPageLoad())
     }
   }
 
@@ -56,11 +55,10 @@ class IndividualContactController @Inject() (
     implicit request =>
       val boundForm = form.bindFromRequest()
       boundForm.fold(
-        formWithErrors => Future.successful(BadRequest(contactView(formWithErrors))),
-        individualContact =>
-          userAnswersCache.cacheIndividualContact(Some(individualContact)) map { _ =>
-            //TODO when refactoring the code
-            Redirect(routes.IndividualInformationCheckController.onPageLoad())
+        formWithErrors => Future.successful(BadRequest(connectionView(formWithErrors))),
+        connectionType =>
+          userAnswersCache.cacheConnection(Some(connectionType)) map { _ =>
+            Redirect(routes.PersonOwnBusinessController.onPageLoad())
           }
       )
   }

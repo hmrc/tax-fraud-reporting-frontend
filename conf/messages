@@ -155,3 +155,29 @@ nino.header = What is the individual''s National Insurance Number?
 nino.hint = For example, ‘QQ 12 34 56 C’.
 nino.error.required = Enter the individual''s National Insurance Number
 nino.error.invalidFormat = Enter the individual''s National Insurance number that is 2 letters, 6 numbers, then A, B, C or D, like QQ123456C
+
+selectConnection.title = How do you know the individual?
+selectConnection.header = How do you know the individual?
+selectConnection.hint = Select the best description.
+selectConnection.partner = Partner
+selectConnection.exPartner = Ex-Partner
+selectConnection.familyMember = Family member
+selectConnection.businessPartner = Business partner
+selectConnection.employer = Employer
+selectConnection.exEmployer = Ex-Employer
+selectConnection.employee = Employee
+selectConnection.colleague = Colleague
+selectConnection.friend = Friend
+selectConnection.neighbour = Neighbour
+selectConnection.customer = Customer
+selectConnection.businessCompetitor = Business competitor
+selectConnection.other = Other
+selectConnection.conditional.text.label = Enter how you know the individual
+selectConnection.error.required = Select or enter your connection
+selectConnection.otherConnection.error.required = Select or enter your connection
+selectConnection.otherConnection.error.invalid = Enter how you know the individual using letters a to z, hyphens, spaces and apostrophes
+
+personOwnBusiness.title = Does the individual have business details that you can provide?
+personOwnBusiness.header = Does the individual have business details that you can provide?
+personOwnBusiness.hint = For example, the business''s name, address or contact details.
+

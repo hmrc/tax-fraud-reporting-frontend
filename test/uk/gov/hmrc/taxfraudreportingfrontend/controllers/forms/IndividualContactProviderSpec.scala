@@ -38,7 +38,7 @@ class IndividualContactProviderSpec extends WordSpec with Matchers with BaseSpec
 
     "accept input if only landlineNumber is present" in {
       List("abc", "1" * 15).foreach { value =>
-        val data = Map("landlineNumber" -> value)
+        val data   = Map("landlineNumber" -> value)
         val result = form().bind(data)
         result.hasErrors mustEqual false
         result.get mustEqual IndividualContact(Some(value), None, None)
@@ -47,7 +47,7 @@ class IndividualContactProviderSpec extends WordSpec with Matchers with BaseSpec
 
     "accept input if only mobileNumber is present" in {
       List("abc", "1" * 15).foreach { value =>
-        val data = Map("mobileNumber" -> value)
+        val data   = Map("mobileNumber" -> value)
         val result = form().bind(data)
         result.hasErrors mustEqual false
         result.get mustEqual IndividualContact(None, Some(value), None)
@@ -55,7 +55,7 @@ class IndividualContactProviderSpec extends WordSpec with Matchers with BaseSpec
     }
 
     "accept input if only emailAddress is present" in {
-      val data = Map("emailAddress" -> "joe@example.com")
+      val data   = Map("emailAddress" -> "joe@example.com")
       val result = form().bind(data)
       result.hasErrors mustEqual false
       result.get mustEqual IndividualContact(None, None, Some("joe@example.com"))
@@ -63,37 +63,33 @@ class IndividualContactProviderSpec extends WordSpec with Matchers with BaseSpec
 
     "return errors with invalid data" in {
 
-      val data = Map(
-        "landlineNumber" -> "1" * 16,
-        "mobileNumber" -> "2" * 16,
-        "emailAddress" -> "joe.com"
-      )
+      val data = Map("landlineNumber" -> "1" * 16, "mobileNumber" -> "2" * 16, "emailAddress" -> "joe.com")
 
       val boundForm = form().bind(data)
-      val errors = boundForm.errors
+      val errors    = boundForm.errors
       errors.length mustEqual 3
-        
+
       boundForm("landlineNumber").error.value.message mustEqual "individualContact.error.landline_Number.invalid"
       boundForm("mobileNumber").error.value.message mustEqual "individualContact.error.mobile_Number.invalid"
       boundForm("emailAddress").error.value.message mustEqual "individualContact.error.email_Address.invalid"
     }
 
     "error if landline number is invalid" in {
-      val data = Map("landlineNumber" -> "1" * 16)
+      val data      = Map("landlineNumber" -> "1" * 16)
       val boundForm = form().bind(data)
       boundForm.errors.length mustEqual 1
       boundForm("landlineNumber").error.value.message mustEqual "individualContact.error.landline_Number.invalid"
     }
 
     "error if mobile number is invalid" in {
-      val data = Map("mobileNumber" -> "1" * 16)
+      val data      = Map("mobileNumber" -> "1" * 16)
       val boundForm = form().bind(data)
       boundForm.errors.length mustEqual 1
       boundForm("mobileNumber").error.value.message mustEqual "individualContact.error.mobile_Number.invalid"
     }
 
     "error if email address is invalid" in {
-      val data = Map("emailAddress" -> "&*joe.com")
+      val data      = Map("emailAddress" -> "&*joe.com")
       val boundForm = form().bind(data)
       boundForm.errors.length mustEqual 1
       boundForm("emailAddress").error.value.message mustEqual "individualContact.error.email_Address.invalid"

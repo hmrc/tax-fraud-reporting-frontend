@@ -18,13 +18,10 @@ package uk.gov.hmrc.taxfraudreportingfrontend.models
 
 import play.api.libs.json.{Json, OFormat}
 
-final case class IndividualContact(
-  landline_Number: Option[String],
-  mobile_Number: Option[String],
-  email_Address: Option[String]
-)
+case class ConnectionType(personConnectionType: PersonConnectionType, OtherConnection: Option[String])
 
-object IndividualContact {
+object ConnectionType {
 
-  implicit val format: OFormat[IndividualContact] = Json.format[IndividualContact]
+  implicit val format: OFormat[ConnectionType] = Json.format[ConnectionType]
+
 }
