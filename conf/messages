@@ -182,7 +182,7 @@ businessDetails.header = Does the individual have business details that you can 
 businessDetails.hint = For example, the business''s name, address or contact details.
 businessDetails.yes = Yes
 businessDetails.no = No
-businessDetails.donNotKnow = I don''t know
+businessDetails.doNotKnow = I don''t know
 businessDetails.error.required = Select yes if the individual owns or runs a business that you can provide details about
 
 addAnotherPerson.title = Are there additional people involved in this activity you want to tell us about?
