@@ -40,7 +40,14 @@
                 form = form,
                 idPrefix = "value",
                 name = "value",
-                items = BusinessDetails.options(form),
+                items = BusinessDetails.values.map {
+                    value =>
+                    RadioItem(
+                        value = Some(value.toString),
+                        content = Text(messages(s"businessDetails.${value.toString}")),
+                        checked = form("value").value.contains(value.toString)
+                    )
+                },
                 inline = false,
                 legendAsHeading = true,
                 legend = Some(messages("businessDetails.header")),

@@ -16,29 +16,15 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.models
 
-import play.api.data.Form
-import play.api.i18n.Messages
-import uk.gov.hmrc.govukfrontend.views.Aliases.Text
-import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
-
 sealed abstract class BusinessDetails(toString: String) extends WithName(toString)
 
 object BusinessDetails extends Enumerable.Implicits {
 
   case object Yes        extends BusinessDetails("yes")
   case object No         extends BusinessDetails("no")
-  case object DonNotKnow extends BusinessDetails("donNotKnow")
+  case object DoNotKnow extends BusinessDetails("doNotKnow")
 
-  val values: Seq[BusinessDetails] = Seq(Yes, No, DonNotKnow)
-
-  def options(form: Form[_])(implicit messages: Messages): Seq[RadioItem] = values.map {
-    value =>
-      RadioItem(
-        value = Some(value.toString),
-        content = Text(messages(s"businessDetails.${value.toString}")),
-        checked = form("value").value.contains(value.toString)
-      )
-  }
+  val values: Seq[BusinessDetails] = Seq(Yes, No, DoNotKnow)
 
   implicit val enumerable: Enumerable[BusinessDetails] =
     Enumerable(values.map(v => v.toString -> v): _*)
