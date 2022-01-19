@@ -16,38 +16,40 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
+import play.api.data.Form
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.taxfraudreportingfrontend.cache.{SessionCache, UserAnswersCache}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
-import uk.gov.hmrc.taxfraudreportingfrontend.forms.PersonConnectionTypeProvider
-import uk.gov.hmrc.taxfraudreportingfrontend.views.html.PersonConnectionTypeView
+import uk.gov.hmrc.taxfraudreportingfrontend.forms.BusinessDetailsProvider
+import uk.gov.hmrc.taxfraudreportingfrontend.models.BusinessDetails
+import uk.gov.hmrc.taxfraudreportingfrontend.views.html.BusinessDetailsView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class PersonConnectionTypeController @Inject() (
+class BusinessDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  connectionView: PersonConnectionTypeView,
-  formProvider: PersonConnectionTypeProvider,
+  view: BusinessDetailsView,
+  formProvider: BusinessDetailsProvider,
   userAnswersCache: UserAnswersCache,
   sessionCache: SessionCache
 )(implicit appConfig: AppConfig, executionContext: ExecutionContext)
     extends FrontendController(mcc) {
 
-  private val form = formProvider()
+  private val form: Form[BusinessDetails] = formProvider()
 
   def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
     hc.sessionId map { _ =>
       sessionCache.get map { fraudReport =>
         val filledForm = (for {
-          report         <- fraudReport
-          connectionType <- report.connectionType
-        } yield form.fill(connectionType)).getOrElse(form)
-        Ok(connectionView(filledForm))
+          report          <- fraudReport
+          businessDetails <- report.businessDetails
+        } yield form.fill(businessDetails)).getOrElse(form)
+        Ok(view(filledForm))
       }
     } getOrElse Future.successful {
-      Redirect(routes.PersonConnectionTypeController.onPageLoad())
+      Redirect(routes.BusinessDetailsController.onPageLoad())
     }
   }
 
@@ -55,10 +57,10 @@ class PersonConnectionTypeController @Inject() (
     implicit request =>
       val boundForm = form.bindFromRequest()
       boundForm.fold(
-        formWithErrors => Future.successful(BadRequest(connectionView(formWithErrors))),
-        connectionType =>
-          userAnswersCache.cacheConnection(Some(connectionType)) map { _ =>
-            Redirect(routes.BusinessDetailsController.onPageLoad())
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors))),
+        businessDetails =>
+          userAnswersCache.cacheBusinessDetails(Some(businessDetails)) map { _ =>
+            Redirect(routes.AddAnotherPersonController.onPageLoad())
           }
       )
   }
