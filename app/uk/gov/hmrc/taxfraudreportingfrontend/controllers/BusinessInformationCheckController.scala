@@ -58,11 +58,15 @@ class BusinessInformationCheckController @Inject() (
       val boundForm = form.bindFromRequest()
       boundForm.fold(
         formWithErrors => Future.successful(BadRequest(view(formWithErrors))),
-        businessInformationCheck =>
-          userAnswersCache.cacheBusinessCheck(businessInformationCheck) map { _ =>
-            //TODO when refactoring the code
-            Redirect(businessInformationCheck.head.route)
-          }
+        {
+          businessInformationCheck =>
+            println(businessInformationCheck)
+
+            userAnswersCache.cacheBusinessCheck(businessInformationCheck) map { _ =>
+              //TODO when refactoring the code
+              Redirect(businessInformationCheck.head.route)
+            }
+        }
       )
   }
 
