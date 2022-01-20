@@ -16,41 +16,40 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
-import play.api.i18n._
-import play.api.mvc._
+import play.api.data.Form
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.taxfraudreportingfrontend.cache.{SessionCache, UserAnswersCache}
 import uk.gov.hmrc.taxfraudreportingfrontend.config.AppConfig
-import uk.gov.hmrc.taxfraudreportingfrontend.forms.IndividualNameProvider
-import uk.gov.hmrc.taxfraudreportingfrontend.views.html.IndividualNameView
+import uk.gov.hmrc.taxfraudreportingfrontend.forms.BusinessInformationCheckProvider
+import uk.gov.hmrc.taxfraudreportingfrontend.models.BusinessInformationCheck
+import uk.gov.hmrc.taxfraudreportingfrontend.views.html.BusinessInformationCheckView
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class IndividualNameController @Inject() (
+class BusinessInformationCheckController @Inject() (
   mcc: MessagesControllerComponents,
-  nameView: IndividualNameView,
-  formProvider: IndividualNameProvider,
+  view: BusinessInformationCheckView,
+  formProvider: BusinessInformationCheckProvider,
   userAnswersCache: UserAnswersCache,
   sessionCache: SessionCache
 )(implicit appConfig: AppConfig, executionContext: ExecutionContext)
-    extends FrontendController(mcc) with I18nSupport {
+    extends FrontendController(mcc) {
 
-  private def form(implicit req: Request[AnyContent]) = formProvider()
-
-  private def onNameSubmit(): Call = routes.IndividualNameController.onSubmit()
+  private val form: Form[Set[BusinessInformationCheck]] = formProvider()
 
   def onPageLoad(): Action[AnyContent] = Action.async { implicit request =>
-    hc.sessionId map { sessionID =>
+    hc.sessionId map { _ =>
       sessionCache.get map { fraudReport =>
         val filledForm = fraudReport match {
-          case Some(f) if f.individualName.nonEmpty => form.fill(f.individualName.get)
-          case _                                    => form
+          case Some(f) if f.businessInformationCheck.nonEmpty => form.fill(f.businessInformationCheck)
+          case _                                              => form
         }
-        Ok(nameView(filledForm, onNameSubmit()))
+        Ok(view(filledForm))
       }
     } getOrElse Future.successful {
-      Redirect(routes.IndividualNameController.onPageLoad())
+      Redirect(routes.BusinessInformationCheckController.onPageLoad())
     }
   }
 
@@ -58,11 +57,11 @@ class IndividualNameController @Inject() (
     implicit request =>
       val boundForm = form.bindFromRequest()
       boundForm.fold(
-        formWithErrors => Future.successful(BadRequest(nameView(formWithErrors, onNameSubmit()))),
-        individualName =>
-          userAnswersCache.cacheIndividualName(Some(individualName)) map { _ =>
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors))),
+        businessInformationCheck =>
+          userAnswersCache.cacheBusinessCheck(businessInformationCheck) map { _ =>
             //TODO when refactoring the code
-            Redirect(routes.PersonConnectionTypeController.onPageLoad())
+            Redirect(businessInformationCheck.head.route)
           }
       )
   }

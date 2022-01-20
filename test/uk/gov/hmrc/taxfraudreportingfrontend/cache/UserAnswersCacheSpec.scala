@@ -23,6 +23,13 @@ import org.scalatest.BeforeAndAfterEach
 import play.api.mvc.Request
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.taxfraudreportingfrontend.models.BusinessDetails.Yes
+import uk.gov.hmrc.taxfraudreportingfrontend.models.BusinessInformationCheck.{
+  BusinessAddress,
+  BusinessContact,
+  BusinessName,
+  BusinessReference,
+  BusinessType
+}
 import uk.gov.hmrc.taxfraudreportingfrontend.models.IndividualInformationCheck.{Address, Age, Contact, NINO, Name}
 import uk.gov.hmrc.taxfraudreportingfrontend.models.PersonConnectionType.Partner
 import uk.gov.hmrc.taxfraudreportingfrontend.models._
@@ -58,6 +65,9 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
   private val mockPersonConnection = ConnectionType(PersonConnectionType.values.head, Option("otherConnection"))
 
   private val mockBusinessDetails = BusinessDetails.values.head
+
+  private val mockBusinessInformationCheck: Set[BusinessInformationCheck] =
+    Set(BusinessName, BusinessType, BusinessAddress, BusinessContact, BusinessReference)
 
   protected override def beforeEach: Unit = {
     reset(mockSessionCache)
@@ -252,6 +262,38 @@ class UserAnswersCacheSpec extends BaseSpec with BeforeAndAfterEach {
       val testCacheData: Option[BusinessDetails] =
         Await.result(testCache.getBusinessDetails()(getRequest), Duration.Inf)
       testCacheData shouldBe None
+    }
+
+    "save business information check Details in frontend cache" in {
+
+      Await.result(testCache.cacheBusinessCheck(mockBusinessInformationCheck)(getRequest), Duration.Inf)
+      val requestCaptor = ArgumentCaptor.forClass(classOf[FraudReportDetails])
+
+      verify(mockSessionCache).saveFraudReportDetails(requestCaptor.capture())(ArgumentMatchers.eq(getRequest))
+      val holder: FraudReportDetails = requestCaptor.getValue
+      holder.businessInformationCheck shouldBe Set(
+        BusinessName,
+        BusinessType,
+        BusinessAddress,
+        BusinessContact,
+        BusinessReference
+      )
+
+      val testCacheData: Set[BusinessInformationCheck] =
+        Await.result(testCache.getBusinessCheck()(getRequest), Duration.Inf)
+      testCacheData shouldBe Set.empty
+
+    }
+
+    "get empty business information check Details from cache" in {
+
+      when(mockSessionCache.getFraudReportDetails(any[Request[_]])).thenReturn(
+        Future.successful(FraudReportDetails(None))
+      )
+
+      val testCacheData: Set[BusinessInformationCheck] =
+        Await.result(testCache.getBusinessCheck()(getRequest), Duration.Inf)
+      testCacheData shouldBe Set.empty
     }
 
   }

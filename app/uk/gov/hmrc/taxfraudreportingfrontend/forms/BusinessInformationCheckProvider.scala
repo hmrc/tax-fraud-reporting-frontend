@@ -14,19 +14,21 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.taxfraudreportingfrontend.models
+package uk.gov.hmrc.taxfraudreportingfrontend.forms
 
-sealed abstract class BusinessDetails(toString: String) extends WithName(toString)
+import play.api.data.Form
+import play.api.data.Forms.set
+import uk.gov.hmrc.taxfraudreportingfrontend.forms.mappings.Mappings
+import uk.gov.hmrc.taxfraudreportingfrontend.models.BusinessInformationCheck
 
-object BusinessDetails extends Enumerable.Implicits {
+import javax.inject.Inject
 
-  case object Yes       extends BusinessDetails("yes")
-  case object No        extends BusinessDetails("no")
-  case object DoNotKnow extends BusinessDetails("doNotKnow")
+class BusinessInformationCheckProvider @Inject() extends Mappings {
 
-  val values: Seq[BusinessDetails] = Seq(Yes, No, DoNotKnow)
-
-  implicit val enumerable: Enumerable[BusinessDetails] =
-    Enumerable(values.map(v => v.toString -> v): _*)
+  def apply(): Form[Set[BusinessInformationCheck]] =
+    Form(
+      "value" -> set(enumerable[BusinessInformationCheck]("businessInformationCheck.error.required"))
+        .verifying(nonEmptySet("businessInformationCheck.error.required"))
+    )
 
 }

@@ -35,3 +35,11 @@ GET        /does-person-own-business                     @uk.gov.hmrc.taxfraudre
 POST       /does-person-own-business                     @uk.gov.hmrc.taxfraudreportingfrontend.controllers.BusinessDetailsController.onSubmit
 
 GET        /add-another-person                           @uk.gov.hmrc.taxfraudreportingfrontend.controllers.AddAnotherPersonController.onPageLoad()
+
+GET        /business-information-check                   @uk.gov.hmrc.taxfraudreportingfrontend.controllers.BusinessInformationCheckController.onPageLoad()
+POST       /business-information-check                   @uk.gov.hmrc.taxfraudreportingfrontend.controllers.BusinessInformationCheckController.onSubmit
+
+GET        /business-name                                @uk.gov.hmrc.taxfraudreportingfrontend.controllers.BusinessNameController.onPageLoad()
+GET        /type-business                                @uk.gov.hmrc.taxfraudreportingfrontend.controllers.BusinessTypeController.onPageLoad()
+GET        /business-contact-details                     @uk.gov.hmrc.taxfraudreportingfrontend.controllers.BusinessContactController.onPageLoad()
+GET        /reference-numbers                            @uk.gov.hmrc.taxfraudreportingfrontend.controllers.BusinessReferenceController.onPageLoad()

@@ -56,7 +56,9 @@ class ReportingTypeController @Inject() (
                 uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.IndividualInformationCheckController.onPageLoad()
               )
             else
-              Redirect(uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.IndividualNameController.onPageLoad())
+              Redirect(
+                uk.gov.hmrc.taxfraudreportingfrontend.controllers.routes.BusinessInformationCheckController.onPageLoad()
+              )
           )
       )
   }

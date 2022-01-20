@@ -190,3 +190,29 @@ businessDetails.error.required = (W) Select yes if the individual owns or runs a
 
 addAnotherPerson.title = (W) Are there additional people involved in this activity you want to tell us about?(W)
 addAnotherPerson.header = (W) Are there additional people involved in this activity you want to tell us about?(W)
+
+businessInformationCheck.title = (W) What do you know about the business?(W)
+businessInformationCheck.header = (W) What do you know about the business?(W)
+businessInformationCheck.hint = (W) You will be asked to provide details based on your selection.(W)
+businessInformationCheck.name-of-business = (W) Name of the business(W)
+businessInformationCheck.type-of-business = (W) Type of business(W)
+businessInformationCheck.address-fo-business = (W) Address(W)
+businessInformationCheck.contact-details = (W) Contact details(W)
+businessInformationCheck.reference = (W) Business reference numbers(W)
+businessInformationCheck.reference.hint = (W) For example VAT number or Employee Reference Number(W)
+businessInformationCheck.error.required = (W) Select the information you know about the business(W)
+
+businessName.title = (W) What is the business''s name?(W)
+businessName.header = (W) What is the business''s name?(W)
+
+businessType.title = (W) What type of business is it?(W)
+businessType.header = (W) What type of business is it?(W)
+
+businessAddress.title = (W) What is the business''s address?(W)
+businessAddress.header = (W) What is the business''s address?(W)
+
+businessContact.title = (W) What are the business''s contact details?(W)
+businessContact.header = (W) What are the business''s contact details?(W)
+
+businessReference.title =  (W) What are the business's reference numbers?(W)
+businessReference.header = (W) What are the business's reference numbers?(W)

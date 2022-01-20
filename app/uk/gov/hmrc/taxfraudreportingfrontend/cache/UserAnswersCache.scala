@@ -82,4 +82,12 @@ class UserAnswersCache @Inject() (sessionCache: SessionCache)(implicit ec: Execu
   def getBusinessDetails()(implicit request: Request[_]): Future[Option[BusinessDetails]] =
     sessionCache.getFraudReportDetails map (_.businessDetails)
 
+  def cacheBusinessCheck(
+    businessInformationCheck: Set[BusinessInformationCheck]
+  )(implicit request: Request[_]): Future[FraudReportDetails] =
+    saveFraudReportDetails(sd => sd.copy(businessInformationCheck = businessInformationCheck))
+
+  def getBusinessCheck()(implicit request: Request[_]): Future[Set[BusinessInformationCheck]] =
+    sessionCache.getFraudReportDetails map (_.businessInformationCheck)
+
 }
