@@ -16,30 +16,23 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
-import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.Mockito.when
 import org.scalatest.MustMatchers.convertToAnyMustWrapper
 import org.scalatest.{Matchers, OptionValues}
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
-import play.api.mvc.AnyContentAsEmpty
+import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{
-  defaultAwaitTimeout,
-  route,
-  status,
-  writeableOf_AnyContentAsEmpty,
-  writeableOf_AnyContentAsFormUrlEncoded,
-  GET,
-  POST
-}
+import play.api.test.Helpers.{GET, POST, defaultAwaitTimeout, redirectLocation, route, status, writeableOf_AnyContentAsEmpty, writeableOf_AnyContentAsFormUrlEncoded}
 import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.taxfraudreportingfrontend.models.BusinessInformationCheck
+import uk.gov.hmrc.taxfraudreportingfrontend.models.BusinessInformationCheck.BusinessName
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, ExecutionContextExecutor, Future}
 
 class BusinessInformationCheckControllerSpec
     extends BaseSpec with Matchers with MockitoSugar with OptionValues with GuiceOneAppPerSuite {
@@ -108,6 +101,22 @@ class BusinessInformationCheckControllerSpec
 
     }
 
-  }
+    "return See Other when valid data is submitted" in {
+      val mockBusinessDetails: Set[BusinessInformationCheck] = Set(BusinessName)
 
+      val mockFraudReportCache = FraudReportDetails(businessInformationCheck = mockBusinessDetails)
+
+      implicit val mockRequest: FakeRequest[AnyContentAsFormUrlEncoded] =
+        FakeRequest(POST, businessInfoCheckRoute)
+          .withFormUrlEncodedBody("value" -> "name")
+
+      when(
+        mockUserAnswersCache.cacheBusinessCheck(eqTo(mockBusinessDetails))(any())
+      ).thenReturn(Future.successful(mockFraudReportCache))
+
+      val result = controller.onSubmit()(mockRequest)
+      status(result) mustEqual SEE_OTHER
+      redirectLocation(result).value mustEqual businessInfoCheckRoute
+    }
+  }
 }
