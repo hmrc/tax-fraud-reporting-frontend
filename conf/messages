@@ -173,8 +173,8 @@ selectConnection.customer = Customer
 selectConnection.businessCompetitor = Business competitor
 selectConnection.other = Other
 selectConnection.conditional.text.label = Enter how you know the individual
-selectConnection.error.required = Select or enter your connection
-selectConnection.otherConnection.error.required = Select or enter your connection
+selectConnection.error.required = Select or enter how you know the individual
+selectConnection.otherConnection.error.required = Select or enter how you know the individual
 selectConnection.otherConnection.error.invalid = Enter how you know the individual using letters a to z, hyphens, spaces and apostrophes
 
 businessDetails.title = Does the individual have business details that you can provide?

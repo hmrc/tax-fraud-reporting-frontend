@@ -20,8 +20,8 @@ sealed abstract class BusinessDetails(toString: String) extends WithName(toStrin
 
 object BusinessDetails extends Enumerable.Implicits {
 
-  case object Yes        extends BusinessDetails("yes")
-  case object No         extends BusinessDetails("no")
+  case object Yes       extends BusinessDetails("yes")
+  case object No        extends BusinessDetails("no")
   case object DoNotKnow extends BusinessDetails("doNotKnow")
 
   val values: Seq[BusinessDetails] = Seq(Yes, No, DoNotKnow)
