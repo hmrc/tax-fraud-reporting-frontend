@@ -17,16 +17,7 @@
 package uk.gov.hmrc.taxfraudreportingfrontend.models.cache
 
 import play.api.libs.json.{Format, Json}
-import uk.gov.hmrc.taxfraudreportingfrontend.models.{
-  ActivityType,
-  BusinessDetails,
-  ConnectionType,
-  IndividualContact,
-  IndividualInformationCheck,
-  IndividualName,
-  IndividualNino,
-  ReportingType
-}
+import uk.gov.hmrc.taxfraudreportingfrontend.models._
 
 case class FraudReportDetails(
   activityType: Option[ActivityType] = None,

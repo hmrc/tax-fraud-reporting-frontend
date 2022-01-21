@@ -35,6 +35,7 @@ class PersonConnectionTypeProvider @Inject() extends Mappings {
           "other",
           text("selectConnection.otherConnection.error.required")
             .verifying(
+              maxLength(255, "selectConnection.otherConnection.error.invalid.length"),
               firstError(regexp(Validation.safeInputPattern, "selectConnection.otherConnection.error.invalid"))
             )
         )

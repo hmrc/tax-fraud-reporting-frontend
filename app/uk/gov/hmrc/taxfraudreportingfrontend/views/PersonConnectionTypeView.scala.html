@@ -59,50 +59,62 @@
                 RadioItem(
                     value = Some("partner"),
                     content = Text(messages("selectConnection.partner")),
+                    checked = form.data.values.exists(_ == "partner"),
                 ),
                 RadioItem(
                     value = Some("exPartner"),
                     content = Text(messages("selectConnection.exPartner")),
+                    checked = form.data.values.exists(_ == "exPartner"),
                 ),
                 RadioItem(
                     value = Some("familyMember"),
                     content = Text(messages("selectConnection.familyMember")),
+                    checked = form.data.values.exists(_ == "familyMember"),
                 ),
                 RadioItem(
                     value = Some("businessPartner"),
                     content = Text(messages("selectConnection.businessPartner")),
+                    checked = form.data.values.exists(_ == "businessPartner"),
                 ),
                 RadioItem(
                     value = Some("employer"),
                     content = Text(messages("selectConnection.employer")),
+                    checked = form.data.values.exists(_ == "employer"),
                 ),
                 RadioItem(
                     value = Some("exEmployer"),
                     content = Text(messages("selectConnection.exEmployer")),
+                    checked = form.data.values.exists(_ == "exEmployer"),
                 ),
                 RadioItem(
                     value = Some("employee"),
                     content = Text(messages("selectConnection.employee")),
+                    checked = form.data.values.exists(_ == "employee"),
                 ),
                 RadioItem(
                     value = Some("colleague"),
                     content = Text(messages("selectConnection.colleague")),
+                    checked = form.data.values.exists(_ == "colleague"),
                 ),
                 RadioItem(
                     value = Some("friend"),
                     content = Text(messages("selectConnection.friend")),
+                    checked = form.data.values.exists(_ == "friend"),
                 ),
                 RadioItem(
                     value = Some("neighbour"),
                     content = Text(messages("selectConnection.neighbour")),
+                    checked = form.data.values.exists(_ == "neighbour"),
                 ),
                 RadioItem(
                     value = Some("customer"),
                     content = Text(messages("selectConnection.customer")),
+                    checked = form.data.values.exists(_ == "customer"),
                 ),
                 RadioItem(
                     value = Some("businessCompetitor"),
                     content = Text(messages("selectConnection.businessCompetitor")),
+                    checked = form.data.values.exists(_ == "businessCompetitor"),
                 ),
                 RadioItem(
                     value = Some("other"),

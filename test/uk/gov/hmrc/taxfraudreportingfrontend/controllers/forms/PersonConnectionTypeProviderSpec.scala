@@ -26,6 +26,7 @@ class PersonConnectionTypeProviderSpec extends OptionFieldBehaviours {
   val form = new PersonConnectionTypeProvider()()
 
   val radioFieldName = "value"
+  val maxLength      = 255
 
   "form value" must {
 
@@ -61,6 +62,19 @@ class PersonConnectionTypeProviderSpec extends OptionFieldBehaviours {
 
       result.errors shouldEqual expectedError
     }
+
+    "fail to bind other connection value above maxLength" in {
+      val results = List(
+        form.bind(Map(radioFieldName -> "other")).bind(Map(fieldName -> "1")).apply(fieldName),
+        form.bind(Map(radioFieldName -> "other")).bind(Map(fieldName -> (maxLength + 1).toString)).apply(fieldName)
+      )
+      val expectedError = FormError(fieldName, requiredKey, Seq())
+      results.foreach {
+        result =>
+          result.errors shouldEqual Seq(expectedError)
+      }
+    }
+
   }
 
 }

@@ -174,6 +174,7 @@ selectConnection.other = (W) Other(W)
 selectConnection.conditional.text.label = (W) Enter how you know the individual(W)
 selectConnection.error.required = (W) Select or enter how you know the individual(W)
 selectConnection.otherConnection.error.required = (W) Select or enter how you know the individual(W)
+selectConnection.otherConnection.error.invalid.length = (W) How you know the individual must be 255 characters or fewer(W)
 selectConnection.otherConnection.error.invalid = (W) Enter how you know the individual using letters a to z, hyphens, spaces and apostrophes(W)
 
 personOwnBusiness.title = (W) Does the individual have business details that you can provide?(W)
