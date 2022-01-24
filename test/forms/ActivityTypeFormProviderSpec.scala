@@ -30,10 +30,6 @@ class ActivityTypeFormProviderSpec extends StringFieldBehaviours {
 
     val fieldName = "value"
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
   }
 }

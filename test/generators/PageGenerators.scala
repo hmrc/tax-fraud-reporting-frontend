@@ -45,4 +45,5 @@ trait PageGenerators {
 
   implicit lazy val arbitraryActivityTypePage: Arbitrary[ActivityTypePage.type] =
     Arbitrary(ActivityTypePage)
+
 }

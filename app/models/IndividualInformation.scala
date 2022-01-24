@@ -25,19 +25,13 @@ sealed trait IndividualInformation
 
 object IndividualInformation extends Enumerable.Implicits {
 
-  case object Name extends WithName("name") with IndividualInformation
-  case object Age extends WithName("age") with IndividualInformation
-  case object Address extends WithName("address") with IndividualInformation
+  case object Name           extends WithName("name") with IndividualInformation
+  case object Age            extends WithName("age") with IndividualInformation
+  case object Address        extends WithName("address") with IndividualInformation
   case object ContactDetails extends WithName("contact-details") with IndividualInformation
-  case object NiNumber extends WithName("ni-number") with IndividualInformation
+  case object NiNumber       extends WithName("ni-number") with IndividualInformation
 
-  val values: Seq[IndividualInformation] = Seq(
-    Name,
-    Age,
-    Address,
-    ContactDetails,
-    NiNumber
-  )
+  val values: Seq[IndividualInformation] = Seq(Name, Age, Address, ContactDetails, NiNumber)
 
   def checkboxItems(implicit messages: Messages): Seq[CheckboxItem] =
     values.zipWithIndex.map {
@@ -45,11 +39,12 @@ object IndividualInformation extends Enumerable.Implicits {
         CheckboxItemViewModel(
           content = Text(messages(s"individualInformation.${value.toString}")),
           fieldId = "value",
-          index   = index,
-          value   = value.toString
+          index = index,
+          value = value.toString
         )
     }
 
   implicit val enumerable: Enumerable[IndividualInformation] =
     Enumerable(values.map(v => v.toString -> v): _*)
+
 }

@@ -22,23 +22,33 @@ sealed trait IndividualConnection
 
 object IndividualConnection extends {
 
-  case object Partner extends WithName("partner") with IndividualConnection
-  case object ExPartner extends WithName("exPartner") with IndividualConnection
-  case object FamilyMember extends WithName("familyMember") with IndividualConnection
-  case object BusinessPartner extends WithName("businessPartner") with IndividualConnection
-  case object Employer extends WithName("employer") with IndividualConnection
-  case object ExEmployer extends WithName("exEmployer") with IndividualConnection
-  case object Employee extends WithName("employee") with IndividualConnection
-  case object Colleague extends WithName("colleague") with IndividualConnection
-  case object Friend extends WithName("friend") with IndividualConnection
-  case object Neighbour extends WithName("neighbour") with IndividualConnection
-  case object Customer extends WithName("customer") with IndividualConnection
-  case object BusinessCompetitor extends WithName("businessCompetitor") with IndividualConnection
+  case object Partner                   extends WithName("partner") with IndividualConnection
+  case object ExPartner                 extends WithName("exPartner") with IndividualConnection
+  case object FamilyMember              extends WithName("familyMember") with IndividualConnection
+  case object BusinessPartner           extends WithName("businessPartner") with IndividualConnection
+  case object Employer                  extends WithName("employer") with IndividualConnection
+  case object ExEmployer                extends WithName("exEmployer") with IndividualConnection
+  case object Employee                  extends WithName("employee") with IndividualConnection
+  case object Colleague                 extends WithName("colleague") with IndividualConnection
+  case object Friend                    extends WithName("friend") with IndividualConnection
+  case object Neighbour                 extends WithName("neighbour") with IndividualConnection
+  case object Customer                  extends WithName("customer") with IndividualConnection
+  case object BusinessCompetitor        extends WithName("businessCompetitor") with IndividualConnection
   final case class Other(value: String) extends WithName("other") with IndividualConnection
 
   val enumerableValues: List[IndividualConnection] = List(
-    Partner, ExPartner, FamilyMember, BusinessPartner, Employer, ExEmployer,
-    Employee, Colleague, Friend, Neighbour, Customer, BusinessCompetitor
+    Partner,
+    ExPartner,
+    FamilyMember,
+    BusinessPartner,
+    Employer,
+    ExEmployer,
+    Employee,
+    Colleague,
+    Friend,
+    Neighbour,
+    Customer,
+    BusinessCompetitor
   )
 
 //  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
@@ -71,4 +81,5 @@ object IndividualConnection extends {
       case "businessCompetitor" => Reads.pure(BusinessCompetitor)
       case "other"              => (__ \ "value").read[String].map(Other)
     }
+
 }

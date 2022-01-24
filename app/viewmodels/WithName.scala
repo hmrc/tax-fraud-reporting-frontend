@@ -16,6 +16,4 @@
 
 package viewmodels
 
-abstract class WithName(name: String) {
-  override val toString: String = name
-}
+abstract class WithName(override val toString: String)

@@ -26,25 +26,24 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object IndividualConnectionSummary  {
+object IndividualConnectionSummary {
 
   def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(IndividualConnectionPage(Index(index))).map {
       answer =>
-
-        val value = ValueViewModel(
-          HtmlContent(
-            HtmlFormat.escape(messages(s"individualConnection.$answer"))
-          )
-        )
+        val value = ValueViewModel(HtmlContent(HtmlFormat.escape(messages(s"individualConnection.$answer"))))
 
         SummaryListRowViewModel(
-          key     = "individualConnection.checkYourAnswersLabel",
-          value   = value,
+          key = "individualConnection.checkYourAnswersLabel",
+          value = value,
           actions = Seq(
-            ActionItemViewModel("site.change", routes.IndividualConnectionController.onPageLoad(Index(index), CheckMode).url)
+            ActionItemViewModel(
+              "site.change",
+              routes.IndividualConnectionController.onPageLoad(Index(index), CheckMode).url
+            )
               .withVisuallyHiddenText(messages("individualConnection.change.hidden"))
           )
         )
     }
+
 }

@@ -19,7 +19,6 @@ package pages
 import models.ActivityType
 import pages.behaviours.PageBehaviours
 
-
 class ActivityTypePageSpec extends PageBehaviours {
 
   "ActivityTypePage" - {

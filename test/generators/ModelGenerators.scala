@@ -30,10 +30,18 @@ trait ModelGenerators {
   implicit lazy val arbitraryIndividualConnection: Arbitrary[IndividualConnection] =
     Arbitrary {
       Gen.oneOf(
-        Gen.alphaStr.map(IndividualConnection.Other), Gen.const(IndividualConnection.Partner), Gen.const(IndividualConnection.ExPartner),
-        Gen.const(IndividualConnection.FamilyMember), Gen.const(IndividualConnection.BusinessCompetitor), Gen.const(IndividualConnection.Employer),
-        Gen.const(IndividualConnection.ExEmployer), Gen.const(IndividualConnection.Employee), Gen.const(IndividualConnection.Colleague),
-        Gen.const(IndividualConnection.Friend), Gen.const(IndividualConnection.Neighbour), Gen.const(IndividualConnection.Customer),
+        Gen.alphaStr.map(IndividualConnection.Other),
+        Gen.const(IndividualConnection.Partner),
+        Gen.const(IndividualConnection.ExPartner),
+        Gen.const(IndividualConnection.FamilyMember),
+        Gen.const(IndividualConnection.BusinessCompetitor),
+        Gen.const(IndividualConnection.Employer),
+        Gen.const(IndividualConnection.ExEmployer),
+        Gen.const(IndividualConnection.Employee),
+        Gen.const(IndividualConnection.Colleague),
+        Gen.const(IndividualConnection.Friend),
+        Gen.const(IndividualConnection.Neighbour),
+        Gen.const(IndividualConnection.Customer),
         Gen.const(IndividualConnection.BusinessCompetitor)
       )
     }
@@ -66,5 +74,6 @@ trait ModelGenerators {
     Arbitrary {
       Gen.oneOf(IndividualOrBusiness.values)
     }
+
   implicit val arbitraryActivityType: Arbitrary[ActivityType] = Arbitrary(Gen.oneOf(ActivityType.list))
 }

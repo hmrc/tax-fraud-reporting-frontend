@@ -24,12 +24,12 @@ import pages._
 import models._
 
 @Singleton
-class Navigator @Inject()() {
+class Navigator @Inject() () {
 
   private val normalRoutes: Page => UserAnswers => Call = {
-    case ActivityTypePage => ua => activityPageRoutes(ua)
+    case ActivityTypePage         => ua => activityPageRoutes(ua)
     case IndividualOrBusinessPage => ua => individualOrBusinessRoutes(ua)
-    case _ => _ => routes.IndexController.onPageLoad
+    case _                        => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
@@ -38,11 +38,10 @@ class Navigator @Inject()() {
 
   private def activityPageRoutes(answers: UserAnswers): Call =
     answers.get(ActivityTypePage).map { activity =>
-      if (ActivityType.otherDepartments.isDefinedAt(activity.activityName)) {
+      if (ActivityType.otherDepartments.isDefinedAt(activity.activityName))
         routes.DoNotUseThisServiceController.onPageLoad()
-      } else {
+      else
         routes.IndividualOrBusinessController.onPageLoad(NormalMode)
-      }
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def individualOrBusinessRoutes(answers: UserAnswers): Call =
@@ -57,4 +56,5 @@ class Navigator @Inject()() {
     case CheckMode =>
       checkRouteMap(page)(userAnswers)
   }
+
 }

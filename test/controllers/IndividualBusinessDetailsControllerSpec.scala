@@ -37,10 +37,11 @@ class IndividualBusinessDetailsControllerSpec extends SpecBase with MockitoSugar
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val individualBusinessDetailsRoute = routes.IndividualBusinessDetailsController.onPageLoad(Index(0), NormalMode).url
+  lazy val individualBusinessDetailsRoute =
+    routes.IndividualBusinessDetailsController.onPageLoad(Index(0), NormalMode).url
 
   val formProvider = new IndividualBusinessDetailsFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "IndividualBusinessDetails Controller" - {
 
@@ -62,7 +63,10 @@ class IndividualBusinessDetailsControllerSpec extends SpecBase with MockitoSugar
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(IndividualBusinessDetailsPage(Index(0)), IndividualBusinessDetails.values.head).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(
+        IndividualBusinessDetailsPage(Index(0)),
+        IndividualBusinessDetails.values.head
+      ).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -74,7 +78,10 @@ class IndividualBusinessDetailsControllerSpec extends SpecBase with MockitoSugar
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(IndividualBusinessDetails.values.head), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(IndividualBusinessDetails.values.head), Index(0), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

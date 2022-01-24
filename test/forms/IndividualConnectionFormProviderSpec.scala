@@ -26,14 +26,10 @@ class IndividualConnectionFormProviderSpec extends OptionFieldBehaviours {
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "individualConnection.error.required"
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
 
     "must bind successfully" - {
 
@@ -86,20 +82,28 @@ class IndividualConnectionFormProviderSpec extends OptionFieldBehaviours {
       }
 
       "Other" in {
-        form.bind(Map(fieldName -> "other", "otherValue" -> "something")).get mustEqual IndividualConnection.Other("something")
+        form.bind(Map(fieldName -> "other", "otherValue" -> "something")).get mustEqual IndividualConnection.Other(
+          "something"
+        )
       }
     }
 
     "must fail to bind invalid values" in {
-      form.bind(Map(fieldName -> "asdfasdf")).errors mustEqual Seq(FormError(fieldName, "individualConnection.error.invalid"))
+      form.bind(Map(fieldName -> "asdfasdf")).errors mustEqual Seq(
+        FormError(fieldName, "individualConnection.error.invalid")
+      )
     }
 
     "must fail to bind Other if there is no extra value" in {
-      form.bind(Map(fieldName -> "other")).errors mustEqual Seq(FormError("otherValue", "individualConnection.error.otherValue.required"))
+      form.bind(Map(fieldName -> "other")).errors mustEqual Seq(
+        FormError("otherValue", "individualConnection.error.otherValue.required")
+      )
     }
 
     "must fail to bind Other if the other value is longer than 100 characters" in {
-      form.bind(Map(fieldName -> "other", "otherValue" -> "a" * 101)).errors mustEqual Seq(FormError("otherValue", "individualConnection.error.otherValue.maxLength", Seq(100)))
+      form.bind(Map(fieldName -> "other", "otherValue" -> "a" * 101)).errors mustEqual Seq(
+        FormError("otherValue", "individualConnection.error.otherValue.maxLength", Seq(100))
+      )
     }
   }
 }

@@ -25,7 +25,6 @@ import models.IndividualBusinessDetails
 class IndividualBusinessDetailsFormProvider @Inject() extends Mappings {
 
   def apply(): Form[IndividualBusinessDetails] =
-    Form(
-      "value" -> enumerable[IndividualBusinessDetails]("individualBusinessDetails.error.required")
-    )
+    Form("value" -> enumerable[IndividualBusinessDetails]("individualBusinessDetails.error.required"))
+
 }

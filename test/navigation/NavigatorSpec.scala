@@ -38,21 +38,37 @@ class NavigatorSpec extends SpecBase {
       "must go from activity type page" - {
 
         "to the individual or business page when the user chooses an activity which HMRC is responsible for investigating" in {
-          ActivityType.list.filterNot(activity => ActivityType.otherDepartments.isDefinedAt(activity.activityName)).foreach { activity =>
-            val result = navigator.nextPage(ActivityTypePage, NormalMode, UserAnswers("id").set(ActivityTypePage, activity).success.value)
+          ActivityType.list.filterNot(
+            activity => ActivityType.otherDepartments.isDefinedAt(activity.activityName)
+          ).foreach { activity =>
+            val result = navigator.nextPage(
+              ActivityTypePage,
+              NormalMode,
+              UserAnswers("id").set(ActivityTypePage, activity).success.value
+            )
             result mustBe routes.IndividualOrBusinessController.onPageLoad(NormalMode)
           }
         }
 
         "to the do not use this service page when the user chooses an activity which HMRC is not responsible for investigating" in {
-          ActivityType.list.filter(activity => ActivityType.otherDepartments.isDefinedAt(activity.activityName)).foreach { activity =>
-            val result = navigator.nextPage(ActivityTypePage, NormalMode, UserAnswers("id").set(ActivityTypePage, activity).success.value)
+          ActivityType.list.filter(
+            activity => ActivityType.otherDepartments.isDefinedAt(activity.activityName)
+          ).foreach { activity =>
+            val result = navigator.nextPage(
+              ActivityTypePage,
+              NormalMode,
+              UserAnswers("id").set(ActivityTypePage, activity).success.value
+            )
             result mustBe routes.DoNotUseThisServiceController.onPageLoad()
           }
         }
 
         "to the journey recovery controller if there is no activity type set" in {
-          navigator.nextPage(ActivityTypePage, NormalMode, UserAnswers("id")) mustBe routes.JourneyRecoveryController.onPageLoad()
+          navigator.nextPage(
+            ActivityTypePage,
+            NormalMode,
+            UserAnswers("id")
+          ) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
       }
 
@@ -60,15 +76,21 @@ class NavigatorSpec extends SpecBase {
 
         "to the individual information check page for the first individual" in {
           val answers = UserAnswers("id").set(IndividualOrBusinessPage, IndividualOrBusiness.Individual).success.value
-          navigator.nextPage(IndividualOrBusinessPage, NormalMode, answers) mustBe routes.IndividualInformationController.onPageLoad(Index(0), NormalMode)
+          navigator.nextPage(
+            IndividualOrBusinessPage,
+            NormalMode,
+            answers
+          ) mustBe routes.IndividualInformationController.onPageLoad(Index(0), NormalMode)
         }
 
-        "to the business information check page" ignore {
-
-        }
+        "to the business information check page" ignore {}
 
         "to the journey recovery controller if there is no individual or business set" in {
-          navigator.nextPage(IndividualOrBusinessPage, NormalMode, UserAnswers("id")) mustBe routes.JourneyRecoveryController.onPageLoad()
+          navigator.nextPage(
+            IndividualOrBusinessPage,
+            NormalMode,
+            UserAnswers("id")
+          ) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
       }
     }
@@ -78,7 +100,11 @@ class NavigatorSpec extends SpecBase {
       "must go from a page that doesn't exist in the edit route map to CheckYourAnswers" in {
 
         case object UnknownPage extends Page
-        navigator.nextPage(UnknownPage, CheckMode, UserAnswers("id")) mustBe routes.CheckYourAnswersController.onPageLoad
+        navigator.nextPage(
+          UnknownPage,
+          CheckMode,
+          UserAnswers("id")
+        ) mustBe routes.CheckYourAnswersController.onPageLoad
       }
     }
   }

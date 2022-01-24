@@ -29,55 +29,81 @@ class IndividualConnectionSpec extends AnyFreeSpec with Matchers with ScalaCheck
     "must deserialise" - {
 
       "Partner" in {
-        Json.fromJson[IndividualConnection](Json.obj("type" -> "partner")).asOpt.value mustEqual IndividualConnection.Partner
+        Json.fromJson[IndividualConnection](
+          Json.obj("type" -> "partner")
+        ).asOpt.value mustEqual IndividualConnection.Partner
       }
 
       "ExPartner" in {
-        Json.fromJson[IndividualConnection](Json.obj("type" -> "exPartner")).asOpt.value mustEqual IndividualConnection.ExPartner
+        Json.fromJson[IndividualConnection](
+          Json.obj("type" -> "exPartner")
+        ).asOpt.value mustEqual IndividualConnection.ExPartner
       }
 
       "FamilyMember" in {
-        Json.fromJson[IndividualConnection](Json.obj("type" -> "familyMember")).asOpt.value mustEqual IndividualConnection.FamilyMember
+        Json.fromJson[IndividualConnection](
+          Json.obj("type" -> "familyMember")
+        ).asOpt.value mustEqual IndividualConnection.FamilyMember
       }
 
       "BusinessPartner" in {
-        Json.fromJson[IndividualConnection](Json.obj("type" -> "businessPartner")).asOpt.value mustEqual IndividualConnection.BusinessPartner
+        Json.fromJson[IndividualConnection](
+          Json.obj("type" -> "businessPartner")
+        ).asOpt.value mustEqual IndividualConnection.BusinessPartner
       }
 
       "Employer" in {
-        Json.fromJson[IndividualConnection](Json.obj("type" -> "employer")).asOpt.value mustEqual IndividualConnection.Employer
+        Json.fromJson[IndividualConnection](
+          Json.obj("type" -> "employer")
+        ).asOpt.value mustEqual IndividualConnection.Employer
       }
 
       "ExEmployer" in {
-        Json.fromJson[IndividualConnection](Json.obj("type" -> "exEmployer")).asOpt.value mustEqual IndividualConnection.ExEmployer
+        Json.fromJson[IndividualConnection](
+          Json.obj("type" -> "exEmployer")
+        ).asOpt.value mustEqual IndividualConnection.ExEmployer
       }
 
       "Employee" in {
-        Json.fromJson[IndividualConnection](Json.obj("type" -> "employee")).asOpt.value mustEqual IndividualConnection.Employee
+        Json.fromJson[IndividualConnection](
+          Json.obj("type" -> "employee")
+        ).asOpt.value mustEqual IndividualConnection.Employee
       }
 
       "Colleague" in {
-        Json.fromJson[IndividualConnection](Json.obj("type" -> "colleague")).asOpt.value mustEqual IndividualConnection.Colleague
+        Json.fromJson[IndividualConnection](
+          Json.obj("type" -> "colleague")
+        ).asOpt.value mustEqual IndividualConnection.Colleague
       }
 
       "Friend" in {
-        Json.fromJson[IndividualConnection](Json.obj("type" -> "friend")).asOpt.value mustEqual IndividualConnection.Friend
+        Json.fromJson[IndividualConnection](
+          Json.obj("type" -> "friend")
+        ).asOpt.value mustEqual IndividualConnection.Friend
       }
 
       "Neighbour" in {
-        Json.fromJson[IndividualConnection](Json.obj("type" -> "neighbour")).asOpt.value mustEqual IndividualConnection.Neighbour
+        Json.fromJson[IndividualConnection](
+          Json.obj("type" -> "neighbour")
+        ).asOpt.value mustEqual IndividualConnection.Neighbour
       }
 
       "Customer" in {
-        Json.fromJson[IndividualConnection](Json.obj("type" -> "customer")).asOpt.value mustEqual IndividualConnection.Customer
+        Json.fromJson[IndividualConnection](
+          Json.obj("type" -> "customer")
+        ).asOpt.value mustEqual IndividualConnection.Customer
       }
 
       "BusinessCompetitor" in {
-        Json.fromJson[IndividualConnection](Json.obj("type" -> "businessCompetitor")).asOpt.value mustEqual IndividualConnection.BusinessCompetitor
+        Json.fromJson[IndividualConnection](
+          Json.obj("type" -> "businessCompetitor")
+        ).asOpt.value mustEqual IndividualConnection.BusinessCompetitor
       }
 
       "Other" in {
-        Json.fromJson[IndividualConnection](Json.obj("type" -> "other", "value" -> "something")).asOpt.value mustEqual IndividualConnection.Other("something")
+        Json.fromJson[IndividualConnection](
+          Json.obj("type" -> "other", "value" -> "something")
+        ).asOpt.value mustEqual IndividualConnection.Other("something")
       }
     }
 
@@ -96,11 +122,15 @@ class IndividualConnectionSpec extends AnyFreeSpec with Matchers with ScalaCheck
       }
 
       "FamilyMember" in {
-        Json.toJson[IndividualConnection](IndividualConnection.FamilyMember) mustEqual Json.obj("type" -> "familyMember")
+        Json.toJson[IndividualConnection](IndividualConnection.FamilyMember) mustEqual Json.obj(
+          "type" -> "familyMember"
+        )
       }
 
       "BusinessPartner" in {
-        Json.toJson[IndividualConnection](IndividualConnection.BusinessPartner) mustEqual Json.obj("type" -> "businessPartner")
+        Json.toJson[IndividualConnection](IndividualConnection.BusinessPartner) mustEqual Json.obj(
+          "type" -> "businessPartner"
+        )
       }
 
       "Employer" in {
@@ -132,11 +162,16 @@ class IndividualConnectionSpec extends AnyFreeSpec with Matchers with ScalaCheck
       }
 
       "BusinessCompetitor" in {
-        Json.toJson[IndividualConnection](IndividualConnection.BusinessCompetitor) mustEqual Json.obj("type" -> "businessCompetitor")
+        Json.toJson[IndividualConnection](IndividualConnection.BusinessCompetitor) mustEqual Json.obj(
+          "type" -> "businessCompetitor"
+        )
       }
 
       "Other" in {
-        Json.toJson[IndividualConnection](IndividualConnection.Other("something")) mustEqual Json.obj("type" -> "other", "value" -> "something")
+        Json.toJson[IndividualConnection](IndividualConnection.Other("something")) mustEqual Json.obj(
+          "type"  -> "other",
+          "value" -> "something"
+        )
       }
     }
   }

@@ -31,25 +31,25 @@ import views.html.IndividualNationalInsuranceNumberView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class IndividualNationalInsuranceNumberController @Inject()(
-                                        override val messagesApi: MessagesApi,
-                                        sessionRepository: SessionRepository,
-                                        navigator: Navigator,
-                                        identify: IdentifierAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formProvider: IndividualNationalInsuranceNumberFormProvider,
-                                        val controllerComponents: MessagesControllerComponents,
-                                        view: IndividualNationalInsuranceNumberView
-                                    )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class IndividualNationalInsuranceNumberController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  navigator: Navigator,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: IndividualNationalInsuranceNumberFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: IndividualNationalInsuranceNumberView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
       val preparedForm = request.userAnswers.get(IndividualNationalInsuranceNumberPage(index)) match {
-        case None => form
+        case None        => form
         case Some(value) => form.fill(value)
       }
 
@@ -58,16 +58,16 @@ class IndividualNationalInsuranceNumberController @Inject()(
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
       form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, index, mode))),
-
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode))),
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualNationalInsuranceNumberPage(index), value))
-            _              <- sessionRepository.set(updatedAnswers)
+            updatedAnswers <- Future.fromTry(
+              request.userAnswers.set(IndividualNationalInsuranceNumberPage(index), value)
+            )
+            _ <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(IndividualNationalInsuranceNumberPage(index), mode, updatedAnswers))
       )
   }
+
 }

@@ -34,8 +34,9 @@ class IndividualBusinessDetailsSpec extends AnyFreeSpec with Matchers with Scala
 
       forAll(gen) {
         individualBusinessDetails =>
-
-          JsString(individualBusinessDetails.toString).validate[IndividualBusinessDetails].asOpt.value mustEqual individualBusinessDetails
+          JsString(individualBusinessDetails.toString).validate[
+            IndividualBusinessDetails
+          ].asOpt.value mustEqual individualBusinessDetails
       }
     }
 
@@ -45,7 +46,6 @@ class IndividualBusinessDetailsSpec extends AnyFreeSpec with Matchers with Scala
 
       forAll(gen) {
         invalidValue =>
-
           JsString(invalidValue).validate[IndividualBusinessDetails] mustEqual JsError("error.invalid")
       }
     }
@@ -56,7 +56,6 @@ class IndividualBusinessDetailsSpec extends AnyFreeSpec with Matchers with Scala
 
       forAll(gen) {
         individualBusinessDetails =>
-
           Json.toJson(individualBusinessDetails) mustEqual JsString(individualBusinessDetails.toString)
       }
     }
