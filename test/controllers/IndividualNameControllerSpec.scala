@@ -25,7 +25,6 @@ import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.IndividualNamePage
 import play.api.inject.bind
-import play.api.libs.json.Json
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -35,18 +34,16 @@ import views.html.IndividualNameView
 import scala.concurrent.Future
 
 class IndividualNameControllerSpec extends SpecBase with MockitoSugar {
-
-  def onwardRoute = Call("GET", "/foo")
-
-  val formProvider = new IndividualNameFormProvider()
-  val form = formProvider()
-
-  lazy val individualNameRoute = routes.IndividualNameController.onPageLoad(Index(0), NormalMode).url
-
-  val model = IndividualName(Some("firstName"), Some("middleName"), Some("lastName"), Some("aliases"))
-  val userAnswers = UserAnswers(userAnswersId).set(IndividualNamePage(Index(0)), model).success.value
-
   "IndividualName Controller" - {
+    val onwardRoute = Call("GET", "/foo")
+
+    val formProvider = new IndividualNameFormProvider()
+    val form         = formProvider()
+
+    lazy val individualNameRoute = routes.IndividualNameController.onPageLoad(Index(0), NormalMode).url
+
+    val model       = IndividualName(Some("firstName"), Some("middleName"), Some("lastName"), Some("aliases"))
+    val userAnswers = UserAnswers(userAnswersId).set(IndividualNamePage(Index(0)), model).success.value
 
     "must return OK and the correct view for a GET" in {
 
@@ -76,7 +73,10 @@ class IndividualNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(model), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(model), Index(0), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

@@ -27,16 +27,15 @@ import views.html.{JourneyRecoveryContinueView, JourneyRecoveryStartAgainView}
 
 import javax.inject.Inject
 
-class JourneyRecoveryController @Inject()(
-                                           val controllerComponents: MessagesControllerComponents,
-                                           identify: IdentifierAction,
-                                           continueView: JourneyRecoveryContinueView,
-                                           startAgainView: JourneyRecoveryStartAgainView
-                                         ) extends FrontendBaseController with I18nSupport with Logging {
+class JourneyRecoveryController @Inject() (
+  val controllerComponents: MessagesControllerComponents,
+  identify: IdentifierAction,
+  continueView: JourneyRecoveryContinueView,
+  startAgainView: JourneyRecoveryStartAgainView
+) extends FrontendBaseController with I18nSupport with Logging {
 
   def onPageLoad(continueUrl: Option[RedirectUrl] = None): Action[AnyContent] = identify {
     implicit request =>
-
       val safeUrl: Option[String] = continueUrl.flatMap {
         unsafeUrl =>
           unsafeUrl.getEither(OnlyRelative) match {
@@ -52,4 +51,5 @@ class JourneyRecoveryController @Inject()(
         .map(url => Ok(continueView(url)))
         .getOrElse(Ok(startAgainView()))
   }
+
 }

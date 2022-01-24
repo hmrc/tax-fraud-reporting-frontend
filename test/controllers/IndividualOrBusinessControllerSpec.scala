@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.IndividualOrBusinessFormProvider
-import models.{NormalMode, IndividualOrBusiness, UserAnswers}
+import models.{IndividualOrBusiness, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -40,7 +40,7 @@ class IndividualOrBusinessControllerSpec extends SpecBase with MockitoSugar {
   lazy val individualOrBusinessRoute = routes.IndividualOrBusinessController.onPageLoad(NormalMode).url
 
   val formProvider = new IndividualOrBusinessFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "IndividualOrBusiness Controller" - {
 
@@ -62,7 +62,8 @@ class IndividualOrBusinessControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(IndividualOrBusinessPage, IndividualOrBusiness.values.head).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(IndividualOrBusinessPage, IndividualOrBusiness.values.head).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -74,7 +75,10 @@ class IndividualOrBusinessControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(IndividualOrBusiness.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(IndividualOrBusiness.values.head), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

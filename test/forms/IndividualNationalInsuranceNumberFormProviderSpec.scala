@@ -23,8 +23,8 @@ import play.api.data.FormError
 class IndividualNationalInsuranceNumberFormProviderSpec extends StringFieldBehaviours {
 
   val requiredKey = "individualNationalInsuranceNumber.error.required"
-  val lengthKey = "individualNationalInsuranceNumber.error.length"
-  val maxLength = 13
+  val lengthKey   = "individualNationalInsuranceNumber.error.length"
+  val maxLength   = 13
 
   val form = new IndividualNationalInsuranceNumberFormProvider()()
 
@@ -32,18 +32,10 @@ class IndividualNationalInsuranceNumberFormProviderSpec extends StringFieldBehav
 
     val fieldName = "value"
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      Gen.oneOf("AA123456C", "AA 12 45 56 C")
-    )
+    behave like fieldThatBindsValidData(form, fieldName, Gen.oneOf("AA123456C", "AA 12 45 56 C"))
 
     // TODO should this be mandatory?
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
 
     "must fail to bind an invalid national insurance number" in {
       val result = form.bind(Map(fieldName -> "abc"))(fieldName)

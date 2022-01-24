@@ -19,7 +19,7 @@ package controllers
 import controllers.actions._
 import forms.IndividualBusinessDetailsFormProvider
 import javax.inject.Inject
-import models.{Mode, Index}
+import models.{Index, Mode}
 import navigation.Navigator
 import pages.IndividualBusinessDetailsPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -30,25 +30,25 @@ import views.html.IndividualBusinessDetailsView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class IndividualBusinessDetailsController @Inject()(
-                                       override val messagesApi: MessagesApi,
-                                       sessionRepository: SessionRepository,
-                                       navigator: Navigator,
-                                       identify: IdentifierAction,
-                                       getData: DataRetrievalAction,
-                                       requireData: DataRequiredAction,
-                                       formProvider: IndividualBusinessDetailsFormProvider,
-                                       val controllerComponents: MessagesControllerComponents,
-                                       view: IndividualBusinessDetailsView
-                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class IndividualBusinessDetailsController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  navigator: Navigator,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: IndividualBusinessDetailsFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: IndividualBusinessDetailsView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
       val preparedForm = request.userAnswers.get(IndividualBusinessDetailsPage(index)) match {
-        case None => form
+        case None        => form
         case Some(value) => form.fill(value)
       }
 
@@ -57,11 +57,8 @@ class IndividualBusinessDetailsController @Inject()(
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
       form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, index, mode))),
-
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualBusinessDetailsPage(index), value))
@@ -69,4 +66,5 @@ class IndividualBusinessDetailsController @Inject()(
           } yield Redirect(navigator.nextPage(IndividualBusinessDetailsPage(index), mode, updatedAnswers))
       )
   }
+
 }

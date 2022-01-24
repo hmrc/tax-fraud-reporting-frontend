@@ -30,4 +30,5 @@ class ActivityTypeFormProvider @Inject() extends Mappings {
         .verifying("activityType.error.invalid", code => ActivityType.isValidActivityTypeCode(code))
         .transform(ActivityType.getActivityTypeByCode(_).get, (_: ActivityType).code)
     )
+
 }

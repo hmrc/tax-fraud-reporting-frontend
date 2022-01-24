@@ -19,7 +19,6 @@ package pages
 import models.Index
 import pages.behaviours.PageBehaviours
 
-
 class IndividualNationalInsuranceNumberPageSpec extends PageBehaviours {
 
   "IndividualNationalInsuranceNumberPage" - {

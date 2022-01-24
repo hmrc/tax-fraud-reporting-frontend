@@ -40,7 +40,7 @@ class IndividualInformationControllerSpec extends SpecBase with MockitoSugar {
   lazy val individualInformationRoute = routes.IndividualInformationController.onPageLoad(Index(0), NormalMode).url
 
   val formProvider = new IndividualInformationFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "IndividualInformation Controller" - {
 
@@ -63,7 +63,10 @@ class IndividualInformationControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(IndividualInformationPage(Index(0)), IndividualInformation.values.toSet).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(
+        IndividualInformationPage(Index(0)),
+        IndividualInformation.values.toSet
+      ).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -75,7 +78,10 @@ class IndividualInformationControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(IndividualInformation.values.toSet), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(IndividualInformation.values.toSet), Index(0), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

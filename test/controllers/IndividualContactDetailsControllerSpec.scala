@@ -39,11 +39,14 @@ class IndividualContactDetailsControllerSpec extends SpecBase with MockitoSugar 
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new IndividualContactDetailsFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val individualContactDetailsRoute = routes.IndividualContactDetailsController.onPageLoad(Index(0), NormalMode).url
+  lazy val individualContactDetailsRoute =
+    routes.IndividualContactDetailsController.onPageLoad(Index(0), NormalMode).url
 
-  val model = IndividualContactDetails(landlineNumber = Some("landline"), mobileNumber = Some("mobile"), email = Some("email"))
+  val model =
+    IndividualContactDetails(landlineNumber = Some("landline"), mobileNumber = Some("mobile"), email = Some("email"))
+
   val userAnswers = UserAnswers(userAnswersId).set(IndividualContactDetailsPage(Index(0)), model).success.value
 
   "IndividualContactDetails Controller" - {
@@ -76,7 +79,10 @@ class IndividualContactDetailsControllerSpec extends SpecBase with MockitoSugar 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(model), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(model), Index(0), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

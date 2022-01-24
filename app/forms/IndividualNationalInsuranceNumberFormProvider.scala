@@ -30,4 +30,5 @@ class IndividualNationalInsuranceNumberFormProvider @Inject() extends Mappings {
       "value" -> text("individualNationalInsuranceNumber.error.required")
         .verifying("individualNationalInsuranceNumber.error.invalid", value => Try(Nino(value)).isSuccess)
     )
+
 }

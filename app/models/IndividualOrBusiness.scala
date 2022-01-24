@@ -25,21 +25,20 @@ sealed trait IndividualOrBusiness
 object IndividualOrBusiness extends Enumerable.Implicits {
 
   case object Individual extends WithName("individual") with IndividualOrBusiness
-  case object Business extends WithName("business") with IndividualOrBusiness
+  case object Business   extends WithName("business") with IndividualOrBusiness
 
-  val values: Seq[IndividualOrBusiness] = Seq(
-    Individual, Business
-  )
+  val values: Seq[IndividualOrBusiness] = Seq(Individual, Business)
 
   def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
     case (value, index) =>
       RadioItem(
         content = Text(messages(s"individualOrBusiness.${value.toString}")),
-        value   = Some(value.toString),
-        id      = Some(s"value_$index")
+        value = Some(value.toString),
+        id = Some(s"value_$index")
       )
   }
 
   implicit val enumerable: Enumerable[IndividualOrBusiness] =
     Enumerable(values.map(v => v.toString -> v): _*)
+
 }

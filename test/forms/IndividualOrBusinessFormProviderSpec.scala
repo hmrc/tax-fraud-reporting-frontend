@@ -26,20 +26,16 @@ class IndividualOrBusinessFormProviderSpec extends OptionFieldBehaviours {
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "individualOrBusiness.error.required"
 
     behave like optionsField[IndividualOrBusiness](
       form,
       fieldName,
-      validValues  = IndividualOrBusiness.values,
+      validValues = IndividualOrBusiness.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
   }
 }

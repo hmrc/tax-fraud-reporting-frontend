@@ -24,6 +24,7 @@ final case class ActivityType(code: String, activityName: String, activitySynony
 
   def toAutoCompleteJson(implicit messages: Messages): JsObject =
     Json.obj("code" -> code, "activityName" -> messages(activityName), "synonyms" -> activitySynonyms)
+
 }
 
 object ActivityType {
@@ -404,4 +405,5 @@ object ActivityType {
     "illegal-immigration"    -> "immigration-border-crime",
     "border-crime"           -> "immigration-border-crime"
   )
+
 }

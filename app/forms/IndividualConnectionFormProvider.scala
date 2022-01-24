@@ -30,22 +30,27 @@ class IndividualConnectionFormProvider @Inject() extends Mappings {
     Form(
       tuple(
         "value" -> text("individualConnection.error.required")
-          .verifying("individualConnection.error.invalid", value => IndividualConnection.enumerableValues.exists(_.toString == value) || value == "other"),
+          .verifying(
+            "individualConnection.error.invalid",
+            value => IndividualConnection.enumerableValues.exists(_.toString == value) || value == "other"
+          ),
         "otherValue" -> mandatoryIfEqual(
-          "value", "other",
+          "value",
+          "other",
           text("individualConnection.error.otherValue.required")
             .verifying(maxLength(100, "individualConnection.error.otherValue.maxLength"))
         )
       )
         .transform[IndividualConnection](
-        {
-          case ("other", Some(value)) => IndividualConnection.Other(value)
-          case (key, _)               => IndividualConnection.enumerableValues.find(_.toString == key).get
-        },
-        {
-          case IndividualConnection.Other(value) => ("other", Some(value))
-          case other                             => (other.toString, None)
-        }
-      )
+          {
+            case ("other", Some(value)) => IndividualConnection.Other(value)
+            case (key, _)               => IndividualConnection.enumerableValues.find(_.toString == key).get
+          },
+          {
+            case IndividualConnection.Other(value) => ("other", Some(value))
+            case other                             => (other.toString, None)
+          }
+        )
     )
+
 }

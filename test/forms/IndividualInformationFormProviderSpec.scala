@@ -26,20 +26,16 @@ class IndividualInformationFormProviderSpec extends CheckboxFieldBehaviours {
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "individualInformation.error.required"
 
     behave like checkboxField[IndividualInformation](
       form,
       fieldName,
-      validValues  = IndividualInformation.values,
+      validValues = IndividualInformation.values,
       invalidError = FormError(s"$fieldName[0]", "error.invalid")
     )
 
-    behave like mandatoryCheckboxField(
-      form,
-      fieldName,
-      requiredKey
-    )
+    behave like mandatoryCheckboxField(form, fieldName, requiredKey)
   }
 }

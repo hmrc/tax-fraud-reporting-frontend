@@ -26,14 +26,14 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.DoNotUseThisServiceView
 
-class DoNotUseThisServiceController @Inject()(
-                                       override val messagesApi: MessagesApi,
-                                       identify: IdentifierAction,
-                                       getData: DataRetrievalAction,
-                                       requireData: DataRequiredAction,
-                                       val controllerComponents: MessagesControllerComponents,
-                                       view: DoNotUseThisServiceView
-                                     ) extends FrontendBaseController with I18nSupport {
+class DoNotUseThisServiceController @Inject() (
+  override val messagesApi: MessagesApi,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  val controllerComponents: MessagesControllerComponents,
+  view: DoNotUseThisServiceView
+) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
@@ -42,4 +42,5 @@ class DoNotUseThisServiceController @Inject()(
         department <- ActivityType.otherDepartments.get(activity.activityName)
       } yield Ok(view(department))).getOrElse(Redirect(routes.JourneyRecoveryController.onPageLoad()))
   }
+
 }
