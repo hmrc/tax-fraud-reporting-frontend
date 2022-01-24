@@ -1,37 +1,64 @@
-->         /hmrc-frontend                                hmrcfrontend.Routes
-GET        /assets/*file                                 controllers.Assets.versioned(path = "/public", file: Asset)
-GET        /language/:lang                               @uk.gov.hmrc.taxfraudreportingfrontend.controllers.LanguageSwitchController.switchToLanguage(lang: String)
+# microservice specific routes
 
-GET        /using-this-service                           @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndexViewController.onPageLoad
+->         /hmrc-frontend                               hmrcfrontend.Routes
 
-GET        /type-activity                                @uk.gov.hmrc.taxfraudreportingfrontend.controllers.ActivityTypeController.onPageLoad()
-POST       /type-activity                                @uk.gov.hmrc.taxfraudreportingfrontend.controllers.ActivityTypeController.onSubmit()
+GET        /                                            controllers.IndexController.onPageLoad
+GET        /using-this-service                          controllers.IndexController.onPageLoad
 
-GET        /person-or-business                           @uk.gov.hmrc.taxfraudreportingfrontend.controllers.ReportingTypeController.onPageLoad()
-POST       /person-or-business                           @uk.gov.hmrc.taxfraudreportingfrontend.controllers.ReportingTypeController.onSubmit
+GET        /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
 
-GET        /individual-information-check                 @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualInformationCheckController.onPageLoad
-POST       /individual-information-check                 @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualInformationCheckController.onSubmit()
+GET        /language/:lang                              controllers.LanguageSwitchController.switchToLanguage(lang: String)
 
-GET        /should-not-use-service/:activityName         @uk.gov.hmrc.taxfraudreportingfrontend.controllers.ShouldNotUseServiceController.onPageLoad(activityName: String)
+GET        /refresh-session                             controllers.KeepAliveController.keepAlive
 
-GET        /name                                         @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualNameController.onPageLoad()
-POST       /name                                         @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualNameController.onSubmit()
+GET        /there-is-a-problem                          controllers.JourneyRecoveryController.onPageLoad(continueUrl: Option[RedirectUrl] ?= None)
 
-GET        /age                                          @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualAgeController.onPageLoad()
+GET        /check-your-answers                          controllers.CheckYourAnswersController.onPageLoad
 
-GET        /address                                      @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualAddressController.onPageLoad()
+GET        /account/sign-out-survey                     controllers.auth.AuthController.signOut
+GET        /account/sign-out                            controllers.auth.AuthController.signOutNoSurvey
+GET        /account/signed-out                          controllers.auth.SignedOutController.onPageLoad
 
-GET        /contact-details                              @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualContactController.onPageLoad()
-POST       /contact-details                              @uk.gov.hmrc.taxfraudreportingfrontend.controllers.IndividualContactController.onSubmit()
+GET        /unauthorised                                controllers.UnauthorisedController.onPageLoad
 
-GET        /national-insurance-number                    @uk.gov.hmrc.taxfraudreportingfrontend.controllers.NinoController.onPageLoad()
-POST       /national-insurance-number                    @uk.gov.hmrc.taxfraudreportingfrontend.controllers.NinoController.onSubmit()
+GET        /activity-type                               controllers.ActivityTypeController.onPageLoad(mode: Mode = NormalMode)
+POST       /activity-type                               controllers.ActivityTypeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-activity-type                        controllers.ActivityTypeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-activity-type                        controllers.ActivityTypeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /select-connection                            @uk.gov.hmrc.taxfraudreportingfrontend.controllers.PersonConnectionTypeController.onPageLoad()
-POST       /select-connection                            @uk.gov.hmrc.taxfraudreportingfrontend.controllers.PersonConnectionTypeController.onSubmit
+GET        /individual-or-business                      controllers.IndividualOrBusinessController.onPageLoad(mode: Mode = NormalMode)
+POST       /individual-or-business                      controllers.IndividualOrBusinessController.onSubmit(mode: Mode = NormalMode)
+GET        /change-individual-or-business               controllers.IndividualOrBusinessController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-individual-or-business               controllers.IndividualOrBusinessController.onSubmit(mode: Mode = CheckMode)
 
-GET        /does-person-own-business                     @uk.gov.hmrc.taxfraudreportingfrontend.controllers.BusinessDetailsController.onPageLoad()
-POST       /does-person-own-business                     @uk.gov.hmrc.taxfraudreportingfrontend.controllers.BusinessDetailsController.onSubmit
+GET        /do-not-use-this-service                     controllers.DoNotUseThisServiceController.onPageLoad()
 
-GET        /add-another-person                           @uk.gov.hmrc.taxfraudreportingfrontend.controllers.AddAnotherPersonController.onPageLoad()
+GET        /:index/individual-information-check         controllers.IndividualInformationController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-information-check         controllers.IndividualInformationController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-information-check  controllers.IndividualInformationController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-information-check  controllers.IndividualInformationController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/individual-name                      controllers.IndividualNameController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-name                      controllers.IndividualNameController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-name               controllers.IndividualNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-name               controllers.IndividualNameController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/individual-contact-details                        controllers.IndividualContactDetailsController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-contact-details                        controllers.IndividualContactDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-contact-details                 controllers.IndividualContactDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-contact-details                 controllers.IndividualContactDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/individual-national-insurance-number                        controllers.IndividualNationalInsuranceNumberController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-national-insurance-number                        controllers.IndividualNationalInsuranceNumberController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-national-insurance-number                 controllers.IndividualNationalInsuranceNumberController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-national-inusrance-number                 controllers.IndividualNationalInsuranceNumberController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/individual-connection                                       controllers.IndividualConnectionController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-connection                                       controllers.IndividualConnectionController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-connection                                controllers.IndividualConnectionController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-connection                                controllers.IndividualConnectionController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/individual-business-details                        controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-business-details                        controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-business-details                 controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-business-details                 controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)

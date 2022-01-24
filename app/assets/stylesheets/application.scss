@@ -1,9 +1,9 @@
-$govuk-assets-path: "/tax-fraud-reporting-frontend/assets/lib/govuk-frontend/govuk/assets/";
-$hmrc-assets-path: "/tax-fraud-reporting-frontend/assets/lib/hmrc-frontend/hmrc/";
+$govuk-assets-path: "/report-tax-fraud/assets/lib/govuk-frontend/govuk/assets/";
+$hmrc-assets-path: "/report-tax-fraud/assets/lib/hmrc-frontend/hmrc/assets/";
 
 @import "lib/hmrc-frontend/hmrc/all";
 @import "lib/govuk-frontend/govuk/all";
 
-@import "lib/govuk-frontend/govuk/base";
-
-@import "./components/autocomplete";
+.autocomplete__wrapper * {
+  @include govuk-typography-common();
+}
