@@ -26,28 +26,27 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object IndividualInformationSummary  {
+object IndividualInformationSummary {
 
   def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(IndividualInformationPage(Index(index))).map {
       answers =>
-
-        val value = ValueViewModel(
-          HtmlContent(
-            answers.map {
-              answer => HtmlFormat.escape(messages(s"individualInformation.$answer")).toString
-            }
-            .mkString(",<br>")
-          )
-        )
+        val value = ValueViewModel(HtmlContent(answers.map {
+          answer => HtmlFormat.escape(messages(s"individualInformation.$answer")).toString
+        }
+          .mkString(",<br>")))
 
         SummaryListRowViewModel(
-          key     = "individualInformation.checkYourAnswersLabel",
-          value   = value,
+          key = "individualInformation.checkYourAnswersLabel",
+          value = value,
           actions = Seq(
-            ActionItemViewModel("site.change", routes.IndividualInformationController.onPageLoad(Index(index), CheckMode).url)
+            ActionItemViewModel(
+              "site.change",
+              routes.IndividualInformationController.onPageLoad(Index(index), CheckMode).url
+            )
               .withVisuallyHiddenText(messages("individualInformation.change.hidden"))
           )
         )
     }
+
 }

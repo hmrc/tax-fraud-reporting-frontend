@@ -29,11 +29,7 @@ class IndividualNameFormProviderSpec extends StringFieldBehaviours {
     val lengthKey = "individualName.error.firstName.length"
     val maxLength = 100
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
     behave like fieldWithMaxLength(
       form,
@@ -49,11 +45,7 @@ class IndividualNameFormProviderSpec extends StringFieldBehaviours {
     val lengthKey = "individualName.error.middleName.length"
     val maxLength = 100
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
     behave like fieldWithMaxLength(
       form,
@@ -69,11 +61,7 @@ class IndividualNameFormProviderSpec extends StringFieldBehaviours {
     val lengthKey = "individualName.error.lastName.length"
     val maxLength = 100
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
     behave like fieldWithMaxLength(
       form,
@@ -89,11 +77,7 @@ class IndividualNameFormProviderSpec extends StringFieldBehaviours {
     val lengthKey = "individualName.error.aliases.length"
     val maxLength = 100
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
     behave like fieldWithMaxLength(
       form,

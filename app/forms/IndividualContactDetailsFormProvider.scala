@@ -25,11 +25,16 @@ import models.IndividualContactDetails
 
 class IndividualContactDetailsFormProvider @Inject() extends Mappings {
 
-   def apply(): Form[IndividualContactDetails] = Form(
-     mapping(
-      "landlineNumber" -> optional(text().verifying(maxLength(100, "individualContactDetails.error.landlineNumber.length"))),
-      "mobileNumber" -> optional(text().verifying(maxLength(100, "individualContactDetails.error.mobileNumber.length"))),
-       "email" -> optional(text().verifying(maxLength(100, "individualContactDetails.error.email.length")))
+  def apply(): Form[IndividualContactDetails] = Form(
+    mapping(
+      "landlineNumber" -> optional(
+        text().verifying(maxLength(100, "individualContactDetails.error.landlineNumber.length"))
+      ),
+      "mobileNumber" -> optional(
+        text().verifying(maxLength(100, "individualContactDetails.error.mobileNumber.length"))
+      ),
+      "email" -> optional(text().verifying(maxLength(100, "individualContactDetails.error.email.length")))
     )(IndividualContactDetails.apply)(IndividualContactDetails.unapply)
-   )
- }
+  )
+
+}

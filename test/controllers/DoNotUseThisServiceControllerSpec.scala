@@ -30,7 +30,8 @@ class DoNotUseThisServiceControllerSpec extends SpecBase with TryValues {
 
     "must return OK and the correct view for a GET when the user has an activity which is the responsibility of another department" in {
 
-      val userAnswers = emptyUserAnswers.set(ActivityTypePage, ActivityType.list.find(_.code == "22030036").value).success.value
+      val userAnswers =
+        emptyUserAnswers.set(ActivityTypePage, ActivityType.list.find(_.code == "22030036").value).success.value
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {

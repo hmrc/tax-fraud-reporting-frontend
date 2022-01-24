@@ -24,7 +24,8 @@ import org.scalatest.matchers.must.Matchers
 import org.scalatest.OptionValues
 import play.api.libs.json.{JsError, JsString, Json}
 
-class IndividualInformationSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with OptionValues with ModelGenerators {
+class IndividualInformationSpec
+    extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with OptionValues with ModelGenerators {
 
   "IndividualInformation" - {
 
@@ -34,8 +35,9 @@ class IndividualInformationSpec extends AnyFreeSpec with Matchers with ScalaChec
 
       forAll(gen) {
         individualInformation =>
-
-          JsString(individualInformation.toString).validate[IndividualInformation].asOpt.value mustEqual individualInformation
+          JsString(individualInformation.toString).validate[
+            IndividualInformation
+          ].asOpt.value mustEqual individualInformation
       }
     }
 
@@ -45,7 +47,6 @@ class IndividualInformationSpec extends AnyFreeSpec with Matchers with ScalaChec
 
       forAll(gen) {
         invalidValue =>
-
           JsString(invalidValue).validate[IndividualInformation] mustEqual JsError("error.invalid")
       }
     }
@@ -56,7 +57,6 @@ class IndividualInformationSpec extends AnyFreeSpec with Matchers with ScalaChec
 
       forAll(gen) {
         individualInformation =>
-
           Json.toJson(individualInformation) mustEqual JsString(individualInformation.toString)
       }
     }

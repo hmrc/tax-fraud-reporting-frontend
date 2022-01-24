@@ -38,7 +38,7 @@ class ActivityTypeControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new ActivityTypeFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   lazy val activityTypeRoute = routes.ActivityTypeController.onPageLoad(NormalMode).url
 
@@ -90,7 +90,10 @@ class ActivityTypeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ActivityType.list.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(ActivityType.list.head), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

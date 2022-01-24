@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers, Index}
+import models.{CheckMode, Index, UserAnswers}
 import pages.IndividualBusinessDetailsPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -26,25 +26,24 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object IndividualBusinessDetailsSummary  {
+object IndividualBusinessDetailsSummary {
 
   def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(IndividualBusinessDetailsPage(Index(index))).map {
       answer =>
-
-        val value = ValueViewModel(
-          HtmlContent(
-            HtmlFormat.escape(messages(s"individualBusinessDetails.$answer"))
-          )
-        )
+        val value = ValueViewModel(HtmlContent(HtmlFormat.escape(messages(s"individualBusinessDetails.$answer"))))
 
         SummaryListRowViewModel(
-          key     = "individualBusinessDetails.checkYourAnswersLabel",
-          value   = value,
+          key = "individualBusinessDetails.checkYourAnswersLabel",
+          value = value,
           actions = Seq(
-            ActionItemViewModel("site.change", routes.IndividualBusinessDetailsController.onPageLoad(Index(index), CheckMode).url)
+            ActionItemViewModel(
+              "site.change",
+              routes.IndividualBusinessDetailsController.onPageLoad(Index(index), CheckMode).url
+            )
               .withVisuallyHiddenText(messages("individualBusinessDetails.change.hidden"))
           )
         )
     }
+
 }

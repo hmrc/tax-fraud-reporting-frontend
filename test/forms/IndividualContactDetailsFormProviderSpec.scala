@@ -29,11 +29,7 @@ class IndividualContactDetailsFormProviderSpec extends StringFieldBehaviours {
     val lengthKey = "individualContactDetails.error.landlineNumber.length"
     val maxLength = 100
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
     behave like fieldWithMaxLength(
       form,
@@ -49,11 +45,7 @@ class IndividualContactDetailsFormProviderSpec extends StringFieldBehaviours {
     val lengthKey = "individualContactDetails.error.mobileNumber.length"
     val maxLength = 100
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
     behave like fieldWithMaxLength(
       form,
@@ -69,11 +61,7 @@ class IndividualContactDetailsFormProviderSpec extends StringFieldBehaviours {
     val lengthKey = "individualContactDetails.error.email.length"
     val maxLength = 100
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
     behave like fieldWithMaxLength(
       form,

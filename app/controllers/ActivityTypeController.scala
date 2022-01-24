@@ -31,23 +31,24 @@ import views.html.ActivityTypeView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class ActivityTypeController @Inject()(
-                                        override val messagesApi: MessagesApi,
-                                        sessionRepository: SessionRepository,
-                                        navigator: Navigator,
-                                        identify: IdentifierAction,
-                                        getData: DataRetrievalAction,
-                                        formProvider: ActivityTypeFormProvider,
-                                        val controllerComponents: MessagesControllerComponents,
-                                        view: ActivityTypeView
-                                    )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class ActivityTypeController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  navigator: Navigator,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  formProvider: ActivityTypeFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: ActivityTypeView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData) {
     implicit request =>
       val preparedForm = request.userAnswers.getOrElse(UserAnswers(request.userId)).get(ActivityTypePage) match {
-        case None => form
+        case None        => form
         case Some(value) => form.fill(value)
       }
 
@@ -57,8 +58,7 @@ class ActivityTypeController @Inject()(
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData).async {
     implicit request =>
       form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
         value => {
           val userAnswers = request.userAnswers.getOrElse(UserAnswers(request.userId))
           for {
@@ -68,4 +68,5 @@ class ActivityTypeController @Inject()(
         }
       )
   }
+
 }

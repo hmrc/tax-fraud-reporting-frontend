@@ -27,6 +27,9 @@ class IndividualInformationFormProvider @Inject() extends Mappings {
 
   def apply(): Form[Set[IndividualInformation]] =
     Form(
-      "value" -> set(enumerable[IndividualInformation]("individualInformation.error.required")).verifying(nonEmptySet("individualInformation.error.required"))
+      "value" -> set(enumerable[IndividualInformation]("individualInformation.error.required")).verifying(
+        nonEmptySet("individualInformation.error.required")
+      )
     )
+
 }

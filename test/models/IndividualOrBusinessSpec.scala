@@ -34,8 +34,9 @@ class IndividualOrBusinessSpec extends AnyFreeSpec with Matchers with ScalaCheck
 
       forAll(gen) {
         individualOrBusiness =>
-
-          JsString(individualOrBusiness.toString).validate[IndividualOrBusiness].asOpt.value mustEqual individualOrBusiness
+          JsString(individualOrBusiness.toString).validate[
+            IndividualOrBusiness
+          ].asOpt.value mustEqual individualOrBusiness
       }
     }
 
@@ -45,7 +46,6 @@ class IndividualOrBusinessSpec extends AnyFreeSpec with Matchers with ScalaCheck
 
       forAll(gen) {
         invalidValue =>
-
           JsString(invalidValue).validate[IndividualOrBusiness] mustEqual JsError("error.invalid")
       }
     }
@@ -56,7 +56,6 @@ class IndividualOrBusinessSpec extends AnyFreeSpec with Matchers with ScalaCheck
 
       forAll(gen) {
         individualOrBusiness =>
-
           Json.toJson(individualOrBusiness) mustEqual JsString(individualOrBusiness.toString)
       }
     }

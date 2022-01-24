@@ -38,9 +38,10 @@ class IndividualNationalInsuranceNumberControllerSpec extends SpecBase with Mock
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new IndividualNationalInsuranceNumberFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val individualNationalInsuranceNumberRoute = routes.IndividualNationalInsuranceNumberController.onPageLoad(Index(0), NormalMode).url
+  lazy val individualNationalInsuranceNumberRoute =
+    routes.IndividualNationalInsuranceNumberController.onPageLoad(Index(0), NormalMode).url
 
   "IndividualNationalInsuranceNumber Controller" - {
 
@@ -62,7 +63,8 @@ class IndividualNationalInsuranceNumberControllerSpec extends SpecBase with Mock
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(IndividualNationalInsuranceNumberPage(Index(0)), "answer").success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(IndividualNationalInsuranceNumberPage(Index(0)), "answer").success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -74,7 +76,10 @@ class IndividualNationalInsuranceNumberControllerSpec extends SpecBase with Mock
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill("answer"), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill("answer"), Index(0), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

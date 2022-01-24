@@ -25,19 +25,22 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object IndividualNationalInsuranceNumberSummary  {
+object IndividualNationalInsuranceNumberSummary {
 
   def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(IndividualNationalInsuranceNumberPage(Index(index))).map {
       answer =>
-
         SummaryListRowViewModel(
-          key     = "individualNationalInsuranceNumber.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlFormat.escape(answer).toString),
+          key = "individualNationalInsuranceNumber.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlFormat.escape(answer).toString),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.IndividualNationalInsuranceNumberController.onPageLoad(Index(index), CheckMode).url)
+            ActionItemViewModel(
+              "site.change",
+              routes.IndividualNationalInsuranceNumberController.onPageLoad(Index(index), CheckMode).url
+            )
               .withVisuallyHiddenText(messages("individualNationalInsuranceNumber.change.hidden"))
           )
         )
     }
+
 }

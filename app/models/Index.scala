@@ -23,6 +23,7 @@ final case class Index(position: Int) {
 
   def +(that: Int): Index =
     Index(this.position + that)
+
 }
 
 object Index {
@@ -37,5 +38,7 @@ object Index {
 
     override def unbind(key: String, value: Index): String =
       intBinder.unbind(key, value.position + 1)
+
   }
+
 }
