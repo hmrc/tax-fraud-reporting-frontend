@@ -1,0 +1,108 @@
+@*
+ * Copyright 2022 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.govukfrontend.views.html.{components => hmrcComponent}
+@import viewmodels.LabelSize
+@import play.api.libs.json.JsValue
+
+@this(select: GovukSelect)
+
+@(
+        form: Form[ActivityType],
+        id: String,
+        name: String,
+        label: String,
+        isPageHint: Boolean = true,
+        isPageHeading: Boolean = true,
+        headingMessageArgs: Seq[String] = Seq(),
+        hint: Option[String],
+        list: Seq[(String, String)],
+        jsonData: JsValue,
+        labelClass: Boolean = false
+)(implicit messages: Messages)
+
+<link href='@controllers.routes.Assets.versioned("stylesheets/autocomplete.min.css")' media="all" rel="stylesheet" type="text/css" />
+
+@select(hmrcComponent.Select(
+    id = id,
+    name = name,
+    label = if (isPageHeading) {
+        LabelViewModel(messages(label)).asPageHeading(LabelSize.ExtraLarge)
+    } else {
+        LabelViewModel(messages(label))
+    },
+    describedBy = hint.map(_ => s"$id-hint"),
+    errorMessage = form(id).error.map(fe ⇒ ErrorMessage(content = messages(fe.message))),
+    hint = hint.map(c => Hint(content = messages(c))),
+    items = Seq(SelectItem(value = Some(""), text = "")) ++ list.map {
+        case (k, v) ⇒ SelectItem(
+            value = Some(k),
+            text = v,
+            selected = k == (form.value map {
+                _.code
+            } getOrElse ""),
+            attributes = Map("id" → (id + s"-$k"))
+        )
+    },
+    formGroupClasses = "form-field-group"
+))
+
+<script src="@controllers.routes.Assets.versioned("javascripts/autocomplete.min.js")" ></script>
+
+<script>
+    accessibleAutocomplete.enhanceSelectElement({
+        selectElement: document.getElementById('@id'),
+        displayMenu: 'inline',
+        minLength: 2,
+        source: customSuggest,
+        confirmOnBlur: true,
+        showAllValues: true,
+        onConfirm: function(confirmed) {
+            let newId = "@id".replace( /(:|\.|\[|\]|,|=)/g, "\\$1" )
+
+            //Workaround the bug sending confirmed = undefined when confirmOnBlur == true
+            let foundInData = Array.from(document.querySelectorAll("#" + newId+ "-select > option"))
+                    .find(e => e.label === document.getElementById('@id').value)
+            let element = !!confirmed ? confirmed : foundInData
+
+            if(!!element) {
+                document.querySelector('select[name="@id"]').value = element.code || element.value;
+
+            }
+            else {
+                document.querySelector('select[name="@id"]').value = "";
+            }
+
+        },
+        templates: {
+            inputValue: function (result) {
+                return (!!result && result.activityName ? result.activityName : '');
+            },
+            suggestion: function (result) {
+                return !!result.activityName ? result.activityName : result;
+            }
+        }
+    })
+
+    function customSuggest(query, syncResults) {
+        var results = @Html(jsonData.toString)
+        syncResults(query ? results.filter(function (result) {
+            return (result.synonyms.findIndex(function (s) {
+                return s.toLowerCase().indexOf(query.toLowerCase()) !== -1
+            }) !== -1) || (result.activityName.toLowerCase().indexOf(query.toLowerCase()) !== -1)
+        }) : results)
+    }
+</script>

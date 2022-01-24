@@ -1,0 +1,9 @@
+$govuk-assets-path: "/report-tax-fraud/assets/lib/govuk-frontend/govuk/assets/";
+$hmrc-assets-path: "/report-tax-fraud/assets/lib/hmrc-frontend/hmrc/assets/";
+
+@import "lib/hmrc-frontend/hmrc/all";
+@import "lib/govuk-frontend/govuk/all";
+
+.autocomplete__wrapper * {
+  @include govuk-typography-common();
+}

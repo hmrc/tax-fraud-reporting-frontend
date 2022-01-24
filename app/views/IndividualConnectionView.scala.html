@@ -1,0 +1,71 @@
+@*
+ * Copyright 2022 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import viewmodels.InputWidth._
+@import viewmodels.LegendSize
+
+@this(
+    layout: templates.Layout,
+    formHelper: FormWithCSRF,
+    govukErrorSummary: GovukErrorSummary,
+    govukRadios: GovukRadios,
+    govukInput: GovukInput,
+    govukButton: GovukButton
+)
+
+@(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
+
+@conditionalHtml = {
+    @govukInput(
+        InputViewModel(
+            field = form("otherValue"),
+            label = LabelViewModel(messages("individualConnection.otherValue.hint"))
+        ).withWidth(TwoThirds)
+    )
+}
+
+@layout(pageTitle = title(form, messages("individualConnection.title"))) {
+
+    @formHelper(action = routes.IndividualConnectionController.onSubmit(index, mode), 'autoComplete -> "off") {
+
+        @if(form.errors.nonEmpty) {
+            @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
+        }
+
+        @govukRadios(
+            RadiosViewModel(
+                field  = form("value"),
+                legend = LegendViewModel(messages("individualConnection.heading")).asPageHeading(LegendSize.Large),
+                items  = IndividualConnection.enumerableValues.map { value =>
+                    RadioItem(
+                        content = messages(s"individualConnection.${value.toString}"),
+                        value   = Some(value.toString),
+                        id      = Some(s"value_$index")
+                    )
+                } :+ RadioItem(
+                    content         = messages("individualConnection.other"),
+                    value           = Some("other"),
+                    id              = Some("value_other"),
+                    conditionalHtml = Some(conditionalHtml)
+                )
+            ).withHint(Hint(content = "individualConnection.hint"))
+        )
+
+        @govukButton(
+            ButtonViewModel(messages("site.continue"))
+        )
+    }
+}

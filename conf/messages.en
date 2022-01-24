@@ -1,0 +1,219 @@
+service.name = Report tax fraud or evasion
+
+site.back = Back
+site.remove = Remove
+site.change = Change
+site.no = No
+site.yes = Yes
+site.continue = Continue
+site.start = Start now
+site.startAgain = Start again
+site.signIn = Sign in
+site.govuk = GOV.UK
+
+date.day = Day
+date.month = Month
+date.year = Year
+
+timeout.title = You’re about to be signed out
+timeout.message = For security reasons, you will be signed out of this service in
+timeout.keepAlive = Stay signed in
+timeout.signOut = Sign out
+
+error.browser.title.prefix = Error:
+error.boolean = Please give an answer
+error.invalid_date = Give a correct date
+error.date.day_blank = Enter a day
+error.date.day_invalid = Give a correct day using numbers 1 to 31
+error.date.month_blank = Enter a month
+error.date.month_invalid = Give a correct month using numbers 1 to 12
+error.date.year_blank = Enter a year
+error.date.year_invalid = Give a correct year
+error.integer = Give an answer in whole numbers
+error.non_numeric = Give a value using only numbers
+error.number = Please enter a valid number
+error.required = Please enter a value
+error.summary.title = There is a problem
+
+index.title = Using this service
+index.header = Using this service
+index.p1 = The information you will provide will be valuable to our investigation.
+index.p2 = By continuing, you understand that:
+index.list.item1 = any information you provide will be private and confidential
+index.list.item2 = you can provide your contact details when asked or report anonymously
+index.list.item3 = you should not try to obtain or access any evidence you do not already have
+index.inset.text = HMRC is unable to investigate police or Border Force issues.
+
+checkYourAnswers.title = Check Your Answers
+checkYourAnswers.heading = Check Your Answers
+
+journeyRecovery.continue.title = Sorry, there is a problem with the service
+journeyRecovery.continue.heading = Sorry, there is a problem with the service
+journeyRecovery.continue.guidance = [Add content to explain how to proceed.]
+journeyRecovery.startAgain.title = Sorry, there is a problem with the service
+journeyRecovery.startAgain.heading = Sorry, there is a problem with the service
+journeyRecovery.startAgain.guidance = [Add content to explain why the user needs to start again.]
+
+signedOut.title = For your security, we signed you out
+signedOut.heading = For your security, we signed you out
+signedOut.guidance = We did not save your answers.
+
+unauthorised.title = You can’t access this service with this account
+unauthorised.heading = You can’t access this service with this account
+
+activityType.title = What type of HMRC activity are you reporting?
+activityType.heading = What type of HMRC activity are you reporting?
+activityType.hint = Enter keywords related to the activity to suggest relevant categories.
+activityType.checkYourAnswersLabel = What type of HMRC activity are you reporting?
+activityType.error.required = Enter the type of HMRC activity that you are reporting
+activityType.change.hidden = ActivityType
+
+activityType.name.furlough = Fraud related to furlough
+activityType.name.defrauding-self-employment = Defrauding the Self-Employment Income Support Scheme
+activityType.name.defrauding-sick-pay = Defrauding Statutory Sick Pay (SSP) or the SSP Rebate Scheme
+activityType.name.defrauding-eat-out = Defrauding the Eat Out to Help Out scheme
+activityType.name.incorrect-emp-status = Incorrect employment status
+activityType.name.avoiding-tax = Avoiding tax
+activityType.name.fraud-related-tax = Fraud related to VAT
+activityType.name.defrauding-c-i-scheme = Defrauding the Construction Industry Scheme
+activityType.name.fraud-related-private-sec-industry = Fraud related to the private security industry
+activityType.name.fraud-related-income-tax = Fraud related to Income Tax Self Assessment
+activityType.name.breaking-off-payroll-IR35 = Breaking off-payroll working rules (IR35)
+activityType.name.not-registered-self-emp = Not registered as self-employed
+activityType.name.suspicious-cash-dep = Suspicious cash deposits
+activityType.name.suspicious-transport = Suspicious transport of cash
+activityType.name.money-funding-criminal-org = Money funding criminal organisations
+activityType.name.not-paying-betting-duty = Not paying betting duty
+activityType.name.illegal-flow-money = Illegal flow of money
+activityType.name.money-laundering = Money laundering
+activityType.name.not-paying-capital-gains-tax = Not paying Capital Gains Tax
+activityType.name.offshore-bank-accounts = Offshore bank accounts
+activityType.name.more-than-two-million-assets-not-paying-tax = People with more than £2 million of assets not paying tax
+activityType.name.not-paying-inheritance-tax = Not paying Inheritance Tax
+activityType.name.fraud-related-charities = Fraud related to charities
+activityType.name.not-paying-duty-on-alcohol = Not paying duty on alcohol
+activityType.name.not-paying-duty-on-tobacco = Not paying duty on tobacco
+activityType.name.illegal-use-of-red-diesel = Illegal use of red diesel
+activityType.name.not-paying-sugar-ax = Not paying sugar tax
+activityType.name.false-tax-credit-claims = False Tax Credit claims
+activityType.name.false-child-benfit-claims = False Child Benfit claims
+activityType.name.fraud-related-to-brexit = Fraud related to Brexit
+activityType.name.fraud-related-to-import-and-export = Fraud related to import and export
+activityType.name.false-vat-refund-claims = False VAT refund claims
+activityType.name.not-paying-tax-when-winding-up-company = Not paying tax when winding up a company
+activityType.name.importing-goods = Importing goods VAT-free and then charging customers VAT
+activityType.name.suspicious-hmrc-emails-text-messages-phone = Suspicious HMRC emails, text messages, and phone calls
+activityType.name.not-being-paid-minimum-wage = Not being paid minimum wage
+
+# TODO why aren't these prefixed with activityType.name?
+activity-related-drugs = Activity related to drugs
+smuggling = Smuggling
+benefit-fraud = Benefit fraud (not including child benefit or tax credits)
+universal-credit-fraud = Universal credit fraud
+human-trafficking = Human trafficking
+illegal-immigration = Illegal immigration
+border-crime = Border crime
+
+individualOrBusiness.title = Are you reporting an individual or a business?
+individualOrBusiness.heading = Are you reporting an individual or a business?
+individualOrBusiness.individual = Individual
+individualOrBusiness.business = Business
+individualOrBusiness.checkYourAnswersLabel = Are you reporting an individual or a business?
+individualOrBusiness.error.required = Select whether you are reporting an individual or business
+individualOrBusiness.change.hidden = IndividualOrBusiness
+
+doNotUseThisService.title = You should not use this service to report this activity
+doNotUseThisService.heading = You should not use this service to report this activity
+doNotUseThisService.p1.activity-related-to-drugs = HMRC is unable to investigate this activity.
+doNotUseThisService.p2.activity-related-to-drugs = You should report activity related to drugs to the police. Call 999 if it’s an emergency, or 101 if it’s not urgent.
+doNotUseThisService.p1.smuggling = HMRC is unable to investigate this activity.
+doNotUseThisService.p2.smuggling = You should <a class="govuk-link" href="https://www.gov.uk/report-smuggling">report smuggling to the Home Office</a>.
+doNotUseThisService.p1.benefit-fraud-and-universal-credit = HMRC is unable to investigate any benefit fraud other than Child Benefit or Tax Credit fraud.
+doNotUseThisService.p2.benefit-fraud-and-universal-credit = You should <a class="govuk-link" href="https://www.gov.uk/report-benefit-fraud">report all other benefit fraud</a> to the Department for Work and Pensions.
+doNotUseThisService.p1.human-trafficking = HMRC is unable to investigate this activity.
+doNotUseThisService.p2.human-trafficking = You should report human trafficking to the police. Call 999 if it’s an emergency, or 101 if it’s not urgent.
+doNotUseThisService.p1.immigration-border-crime = HMRC is unable to investigate this activity.
+doNotUseThisService.p2.immigration-border-crime = You should <a class="govuk-link" href="https://www.gov.uk/report-immigration-crime">report immigration or border crime to the Home Office</a>
+
+individualInformation.title = What do you know about the individual?
+individualInformation.heading = What do you know about the individual?
+individualInformation.name = Name
+individualInformation.age = Age (approximate)
+individualInformation.address = Address
+individualInformation.contact-details = Contact details
+individualInformation.ni-number = National Insurance Number
+individualInformation.checkYourAnswersLabel = What do you know about the individual?
+individualInformation.error.required = Select what you know about the individual
+individualInformation.change.hidden = IndividualInformation
+
+individualName.title = What is the individual''s name?
+individualName.heading = What is the individual''s name?
+individualName.hint = Enter as much as you are able to
+individualName.firstName = First name
+individualName.middleName = Middle name
+individualName.lastName = Last name
+individualName.aliases = Aliases or nicknames
+individualName.checkYourAnswersLabel = What is the individual's name?
+individualName.error.firstName.length = First name must be 100 characters or less
+individualName.error.middleName.length = Middle name must be 100 characters or less
+individualName.error.lastName.length = Last name must be 100 characters or less
+individualName.error.aliases.length = Alises or nicknames name must be 100 characters or less
+individualName.firstName.change.hidden = firstName
+individualName.middleName.change.hidden = middleName
+individualName.lastName.change.hidden = middleName
+individualName.aliases.change.hidden = middleName
+
+individualContactDetails.title = What are the individual''s contact details?
+individualContactDetails.heading = What are the individual''s contact details?
+individualContactDetails.hint = Enter as much as you are able to
+individualContactDetails.landlineNumber = Landline number
+individualContactDetails.mobileNumber = Mobile number
+individualContactDetails.email = Email address
+individualContactDetails.checkYourAnswersLabel = What are the individual''s contact details?
+individualContactDetails.error.landlineNumber.length = Landline number must be 100 characters or less
+individualContactDetails.error.mobileNumber.length = Mobile number must be 100 characters or less
+individualContactDetails.error.email.length = Email address must be 100 characters or less
+individualContactDetails.landlineNumber.change.hidden = landlineNumber
+individualContactDetails.mobileNumber.change.hidden = mobileNumber
+individualContactDetails.mobileNumber.change.hidden = email
+
+individualNationalInsuranceNumber.title = What is the individual''s National Insurance Number?
+individualNationalInsuranceNumber.heading = What is the individual''s National Insurance Number?
+individualNationalInsuranceNumber.hint = For example, ‘QQ 12 34 56 C’
+individualNationalInsuranceNumber.checkYourAnswersLabel = What is the individual''s National Insurance Number?
+individualNationalInsuranceNumber.error.required = Enter the individual''s National Insurance Number
+individualNationalInsuranceNumber.error.invalid = Enter the individual''s National Insurance Number in the correct format
+individualNationalInsuranceNumber.change.hidden = IndividualNationalInsuranceNumber
+
+individualConnection.title = How do you know the individual?
+individualConnection.heading = How do you know the individual?
+individualConnection.hint = Select the best description
+individualConnection.partner = Partner
+individualConnection.exPartner = Ex-Partner
+individualConnection.familyMember = Family member
+individualConnection.businessPartner = Business partner
+individualConnection.employer = Employer
+individualConnection.exEmployer = Ex-Employer
+individualConnection.employee = Employee
+individualConnection.colleague = Colleague
+individualConnection.friend = Friend
+individualConnection.neighbour = Neighbour
+individualConnection.customer = Customer
+individualConnection.businessCompetitor = Business competitor
+individualConnection.other = Other
+individualConnection.checkYourAnswersLabel = How do you know the individual?
+individualConnection.error.required = Select how you know the individual
+individualConnection.otherValue.hint = Enter how you know the individual
+individualConnection.error.otherValue.required = Select or enter how you know the individual
+individualConnection.error.otherValue.maxLength = Enter how you know the individual in less than {0} characters
+individualConnection.change.hidden = IndividualConnection
+
+individualBusinessDetails.title = Does the individual have business details that you can provide?
+individualBusinessDetails.heading = Does the individual have business details that you can provide?
+individualBusinessDetails.hint = For example, the business's name, address or contact details.
+individualBusinessDetails.yes = Yes
+individualBusinessDetails.no = No
+individualBusinessDetails.dontKnow = I don''t know
+individualBusinessDetails.checkYourAnswersLabel = Does the individual have business details that you can provide?
+individualBusinessDetails.error.required = Select whether the individual has business details that you can provide
+individualBusinessDetails.change.hidden = IndividualBusinessDetails

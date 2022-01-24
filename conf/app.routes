@@ -1,0 +1,64 @@
+# microservice specific routes
+
+->         /hmrc-frontend                               hmrcfrontend.Routes
+
+GET        /                                            controllers.IndexController.onPageLoad
+GET        /using-this-service                          controllers.IndexController.onPageLoad
+
+GET        /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
+
+GET        /language/:lang                              controllers.LanguageSwitchController.switchToLanguage(lang: String)
+
+GET        /refresh-session                             controllers.KeepAliveController.keepAlive
+
+GET        /there-is-a-problem                          controllers.JourneyRecoveryController.onPageLoad(continueUrl: Option[RedirectUrl] ?= None)
+
+GET        /check-your-answers                          controllers.CheckYourAnswersController.onPageLoad
+
+GET        /account/sign-out-survey                     controllers.auth.AuthController.signOut
+GET        /account/sign-out                            controllers.auth.AuthController.signOutNoSurvey
+GET        /account/signed-out                          controllers.auth.SignedOutController.onPageLoad
+
+GET        /unauthorised                                controllers.UnauthorisedController.onPageLoad
+
+GET        /activity-type                               controllers.ActivityTypeController.onPageLoad(mode: Mode = NormalMode)
+POST       /activity-type                               controllers.ActivityTypeController.onSubmit(mode: Mode = NormalMode)
+GET        /change-activity-type                        controllers.ActivityTypeController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-activity-type                        controllers.ActivityTypeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /individual-or-business                      controllers.IndividualOrBusinessController.onPageLoad(mode: Mode = NormalMode)
+POST       /individual-or-business                      controllers.IndividualOrBusinessController.onSubmit(mode: Mode = NormalMode)
+GET        /change-individual-or-business               controllers.IndividualOrBusinessController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-individual-or-business               controllers.IndividualOrBusinessController.onSubmit(mode: Mode = CheckMode)
+
+GET        /do-not-use-this-service                     controllers.DoNotUseThisServiceController.onPageLoad()
+
+GET        /:index/individual-information-check         controllers.IndividualInformationController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-information-check         controllers.IndividualInformationController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-information-check  controllers.IndividualInformationController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-information-check  controllers.IndividualInformationController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/individual-name                      controllers.IndividualNameController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-name                      controllers.IndividualNameController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-name               controllers.IndividualNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-name               controllers.IndividualNameController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/individual-contact-details                        controllers.IndividualContactDetailsController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-contact-details                        controllers.IndividualContactDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-contact-details                 controllers.IndividualContactDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-contact-details                 controllers.IndividualContactDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/individual-national-insurance-number                        controllers.IndividualNationalInsuranceNumberController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-national-insurance-number                        controllers.IndividualNationalInsuranceNumberController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-national-insurance-number                 controllers.IndividualNationalInsuranceNumberController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-national-inusrance-number                 controllers.IndividualNationalInsuranceNumberController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/individual-connection                                       controllers.IndividualConnectionController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-connection                                       controllers.IndividualConnectionController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-connection                                controllers.IndividualConnectionController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-connection                                controllers.IndividualConnectionController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/individual-business-details                        controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-business-details                        controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-business-details                 controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-business-details                 controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
