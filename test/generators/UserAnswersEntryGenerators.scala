@@ -32,7 +32,6 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryIndividualBusinessDetailsUserAnswersEntry: Arbitrary[(IndividualBusinessDetailsPage, JsValue)] =
   implicit lazy val arbitraryIndividualBusinessDetailsUserAnswersEntry
     : Arbitrary[(IndividualBusinessDetailsPage, JsValue)] =
     Arbitrary {
