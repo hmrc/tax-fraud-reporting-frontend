@@ -31,8 +31,6 @@
         pageTitle    = s"${errorPrefix(form)}${titleNoForm(messages("businessInformationCheck.title"))}"
 ) {
 
-    <div id="business-check">
-
         @forms.formWithCSRF(action = routes.BusinessInformationCheckController.onSubmit(), args = 'novalidate -> "novalidate") {
 
         @components.error_summary(form.errors)
@@ -82,5 +80,5 @@
         @html.button("site.continue")
 
         }
-    </div>
+
 }

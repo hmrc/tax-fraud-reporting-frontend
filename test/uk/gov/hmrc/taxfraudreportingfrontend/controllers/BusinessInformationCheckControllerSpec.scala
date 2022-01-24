@@ -16,23 +16,32 @@
 
 package uk.gov.hmrc.taxfraudreportingfrontend.controllers
 
-import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.Mockito.when
 import org.scalatest.MustMatchers.convertToAnyMustWrapper
 import org.scalatest.{Matchers, OptionValues}
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
-import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded}
+import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, POST, defaultAwaitTimeout, redirectLocation, route, status, writeableOf_AnyContentAsEmpty, writeableOf_AnyContentAsFormUrlEncoded}
+import play.api.test.Helpers.{
+  defaultAwaitTimeout,
+  redirectLocation,
+  route,
+  status,
+  writeableOf_AnyContentAsEmpty,
+  writeableOf_AnyContentAsFormUrlEncoded,
+  GET,
+  POST
+}
 import uk.gov.hmrc.http.SessionKeys
 import uk.gov.hmrc.taxfraudreportingfrontend.models.BusinessInformationCheck
 import uk.gov.hmrc.taxfraudreportingfrontend.models.BusinessInformationCheck.BusinessName
 import uk.gov.hmrc.taxfraudreportingfrontend.models.cache.FraudReportDetails
 import uk.gov.hmrc.taxfraudreportingfrontend.util.BaseSpec
 
-import scala.concurrent.{ExecutionContext, ExecutionContextExecutor, Future}
+import scala.concurrent.Future
 
 class BusinessInformationCheckControllerSpec
     extends BaseSpec with Matchers with MockitoSugar with OptionValues with GuiceOneAppPerSuite {
@@ -44,6 +53,8 @@ class BusinessInformationCheckControllerSpec
 
   lazy val businessInfoCheckRoute: String = routes.BusinessInformationCheckController.onPageLoad().url
 
+  lazy val businessNameRoute: String = routes.BusinessNameController.onPageLoad().url
+
   "business information check page view" should {
 
     "return to business information check view page" in {
@@ -51,6 +62,7 @@ class BusinessInformationCheckControllerSpec
       val request = FakeRequest(GET, businessInfoCheckRoute)
       val result  = route(application, request).get
       status(result) mustEqual SEE_OTHER
+      redirectLocation(result).value mustEqual businessInfoCheckRoute
 
     }
 
@@ -62,19 +74,9 @@ class BusinessInformationCheckControllerSpec
 
     }
 
-    "return OK when there is no session id" in {
-
-      when(mockSessionCache.createCacheIfNotPresent()(getRequest)).thenReturn(Future.successful(true))
-      val result = controller.onPageLoad()(request)
-      status(result) mustEqual OK
-
-    }
-
     "load the page content from cache business information data is empty" in {
 
-      when(mockUserAnswersCache.getBusinessCheck()(getRequest)).thenReturn(
-        Future.successful(Set.empty[BusinessInformationCheck])
-      )
+      when(mockSessionCache.createCacheIfNotPresent()(getRequest)).thenReturn(Future.successful(true))
       val result = controller.onPageLoad()(request)
       status(result) mustEqual OK
 
@@ -102,25 +104,23 @@ class BusinessInformationCheckControllerSpec
     }
 
     "return See Other when valid data is submitted" in {
+
       val mockBusinessDetails: Set[BusinessInformationCheck] = Set(BusinessName)
 
       val mockFraudReportCache = FraudReportDetails(businessInformationCheck = mockBusinessDetails)
 
-      implicit val ec: ExecutionContextExecutor = ExecutionContext.global
+      when(mockUserAnswersCache.cacheBusinessCheck(eqTo(mockBusinessDetails))(any())).thenReturn(
+        Future.successful(mockFraudReportCache)
+      )
 
-      implicit val mockRequest: FakeRequest[AnyContentAsFormUrlEncoded] =
+      val request =
         FakeRequest(POST, businessInfoCheckRoute)
-          .withFormUrlEncodedBody("value[]" -> "name")
+          .withFormUrlEncodedBody(("value[]", "name"))
 
-      when(
-        mockUserAnswersCache.cacheBusinessCheck(mockBusinessDetails)
-      ).thenReturn(Future.successful(mockFraudReportCache))
+      val result = route(application, request).value
 
-      mockUserAnswersCache.cacheBusinessCheck(mockBusinessDetails) foreach {cache => println(s"### $cache ###")}
-
-      val result = route(application, mockRequest).value
       status(result) mustEqual SEE_OTHER
-      redirectLocation(result).value mustEqual businessInfoCheckRoute
+      redirectLocation(result).value mustEqual businessNameRoute
     }
   }
 }

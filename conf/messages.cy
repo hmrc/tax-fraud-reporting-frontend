@@ -214,5 +214,5 @@ businessAddress.header = (W) What is the business''s address?(W)
 businessContact.title = (W) What are the business''s contact details?(W)
 businessContact.header = (W) What are the business''s contact details?(W)
 
-businessReference.title =  (W) What are the business's reference numbers?(W)
-businessReference.header = (W) What are the business's reference numbers?(W)
+businessReference.title =  (W) What are the business''s reference numbers?(W)
+businessReference.header = (W) What are the business''s reference numbers?(W)
