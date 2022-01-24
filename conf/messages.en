@@ -217,3 +217,10 @@ individualBusinessDetails.dontKnow = I don''t know
 individualBusinessDetails.checkYourAnswersLabel = Does the individual have business details that you can provide?
 individualBusinessDetails.error.required = Select whether the individual has business details that you can provide
 individualBusinessDetails.change.hidden = IndividualBusinessDetails
+
+businessName.title = What is the business''s name?
+businessName.heading = What is the business''s name?
+businessName.checkYourAnswersLabel = businessName
+businessName.error.required = Enter the name of the business
+businessName.error.length = The name of the business must be less than {0} characters
+businessName.change.hidden = BusinessName
