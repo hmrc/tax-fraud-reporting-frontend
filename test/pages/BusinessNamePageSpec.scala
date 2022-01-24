@@ -16,6 +16,7 @@
 
 package pages
 
+import models.Index
 import pages.behaviours.PageBehaviours
 
 
@@ -23,10 +24,10 @@ class BusinessNamePageSpec extends PageBehaviours {
 
   "BusinessNamePage" - {
 
-    beRetrievable[String](BusinessNamePage)
+    beRetrievable[String](BusinessNamePage(Index(0)))
 
-    beSettable[String](BusinessNamePage)
+    beSettable[String](BusinessNamePage(Index(0)))
 
-    beRemovable[String](BusinessNamePage)
+    beRemovable[String](BusinessNamePage(Index(0)))
   }
 }

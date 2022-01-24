@@ -1,0 +1,5 @@
+businessName.title = (W) What is the business''s name? (W)
+businessName.heading = (W) What is the business''s name? (W)
+businessName.checkYourAnswersLabel = (W) businessName (W)
+businessName.error.required = (W) Enter the business''s name (W)
+businessName.error.length = (W) The name of the business must be less than {0} characters (W)

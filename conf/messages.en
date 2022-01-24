@@ -221,6 +221,6 @@ individualBusinessDetails.change.hidden = IndividualBusinessDetails
 businessName.title = What is the business''s name?
 businessName.heading = What is the business''s name?
 businessName.checkYourAnswersLabel = businessName
-businessName.error.required = Enter the name of the business
+businessName.error.required = Enter the business''s name
 businessName.error.length = The name of the business must be less than {0} characters
-businessName.change.hidden = BusinessName
+

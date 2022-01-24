@@ -63,7 +63,7 @@ POST       /:index/individual-business-details                        controller
 GET        /:index/change-individual-business-details                 controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-individual-business-details                 controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /businessName                        controllers.BusinessNameController.onPageLoad(mode: Mode = NormalMode)
-POST       /businessName                        controllers.BusinessNameController.onSubmit(mode: Mode = NormalMode)
-GET        /changeBusinessName                  controllers.BusinessNameController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeBusinessName                  controllers.BusinessNameController.onSubmit(mode: Mode = CheckMode)
+GET        /:index/business-name                                      controllers.BusinessNameController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/business-name                                      controllers.BusinessNameController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-business-name                               controllers.BusinessNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-business-name                               controllers.BusinessNameController.onSubmit(index: Index, mode: Mode = CheckMode)

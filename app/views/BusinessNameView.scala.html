@@ -25,11 +25,11 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("businessName.title"))) {
 
-    @formHelper(action = routes.BusinessNameController.onSubmit(mode)) {
+    @formHelper(action = routes.BusinessNameController.onSubmit(index, mode)) {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))
@@ -40,7 +40,7 @@
                 field = form("value"),
                 label = LabelViewModel(messages("businessName.heading")).asPageHeading(Large)
             )
-            .withWidth(TwoThirds)
+            .withWidth(Full)
         )
 
         @govukButton(
