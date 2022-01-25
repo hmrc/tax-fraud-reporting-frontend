@@ -72,3 +72,8 @@ GET        /individualDateOfBirth                  controllers.IndividualDateOfB
 POST       /individualDateOfBirth                  controllers.IndividualDateOfBirthController.onSubmit(mode: Mode = NormalMode)
 GET        /changeIndividualDateOfBirth                        controllers.IndividualDateOfBirthController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeIndividualDateOfBirth                        controllers.IndividualDateOfBirthController.onSubmit(mode: Mode = CheckMode)
+
+GET        /individualAge                  controllers.IndividualAgeController.onPageLoad(mode: Mode = NormalMode)
+POST       /individualAge                  controllers.IndividualAgeController.onSubmit(mode: Mode = NormalMode)
+GET        /changeIndividualAge                        controllers.IndividualAgeController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeIndividualAge                        controllers.IndividualAgeController.onSubmit(mode: Mode = CheckMode)

@@ -236,3 +236,13 @@ individualDateOfBirth.error.required = Date of birth must include {0}
 individualDateOfBirth.error.invalid = Enter a real date of birth
 individualDateOfBirth.change.hidden = IndividualDateOfBirth
 individualDateOfBirth.error.futureDate = Date of birth must be in the past
+
+individualAge.title = What is the individual''s approximate age?
+individualAge.heading = What is the individual''s approximate age?
+individualAge.suffix = years old
+individualAge.checkYourAnswersLabel = What is the individual''s approximate age?
+individualAge.error.nonNumeric = Enter the individual''s approximate age with numerical values
+individualAge.error.required = Enter the individual''s approximate age
+individualAge.error.wholeNumber = Enter the individual''s approximate age with numerical values
+individualAge.error.outOfRange = The individual''s approximate age must be between {0} and {1}
+individualAge.change.hidden = IndividualAge
