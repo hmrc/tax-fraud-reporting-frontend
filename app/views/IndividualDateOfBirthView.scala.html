@@ -14,6 +14,8 @@
  * limitations under the License.
  *@
 
+@import viewmodels.LegendSize
+
 @this(
     layout: templates.Layout,
     formHelper: FormWithCSRF,
@@ -35,7 +37,7 @@
         @govukDateInput(
             DateViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("individualDateOfBirth.heading")).asPageHeading()
+                legend = LegendViewModel(messages("individualDateOfBirth.heading")).asPageHeading(LegendSize.Large)
             )
             .withHint(HintViewModel(messages("individualDateOfBirth.hint")))
         )
