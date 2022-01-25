@@ -22,6 +22,11 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryDateFormat: Arbitrary[DateFormat] =
+    Arbitrary {
+      Gen.oneOf(DateFormat.values.toSeq)
+    }
+
   implicit lazy val arbitraryIndividualBusinessDetails: Arbitrary[IndividualBusinessDetails] =
     Arbitrary {
       Gen.oneOf(IndividualBusinessDetails.values)

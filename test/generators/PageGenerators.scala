@@ -22,6 +22,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryDateFormatPage: Arbitrary[DateFormatPage.type] =
+    Arbitrary(DateFormatPage)
+
   implicit lazy val arbitraryIndividualBusinessDetailsPage: Arbitrary[IndividualBusinessDetailsPage] =
     Arbitrary(IndividualBusinessDetailsPage(Index(0)))
 
