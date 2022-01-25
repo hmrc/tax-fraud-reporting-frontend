@@ -109,7 +109,7 @@ class NavigatorSpec extends SpecBase {
           navigator.nextPage(
             IndividualDateFormatPage(Index(0)),
             NormalMode, answers
-          ) mustBe routes.IndividualDateOfBirthController.onPageLoad(NormalMode)
+          ) mustBe routes.IndividualDateOfBirthController.onPageLoad(Index(0), NormalMode)
         }
 
         "to the journey recovery controller if there is no individual date format set" in {

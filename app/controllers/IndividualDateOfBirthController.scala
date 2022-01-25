@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.IndividualDateOfBirthFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Index, Mode}
 import navigation.Navigator
 import pages.IndividualDateOfBirthPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -42,31 +43,31 @@ class IndividualDateOfBirthController @Inject()(
                                         view: IndividualDateOfBirthView
                                       )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  def form = formProvider()
+  private val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(IndividualDateOfBirthPage) match {
+      val preparedForm = request.userAnswers.get(IndividualDateOfBirthPage(index)) match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, index, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
+          Future.successful(BadRequest(view(formWithErrors, index, mode))),
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualDateOfBirthPage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualDateOfBirthPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(IndividualDateOfBirthPage, mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(IndividualDateOfBirthPage(index), mode, updatedAnswers))
       )
   }
 }

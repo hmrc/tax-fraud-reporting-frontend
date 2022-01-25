@@ -39,7 +39,7 @@ class Navigator @Inject() () {
 
   private def ageFormatPageRoutes(answers: UserAnswers, index: Index): Call =
     answers.get(IndividualDateFormatPage(index)).map {
-      case IndividualDateFormat.Date => routes.IndividualDateOfBirthController.onPageLoad(NormalMode)
+      case IndividualDateFormat.Date => routes.IndividualDateOfBirthController.onPageLoad(index, NormalMode)
       case IndividualDateFormat.Age  => routes.IndividualAgeController.onPageLoad(index, NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 

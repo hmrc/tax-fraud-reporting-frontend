@@ -16,8 +16,9 @@
 
 package pages
 
-import java.time.LocalDate
+import models.Index
 
+import java.time.LocalDate
 import org.scalacheck.Arbitrary
 import pages.behaviours.PageBehaviours
 
@@ -29,10 +30,10 @@ class IndividualDateOfBirthPageSpec extends PageBehaviours {
       datesBetween(LocalDate.of(1900, 1, 1), LocalDate.of(2100, 1, 1))
     }
 
-    beRetrievable[LocalDate](IndividualDateOfBirthPage)
+    beRetrievable[LocalDate](IndividualDateOfBirthPage(Index(0)))
 
-    beSettable[LocalDate](IndividualDateOfBirthPage)
+    beSettable[LocalDate](IndividualDateOfBirthPage(Index(0)))
 
-    beRemovable[LocalDate](IndividualDateOfBirthPage)
+    beRemovable[LocalDate](IndividualDateOfBirthPage(Index(0)))
   }
 }
