@@ -40,7 +40,7 @@
     id = id,
     name = name,
     label = if (isPageHeading) {
-        LabelViewModel(messages(label)).asPageHeading(LabelSize.ExtraLarge)
+        LabelViewModel(messages(label)).asPageHeading((LabelSize.Large))
     } else {
         LabelViewModel(messages(label))
     },

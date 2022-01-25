@@ -26,10 +26,10 @@ POST       /activity-type                               controllers.ActivityType
 GET        /change-activity-type                        controllers.ActivityTypeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-activity-type                        controllers.ActivityTypeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /individual-or-business                      controllers.IndividualOrBusinessController.onPageLoad(mode: Mode = NormalMode)
-POST       /individual-or-business                      controllers.IndividualOrBusinessController.onSubmit(mode: Mode = NormalMode)
-GET        /change-individual-or-business               controllers.IndividualOrBusinessController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-individual-or-business               controllers.IndividualOrBusinessController.onSubmit(mode: Mode = CheckMode)
+GET        /person-or-business                      controllers.IndividualOrBusinessController.onPageLoad(mode: Mode = NormalMode)
+POST       /person-or-business                      controllers.IndividualOrBusinessController.onSubmit(mode: Mode = NormalMode)
+GET        /change-person-or-business               controllers.IndividualOrBusinessController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-person-or-business               controllers.IndividualOrBusinessController.onSubmit(mode: Mode = CheckMode)
 
 GET        /do-not-use-this-service                     controllers.DoNotUseThisServiceController.onPageLoad()
 
@@ -38,20 +38,20 @@ POST       /:index/individual-information-check         controllers.IndividualIn
 GET        /:index/change-individual-information-check  controllers.IndividualInformationController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-individual-information-check  controllers.IndividualInformationController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/individual-name                      controllers.IndividualNameController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/individual-name                      controllers.IndividualNameController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-individual-name               controllers.IndividualNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-individual-name               controllers.IndividualNameController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/name                      controllers.IndividualNameController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/name                      controllers.IndividualNameController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-name               controllers.IndividualNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-name               controllers.IndividualNameController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/individual-contact-details                        controllers.IndividualContactDetailsController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/individual-contact-details                        controllers.IndividualContactDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-individual-contact-details                 controllers.IndividualContactDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-individual-contact-details                 controllers.IndividualContactDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/contact-details                        controllers.IndividualContactDetailsController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/contact-details                        controllers.IndividualContactDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-contact-details                 controllers.IndividualContactDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-contact-details                 controllers.IndividualContactDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/individual-national-insurance-number                        controllers.IndividualNationalInsuranceNumberController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/individual-national-insurance-number                        controllers.IndividualNationalInsuranceNumberController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-individual-national-insurance-number                 controllers.IndividualNationalInsuranceNumberController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-individual-national-inusrance-number                 controllers.IndividualNationalInsuranceNumberController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/national-insurance-number                        controllers.IndividualNationalInsuranceNumberController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/national-insurance-number                        controllers.IndividualNationalInsuranceNumberController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-national-insurance-number                 controllers.IndividualNationalInsuranceNumberController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-national-insurance-number                 controllers.IndividualNationalInsuranceNumberController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /:index/individual-connection                                       controllers.IndividualConnectionController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/individual-connection                                       controllers.IndividualConnectionController.onSubmit(index: Index, mode: Mode = NormalMode)

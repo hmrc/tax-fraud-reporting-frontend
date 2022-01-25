@@ -14,6 +14,8 @@
  * limitations under the License.
  *@
 
+@import viewmodels.LegendSize
+
 @this(
     layout: templates.Layout,
     formHelper: FormWithCSRF,
@@ -36,7 +38,7 @@
             CheckboxesViewModel(
                 form   = form,
                 name   = "value",
-                legend = LegendViewModel(messages("individualInformation.heading")).asPageHeading(),
+                legend = LegendViewModel(messages("individualInformation.heading")).asPageHeading(LegendSize.Large),
                 items  = IndividualInformation.checkboxItems
             )
         )
