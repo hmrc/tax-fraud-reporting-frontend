@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, Index, UserAnswers}
 import pages.IndividualDateFormatPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -28,8 +28,8 @@ import viewmodels.implicits._
 
 object IndividualDateFormatSummary  {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(IndividualDateFormatPage).map {
+  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(IndividualDateFormatPage(Index(index))).map {
       answer =>
 
         val value = ValueViewModel(
@@ -42,7 +42,7 @@ object IndividualDateFormatSummary  {
           key     = "dateFormat.checkYourAnswersLabel",
           value   = value,
           actions = Seq(
-            ActionItemViewModel("site.change", routes.IndividualDateFormatController.onPageLoad(CheckMode).url)
+            ActionItemViewModel("site.change", routes.IndividualDateFormatController.onPageLoad(Index(index), CheckMode).url)
               .withVisuallyHiddenText(messages("dateFormat.change.hidden"))
           )
         )

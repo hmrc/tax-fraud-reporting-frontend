@@ -63,10 +63,10 @@ POST       /:index/individual-business-details                        controller
 GET        /:index/change-individual-business-details                 controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-individual-business-details                 controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /dateFormat                        controllers.IndividualDateFormatController.onPageLoad(mode: Mode = NormalMode)
-POST       /dateFormat                        controllers.IndividualDateFormatController.onSubmit(mode: Mode = NormalMode)
-GET        /changeDateFormat                  controllers.IndividualDateFormatController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeDateFormat                  controllers.IndividualDateFormatController.onSubmit(mode: Mode = CheckMode)
+GET        /:index/age-format                        controllers.IndividualDateFormatController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/age-format                        controllers.IndividualDateFormatController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-age-format                 controllers.IndividualDateFormatController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-age-format                 controllers.IndividualDateFormatController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /individualDateOfBirth                  controllers.IndividualDateOfBirthController.onPageLoad(mode: Mode = NormalMode)
 POST       /individualDateOfBirth                  controllers.IndividualDateOfBirthController.onSubmit(mode: Mode = NormalMode)

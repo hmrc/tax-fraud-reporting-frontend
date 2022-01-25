@@ -16,12 +16,12 @@
 
 package pages
 
-import models.IndividualDateFormat
+import models.{Index, IndividualDateFormat}
 import play.api.libs.json.JsPath
 
-case object IndividualDateFormatPage extends QuestionPage[IndividualDateFormat] {
+final case class IndividualDateFormatPage(index: Index) extends QuestionPage[IndividualDateFormat] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ toString \ index.position
 
   override def toString: String = "dateFormat"
 }

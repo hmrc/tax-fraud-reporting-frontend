@@ -16,17 +16,17 @@
 
 package pages
 
-import models.IndividualDateFormat
+import models.{Index, IndividualDateFormat}
 import pages.behaviours.PageBehaviours
 
 class DateFormatSpec extends PageBehaviours {
 
   "DateFormatPage" - {
 
-    beRetrievable[IndividualDateFormat](IndividualDateFormatPage)
+    beRetrievable[IndividualDateFormat](IndividualDateFormatPage(Index(0)))
 
-    beSettable[IndividualDateFormat](IndividualDateFormatPage)
+    beSettable[IndividualDateFormat](IndividualDateFormatPage(Index(0)))
 
-    beRemovable[IndividualDateFormat](IndividualDateFormatPage)
+    beRemovable[IndividualDateFormat](IndividualDateFormatPage(Index(0)))
   }
 }

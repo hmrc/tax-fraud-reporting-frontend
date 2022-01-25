@@ -29,7 +29,7 @@ class Navigator @Inject() () {
   private val normalRoutes: Page => UserAnswers => Call = {
     case ActivityTypePage         => activityPageRoutes
     case IndividualOrBusinessPage => individualOrBusinessRoutes
-    case IndividualDateFormatPage           => ageFormatPageRoutes
+    case IndividualDateFormatPage(index) => ageFormatPageRoutes(_, index)
     case _                        => _ => routes.IndexController.onPageLoad
   }
 
@@ -37,12 +37,11 @@ class Navigator @Inject() () {
     case _ => _ => routes.CheckYourAnswersController.onPageLoad
   }
 
-  private def ageFormatPageRoutes(answers: UserAnswers): Call =
-    answers.get(IndividualDateFormatPage).map {
+  private def ageFormatPageRoutes(answers: UserAnswers, index: Index): Call =
+    answers.get(IndividualDateFormatPage(index)).map {
       case IndividualDateFormat.Date => routes.IndividualDateOfBirthController.onPageLoad(NormalMode)
       case IndividualDateFormat.Age  => routes.IndividualAgeController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
-
 
   private def activityPageRoutes(answers: UserAnswers): Call =
     answers.get(ActivityTypePage).map { activity =>
