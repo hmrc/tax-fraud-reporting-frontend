@@ -38,14 +38,13 @@
 @(pageTitle: String, showBackLink: Boolean = true, timeout: Boolean = true, showSignOut: Boolean = false)(contentBlock: Html)(implicit request: Request[_], messages: Messages)
 
 @headContent = {
-
     <!--[if lte IE 8]><link href='@controllers.routes.Assets.versioned("stylesheets/application-ie-8.css")' rel="stylesheet" type="text/css" /><![endif]-->
     <!--[if gt IE 8]><!--><link href='@controllers.routes.Assets.versioned("stylesheets/application.css")' rel="stylesheet" type="text/css" /><!--<![endif]-->
     @hmrcTrackingConsentSnippet(CSPNonce.get)
 }
 
 @additionalScripts = {
-@*    <script src='@controllers.routes.Assets.versioned("javascripts/application.min.js")'></script>*@
+    <script src='@controllers.routes.Assets.versioned("javascripts/application.min.js")'></script>
 }
 
 @beforeContent = {

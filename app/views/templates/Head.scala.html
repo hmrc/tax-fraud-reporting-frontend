@@ -22,9 +22,6 @@
 
 @timeoutScriptBlock = {
 
-    <script src='@controllers.routes.Assets.versioned("lib/govuk-frontend/govuk/all.js")'></script>
-    <script src='@routes.Assets.versioned("lib/hmrc-frontend/hmrc/all.js")'></script>
-
     @timeoutDialog(TimeoutDialog(
         title =  Some(messages("timeout.title")),
         message =  Some(messages("timeout.message.notSignedIn")),
