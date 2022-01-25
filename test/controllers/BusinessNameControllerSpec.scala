@@ -35,10 +35,10 @@ import scala.concurrent.Future
 
 class BusinessNameControllerSpec extends SpecBase with MockitoSugar {
 
-  def onwardRoute = Call("GET", "/foo")
+  private val onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new BusinessNameFormProvider()
-  val form = formProvider()
+  private val formProvider = new BusinessNameFormProvider()
+  private val form = formProvider()
 
   lazy val businessNameRoute = routes.BusinessNameController.onPageLoad(Index(0), NormalMode).url
 
