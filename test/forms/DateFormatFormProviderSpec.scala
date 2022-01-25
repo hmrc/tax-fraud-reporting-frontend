@@ -17,7 +17,7 @@
 package forms
 
 import forms.behaviours.OptionFieldBehaviours
-import models.DateFormat
+import models.IndividualDateFormat
 import play.api.data.FormError
 
 class DateFormatFormProviderSpec extends OptionFieldBehaviours {
@@ -29,10 +29,10 @@ class DateFormatFormProviderSpec extends OptionFieldBehaviours {
     val fieldName = "value"
     val requiredKey = "dateFormat.error.required"
 
-    behave like optionsField[DateFormat](
+    behave like optionsField[IndividualDateFormat](
       form,
       fieldName,
-      validValues  = DateFormat.values,
+      validValues  = IndividualDateFormat.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 

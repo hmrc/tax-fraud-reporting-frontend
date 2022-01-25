@@ -20,14 +20,14 @@ import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
 
-sealed trait DateFormat
+sealed trait IndividualDateFormat
 
-object DateFormat extends Enumerable.Implicits {
+object IndividualDateFormat extends Enumerable.Implicits {
 
-  case object Date extends WithName("date") with DateFormat
-  case object Age extends WithName("age") with DateFormat
+  case object Date extends WithName("date") with IndividualDateFormat
+  case object Age extends WithName("age") with IndividualDateFormat
 
-  val values: Seq[DateFormat] = Seq(
+  val values: Seq[IndividualDateFormat] = Seq(
     Date, Age
   )
 
@@ -40,6 +40,6 @@ object DateFormat extends Enumerable.Implicits {
       )
   }
 
-  implicit val enumerable: Enumerable[DateFormat] =
+  implicit val enumerable: Enumerable[IndividualDateFormat] =
     Enumerable(values.map(v => v.toString -> v): _*)
 }

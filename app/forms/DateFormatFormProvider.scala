@@ -20,12 +20,12 @@ import javax.inject.Inject
 
 import forms.mappings.Mappings
 import play.api.data.Form
-import models.DateFormat
+import models.IndividualDateFormat
 
 class DateFormatFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[DateFormat] =
+  def apply(): Form[IndividualDateFormat] =
     Form(
-      "value" -> enumerable[DateFormat]("dateFormat.error.required")
+      "value" -> enumerable[IndividualDateFormat]("dateFormat.error.required")
     )
 }

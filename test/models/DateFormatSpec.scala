@@ -30,29 +30,29 @@ class DateFormatSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyCh
 
     "must deserialise valid values" in {
 
-      val gen = Gen.oneOf(DateFormat.values.toSeq)
+      val gen = Gen.oneOf(IndividualDateFormat.values.toSeq)
 
       forAll(gen) {
         dateFormat =>
 
-          JsString(dateFormat.toString).validate[DateFormat].asOpt.value mustEqual dateFormat
+          JsString(dateFormat.toString).validate[IndividualDateFormat].asOpt.value mustEqual dateFormat
       }
     }
 
     "must fail to deserialise invalid values" in {
 
-      val gen = arbitrary[String] suchThat (!DateFormat.values.map(_.toString).contains(_))
+      val gen = arbitrary[String] suchThat (!IndividualDateFormat.values.map(_.toString).contains(_))
 
       forAll(gen) {
         invalidValue =>
 
-          JsString(invalidValue).validate[DateFormat] mustEqual JsError("error.invalid")
+          JsString(invalidValue).validate[IndividualDateFormat] mustEqual JsError("error.invalid")
       }
     }
 
     "must serialise" in {
 
-      val gen = Gen.oneOf(DateFormat.values.toSeq)
+      val gen = Gen.oneOf(IndividualDateFormat.values.toSeq)
 
       forAll(gen) {
         dateFormat =>

@@ -16,10 +16,10 @@
 
 package pages
 
-import models.DateFormat
+import models.IndividualDateFormat
 import play.api.libs.json.JsPath
 
-case object DateFormatPage extends QuestionPage[DateFormat] {
+case object IndividualDateFormatPage extends QuestionPage[IndividualDateFormat] {
 
   override def path: JsPath = JsPath \ toString
 

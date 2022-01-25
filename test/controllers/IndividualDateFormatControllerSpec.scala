@@ -18,26 +18,26 @@ package controllers
 
 import base.SpecBase
 import forms.DateFormatFormProvider
-import models.{NormalMode, DateFormat, UserAnswers}
+import models.{NormalMode, IndividualDateFormat, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.DateFormatPage
+import pages.IndividualDateFormatPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.DateFormatView
+import views.html.IndividualDateFormatView
 
 import scala.concurrent.Future
 
-class DateFormatControllerSpec extends SpecBase with MockitoSugar {
+class IndividualDateFormatControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val dateFormatRoute = routes.DateFormatController.onPageLoad(NormalMode).url
+  lazy val dateFormatRoute = routes.IndividualDateFormatController.onPageLoad(NormalMode).url
 
   val formProvider = new DateFormatFormProvider()
   val form = formProvider()
@@ -53,7 +53,7 @@ class DateFormatControllerSpec extends SpecBase with MockitoSugar {
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[DateFormatView]
+        val view = application.injector.instanceOf[IndividualDateFormatView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -62,19 +62,19 @@ class DateFormatControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(DateFormatPage, DateFormat.values.head).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(IndividualDateFormatPage, IndividualDateFormat.values.head).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, dateFormatRoute)
 
-        val view = application.injector.instanceOf[DateFormatView]
+        val view = application.injector.instanceOf[IndividualDateFormatView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(DateFormat.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(IndividualDateFormat.values.head), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -95,7 +95,7 @@ class DateFormatControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, dateFormatRoute)
-            .withFormUrlEncodedBody(("value", DateFormat.values.head.toString))
+            .withFormUrlEncodedBody(("value", IndividualDateFormat.values.head.toString))
 
         val result = route(application, request).value
 
@@ -115,7 +115,7 @@ class DateFormatControllerSpec extends SpecBase with MockitoSugar {
 
         val boundForm = form.bind(Map("value" -> "invalid value"))
 
-        val view = application.injector.instanceOf[DateFormatView]
+        val view = application.injector.instanceOf[IndividualDateFormatView]
 
         val result = route(application, request).value
 
@@ -145,7 +145,7 @@ class DateFormatControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, dateFormatRoute)
-            .withFormUrlEncodedBody(("value", DateFormat.values.head.toString))
+            .withFormUrlEncodedBody(("value", IndividualDateFormat.values.head.toString))
 
         val result = route(application, request).value
 

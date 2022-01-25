@@ -26,7 +26,7 @@
 
 @layout(pageTitle = title(form, messages("dateFormat.title"))) {
 
-    @formHelper(action = routes.DateFormatController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.IndividualDateFormatController.onSubmit(mode), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
@@ -36,7 +36,7 @@
             RadiosViewModel(
                 field  = form("value"),
                 legend = LegendViewModel(messages("dateFormat.heading")).asPageHeading(),
-                items  = DateFormat.options
+                items  = IndividualDateFormat.options
             )
         )
 

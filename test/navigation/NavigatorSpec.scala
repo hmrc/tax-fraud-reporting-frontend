@@ -97,24 +97,24 @@ class NavigatorSpec extends SpecBase {
       "must go from individual date format page" - {
 
         "to the individual approximate age page when they select 'age'" in {
-          val answers = UserAnswers("id").set(DateFormatPage, DateFormat.Age).success.value
+          val answers = UserAnswers("id").set(IndividualDateFormatPage, IndividualDateFormat.Age).success.value
           navigator.nextPage(
-            DateFormatPage,
+            IndividualDateFormatPage,
             NormalMode, answers
           ) mustBe routes.IndividualAgeController.onPageLoad(NormalMode)
         }
 
         "to the individual date of birth page when they select 'date of birth'" in {
-          val answers = UserAnswers("id").set(DateFormatPage, DateFormat.Date).success.value
+          val answers = UserAnswers("id").set(IndividualDateFormatPage, IndividualDateFormat.Date).success.value
           navigator.nextPage(
-            DateFormatPage,
+            IndividualDateFormatPage,
             NormalMode, answers
           ) mustBe routes.IndividualDateOfBirthController.onPageLoad(NormalMode)
         }
 
         "to the journey recovery controller if there is no individual date format set" in {
           navigator.nextPage(
-            DateFormatPage,
+            IndividualDateFormatPage,
             NormalMode, UserAnswers("id")
           ) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
