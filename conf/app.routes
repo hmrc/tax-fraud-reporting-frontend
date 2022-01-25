@@ -67,3 +67,8 @@ GET        /dateFormat                        controllers.DateFormatController.o
 POST       /dateFormat                        controllers.DateFormatController.onSubmit(mode: Mode = NormalMode)
 GET        /changeDateFormat                  controllers.DateFormatController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeDateFormat                  controllers.DateFormatController.onSubmit(mode: Mode = CheckMode)
+
+GET        /individualDateOfBirth                  controllers.IndividualDateOfBirthController.onPageLoad(mode: Mode = NormalMode)
+POST       /individualDateOfBirth                  controllers.IndividualDateOfBirthController.onSubmit(mode: Mode = NormalMode)
+GET        /changeIndividualDateOfBirth                        controllers.IndividualDateOfBirthController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeIndividualDateOfBirth                        controllers.IndividualDateOfBirthController.onSubmit(mode: Mode = CheckMode)
