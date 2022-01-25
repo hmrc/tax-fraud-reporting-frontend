@@ -101,7 +101,7 @@ class NavigatorSpec extends SpecBase {
           navigator.nextPage(
             IndividualDateFormatPage(Index(0)),
             NormalMode, answers
-          ) mustBe routes.IndividualAgeController.onPageLoad(NormalMode)
+          ) mustBe routes.IndividualAgeController.onPageLoad(Index(0), NormalMode)
         }
 
         "to the individual date of birth page when they select 'date of birth'" in {

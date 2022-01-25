@@ -73,7 +73,7 @@ POST       /individualDateOfBirth                  controllers.IndividualDateOfB
 GET        /changeIndividualDateOfBirth                        controllers.IndividualDateOfBirthController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeIndividualDateOfBirth                        controllers.IndividualDateOfBirthController.onSubmit(mode: Mode = CheckMode)
 
-GET        /individualAge                  controllers.IndividualAgeController.onPageLoad(mode: Mode = NormalMode)
-POST       /individualAge                  controllers.IndividualAgeController.onSubmit(mode: Mode = NormalMode)
-GET        /changeIndividualAge                        controllers.IndividualAgeController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeIndividualAge                        controllers.IndividualAgeController.onSubmit(mode: Mode = CheckMode)
+GET        /:index/age-approx                               controllers.IndividualAgeController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/age-approx                               controllers.IndividualAgeController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-age-approx                        controllers.IndividualAgeController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-age-approx                        controllers.IndividualAgeController.onSubmit(index: Index, mode: Mode = CheckMode)

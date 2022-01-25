@@ -16,16 +16,17 @@
 
 package pages
 
+import models.Index
 import pages.behaviours.PageBehaviours
 
 class IndividualAgePageSpec extends PageBehaviours {
 
   "IndividualAgePage" - {
 
-    beRetrievable[Int](IndividualAgePage)
+    beRetrievable[Int](IndividualAgePage(Index(0)))
 
-    beSettable[Int](IndividualAgePage)
+    beSettable[Int](IndividualAgePage(Index(0)))
 
-    beRemovable[Int](IndividualAgePage)
+    beRemovable[Int](IndividualAgePage(Index(0)))
   }
 }
