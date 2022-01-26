@@ -28,4 +28,5 @@ class BusinessNameFormProvider @Inject() extends Mappings {
       "value" -> text("businessName.error.required")
         .verifying(maxLength(255, "businessName.error.length"))
     )
+
 }

@@ -34,7 +34,6 @@ class DateFormatSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyCh
 
       forAll(gen) {
         dateFormat =>
-
           JsString(dateFormat.toString).validate[IndividualDateFormat].asOpt.value mustEqual dateFormat
       }
     }
@@ -45,7 +44,6 @@ class DateFormatSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyCh
 
       forAll(gen) {
         invalidValue =>
-
           JsString(invalidValue).validate[IndividualDateFormat] mustEqual JsError("error.invalid")
       }
     }
@@ -56,7 +54,6 @@ class DateFormatSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyCh
 
       forAll(gen) {
         dateFormat =>
-
           Json.toJson(dateFormat) mustEqual JsString(dateFormat.toString)
       }
     }

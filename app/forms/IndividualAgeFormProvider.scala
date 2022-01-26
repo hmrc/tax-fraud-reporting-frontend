@@ -27,7 +27,9 @@ class IndividualAgeFormProvider @Inject() extends Mappings {
       "value" -> int(
         "individualAge.error.required",
         "individualAge.error.wholeNumber",
-        "individualAge.error.nonNumeric")
-          .verifying(inRange(0, 120, "individualAge.error.outOfRange"))
+        "individualAge.error.nonNumeric"
+      )
+        .verifying(inRange(0, 120, "individualAge.error.outOfRange"))
     )
+
 }

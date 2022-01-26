@@ -26,20 +26,16 @@ class DateFormatFormProviderSpec extends OptionFieldBehaviours {
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "dateFormat.error.required"
 
     behave like optionsField[IndividualDateFormat](
       form,
       fieldName,
-      validValues  = IndividualDateFormat.values,
+      validValues = IndividualDateFormat.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
   }
 }

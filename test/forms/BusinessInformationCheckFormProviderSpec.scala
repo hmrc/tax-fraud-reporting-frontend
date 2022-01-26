@@ -26,20 +26,16 @@ class BusinessInformationCheckFormProviderSpec extends CheckboxFieldBehaviours {
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "businessInformationCheck.error.required"
 
     behave like checkboxField[BusinessInformationCheck](
       form,
       fieldName,
-      validValues  = BusinessInformationCheck.values,
+      validValues = BusinessInformationCheck.values,
       invalidError = FormError(s"$fieldName[0]", "error.invalid")
     )
 
-    behave like mandatoryCheckboxField(
-      form,
-      fieldName,
-      requiredKey
-    )
+    behave like mandatoryCheckboxField(form, fieldName, requiredKey)
   }
 }

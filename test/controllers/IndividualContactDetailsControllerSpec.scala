@@ -25,7 +25,6 @@ import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.IndividualContactDetailsPage
 import play.api.inject.bind
-import play.api.libs.json.Json
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -36,18 +35,17 @@ import scala.concurrent.Future
 
 class IndividualContactDetailsControllerSpec extends SpecBase with MockitoSugar {
 
-  def onwardRoute = Call("GET", "/foo")
+  private val onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new IndividualContactDetailsFormProvider()
-  val form         = formProvider()
+  private val form = (new IndividualContactDetailsFormProvider)()
 
-  lazy val individualContactDetailsRoute =
+  private lazy val individualContactDetailsRoute =
     routes.IndividualContactDetailsController.onPageLoad(Index(0), NormalMode).url
 
-  val model =
+  private val model =
     IndividualContactDetails(landlineNumber = Some("landline"), mobileNumber = Some("mobile"), email = Some("email"))
 
-  val userAnswers = UserAnswers(userAnswersId).set(IndividualContactDetailsPage(Index(0)), model).success.value
+  private val userAnswers = UserAnswers(userAnswersId).set(IndividualContactDetailsPage(Index(0)), model).success.value
 
   "IndividualContactDetails Controller" - {
 

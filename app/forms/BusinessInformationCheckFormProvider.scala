@@ -27,6 +27,9 @@ class BusinessInformationCheckFormProvider @Inject() extends Mappings {
 
   def apply(): Form[Set[BusinessInformationCheck]] =
     Form(
-      "value" -> set(enumerable[BusinessInformationCheck]("businessInformationCheck.error.required")).verifying(nonEmptySet("businessInformationCheck.error.required"))
+      "value" -> set(enumerable[BusinessInformationCheck]("businessInformationCheck.error.required")).verifying(
+        nonEmptySet("businessInformationCheck.error.required")
+      )
     )
+
 }

@@ -32,31 +32,23 @@ class IndividualAgeFormProviderSpec extends IntFieldBehaviours {
 
     val validDataGenerator = intsInRangeWithCommas(minimum, maximum)
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      validDataGenerator
-    )
+    behave like fieldThatBindsValidData(form, fieldName, validDataGenerator)
 
     behave like intField(
       form,
       fieldName,
-      nonNumericError  = FormError(fieldName, "individualAge.error.nonNumeric"),
+      nonNumericError = FormError(fieldName, "individualAge.error.nonNumeric"),
       wholeNumberError = FormError(fieldName, "individualAge.error.wholeNumber")
     )
 
     behave like intFieldWithRange(
       form,
       fieldName,
-      minimum       = minimum,
-      maximum       = maximum,
+      minimum = minimum,
+      maximum = maximum,
       expectedError = FormError(fieldName, "individualAge.error.outOfRange", Seq(minimum, maximum))
     )
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, "individualAge.error.required")
-    )
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, "individualAge.error.required"))
   }
 }

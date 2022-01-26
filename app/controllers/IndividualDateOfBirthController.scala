@@ -31,25 +31,25 @@ import views.html.IndividualDateOfBirthView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class IndividualDateOfBirthController @Inject()(
-                                        override val messagesApi: MessagesApi,
-                                        sessionRepository: SessionRepository,
-                                        navigator: Navigator,
-                                        identify: IdentifierAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formProvider: IndividualDateOfBirthFormProvider,
-                                        val controllerComponents: MessagesControllerComponents,
-                                        view: IndividualDateOfBirthView
-                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class IndividualDateOfBirthController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  navigator: Navigator,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: IndividualDateOfBirthFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: IndividualDateOfBirthView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   private val form = formProvider()
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
       val preparedForm = request.userAnswers.get(IndividualDateOfBirthPage(index)) match {
-        case None => form
+        case None        => form
         case Some(value) => form.fill(value)
       }
 
@@ -58,11 +58,8 @@ class IndividualDateOfBirthController @Inject()(
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
       form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, index, mode))),
-
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualDateOfBirthPage(index), value))
@@ -70,4 +67,5 @@ class IndividualDateOfBirthController @Inject()(
           } yield Redirect(navigator.nextPage(IndividualDateOfBirthPage(index), mode, updatedAnswers))
       )
   }
+
 }

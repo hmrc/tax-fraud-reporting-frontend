@@ -22,8 +22,8 @@ import play.api.data.FormError
 class BusinessNameFormProviderSpec extends StringFieldBehaviours {
 
   val requiredKey = "businessName.error.required"
-  val lengthKey = "businessName.error.length"
-  val maxLength = 255
+  val lengthKey   = "businessName.error.length"
+  val maxLength   = 255
 
   val form = new BusinessNameFormProvider()()
 
@@ -31,11 +31,7 @@ class BusinessNameFormProviderSpec extends StringFieldBehaviours {
 
     val fieldName = "value"
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
     behave like fieldWithMaxLength(
       form,
@@ -44,10 +40,6 @@ class BusinessNameFormProviderSpec extends StringFieldBehaviours {
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
     )
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
   }
 }

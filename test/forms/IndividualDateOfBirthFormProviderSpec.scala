@@ -26,7 +26,12 @@ class IndividualDateOfBirthFormProviderSpec extends DateBehaviours {
 
   ".value" - {
 
-    behave like dateFieldWithMax(form, "value", LocalDate.now(ZoneOffset.UTC), FormError("value", "individualDateOfBirth.error.futureDate"))
+    behave like dateFieldWithMax(
+      form,
+      "value",
+      LocalDate.now(ZoneOffset.UTC),
+      FormError("value", "individualDateOfBirth.error.futureDate")
+    )
 
     behave like mandatoryDateField(form, "value", "individualDateOfBirth.error.required.all")
   }

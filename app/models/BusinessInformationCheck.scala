@@ -25,19 +25,13 @@ sealed trait BusinessInformationCheck
 
 object BusinessInformationCheck extends Enumerable.Implicits {
 
-  case object Name extends WithName("name") with BusinessInformationCheck
-  case object Type extends WithName("type") with BusinessInformationCheck
-  case object Address extends WithName("address") with BusinessInformationCheck
-  case object Contact extends WithName("contact") with BusinessInformationCheck
+  case object Name              extends WithName("name") with BusinessInformationCheck
+  case object Type              extends WithName("type") with BusinessInformationCheck
+  case object Address           extends WithName("address") with BusinessInformationCheck
+  case object Contact           extends WithName("contact") with BusinessInformationCheck
   case object BusinessReference extends WithName("businessReference") with BusinessInformationCheck
 
-  val values: Seq[BusinessInformationCheck] = Seq(
-    Name,
-    Type,
-    Address,
-    Contact,
-    BusinessReference
-  )
+  val values: Seq[BusinessInformationCheck] = Seq(Name, Type, Address, Contact, BusinessReference)
 
   def checkboxItems(implicit messages: Messages): Seq[CheckboxItem] =
     values.zipWithIndex.map {
@@ -45,11 +39,12 @@ object BusinessInformationCheck extends Enumerable.Implicits {
         CheckboxItemViewModel(
           content = Text(messages(s"businessInformationCheck.${value.toString}")),
           fieldId = "value",
-          index   = index,
-          value   = value.toString
+          index = index,
+          value = value.toString
         )
     }
 
   implicit val enumerable: Enumerable[BusinessInformationCheck] =
     Enumerable(values.map(v => v.toString -> v): _*)
+
 }
