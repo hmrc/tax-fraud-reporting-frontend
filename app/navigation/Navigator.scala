@@ -30,8 +30,9 @@ class Navigator @Inject() () {
     case ActivityTypePage                 => activityPageRoutes
     case IndividualOrBusinessPage         => individualOrBusinessRoutes
     case IndividualDateFormatPage(index)  => ageFormatPageRoutes(_, index)
-    case IndividualAgePage(index)         => individualAgeRoutes(_, index)
-    case IndividualDateOfBirthPage(index) => individualAgeRoutes(_, index)
+    case IndividualNamePage(index)        => individualInformationRoutes(_, index, IndividualInformation.Name)
+    case IndividualAgePage(index)         => individualInformationRoutes(_, index, IndividualInformation.Age)
+    case IndividualDateOfBirthPage(index) => individualInformationRoutes(_, index, IndividualInformation.Age)
     case IndividualInformationPage(index) => individualInformationRoutes(_, index)
     case _                                => _ => routes.IndexController.onPageLoad
   }
@@ -54,9 +55,9 @@ class Navigator @Inject() () {
       IndividualInformation.values.find(individualInformation.contains).map(individualInformationRoute(_, index, NormalMode))
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def individualAgeRoutes(answers: UserAnswers, index: Index): Call =
+  private def individualInformationRoutes(answers: UserAnswers, index: Index, answer: IndividualInformation): Call =
     answers.get(IndividualInformationPage(index)).flatMap { individualInformation =>
-      val remainingSections = individualInformation -- Set(IndividualInformation.Name, IndividualInformation.Age)
+      val remainingSections = individualInformation & IndividualInformation.values.dropWhile(_ != answer).drop(1).toSet
       if (remainingSections.isEmpty) {
         Some(routes.IndividualConnectionController.onPageLoad(index, NormalMode))
       } else {
