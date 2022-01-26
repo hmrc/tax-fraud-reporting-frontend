@@ -168,6 +168,83 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         }
       }
 
+      "must go from the individual name page" - {
+
+        "to the individual date format page if the user has selected age" in {
+          forAll(individualInformationGen) { individualInformationAnswer =>
+            val previousAnswers = Set(IndividualInformation.Name)
+            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.Age
+            val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
+            navigator.nextPage(
+              IndividualNamePage(Index(0)),
+              NormalMode,
+              userAnswers
+            ) mustBe routes.IndividualDateFormatController.onPageLoad(Index(0), NormalMode)
+          }
+        }
+
+        "to the individual address page if the user has selected address and has not selected previous answers" ignore {
+          // TODO when address pages are done
+        }
+
+        "to the individual contact details page if the user has selected contact details and has not selected previous answers" in {
+          forAll(individualInformationGen) { individualInformationAnswer =>
+            val previousAnswers = Set(IndividualInformation.Name, IndividualInformation.Age, IndividualInformation.Address)
+            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.ContactDetails
+            val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
+            navigator.nextPage(
+              IndividualNamePage(Index(0)),
+              NormalMode,
+              userAnswers
+            ) mustBe routes.IndividualContactDetailsController.onPageLoad(Index(0), NormalMode)
+          }
+        }
+
+        "to the individual nio page if the user has selected nino and has not selected previous answers" in {
+          forAll(individualInformationGen) { individualInformationAnswer =>
+            val previousAnswers = Set(
+              IndividualInformation.Name,
+              IndividualInformation.Age,
+              IndividualInformation.Address,
+              IndividualInformation.ContactDetails
+            )
+            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.NiNumber
+            val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
+            navigator.nextPage(
+              IndividualNamePage(Index(0)),
+              NormalMode,
+              userAnswers
+            ) mustBe routes.IndividualNationalInsuranceNumberController.onPageLoad(Index(0), NormalMode)
+          }
+        }
+
+        "to the individual connection page if there are no following options selected" in {
+          forAll(individualInformationGen) { individualInformationAnswer =>
+            val followingAnswers = Set(
+              IndividualInformation.Age,
+              IndividualInformation.Address,
+              IndividualInformation.ContactDetails,
+              IndividualInformation.NiNumber
+            )
+            val answer = individualInformationAnswer -- followingAnswers
+            val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
+            navigator.nextPage(
+              IndividualNamePage(Index(0)),
+              NormalMode,
+              userAnswers
+            ) mustBe routes.IndividualConnectionController.onPageLoad(Index(0), NormalMode)
+          }
+        }
+
+        "to the journey recovery controller if there is no individual information set" in {
+          navigator.nextPage(
+            IndividualNamePage(Index(0)),
+            NormalMode,
+            UserAnswers("id")
+          ) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+      }
+
       "must go from individual date format page" - {
 
         "to the individual approximate age page when they select 'age'" in {
