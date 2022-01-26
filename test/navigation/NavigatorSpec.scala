@@ -429,8 +429,6 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         "to the individual connection page if there are no following options selected" in {
           forAll(individualInformationGen) { individualInformationAnswer =>
             val followingAnswers = Set(
-              IndividualInformation.Address,
-              IndividualInformation.ContactDetails,
               IndividualInformation.NiNumber
             )
             val answer = individualInformationAnswer -- followingAnswers
@@ -452,8 +450,26 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         }
       }
 
-      "must go from the individual nino page" ignore {
-        // TODO
+      "must go from the individual nino page" - {
+
+        "to the individual connection page" in {
+          forAll(individualInformationGen) { answer =>
+            val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
+            navigator.nextPage(
+              IndividualNationalInsuranceNumberPage(Index(0)),
+              NormalMode,
+              userAnswers
+            ) mustBe routes.IndividualConnectionController.onPageLoad(Index(0), NormalMode)
+          }
+        }
+
+        "to the journey recovery controller if there is no individual information set" in {
+          navigator.nextPage(
+            IndividualNationalInsuranceNumberPage(Index(0)),
+            NormalMode,
+            UserAnswers("id")
+          ) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
       }
     }
 
