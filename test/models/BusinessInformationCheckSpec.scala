@@ -24,7 +24,8 @@ import org.scalatest.matchers.must.Matchers
 import org.scalatest.OptionValues
 import play.api.libs.json.{JsError, JsString, Json}
 
-class BusinessInformationCheckSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with OptionValues with ModelGenerators {
+class BusinessInformationCheckSpec
+    extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with OptionValues with ModelGenerators {
 
   "BusinessInformationCheck" - {
 
@@ -34,8 +35,9 @@ class BusinessInformationCheckSpec extends AnyFreeSpec with Matchers with ScalaC
 
       forAll(gen) {
         businessInformationCheck =>
-
-          JsString(businessInformationCheck.toString).validate[BusinessInformationCheck].asOpt.value mustEqual businessInformationCheck
+          JsString(businessInformationCheck.toString).validate[
+            BusinessInformationCheck
+          ].asOpt.value mustEqual businessInformationCheck
       }
     }
 
@@ -45,7 +47,6 @@ class BusinessInformationCheckSpec extends AnyFreeSpec with Matchers with ScalaC
 
       forAll(gen) {
         invalidValue =>
-
           JsString(invalidValue).validate[BusinessInformationCheck] mustEqual JsError("error.invalid")
       }
     }
@@ -56,7 +57,6 @@ class BusinessInformationCheckSpec extends AnyFreeSpec with Matchers with ScalaC
 
       forAll(gen) {
         businessInformationCheck =>
-
           Json.toJson(businessInformationCheck) mustEqual JsString(businessInformationCheck.toString)
       }
     }

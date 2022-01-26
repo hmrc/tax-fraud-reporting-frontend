@@ -16,26 +16,30 @@
 
 package forms
 
-import forms.behaviours.CheckboxFieldBehaviours
-import models.BusinessInformationCheck
+import forms.behaviours.StringFieldBehaviours
 import play.api.data.FormError
 
-class BusinessInformationCheckFormProviderSpec extends CheckboxFieldBehaviours {
+class BusinessNameFormProviderSpec extends StringFieldBehaviours {
 
-  val form = new BusinessInformationCheckFormProvider()()
+  val requiredKey = "businessName.error.required"
+  val lengthKey   = "businessName.error.length"
+  val maxLength   = 255
+
+  val form = new BusinessNameFormProvider()()
 
   ".value" - {
 
-    val fieldName   = "value"
-    val requiredKey = "businessInformationCheck.error.required"
+    val fieldName = "value"
 
-    behave like checkboxField[BusinessInformationCheck](
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
+
+    behave like fieldWithMaxLength(
       form,
       fieldName,
-      validValues = BusinessInformationCheck.values,
-      invalidError = FormError(s"$fieldName[0]", "error.invalid")
+      maxLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
     )
 
-    behave like mandatoryCheckboxField(form, fieldName, requiredKey)
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
   }
 }

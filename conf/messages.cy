@@ -258,3 +258,9 @@ businessInformationCheck.businessReference.hint = (W) For example VAT number or 
 businessInformationCheck.checkYourAnswersLabel = (W) What do you know about the business? (W)
 businessInformationCheck.error.required = (W) Select the information you know about the business (W)
 businessInformationCheck.change.hidden = (W) BusinessInformationCheck (W)
+
+businessName.title = (W) What is the business''s name? (W)
+businessName.heading = (W) What is the business''s name? (W)
+businessName.checkYourAnswersLabel = (W) businessName (W)
+businessName.error.required = (W) Enter the business''s name (W)
+businessName.error.length = (W) The name of the business must be less than {0} characters (W)

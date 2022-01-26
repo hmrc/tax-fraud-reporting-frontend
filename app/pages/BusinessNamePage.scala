@@ -14,22 +14,14 @@
  * limitations under the License.
  */
 
-package forms
+package pages
 
-import javax.inject.Inject
+import models.Index
+import play.api.libs.json.JsPath
 
-import forms.mappings.Mappings
-import play.api.data.Form
-import play.api.data.Forms.set
-import models.BusinessInformationCheck
+final case class BusinessNamePage(index: Index) extends QuestionPage[String] {
 
-class BusinessInformationCheckFormProvider @Inject() extends Mappings {
+  override def path: JsPath = JsPath \ toString \ index.position
 
-  def apply(): Form[Set[BusinessInformationCheck]] =
-    Form(
-      "value" -> set(enumerable[BusinessInformationCheck]("businessInformationCheck.error.required")).verifying(
-        nonEmptySet("businessInformationCheck.error.required")
-      )
-    )
-
+  override def toString: String = "businessName"
 }

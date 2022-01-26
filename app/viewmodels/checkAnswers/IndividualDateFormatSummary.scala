@@ -26,25 +26,24 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object IndividualDateFormatSummary  {
+object IndividualDateFormatSummary {
 
   def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(IndividualDateFormatPage(Index(index))).map {
       answer =>
-
-        val value = ValueViewModel(
-          HtmlContent(
-            HtmlFormat.escape(messages(s"dateFormat.$answer"))
-          )
-        )
+        val value = ValueViewModel(HtmlContent(HtmlFormat.escape(messages(s"dateFormat.$answer"))))
 
         SummaryListRowViewModel(
-          key     = "dateFormat.checkYourAnswersLabel",
-          value   = value,
+          key = "dateFormat.checkYourAnswersLabel",
+          value = value,
           actions = Seq(
-            ActionItemViewModel("site.change", routes.IndividualDateFormatController.onPageLoad(Index(index), CheckMode).url)
+            ActionItemViewModel(
+              "site.change",
+              routes.IndividualDateFormatController.onPageLoad(Index(index), CheckMode).url
+            )
               .withVisuallyHiddenText(messages("dateFormat.change.hidden"))
           )
         )
     }
+
 }

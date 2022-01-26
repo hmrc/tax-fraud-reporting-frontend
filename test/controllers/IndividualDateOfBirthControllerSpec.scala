@@ -86,7 +86,10 @@ class IndividualDateOfBirthControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, getRequest).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), Index(0), NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), Index(0), NormalMode)(
+          getRequest,
+          messages(application)
+        ).toString
       }
     }
 

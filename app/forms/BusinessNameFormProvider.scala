@@ -20,16 +20,13 @@ import javax.inject.Inject
 
 import forms.mappings.Mappings
 import play.api.data.Form
-import play.api.data.Forms.set
-import models.BusinessInformationCheck
 
-class BusinessInformationCheckFormProvider @Inject() extends Mappings {
+class BusinessNameFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Set[BusinessInformationCheck]] =
+  def apply(): Form[String] =
     Form(
-      "value" -> set(enumerable[BusinessInformationCheck]("businessInformationCheck.error.required")).verifying(
-        nonEmptySet("businessInformationCheck.error.required")
-      )
+      "value" -> text("businessName.error.required")
+        .verifying(maxLength(255, "businessName.error.length"))
     )
 
 }

@@ -36,7 +36,7 @@ import scala.concurrent.Future
 class IndividualAgeControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new IndividualAgeFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -76,7 +76,10 @@ class IndividualAgeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), Index(0), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

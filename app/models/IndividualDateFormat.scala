@@ -25,21 +25,20 @@ sealed trait IndividualDateFormat
 object IndividualDateFormat extends Enumerable.Implicits {
 
   case object Date extends WithName("date") with IndividualDateFormat
-  case object Age extends WithName("age") with IndividualDateFormat
+  case object Age  extends WithName("age") with IndividualDateFormat
 
-  val values: Seq[IndividualDateFormat] = Seq(
-    Date, Age
-  )
+  val values: Seq[IndividualDateFormat] = Seq(Date, Age)
 
   def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
     case (value, index) =>
       RadioItem(
         content = Text(messages(s"dateFormat.${value.toString}")),
-        value   = Some(value.toString),
-        id      = Some(s"value_$index")
+        value = Some(value.toString),
+        id = Some(s"value_$index")
       )
   }
 
   implicit val enumerable: Enumerable[IndividualDateFormat] =
     Enumerable(values.map(v => v.toString -> v): _*)
+
 }

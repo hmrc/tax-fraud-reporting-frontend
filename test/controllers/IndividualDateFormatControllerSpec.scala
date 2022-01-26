@@ -40,7 +40,7 @@ class IndividualDateFormatControllerSpec extends SpecBase with MockitoSugar {
   lazy val dateFormatRoute = routes.IndividualDateFormatController.onPageLoad(Index(0), NormalMode).url
 
   val formProvider = new DateFormatFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "DateFormat Controller" - {
 
@@ -62,7 +62,10 @@ class IndividualDateFormatControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(IndividualDateFormatPage(Index(0)), IndividualDateFormat.values.head).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(
+        IndividualDateFormatPage(Index(0)),
+        IndividualDateFormat.values.head
+      ).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -74,7 +77,10 @@ class IndividualDateFormatControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(IndividualDateFormat.values.head), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(IndividualDateFormat.values.head), Index(0), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

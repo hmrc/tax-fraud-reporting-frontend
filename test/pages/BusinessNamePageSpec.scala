@@ -14,22 +14,19 @@
  * limitations under the License.
  */
 
-package forms
+package pages
 
-import javax.inject.Inject
+import models.Index
+import pages.behaviours.PageBehaviours
 
-import forms.mappings.Mappings
-import play.api.data.Form
-import play.api.data.Forms.set
-import models.BusinessInformationCheck
+class BusinessNamePageSpec extends PageBehaviours {
 
-class BusinessInformationCheckFormProvider @Inject() extends Mappings {
+  "BusinessNamePage" - {
 
-  def apply(): Form[Set[BusinessInformationCheck]] =
-    Form(
-      "value" -> set(enumerable[BusinessInformationCheck]("businessInformationCheck.error.required")).verifying(
-        nonEmptySet("businessInformationCheck.error.required")
-      )
-    )
+    beRetrievable[String](BusinessNamePage(Index(0)))
 
+    beSettable[String](BusinessNamePage(Index(0)))
+
+    beRemovable[String](BusinessNamePage(Index(0)))
+  }
 }

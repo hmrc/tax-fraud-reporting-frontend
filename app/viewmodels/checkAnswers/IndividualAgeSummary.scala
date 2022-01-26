@@ -24,19 +24,19 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object IndividualAgeSummary  {
+object IndividualAgeSummary {
 
   def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(IndividualAgePage(Index(index))).map {
       answer =>
-
         SummaryListRowViewModel(
-          key     = "individualAge.checkYourAnswersLabel",
-          value   = ValueViewModel(answer.toString),
+          key = "individualAge.checkYourAnswersLabel",
+          value = ValueViewModel(answer.toString),
           actions = Seq(
             ActionItemViewModel("site.change", routes.IndividualAgeController.onPageLoad(Index(index), CheckMode).url)
               .withVisuallyHiddenText(messages("individualAge.change.hidden"))
           )
         )
     }
+
 }

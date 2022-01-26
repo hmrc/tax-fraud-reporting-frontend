@@ -16,31 +16,26 @@
 
 package viewmodels.checkAnswers
 
-import java.time.format.DateTimeFormatter
 import controllers.routes
 import models.{CheckMode, Index, UserAnswers}
-import pages.IndividualDateOfBirthPage
+import pages.BusinessNamePage
 import play.api.i18n.Messages
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object IndividualDateOfBirthSummary {
+object BusinessNameSummary {
 
   def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(IndividualDateOfBirthPage(Index(index))).map {
+    answers.get(BusinessNamePage(Index(index))).map {
       answer =>
-        val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
-
         SummaryListRowViewModel(
-          key = "individualDateOfBirth.checkYourAnswersLabel",
-          value = ValueViewModel(answer.format(dateFormatter)),
+          key = "businessName.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlFormat.escape(answer).toString),
           actions = Seq(
-            ActionItemViewModel(
-              "site.change",
-              routes.IndividualDateOfBirthController.onPageLoad(Index(index), CheckMode).url
-            )
-              .withVisuallyHiddenText(messages("individualDateOfBirth.change.hidden"))
+            ActionItemViewModel("site.change", routes.BusinessNameController.onPageLoad(Index(index), CheckMode).url)
+              .withVisuallyHiddenText(messages("businessName.change.hidden"))
           )
         )
     }

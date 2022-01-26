@@ -25,7 +25,6 @@ import models.IndividualDateFormat
 class DateFormatFormProvider @Inject() extends Mappings {
 
   def apply(): Form[IndividualDateFormat] =
-    Form(
-      "value" -> enumerable[IndividualDateFormat]("dateFormat.error.required")
-    )
+    Form("value" -> enumerable[IndividualDateFormat]("dateFormat.error.required"))
+
 }
