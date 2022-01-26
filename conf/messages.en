@@ -246,3 +246,15 @@ individualAge.error.required = Enter the individual''s approximate age
 individualAge.error.wholeNumber = Enter the individual''s approximate age with numerical values
 individualAge.error.outOfRange = The individual''s approximate age must be between {0} and {1}
 individualAge.change.hidden = IndividualAge
+
+businessInformationCheck.title = What do you know about the business?
+businessInformationCheck.heading = What do you know about the business?
+businessInformationCheck.name = Name of the business
+businessInformationCheck.type = Type of business
+businessInformationCheck.address = Address
+businessInformationCheck.contact = Contact details
+businessInformationCheck.businessReference = Business reference numbers
+businessInformationCheck.businessReference.hint = For example VAT number or Employee Reference Number
+businessInformationCheck.checkYourAnswersLabel = What do you know about the business?
+businessInformationCheck.error.required = Select the information you know about the business
+businessInformationCheck.change.hidden = BusinessInformationCheck

@@ -77,3 +77,8 @@ GET        /:index/age-approx                               controllers.Individu
 POST       /:index/age-approx                               controllers.IndividualAgeController.onSubmit(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-age-approx                        controllers.IndividualAgeController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-age-approx                        controllers.IndividualAgeController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/business-information-check                        controllers.BusinessInformationCheckController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/business-information-check                        controllers.BusinessInformationCheckController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/business-information-check                  controllers.BusinessInformationCheckController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/business-information-check                  controllers.BusinessInformationCheckController.onSubmit(index: Index, mode: Mode = CheckMode)
