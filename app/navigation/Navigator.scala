@@ -27,15 +27,30 @@ import models._
 class Navigator @Inject() () {
 
   private val normalRoutes: Page => UserAnswers => Call = {
-    case ActivityTypePage         => activityPageRoutes
-    case IndividualOrBusinessPage => individualOrBusinessRoutes
-    case IndividualDateFormatPage(index) => ageFormatPageRoutes(_, index)
-    case _                        => _ => routes.IndexController.onPageLoad
+    case ActivityTypePage                 => activityPageRoutes
+    case IndividualOrBusinessPage         => individualOrBusinessRoutes
+    case IndividualDateFormatPage(index)  => ageFormatPageRoutes(_, index)
+    case IndividualInformationPage(index) => individualInformationRoutes(_, index)
+    case _                                => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
     case _ => _ => routes.CheckYourAnswersController.onPageLoad
   }
+
+  private def individualInformationRoute(answer: IndividualInformation, index: Index, mode: Mode): Call =
+    answer match {
+      case IndividualInformation.Name           => routes.IndividualNameController.onPageLoad(index, mode)
+      case IndividualInformation.Age            => routes.IndividualDateFormatController.onPageLoad(index, mode)
+      // TODO add address when the pages are merged
+      case IndividualInformation.ContactDetails => routes.IndividualContactDetailsController.onPageLoad(index, mode)
+      case IndividualInformation.NiNumber       => routes.IndividualNationalInsuranceNumberController.onPageLoad(index, mode)
+    }
+
+  private def individualInformationRoutes(answers: UserAnswers, index: Index): Call =
+    answers.get(IndividualInformationPage(index)).flatMap { individualInformation =>
+      IndividualInformation.values.find(individualInformation.contains).map(individualInformationRoute(_, index, NormalMode))
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def ageFormatPageRoutes(answers: UserAnswers, index: Index): Call =
     answers.get(IndividualDateFormatPage(index)).map {
@@ -45,10 +60,11 @@ class Navigator @Inject() () {
 
   private def activityPageRoutes(answers: UserAnswers): Call =
     answers.get(ActivityTypePage).map { activity =>
-      if (ActivityType.otherDepartments.isDefinedAt(activity.activityName))
+      if (ActivityType.otherDepartments.isDefinedAt(activity.activityName)) {
         routes.DoNotUseThisServiceController.onPageLoad()
-      else
+      } else {
         routes.IndividualOrBusinessController.onPageLoad(NormalMode)
+      }
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def individualOrBusinessRoutes(answers: UserAnswers): Call =
