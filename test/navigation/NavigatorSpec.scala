@@ -26,6 +26,7 @@ import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
   val navigator = new Navigator
+  val individualInformationGen = Gen.containerOf[Set, IndividualInformation](Gen.oneOf(IndividualInformation.values))
 
   "Navigator" - {
 
@@ -97,8 +98,6 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
       }
 
       "must go from the individual information check page" - {
-
-        val individualInformationGen = Gen.containerOf[Set, IndividualInformation](Gen.oneOf(IndividualInformation.values))
 
         "to the individual name page if the user has selected  name" in {
           forAll(individualInformationGen) { individualInformationAnswer =>
@@ -195,12 +194,130 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         }
       }
 
-      "must go from the individual age page" ignore {
-        // TODO add when pages are merged
+      "must go from the individual age page" - {
+
+        "to the address page if the user has selected address" ignore {
+          // TODO when address pages are merged
+        }
+
+        "to the individual contact details page if the user has selected contact details and has not selected previous answers" in {
+          forAll(individualInformationGen) { individualInformationAnswer =>
+            val previousAnswers = Set(IndividualInformation.Name, IndividualInformation.Age, IndividualInformation.Address)
+            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.ContactDetails
+            val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
+            navigator.nextPage(
+              IndividualAgePage(Index(0)),
+              NormalMode,
+              userAnswers
+            ) mustBe routes.IndividualContactDetailsController.onPageLoad(Index(0), NormalMode)
+          }
+        }
+
+        "to the individual nino page if the user has selected nino and has not selected previous answers" in {
+          forAll(individualInformationGen) { individualInformationAnswer =>
+            val previousAnswers = Set(
+              IndividualInformation.Name,
+              IndividualInformation.Age,
+              IndividualInformation.Address,
+              IndividualInformation.ContactDetails
+            )
+            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.NiNumber
+            val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
+            navigator.nextPage(
+              IndividualAgePage(Index(0)),
+              NormalMode,
+              userAnswers
+            ) mustBe routes.IndividualNationalInsuranceNumberController.onPageLoad(Index(0), NormalMode)
+          }
+        }
+
+        "to the individual connection page if there are no following options selected" in {
+          forAll(individualInformationGen) { individualInformationAnswer =>
+            val followingAnswers = Set(
+              IndividualInformation.Address,
+              IndividualInformation.ContactDetails,
+              IndividualInformation.NiNumber
+            )
+            val answer = individualInformationAnswer -- followingAnswers
+            val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
+            navigator.nextPage(
+              IndividualAgePage(Index(0)),
+              NormalMode,
+              userAnswers
+            ) mustBe routes.IndividualConnectionController.onPageLoad(Index(0), NormalMode)
+          }
+        }
+
+        "to the journey recovery controller if there is no individual information set" in {
+          navigator.nextPage(
+            IndividualAgePage(Index(0)),
+            NormalMode,
+            UserAnswers("id")
+          ) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
       }
 
-      "must go from the individual date of birth page" ignore {
-        // TODO add when pages are merged
+      "must go from the individual date of birth page" - {
+
+        "to the address page if the user has selected address" ignore {
+          // TODO when address pages are merged
+        }
+
+        "to the individual contact details page if the user has selected contact details and has not selected previous answers" in {
+          forAll(individualInformationGen) { individualInformationAnswer =>
+            val previousAnswers = Set(IndividualInformation.Name, IndividualInformation.Age, IndividualInformation.Address)
+            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.ContactDetails
+            val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
+            navigator.nextPage(
+              IndividualDateOfBirthPage(Index(0)),
+              NormalMode,
+              userAnswers
+            ) mustBe routes.IndividualContactDetailsController.onPageLoad(Index(0), NormalMode)
+          }
+        }
+
+        "to the individual nino page if the user has selected nino and has not selected previous answers" in {
+          forAll(individualInformationGen) { individualInformationAnswer =>
+            val previousAnswers = Set(
+              IndividualInformation.Name,
+              IndividualInformation.Age,
+              IndividualInformation.Address,
+              IndividualInformation.ContactDetails
+            )
+            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.NiNumber
+            val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
+            navigator.nextPage(
+              IndividualDateOfBirthPage(Index(0)),
+              NormalMode,
+              userAnswers
+            ) mustBe routes.IndividualNationalInsuranceNumberController.onPageLoad(Index(0), NormalMode)
+          }
+        }
+
+        "to the individual connection page if there are no following options selected" in {
+          forAll(individualInformationGen) { individualInformationAnswer =>
+            val followingAnswers = Set(
+              IndividualInformation.Address,
+              IndividualInformation.ContactDetails,
+              IndividualInformation.NiNumber
+            )
+            val answer = individualInformationAnswer -- followingAnswers
+            val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
+            navigator.nextPage(
+              IndividualDateOfBirthPage(Index(0)),
+              NormalMode,
+              userAnswers
+            ) mustBe routes.IndividualConnectionController.onPageLoad(Index(0), NormalMode)
+          }
+        }
+
+        "to the journey recovery controller if there is no individual information set" in {
+          navigator.nextPage(
+            IndividualDateOfBirthPage(Index(0)),
+            NormalMode,
+            UserAnswers("id")
+          ) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
       }
 
       "must go from the individual address flow" ignore {
