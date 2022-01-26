@@ -217,3 +217,32 @@ individualBusinessDetails.dontKnow = I don''t know
 individualBusinessDetails.checkYourAnswersLabel = Does the individual have business details that you can provide?
 individualBusinessDetails.error.required = Select whether the individual has business details that you can provide
 individualBusinessDetails.change.hidden = IndividualBusinessDetails
+
+dateFormat.title = Select a format to enter this individual''s age
+dateFormat.heading = Select a format to enter this individual''s age
+dateFormat.date = Date of birth
+dateFormat.age = Approximate age
+dateFormat.checkYourAnswersLabel = Select a format to enter this individual''s age
+dateFormat.error.required = Select what you know about the individual''s age
+dateFormat.change.hidden = DateFormat
+
+individualDateOfBirth.title = What is this individual''s date of birth?
+individualDateOfBirth.heading = What is this individual''s date of birth?
+individualDateOfBirth.hint = For example, 31 3 1980
+individualDateOfBirth.checkYourAnswersLabel = What is this individual''s date of birth?
+individualDateOfBirth.error.required.all = Enter the individual''s date of birth
+individualDateOfBirth.error.required.two = Date of birth must include {0} and {1}
+individualDateOfBirth.error.required = Date of birth must include {0}
+individualDateOfBirth.error.invalid = Enter a real date of birth
+individualDateOfBirth.change.hidden = IndividualDateOfBirth
+individualDateOfBirth.error.futureDate = Date of birth must be in the past
+
+individualAge.title = What is the individual''s approximate age?
+individualAge.heading = What is the individual''s approximate age?
+individualAge.suffix = years old
+individualAge.checkYourAnswersLabel = What is the individual''s approximate age?
+individualAge.error.nonNumeric = Enter the individual''s approximate age with numerical values
+individualAge.error.required = Enter the individual''s approximate age
+individualAge.error.wholeNumber = Enter the individual''s approximate age with numerical values
+individualAge.error.outOfRange = The individual''s approximate age must be between {0} and {1}
+individualAge.change.hidden = IndividualAge

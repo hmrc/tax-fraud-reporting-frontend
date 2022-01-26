@@ -27,14 +27,21 @@ import models._
 class Navigator @Inject() () {
 
   private val normalRoutes: Page => UserAnswers => Call = {
-    case ActivityTypePage         => ua => activityPageRoutes(ua)
-    case IndividualOrBusinessPage => ua => individualOrBusinessRoutes(ua)
+    case ActivityTypePage         => activityPageRoutes
+    case IndividualOrBusinessPage => individualOrBusinessRoutes
+    case IndividualDateFormatPage(index) => ageFormatPageRoutes(_, index)
     case _                        => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
     case _ => _ => routes.CheckYourAnswersController.onPageLoad
   }
+
+  private def ageFormatPageRoutes(answers: UserAnswers, index: Index): Call =
+    answers.get(IndividualDateFormatPage(index)).map {
+      case IndividualDateFormat.Date => routes.IndividualDateOfBirthController.onPageLoad(index, NormalMode)
+      case IndividualDateFormat.Age  => routes.IndividualAgeController.onPageLoad(index, NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def activityPageRoutes(answers: UserAnswers): Call =
     answers.get(ActivityTypePage).map { activity =>
