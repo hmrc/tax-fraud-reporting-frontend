@@ -93,6 +93,32 @@ class NavigatorSpec extends SpecBase {
           ) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
       }
+
+      "must go from individual date format page" - {
+
+        "to the individual approximate age page when they select 'age'" in {
+          val answers = UserAnswers("id").set(IndividualDateFormatPage(Index(0)), IndividualDateFormat.Age).success.value
+          navigator.nextPage(
+            IndividualDateFormatPage(Index(0)),
+            NormalMode, answers
+          ) mustBe routes.IndividualAgeController.onPageLoad(Index(0), NormalMode)
+        }
+
+        "to the individual date of birth page when they select 'date of birth'" in {
+          val answers = UserAnswers("id").set(IndividualDateFormatPage(Index(0)), IndividualDateFormat.Date).success.value
+          navigator.nextPage(
+            IndividualDateFormatPage(Index(0)),
+            NormalMode, answers
+          ) mustBe routes.IndividualDateOfBirthController.onPageLoad(Index(0), NormalMode)
+        }
+
+        "to the journey recovery controller if there is no individual date format set" in {
+          navigator.nextPage(
+            IndividualDateFormatPage(Index(0)),
+            NormalMode, UserAnswers("id")
+          ) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+      }
     }
 
     "in Check mode" - {

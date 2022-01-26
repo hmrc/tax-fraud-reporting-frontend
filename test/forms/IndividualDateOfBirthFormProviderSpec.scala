@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,25 +12,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@this(
-    layout: templates.Layout,
-    govukButton: GovukButton
-)
+package forms
 
-@()(implicit request: Request[_], messages: Messages)
+import java.time.{LocalDate, ZoneOffset}
+import forms.behaviours.DateBehaviours
+import play.api.data.FormError
 
-@layout(pageTitle = titleNoForm(messages("journeyRecovery.startAgain.title"))) {
+class IndividualDateOfBirthFormProviderSpec extends DateBehaviours {
 
-    <h1 class="govuk-heading-l">@messages("journeyRecovery.startAgain.heading")</h1>
+  val form = new IndividualDateOfBirthFormProvider()()
 
-    <p class="govuk-body">@messages("journeyRecovery.startAgain.guidance")</p>
+  ".value" - {
 
-    <p class="govuk-body">
-        @govukButton(
-            ButtonViewModel(messages("site.startAgain"))
-                .asLink(routes.IndexController.onPageLoad.url)
-        )
-    </p>
+    behave like dateFieldWithMax(form, "value", LocalDate.now(ZoneOffset.UTC), FormError("value", "individualDateOfBirth.error.futureDate"))
+
+    behave like mandatoryDateField(form, "value", "individualDateOfBirth.error.required.all")
+  }
 }

@@ -218,6 +218,47 @@ individualBusinessDetails.checkYourAnswersLabel = Does the individual have busin
 individualBusinessDetails.error.required = Select whether the individual has business details that you can provide
 individualBusinessDetails.change.hidden = IndividualBusinessDetails
 
+dateFormat.title = Select a format to enter this individual''s age
+dateFormat.heading = Select a format to enter this individual''s age
+dateFormat.date = Date of birth
+dateFormat.age = Approximate age
+dateFormat.checkYourAnswersLabel = Select a format to enter this individual''s age
+dateFormat.error.required = Select what you know about the individual''s age
+dateFormat.change.hidden = DateFormat
+
+individualDateOfBirth.title = What is this individual''s date of birth?
+individualDateOfBirth.heading = What is this individual''s date of birth?
+individualDateOfBirth.hint = For example, 31 3 1980
+individualDateOfBirth.checkYourAnswersLabel = What is this individual''s date of birth?
+individualDateOfBirth.error.required.all = Enter the individual''s date of birth
+individualDateOfBirth.error.required.two = Date of birth must include {0} and {1}
+individualDateOfBirth.error.required = Date of birth must include {0}
+individualDateOfBirth.error.invalid = Enter a real date of birth
+individualDateOfBirth.change.hidden = IndividualDateOfBirth
+individualDateOfBirth.error.futureDate = Date of birth must be in the past
+
+individualAge.title = What is the individual''s approximate age?
+individualAge.heading = What is the individual''s approximate age?
+individualAge.suffix = years old
+individualAge.checkYourAnswersLabel = What is the individual''s approximate age?
+individualAge.error.nonNumeric = Enter the individual''s approximate age with numerical values
+individualAge.error.required = Enter the individual''s approximate age
+individualAge.error.wholeNumber = Enter the individual''s approximate age with numerical values
+individualAge.error.outOfRange = The individual''s approximate age must be between {0} and {1}
+individualAge.change.hidden = IndividualAge
+
+businessInformationCheck.title = What do you know about the business?
+businessInformationCheck.heading = What do you know about the business?
+businessInformationCheck.name = Name of the business
+businessInformationCheck.type = Type of business
+businessInformationCheck.address = Address
+businessInformationCheck.contact = Contact details
+businessInformationCheck.businessReference = Business reference numbers
+businessInformationCheck.businessReference.hint = For example VAT number or Employee Reference Number
+businessInformationCheck.checkYourAnswersLabel = What do you know about the business?
+businessInformationCheck.error.required = Select the information you know about the business
+businessInformationCheck.change.hidden = BusinessInformationCheck
+
 businessName.title = What is the business''s name?
 businessName.heading = What is the business''s name?
 businessName.checkYourAnswersLabel = businessName

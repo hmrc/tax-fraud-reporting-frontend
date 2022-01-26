@@ -22,6 +22,18 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryBusinessInformationCheckPage: Arbitrary[BusinessInformationCheckPage] =
+    Arbitrary(BusinessInformationCheckPage(Index(0)))
+
+  implicit lazy val arbitraryIndividualAgePage: Arbitrary[IndividualAgePage] =
+    Arbitrary(IndividualAgePage(Index(0)))
+
+  implicit lazy val arbitraryIndividualDateOfBirthPage: Arbitrary[IndividualDateOfBirthPage] =
+    Arbitrary(IndividualDateOfBirthPage(Index(0)))
+
+  implicit lazy val arbitraryDateFormatPage: Arbitrary[IndividualDateFormatPage] =
+    Arbitrary(IndividualDateFormatPage(Index(0)))
+
   implicit lazy val arbitraryBusinessNamePage: Arbitrary[BusinessNamePage] =
     Arbitrary(BusinessNamePage(Index(0)))
 

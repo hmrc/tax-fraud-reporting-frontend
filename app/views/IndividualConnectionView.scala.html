@@ -49,11 +49,11 @@
             RadiosViewModel(
                 field  = form("value"),
                 legend = LegendViewModel(messages("individualConnection.heading")).asPageHeading(LegendSize.Large),
-                items  = IndividualConnection.enumerableValues.map { value =>
+                items  = IndividualConnection.enumerableValues.zipWithIndex.map { case (value, i) =>
                     RadioItem(
                         content = messages(s"individualConnection.${value.toString}"),
                         value   = Some(value.toString),
-                        id      = Some(s"value_$index")
+                        id      = Some(s"value_$i")
                     )
                 } :+ RadioItem(
                     content         = messages("individualConnection.other"),
