@@ -406,12 +406,70 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         // TODO add when pages are merged
       }
 
-      "must go from the individual contact details page" ignore {
-        // TODO
+      "must go from the individual contact details page" - {
+
+        "to the individual nino page if the user has selected nino and has not selected previous answers" in {
+          forAll(individualInformationGen) { individualInformationAnswer =>
+            val previousAnswers = Set(
+              IndividualInformation.Name,
+              IndividualInformation.Age,
+              IndividualInformation.Address,
+              IndividualInformation.ContactDetails
+            )
+            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.NiNumber
+            val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
+            navigator.nextPage(
+              IndividualContactDetailsPage(Index(0)),
+              NormalMode,
+              userAnswers
+            ) mustBe routes.IndividualNationalInsuranceNumberController.onPageLoad(Index(0), NormalMode)
+          }
+        }
+
+        "to the individual connection page if there are no following options selected" in {
+          forAll(individualInformationGen) { individualInformationAnswer =>
+            val followingAnswers = Set(
+              IndividualInformation.NiNumber
+            )
+            val answer = individualInformationAnswer -- followingAnswers
+            val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
+            navigator.nextPage(
+              IndividualContactDetailsPage(Index(0)),
+              NormalMode,
+              userAnswers
+            ) mustBe routes.IndividualConnectionController.onPageLoad(Index(0), NormalMode)
+          }
+        }
+
+        "to the journey recovery controller if there is no individual information set" in {
+          navigator.nextPage(
+            IndividualContactDetailsPage(Index(0)),
+            NormalMode,
+            UserAnswers("id")
+          ) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
       }
 
-      "must go from the individual nino page" ignore {
-        // TODO
+      "must go from the individual nino page" - {
+
+        "to the individual connection page" in {
+          forAll(individualInformationGen) { answer =>
+            val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
+            navigator.nextPage(
+              IndividualNationalInsuranceNumberPage(Index(0)),
+              NormalMode,
+              userAnswers
+            ) mustBe routes.IndividualConnectionController.onPageLoad(Index(0), NormalMode)
+          }
+        }
+
+        "to the journey recovery controller if there is no individual information set" in {
+          navigator.nextPage(
+            IndividualNationalInsuranceNumberPage(Index(0)),
+            NormalMode,
+            UserAnswers("id")
+          ) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
       }
     }
 
