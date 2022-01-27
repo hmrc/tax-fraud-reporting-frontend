@@ -22,6 +22,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryIndividualAddressConfirmationPage: Arbitrary[IndividualAddressConfirmationPage] =
+    Arbitrary(IndividualAddressConfirmationPage(Index(0)))
+
   implicit lazy val arbitraryReferenceNumbersPage: Arbitrary[ReferenceNumbersPage] =
     Arbitrary(ReferenceNumbersPage(Index(0)))
 
