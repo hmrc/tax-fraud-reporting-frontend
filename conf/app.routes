@@ -80,8 +80,8 @@ POST       /:index/change-age-approx                        controllers.Individu
 
 GET        /:index/business-information-check                        controllers.BusinessInformationCheckController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/business-information-check                        controllers.BusinessInformationCheckController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/business-information-check                  controllers.BusinessInformationCheckController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/business-information-check                  controllers.BusinessInformationCheckController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/change-business-information-check                  controllers.BusinessInformationCheckController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-business-information-check                  controllers.BusinessInformationCheckController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /:index/business-name                                      controllers.BusinessNameController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/business-name                                      controllers.BusinessNameController.onSubmit(index: Index, mode: Mode = NormalMode)
