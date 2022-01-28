@@ -16,6 +16,7 @@
 
 @import viewmodels.LegendSize
 
+
 @this(
     layout: templates.Layout,
     formHelper: FormWithCSRF,
@@ -67,14 +68,13 @@
                         ),
                         CheckboxItem(
                             name = Some("value[]"),
-                            value = "reference",
+                            value = "businessReference",
                             content = Text(messages("businessInformationCheck.businessReference")),
-                            checked = form.data.values.exists(_ == "reference"),
+                            checked = form.data.values.exists(_ == "businessReference"),
                             hint = Some(Hint(content = Text(messages("businessInformationCheck.businessReference.hint"))))
                         )
                 )
-
-            )
+            ).withHint(HintViewModel(messages("businessInformationCheck.hint")))
         )
 
         @govukButton(
