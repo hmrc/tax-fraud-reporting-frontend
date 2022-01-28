@@ -26,10 +26,6 @@
 
 @(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@conditionalHtml = {
-<div>test</div>
-}
-
 @layout(pageTitle = title(form, messages("individualInformation.title"))) {
 
     @formHelper(action = routes.IndividualInformationController.onSubmit(index, mode), 'autoComplete -> "off") {
