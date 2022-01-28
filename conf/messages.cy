@@ -137,6 +137,7 @@ doNotUseThisService.p2.immigration-border-crime = (W) You should <a class="govuk
 
 individualInformation.title = (W) What do you know about the individual? (W)
 individualInformation.heading = (W) What do you know about the individual? (W)
+individualInformation.hint = (W) You will be asked to provide details based on your selection. (W)
 individualInformation.name = (W) Name (W)
 individualInformation.age = (W) Age (approximate) (W)
 individualInformation.address = (W) Address (W)
@@ -249,6 +250,7 @@ individualAge.change.hidden = (W) IndividualAge (W)
 
 businessInformationCheck.title = (W) What do you know about the business? (W)
 businessInformationCheck.heading = (W) What do you know about the business? (W)
+businessInformationCheck.hint = (W) You will be asked to provide details based on your selection. (W)
 businessInformationCheck.name = (W) Name of the business (W)
 businessInformationCheck.type = (W) Type of business (W)
 businessInformationCheck.address = (W) Address (W)

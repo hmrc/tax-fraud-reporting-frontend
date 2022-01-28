@@ -137,6 +137,7 @@ doNotUseThisService.p2.immigration-border-crime = You should <a class="govuk-lin
 
 individualInformation.title = What do you know about the individual?
 individualInformation.heading = What do you know about the individual?
+individualInformation.hint = You will be asked to provide details based on your selection.
 individualInformation.name = Name
 individualInformation.age = Age (approximate)
 individualInformation.address = Address
@@ -249,6 +250,7 @@ individualAge.change.hidden = IndividualAge
 
 businessInformationCheck.title = What do you know about the business?
 businessInformationCheck.heading = What do you know about the business?
+businessInformationCheck.hint = You will be asked to provide details based on your selection.
 businessInformationCheck.name = Name of the business
 businessInformationCheck.type = Type of business
 businessInformationCheck.address = Address
