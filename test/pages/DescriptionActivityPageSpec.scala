@@ -16,7 +16,6 @@
 
 package pages
 
-import models.Index
 import pages.behaviours.PageBehaviours
 
 
@@ -24,10 +23,10 @@ class DescriptionActivityPageSpec extends PageBehaviours {
 
   "DescriptionActivityPage" - {
 
-    beRetrievable[String](DescriptionActivityPage(Index(0)))
+    beRetrievable[String](DescriptionActivityPage)
 
-    beSettable[String](DescriptionActivityPage(Index(0)))
+    beSettable[String](DescriptionActivityPage)
 
-    beRemovable[String](DescriptionActivityPage(Index(0)))
+    beRemovable[String](DescriptionActivityPage)
   }
 }

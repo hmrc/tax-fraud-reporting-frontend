@@ -18,9 +18,8 @@ package controllers
 
 import controllers.actions._
 import forms.DescriptionActivityFormProvider
-
 import javax.inject.Inject
-import models.{Index, Mode}
+import models.Mode
 import navigation.Navigator
 import pages.DescriptionActivityPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -45,29 +44,29 @@ class DescriptionActivityController @Inject()(
 
   val form = formProvider()
 
-  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(DescriptionActivityPage(index)) match {
+      val preparedForm = request.userAnswers.get(DescriptionActivityPage) match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, index, mode))
+      Ok(view(preparedForm, mode))
   }
 
-  def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, index, mode))),
+          Future.successful(BadRequest(view(formWithErrors, mode))),
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(DescriptionActivityPage(index), value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(DescriptionActivityPage, value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(DescriptionActivityPage(index), mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(DescriptionActivityPage, mode, updatedAnswers))
       )
   }
 }

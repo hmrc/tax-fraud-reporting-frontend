@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, Index, UserAnswers}
+import models.{CheckMode, UserAnswers}
 import pages.DescriptionActivityPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -27,15 +27,15 @@ import viewmodels.implicits._
 
 object DescriptionActivitySummary  {
 
-  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(DescriptionActivityPage(Index(index))).map {
+  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(DescriptionActivityPage).map {
       answer =>
 
         SummaryListRowViewModel(
           key     = "descriptionActivity.checkYourAnswersLabel",
           value   = ValueViewModel(HtmlFormat.escape(answer).toString),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.DescriptionActivityController.onPageLoad(Index(index), CheckMode).url)
+            ActionItemViewModel("site.change", routes.DescriptionActivityController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText(messages("descriptionActivity.change.hidden"))
           )
         )

@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.DescriptionActivityFormProvider
-import models.{Index, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -40,7 +40,7 @@ class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new DescriptionActivityFormProvider()
   val form = formProvider()
 
-  lazy val descriptionActivityRoute = routes.DescriptionActivityController.onPageLoad(Index(0), NormalMode).url
+  lazy val descriptionActivityRoute = routes.DescriptionActivityController.onPageLoad(NormalMode).url
 
   "DescriptionActivity Controller" - {
 
@@ -56,13 +56,13 @@ class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[DescriptionActivityView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(DescriptionActivityPage(Index(0)), "answer").success.value
+      val userAnswers = UserAnswers(userAnswersId).set(DescriptionActivityPage, "answer").success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -74,7 +74,7 @@ class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill("answer"), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill("answer"), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -120,7 +120,7 @@ class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 

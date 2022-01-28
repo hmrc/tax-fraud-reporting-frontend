@@ -26,11 +26,11 @@
     inputCharacterCount: InputCharacterCount
 )
 
-@(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("descriptionActivity.title"))) {
 
-    @formHelper(action = routes.DescriptionActivityController.onSubmit(index, mode)) {
+    @formHelper(action = routes.DescriptionActivityController.onSubmit(mode)) {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))
