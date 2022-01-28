@@ -87,3 +87,8 @@ GET        /:index/business-name                                      controller
 POST       /:index/business-name                                      controllers.BusinessNameController.onSubmit(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-business-name                               controllers.BusinessNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-business-name                               controllers.BusinessNameController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/description-activity                        controllers.DescriptionActivityController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/description-activity                        controllers.DescriptionActivityController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-description-activity                  controllers.DescriptionActivityController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-description-activity                  controllers.DescriptionActivityController.onSubmit(index: Index, mode: Mode = CheckMode)
