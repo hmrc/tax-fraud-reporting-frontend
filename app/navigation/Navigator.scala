@@ -27,16 +27,21 @@ import models._
 class Navigator @Inject() () {
 
   private val normalRoutes: Page => UserAnswers => Call = {
-    case ActivityTypePage                             => activityPageRoutes
-    case IndividualOrBusinessPage                     => individualOrBusinessRoutes
-    case IndividualDateFormatPage(index)              => ageFormatPageRoutes(_, index)
-    case IndividualNamePage(index)                    => individualInformationRoutes(_, index, IndividualInformation.Name)
-    case IndividualAgePage(index)                     => individualInformationRoutes(_, index, IndividualInformation.Age)
-    case IndividualDateOfBirthPage(index)             => individualInformationRoutes(_, index, IndividualInformation.Age)
-    case IndividualContactDetailsPage(index)          => individualInformationRoutes(_, index, IndividualInformation.ContactDetails)
-    case IndividualNationalInsuranceNumberPage(index) => individualInformationRoutes(_, index, IndividualInformation.NiNumber)
-    case IndividualInformationPage(index)             => individualInformationRoutes(_, index)
-    case _                                            => _ => routes.IndexController.onPageLoad
+    case ActivityTypePage                 => activityPageRoutes
+    case IndividualOrBusinessPage         => individualOrBusinessRoutes
+    case IndividualDateFormatPage(index)  => ageFormatPageRoutes(_, index)
+    case IndividualNamePage(index)        => individualInformationRoutes(_, index, IndividualInformation.Name)
+    case IndividualAgePage(index)         => individualInformationRoutes(_, index, IndividualInformation.Age)
+    case IndividualDateOfBirthPage(index) => individualInformationRoutes(_, index, IndividualInformation.Age)
+    case IndividualContactDetailsPage(index) =>
+      individualInformationRoutes(_, index, IndividualInformation.ContactDetails)
+    case IndividualNationalInsuranceNumberPage(index) =>
+      individualInformationRoutes(_, index, IndividualInformation.NiNumber)
+    case IndividualInformationPage(index)    => individualInformationRoutes(_, index)
+    case BusinessNamePage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Name)
+    case TypeBusinessPage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
+    case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
+    case _                                   => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
@@ -45,8 +50,8 @@ class Navigator @Inject() () {
 
   private def individualInformationRoute(answer: IndividualInformation, index: Index, mode: Mode): Call =
     answer match {
-      case IndividualInformation.Name           => routes.IndividualNameController.onPageLoad(index, mode)
-      case IndividualInformation.Age            => routes.IndividualDateFormatController.onPageLoad(index, mode)
+      case IndividualInformation.Name => routes.IndividualNameController.onPageLoad(index, mode)
+      case IndividualInformation.Age  => routes.IndividualDateFormatController.onPageLoad(index, mode)
       // TODO add address when the pages are merged
       case IndividualInformation.ContactDetails => routes.IndividualContactDetailsController.onPageLoad(index, mode)
       case IndividualInformation.NiNumber       => routes.IndividualNationalInsuranceNumberController.onPageLoad(index, mode)
@@ -54,17 +59,20 @@ class Navigator @Inject() () {
 
   private def individualInformationRoutes(answers: UserAnswers, index: Index): Call =
     answers.get(IndividualInformationPage(index)).flatMap { individualInformation =>
-      IndividualInformation.values.find(individualInformation.contains).map(individualInformationRoute(_, index, NormalMode))
+      IndividualInformation.values.find(individualInformation.contains).map(
+        individualInformationRoute(_, index, NormalMode)
+      )
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def individualInformationRoutes(answers: UserAnswers, index: Index, answer: IndividualInformation): Call =
     answers.get(IndividualInformationPage(index)).flatMap { individualInformation =>
       val remainingSections = individualInformation & IndividualInformation.values.dropWhile(_ != answer).drop(1).toSet
-      if (remainingSections.isEmpty) {
+      if (remainingSections.isEmpty)
         Some(routes.IndividualConnectionController.onPageLoad(index, NormalMode))
-      } else {
-        IndividualInformation.values.find(remainingSections.contains).map(individualInformationRoute(_, index, NormalMode))
-      }
+      else
+        IndividualInformation.values.find(remainingSections.contains).map(
+          individualInformationRoute(_, index, NormalMode)
+        )
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def ageFormatPageRoutes(answers: UserAnswers, index: Index): Call =
@@ -75,17 +83,44 @@ class Navigator @Inject() () {
 
   private def activityPageRoutes(answers: UserAnswers): Call =
     answers.get(ActivityTypePage).map { activity =>
-      if (ActivityType.otherDepartments.isDefinedAt(activity.activityName)) {
+      if (ActivityType.otherDepartments.isDefinedAt(activity.activityName))
         routes.DoNotUseThisServiceController.onPageLoad()
-      } else {
+      else
         routes.IndividualOrBusinessController.onPageLoad(NormalMode)
-      }
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def individualOrBusinessRoutes(answers: UserAnswers): Call =
     answers.get(IndividualOrBusinessPage).map {
       case IndividualOrBusiness.Individual =>
         routes.IndividualInformationController.onPageLoad(Index(0), NormalMode)
+      case IndividualOrBusiness.Business =>
+        routes.BusinessInformationCheckController.onPageLoad(Index(0), NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def businessInformationRoute(answer: BusinessInformationCheck, index: Index, mode: Mode): Call =
+    answer match {
+      case BusinessInformationCheck.Name => routes.BusinessNameController.onPageLoad(index, mode)
+      case BusinessInformationCheck.Type => routes.TypeBusinessController.onPageLoad(index, mode)
+      // TODO add address, contact and business reference when the pages are merged
+
+    }
+
+  private def businessInformationRoutes(answers: UserAnswers, index: Index): Call =
+    answers.get(BusinessInformationCheckPage(index)).flatMap { businessInformation =>
+      BusinessInformationCheck.values.find(businessInformation.contains).map(
+        businessInformationRoute(_, index, NormalMode)
+      )
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def businessInformationRoutes(answers: UserAnswers, index: Index, answer: BusinessInformationCheck): Call =
+    answers.get(BusinessInformationCheckPage(index)).flatMap { businessInformation =>
+      val remainingSections = businessInformation & BusinessInformationCheck.values.dropWhile(_ != answer).drop(1).toSet
+      if (remainingSections.isEmpty)
+        Some(routes.IndividualConnectionController.onPageLoad(index, NormalMode))
+      else
+        BusinessInformationCheck.values.find(remainingSections.contains).map(
+          businessInformationRoute(_, index, NormalMode)
+        )
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {

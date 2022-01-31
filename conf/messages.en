@@ -267,3 +267,10 @@ businessName.checkYourAnswersLabel = businessName
 businessName.error.required = Enter the business''s name
 businessName.error.length = The name of the business must be less than {0} characters
 
+typeBusiness.title = What type of business is it?
+typeBusiness.heading = What type of business is it?
+typeBusiness.hint = For example builder, hairdresser or restaurant.
+typeBusiness.checkYourAnswersLabel = What type of business is it?
+typeBusiness.error.required = Enter what type of business it is
+typeBusiness.error.length =  The type of business must be 100 characters or fewer.
+typeBusiness.change.hidden = TypeBusiness
