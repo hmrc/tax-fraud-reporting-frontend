@@ -267,6 +267,15 @@ businessName.checkYourAnswersLabel = businessName
 businessName.error.required = Enter the business''s name
 businessName.error.length = The name of the business must be less than {0} characters
 
+
+descriptionActivity.title = Provide a concise description of the activity you are reporting
+descriptionActivity.heading = Provide a concise description of the activity you are reporting
+descriptionActivity.hint = A concise description allows HMRC to process your information effectively. There is no need to repeat any information you''ve already provided.
+descriptionActivity.checkYourAnswersLabel = Provide a concise description of the activity you are reporting
+descriptionActivity.error.required = Enter a description on the activity you''re reporting.
+descriptionActivity.error.length = The description of the activity must be 1200 characters or fewer.
+descriptionActivity.change.hidden = DescriptionActivity
+
 typeBusiness.title = What type of business is it?
 typeBusiness.heading = What type of business is it?
 typeBusiness.hint = For example builder, hairdresser or restaurant.

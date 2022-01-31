@@ -92,3 +92,8 @@ GET        /:index/type-business                        controllers.TypeBusiness
 POST       /:index/type-business                        controllers.TypeBusinessController.onSubmit(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-type-business                  controllers.TypeBusinessController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-type-business                 controllers.TypeBusinessController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /description-activity                        controllers.DescriptionActivityController.onPageLoad(mode: Mode = NormalMode)
+POST       /description-activity                        controllers.DescriptionActivityController.onSubmit(mode: Mode = NormalMode)
+GET        /change-description-activity                  controllers.DescriptionActivityController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-description-activity                  controllers.DescriptionActivityController.onSubmit(mode: Mode = CheckMode)
