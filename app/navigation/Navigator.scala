@@ -37,8 +37,11 @@ class Navigator @Inject() () {
       individualInformationRoutes(_, index, IndividualInformation.ContactDetails)
     case IndividualNationalInsuranceNumberPage(index) =>
       individualInformationRoutes(_, index, IndividualInformation.NiNumber)
-    case IndividualInformationPage(index) => individualInformationRoutes(_, index)
-    case _                                => _ => routes.IndexController.onPageLoad
+    case IndividualInformationPage(index)    => individualInformationRoutes(_, index)
+    case BusinessNamePage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Name)
+    case TypeBusinessPage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
+    case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
+    case _                                   => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
@@ -90,6 +93,34 @@ class Navigator @Inject() () {
     answers.get(IndividualOrBusinessPage).map {
       case IndividualOrBusiness.Individual =>
         routes.IndividualInformationController.onPageLoad(Index(0), NormalMode)
+      case IndividualOrBusiness.Business =>
+        routes.BusinessInformationCheckController.onPageLoad(Index(0), NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def businessInformationRoute(answer: BusinessInformationCheck, index: Index, mode: Mode): Call =
+    answer match {
+      case BusinessInformationCheck.Name => routes.BusinessNameController.onPageLoad(index, mode)
+      case BusinessInformationCheck.Type => routes.TypeBusinessController.onPageLoad(index, mode)
+      // TODO add address, contact and business reference when the pages are merged
+
+    }
+
+  private def businessInformationRoutes(answers: UserAnswers, index: Index): Call =
+    answers.get(BusinessInformationCheckPage(index)).flatMap { businessInformation =>
+      BusinessInformationCheck.values.find(businessInformation.contains).map(
+        businessInformationRoute(_, index, NormalMode)
+      )
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def businessInformationRoutes(answers: UserAnswers, index: Index, answer: BusinessInformationCheck): Call =
+    answers.get(BusinessInformationCheckPage(index)).flatMap { businessInformation =>
+      val remainingSections = businessInformation & BusinessInformationCheck.values.dropWhile(_ != answer).drop(1).toSet
+      if (remainingSections.isEmpty)
+        Some(routes.IndividualConnectionController.onPageLoad(index, NormalMode))
+      else
+        BusinessInformationCheck.values.find(remainingSections.contains).map(
+          businessInformationRoute(_, index, NormalMode)
+        )
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {

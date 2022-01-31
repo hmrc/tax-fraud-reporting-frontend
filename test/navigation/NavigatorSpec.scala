@@ -28,6 +28,9 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
   val navigator                = new Navigator
   val individualInformationGen = Gen.containerOf[Set, IndividualInformation](Gen.oneOf(IndividualInformation.values))
 
+  val businessInformationCheckGen =
+    Gen.containerOf[Set, BusinessInformationCheck](Gen.oneOf(BusinessInformationCheck.values))
+
   "Navigator" - {
 
     "in Normal mode" - {
@@ -84,6 +87,15 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             NormalMode,
             answers
           ) mustBe routes.IndividualInformationController.onPageLoad(Index(0), NormalMode)
+        }
+
+        "to the individual information check page for the first business" in {
+          val answers = UserAnswers("id").set(IndividualOrBusinessPage, IndividualOrBusiness.Business).success.value
+          navigator.nextPage(
+            IndividualOrBusinessPage,
+            NormalMode,
+            answers
+          ) mustBe routes.BusinessInformationCheckController.onPageLoad(Index(0), NormalMode)
         }
 
         "to the business information check page" ignore {}
@@ -467,6 +479,121 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           ) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
       }
+    }
+
+    "must go from the business information check page" - {
+
+      "to the business name page if the user has selected business name" in {
+        forAll(businessInformationCheckGen) { businessInformationCheckCheckAnswer =>
+          val answer      = businessInformationCheckCheckAnswer + BusinessInformationCheck.Name
+          val userAnswers = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
+          navigator.nextPage(
+            BusinessInformationCheckPage(Index(0)),
+            NormalMode,
+            userAnswers
+          ) mustBe routes.BusinessNameController.onPageLoad(Index(0), NormalMode)
+        }
+      }
+
+      "to the business type page if the user has selected business type and has not selected previous answers" in {
+        forAll(businessInformationCheckGen) { businessInformationCheckCheckAnswer =>
+          val previousAnswers = Set(BusinessInformationCheck.Name)
+          val answer          = businessInformationCheckCheckAnswer -- previousAnswers + BusinessInformationCheck.Type
+          val userAnswers     = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
+          navigator.nextPage(
+            BusinessInformationCheckPage(Index(0)),
+            NormalMode,
+            userAnswers
+          ) mustBe routes.TypeBusinessController.onPageLoad(Index(0), NormalMode)
+        }
+      }
+
+      "to the business address page if the user has selected business address and has not selected previous answers" ignore {
+        // TODO when address pages are merged
+      }
+
+      "to the business contact details page if the user has selected contact details and has not selected previous answers" ignore {
+        // TODO when contact details pages are merged
+      }
+
+      "to the business reference page if the user has selected business reference and has not selected previous answers" ignore {
+        // TODO when reference pages are merged
+      }
+
+      "to the journey recovery page if there is no business information set" in {
+        navigator.nextPage(
+          BusinessInformationCheckPage(Index(0)),
+          NormalMode,
+          UserAnswers("id")
+        ) mustBe routes.JourneyRecoveryController.onPageLoad()
+      }
+    }
+
+    "must go from the business name page" - {
+
+      "to the business type format page if the user has selected business type" in {
+        forAll(businessInformationCheckGen) { businesslInformationAnswer =>
+          val previousAnswers = Set(BusinessInformationCheck.Name)
+          val answer          = businesslInformationAnswer -- previousAnswers + BusinessInformationCheck.Type
+          val userAnswers     = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
+          navigator.nextPage(
+            BusinessNamePage(Index(0)),
+            NormalMode,
+            userAnswers
+          ) mustBe routes.TypeBusinessController.onPageLoad(Index(0), NormalMode)
+        }
+      }
+
+      "to the business address page if the user has selected address and has not selected previous answers" ignore {
+        // TODO when address pages are done
+      }
+
+      "to the business contact details page if the user has selected contact details and has not selected previous answers" ignore {
+        // TODO when address pages are done
+      }
+
+      "to the business reference page if the user has selected reference and has not selected previous answers" ignore {
+        // TODO when address pages are done
+      }
+
+      "to the connection page if there are no following options selected" in {
+        forAll(businessInformationCheckGen) { businesslInformationAnswer =>
+          val followingAnswers = Set(
+            BusinessInformationCheck.Name,
+            BusinessInformationCheck.Type,
+            BusinessInformationCheck.Address,
+            BusinessInformationCheck.Contact,
+            BusinessInformationCheck.BusinessReference
+          )
+          val answer      = businesslInformationAnswer -- followingAnswers
+          val userAnswers = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
+          navigator.nextPage(
+            BusinessNamePage(Index(0)),
+            NormalMode,
+            userAnswers
+          ) mustBe routes.IndividualConnectionController.onPageLoad(Index(0), NormalMode)
+        }
+      }
+
+      "to the journey recovery controller if there is no business check information set" in {
+        navigator.nextPage(
+          BusinessNamePage(Index(0)),
+          NormalMode,
+          UserAnswers("id")
+        ) mustBe routes.JourneyRecoveryController.onPageLoad()
+      }
+    }
+
+    "must go from the business address flow" ignore {
+      // TODO add when pages are merged
+    }
+
+    "to the journey recovery controller if there is no business information set" in {
+      navigator.nextPage(
+        BusinessNamePage(Index(0)),
+        NormalMode,
+        UserAnswers("id")
+      ) mustBe routes.JourneyRecoveryController.onPageLoad()
     }
 
     "in Check mode" - {
