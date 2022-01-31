@@ -25,19 +25,19 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object DescriptionActivitySummary  {
+object DescriptionActivitySummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(DescriptionActivityPage).map {
       answer =>
-
         SummaryListRowViewModel(
-          key     = "descriptionActivity.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlFormat.escape(answer).toString),
+          key = "descriptionActivity.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlFormat.escape(answer).toString),
           actions = Seq(
             ActionItemViewModel("site.change", routes.DescriptionActivityController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText(messages("descriptionActivity.change.hidden"))
           )
         )
     }
+
 }

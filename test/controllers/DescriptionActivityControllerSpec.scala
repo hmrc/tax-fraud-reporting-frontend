@@ -38,7 +38,7 @@ class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new DescriptionActivityFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   lazy val descriptionActivityRoute = routes.DescriptionActivityController.onPageLoad(NormalMode).url
 

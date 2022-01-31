@@ -28,4 +28,5 @@ class DescriptionActivityFormProvider @Inject() extends Mappings {
       "value" -> text("descriptionActivity.error.required")
         .verifying(maxLength(1200, "descriptionActivity.error.length"))
     )
+
 }

@@ -30,25 +30,25 @@ import views.html.DescriptionActivityView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DescriptionActivityController @Inject()(
-                                        override val messagesApi: MessagesApi,
-                                        sessionRepository: SessionRepository,
-                                        navigator: Navigator,
-                                        identify: IdentifierAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formProvider: DescriptionActivityFormProvider,
-                                        val controllerComponents: MessagesControllerComponents,
-                                        view: DescriptionActivityView
-                                    )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class DescriptionActivityController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  navigator: Navigator,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: DescriptionActivityFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: DescriptionActivityView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
       val preparedForm = request.userAnswers.get(DescriptionActivityPage) match {
-        case None => form
+        case None        => form
         case Some(value) => form.fill(value)
       }
 
@@ -57,11 +57,8 @@ class DescriptionActivityController @Inject()(
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
       form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(DescriptionActivityPage, value))
@@ -69,4 +66,5 @@ class DescriptionActivityController @Inject()(
           } yield Redirect(navigator.nextPage(DescriptionActivityPage, mode, updatedAnswers))
       )
   }
+
 }

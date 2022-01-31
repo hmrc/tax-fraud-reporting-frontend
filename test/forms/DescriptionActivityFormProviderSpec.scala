@@ -22,9 +22,9 @@ import play.api.data.FormError
 class DescriptionActivityFormProviderSpec extends StringFieldBehaviours {
 
   val requiredKey = "descriptionActivity.error.required"
-  val lengthKey = "descriptionActivity.error.length"
-  val invalidKey = "descriptionActivity.error.invalid"
-  val maxLength = 1200
+  val lengthKey   = "descriptionActivity.error.length"
+  val invalidKey  = "descriptionActivity.error.invalid"
+  val maxLength   = 1200
 
   val form = new DescriptionActivityFormProvider()()
 
@@ -32,11 +32,7 @@ class DescriptionActivityFormProviderSpec extends StringFieldBehaviours {
 
     val fieldName = "value"
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
     behave like fieldWithMaxLength(
       form,
@@ -45,11 +41,7 @@ class DescriptionActivityFormProviderSpec extends StringFieldBehaviours {
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
     )
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
 
   }
 }
