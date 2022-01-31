@@ -25,7 +25,7 @@ import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
-  val navigator = new Navigator
+  val navigator                = new Navigator
   val individualInformationGen = Gen.containerOf[Set, IndividualInformation](Gen.oneOf(IndividualInformation.values))
 
   "Navigator" - {
@@ -101,7 +101,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
         "to the individual name page if the user has selected  name" in {
           forAll(individualInformationGen) { individualInformationAnswer =>
-            val answer = individualInformationAnswer + IndividualInformation.Name
+            val answer      = individualInformationAnswer + IndividualInformation.Name
             val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
               IndividualInformationPage(Index(0)),
@@ -114,8 +114,8 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         "to the individual date format page if the user has selected age and has not selected previous answers" in {
           forAll(individualInformationGen) { individualInformationAnswer =>
             val previousAnswers = Set(IndividualInformation.Name)
-            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.Age
-            val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
+            val answer          = individualInformationAnswer -- previousAnswers + IndividualInformation.Age
+            val userAnswers     = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
               IndividualInformationPage(Index(0)),
               NormalMode,
@@ -130,8 +130,9 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
         "to the individual contact details page if the user has selected contact details and has not selected previous answers" in {
           forAll(individualInformationGen) { individualInformationAnswer =>
-            val previousAnswers = Set(IndividualInformation.Name, IndividualInformation.Age, IndividualInformation.Address)
-            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.ContactDetails
+            val previousAnswers =
+              Set(IndividualInformation.Name, IndividualInformation.Age, IndividualInformation.Address)
+            val answer      = individualInformationAnswer -- previousAnswers + IndividualInformation.ContactDetails
             val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
               IndividualInformationPage(Index(0)),
@@ -149,7 +150,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualInformation.Address,
               IndividualInformation.ContactDetails
             )
-            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.NiNumber
+            val answer      = individualInformationAnswer -- previousAnswers + IndividualInformation.NiNumber
             val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
               IndividualInformationPage(Index(0)),
@@ -173,8 +174,8 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         "to the individual date format page if the user has selected age" in {
           forAll(individualInformationGen) { individualInformationAnswer =>
             val previousAnswers = Set(IndividualInformation.Name)
-            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.Age
-            val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
+            val answer          = individualInformationAnswer -- previousAnswers + IndividualInformation.Age
+            val userAnswers     = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
               IndividualNamePage(Index(0)),
               NormalMode,
@@ -189,8 +190,9 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
         "to the individual contact details page if the user has selected contact details and has not selected previous answers" in {
           forAll(individualInformationGen) { individualInformationAnswer =>
-            val previousAnswers = Set(IndividualInformation.Name, IndividualInformation.Age, IndividualInformation.Address)
-            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.ContactDetails
+            val previousAnswers =
+              Set(IndividualInformation.Name, IndividualInformation.Age, IndividualInformation.Address)
+            val answer      = individualInformationAnswer -- previousAnswers + IndividualInformation.ContactDetails
             val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
               IndividualNamePage(Index(0)),
@@ -208,7 +210,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualInformation.Address,
               IndividualInformation.ContactDetails
             )
-            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.NiNumber
+            val answer      = individualInformationAnswer -- previousAnswers + IndividualInformation.NiNumber
             val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
               IndividualNamePage(Index(0)),
@@ -226,7 +228,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualInformation.ContactDetails,
               IndividualInformation.NiNumber
             )
-            val answer = individualInformationAnswer -- followingAnswers
+            val answer      = individualInformationAnswer -- followingAnswers
             val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
               IndividualNamePage(Index(0)),
@@ -284,8 +286,9 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
         "to the individual contact details page if the user has selected contact details and has not selected previous answers" in {
           forAll(individualInformationGen) { individualInformationAnswer =>
-            val previousAnswers = Set(IndividualInformation.Name, IndividualInformation.Age, IndividualInformation.Address)
-            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.ContactDetails
+            val previousAnswers =
+              Set(IndividualInformation.Name, IndividualInformation.Age, IndividualInformation.Address)
+            val answer      = individualInformationAnswer -- previousAnswers + IndividualInformation.ContactDetails
             val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
               IndividualAgePage(Index(0)),
@@ -303,7 +306,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualInformation.Address,
               IndividualInformation.ContactDetails
             )
-            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.NiNumber
+            val answer      = individualInformationAnswer -- previousAnswers + IndividualInformation.NiNumber
             val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
               IndividualAgePage(Index(0)),
@@ -315,12 +318,9 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
         "to the individual connection page if there are no following options selected" in {
           forAll(individualInformationGen) { individualInformationAnswer =>
-            val followingAnswers = Set(
-              IndividualInformation.Address,
-              IndividualInformation.ContactDetails,
-              IndividualInformation.NiNumber
-            )
-            val answer = individualInformationAnswer -- followingAnswers
+            val followingAnswers =
+              Set(IndividualInformation.Address, IndividualInformation.ContactDetails, IndividualInformation.NiNumber)
+            val answer      = individualInformationAnswer -- followingAnswers
             val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
               IndividualAgePage(Index(0)),
@@ -347,8 +347,9 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
         "to the individual contact details page if the user has selected contact details and has not selected previous answers" in {
           forAll(individualInformationGen) { individualInformationAnswer =>
-            val previousAnswers = Set(IndividualInformation.Name, IndividualInformation.Age, IndividualInformation.Address)
-            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.ContactDetails
+            val previousAnswers =
+              Set(IndividualInformation.Name, IndividualInformation.Age, IndividualInformation.Address)
+            val answer      = individualInformationAnswer -- previousAnswers + IndividualInformation.ContactDetails
             val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
               IndividualDateOfBirthPage(Index(0)),
@@ -366,7 +367,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualInformation.Address,
               IndividualInformation.ContactDetails
             )
-            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.NiNumber
+            val answer      = individualInformationAnswer -- previousAnswers + IndividualInformation.NiNumber
             val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
               IndividualDateOfBirthPage(Index(0)),
@@ -378,12 +379,9 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
         "to the individual connection page if there are no following options selected" in {
           forAll(individualInformationGen) { individualInformationAnswer =>
-            val followingAnswers = Set(
-              IndividualInformation.Address,
-              IndividualInformation.ContactDetails,
-              IndividualInformation.NiNumber
-            )
-            val answer = individualInformationAnswer -- followingAnswers
+            val followingAnswers =
+              Set(IndividualInformation.Address, IndividualInformation.ContactDetails, IndividualInformation.NiNumber)
+            val answer      = individualInformationAnswer -- followingAnswers
             val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
               IndividualDateOfBirthPage(Index(0)),
@@ -416,7 +414,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualInformation.Address,
               IndividualInformation.ContactDetails
             )
-            val answer = individualInformationAnswer -- previousAnswers + IndividualInformation.NiNumber
+            val answer      = individualInformationAnswer -- previousAnswers + IndividualInformation.NiNumber
             val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
               IndividualContactDetailsPage(Index(0)),
@@ -428,11 +426,9 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
         "to the individual connection page if there are no following options selected" in {
           forAll(individualInformationGen) { individualInformationAnswer =>
-            val followingAnswers = Set(
-              IndividualInformation.NiNumber
-            )
-            val answer = individualInformationAnswer -- followingAnswers
-            val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
+            val followingAnswers = Set(IndividualInformation.NiNumber)
+            val answer           = individualInformationAnswer -- followingAnswers
+            val userAnswers      = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
               IndividualContactDetailsPage(Index(0)),
               NormalMode,
