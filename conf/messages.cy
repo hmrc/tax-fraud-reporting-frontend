@@ -275,3 +275,11 @@ descriptionActivity.error.required = (W) Enter a description on the activity you
 descriptionActivity.error.length = (W) The description of the activity must be 1200 characters or fewer. (W)
 descriptionActivity.error.invalid = (W) Enter a description on the activity you're reporting with letters a to z, numbers, hyphens, spaces and apostrophes’. (W)
 descriptionActivity.change.hidden = (W) DescriptionActivity (W)
+
+typeBusiness.title = (W) What type of business is it? (W)
+typeBusiness.heading = (W) What type of business is it? (W)
+typeBusiness.hint = (W) For example builder, hairdresser or restaurant. (W)
+typeBusiness.checkYourAnswersLabel = (W) What type of business is it? (W)
+typeBusiness.error.required = (W) Enter what type of business it is (W)
+typeBusiness.error.length =  (W) The type of business must be 100 characters or fewer. (W)
+typeBusiness.change.hidden = (W) TypeBusiness (W)

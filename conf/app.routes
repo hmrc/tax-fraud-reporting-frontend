@@ -58,10 +58,10 @@ POST       /:index/individual-connection                                       c
 GET        /:index/change-individual-connection                                controllers.IndividualConnectionController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-individual-connection                                controllers.IndividualConnectionController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/individual-business-details                        controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/individual-business-details                        controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-individual-business-details                 controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-individual-business-details                 controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/does-person-own-business                        controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/does-person-own-business                        controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-does-person-own-business                 controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-does-person-own-business                 controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /:index/age-format                        controllers.IndividualDateFormatController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/age-format                        controllers.IndividualDateFormatController.onSubmit(index: Index, mode: Mode = NormalMode)
@@ -88,6 +88,10 @@ POST       /:index/business-name                                      controller
 GET        /:index/change-business-name                               controllers.BusinessNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-business-name                               controllers.BusinessNameController.onSubmit(index: Index, mode: Mode = CheckMode)
 
+GET        /:index/type-business                        controllers.TypeBusinessController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/type-business                        controllers.TypeBusinessController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-type-business                  controllers.TypeBusinessController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-type-business                 controllers.TypeBusinessController.onSubmit(index: Index, mode: Mode = CheckMode)
 GET        /description-activity                        controllers.DescriptionActivityController.onPageLoad(mode: Mode = NormalMode)
 POST       /description-activity                        controllers.DescriptionActivityController.onSubmit(mode: Mode = NormalMode)
 GET        /change-description-activity                  controllers.DescriptionActivityController.onPageLoad(mode: Mode = CheckMode)
