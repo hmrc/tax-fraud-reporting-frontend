@@ -22,6 +22,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitrarySelectConnectionBusinessPage: Arbitrary[SelectConnectionBusinessPage.type] =
+    Arbitrary(SelectConnectionBusinessPage)
+
   implicit lazy val arbitraryDescriptionActivityPage: Arbitrary[DescriptionActivityPage.type] =
     Arbitrary(DescriptionActivityPage)
 

@@ -97,3 +97,8 @@ GET        /description-activity                        controllers.DescriptionA
 POST       /description-activity                        controllers.DescriptionActivityController.onSubmit(mode: Mode = NormalMode)
 GET        /change-description-activity                  controllers.DescriptionActivityController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-description-activity                  controllers.DescriptionActivityController.onSubmit(mode: Mode = CheckMode)
+
+GET        /select-connection-business                        controllers.SelectConnectionBusinessController.onPageLoad(mode: Mode = NormalMode)
+POST       /select-connection-business                        controllers.SelectConnectionBusinessController.onSubmit(mode: Mode = NormalMode)
+GET        /change-select-connection-business                 controllers.SelectConnectionBusinessController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-select-connection-business                 controllers.SelectConnectionBusinessController.onSubmit(mode: Mode = CheckMode)
