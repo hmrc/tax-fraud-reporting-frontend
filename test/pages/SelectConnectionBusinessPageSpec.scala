@@ -16,17 +16,17 @@
 
 package pages
 
-import models.SelectConnectionBusiness
+import models.{Index, SelectConnectionBusiness}
 import pages.behaviours.PageBehaviours
 
 class SelectConnectionBusinessSpec extends PageBehaviours {
 
   "SelectConnectionBusinessPage" - {
 
-    beRetrievable[SelectConnectionBusiness](SelectConnectionBusinessPage)
+    beRetrievable[SelectConnectionBusiness](SelectConnectionBusinessPage(Index(0)))
 
-    beSettable[SelectConnectionBusiness](SelectConnectionBusinessPage)
+    beSettable[SelectConnectionBusiness](SelectConnectionBusinessPage(Index(0)))
 
-    beRemovable[SelectConnectionBusiness](SelectConnectionBusinessPage)
+    beRemovable[SelectConnectionBusiness](SelectConnectionBusinessPage(Index(0)))
   }
 }

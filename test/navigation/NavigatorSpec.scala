@@ -571,7 +571,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             BusinessNamePage(Index(0)),
             NormalMode,
             userAnswers
-          ) mustBe routes.IndividualConnectionController.onPageLoad(Index(0), NormalMode)
+          ) mustBe routes.SelectConnectionBusinessController.onPageLoad(Index(0), NormalMode)
         }
       }
 

@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.SelectConnectionBusinessFormProvider
-import models.{NormalMode, SelectConnectionBusiness, UserAnswers}
+import models.{Index, NormalMode, SelectConnectionBusiness, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -37,7 +37,8 @@ class SelectConnectionBusinessControllerSpec extends SpecBase with MockitoSugar 
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val selectConnectionBusinessRoute = routes.SelectConnectionBusinessController.onPageLoad(NormalMode).url
+  lazy val selectConnectionBusinessRoute =
+    routes.SelectConnectionBusinessController.onPageLoad(Index(0), NormalMode).url
 
   val formProvider = new SelectConnectionBusinessFormProvider()
   val form         = formProvider()
@@ -56,14 +57,14 @@ class SelectConnectionBusinessControllerSpec extends SpecBase with MockitoSugar 
         val view = application.injector.instanceOf[SelectConnectionBusinessView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = UserAnswers(userAnswersId).set(
-        SelectConnectionBusinessPage,
+        SelectConnectionBusinessPage(Index(0)),
         SelectConnectionBusiness.CurrentEmployer
       ).success.value
 
@@ -77,10 +78,11 @@ class SelectConnectionBusinessControllerSpec extends SpecBase with MockitoSugar 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(SelectConnectionBusiness.CurrentEmployer), NormalMode)(
-          request,
-          messages(application)
-        ).toString
+        contentAsString(result) mustEqual view(
+          form.fill(SelectConnectionBusiness.CurrentEmployer),
+          Index(0),
+          NormalMode
+        )(request, messages(application)).toString
       }
     }
 
@@ -126,7 +128,7 @@ class SelectConnectionBusinessControllerSpec extends SpecBase with MockitoSugar 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 

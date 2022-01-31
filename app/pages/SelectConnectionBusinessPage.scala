@@ -16,12 +16,12 @@
 
 package pages
 
-import models.SelectConnectionBusiness
+import models.{Index, SelectConnectionBusiness}
 import play.api.libs.json.JsPath
 
-case object SelectConnectionBusinessPage extends QuestionPage[SelectConnectionBusiness] {
+final case class SelectConnectionBusinessPage(index: Index) extends QuestionPage[SelectConnectionBusiness] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ toString \ index.position
 
   override def toString: String = "selectConnectionBusiness"
 }
