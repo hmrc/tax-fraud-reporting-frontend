@@ -102,3 +102,8 @@ GET        /:index/select-connection-business                        controllers
 POST       /:index/select-connection-business                        controllers.SelectConnectionBusinessController.onSubmit(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-select-connection-business                 controllers.SelectConnectionBusinessController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-select-connection-business                 controllers.SelectConnectionBusinessController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/business-reference-numbers                          controllers.ReferenceNumbersController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/business-reference-numbers                          controllers.ReferenceNumbersController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-business-reference-numbers                   controllers.ReferenceNumbersController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-business-reference-numbers                   controllers.ReferenceNumbersController.onSubmit(index: Index, mode: Mode = CheckMode)

@@ -22,6 +22,15 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryReferenceNumbers: Arbitrary[ReferenceNumbers] =
+    Arbitrary {
+      for {
+        vatRegistration <- arbitrary[Option[String]]
+        employeeRefNo   <- arbitrary[Option[String]]
+        corporationTax  <- arbitrary[Option[String]]
+      } yield ReferenceNumbers(vatRegistration, employeeRefNo, corporationTax)
+    }
+
   implicit lazy val arbitrarySelectConnectionBusiness: Arbitrary[SelectConnectionBusiness] =
     Arbitrary {
       Gen.oneOf(
