@@ -22,6 +22,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryApproximateValuePage: Arbitrary[ApproximateValuePage.type] =
+    Arbitrary(ApproximateValuePage)
+
   implicit lazy val arbitraryDescriptionActivityPage: Arbitrary[DescriptionActivityPage.type] =
     Arbitrary(DescriptionActivityPage)
 

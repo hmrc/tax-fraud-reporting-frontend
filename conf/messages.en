@@ -283,3 +283,15 @@ typeBusiness.checkYourAnswersLabel = What type of business is it?
 typeBusiness.error.required = Enter what type of business it is
 typeBusiness.error.length =  The type of business must be 100 characters or fewer.
 typeBusiness.change.hidden = TypeBusiness
+
+approximateValue.title = What is the approximate total value of the activity?
+approximateValue.heading = What is the approximate total value of the activity?
+approximateValue.suffix = £
+approximateValue.hint = Enter the value in pounds.
+approximateValue.checkYourAnswersLabel = What is the approximate total value of the activity?
+approximateValue.details.header = I don''t know the approximate value.
+approximateValue.details.p = HMRC does not require an exact figure, an estimation will still be useful. If you have no estimate then you can <a href="/report-tax-fraud/when-activity-happen">skip to the next question.</a>
+approximateValue.error.nonNumeric = Enter the approximate value as a numerical value
+approximateValue.error.required = Enter the approximate value as a numerical value
+approximateValue.error.wholeNumber = Enter your approximate using whole numbers
+approximateValue.change.hidden = ApproximateValue
