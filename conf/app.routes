@@ -97,3 +97,8 @@ GET        /description-activity                        controllers.DescriptionA
 POST       /description-activity                        controllers.DescriptionActivityController.onSubmit(mode: Mode = NormalMode)
 GET        /change-description-activity                  controllers.DescriptionActivityController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-description-activity                  controllers.DescriptionActivityController.onSubmit(mode: Mode = CheckMode)
+
+GET        /activity-approximate-value                               controllers.ApproximateValueController.onPageLoad(mode: Mode = NormalMode)
+POST       /activity-approximate-value                               controllers.ApproximateValueController.onSubmit(mode: Mode = NormalMode)
+GET        /change-activity-approximate-value                        controllers.ApproximateValueController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-activity-approximate-value                        controllers.ApproximateValueController.onSubmit(mode: Mode = CheckMode)
