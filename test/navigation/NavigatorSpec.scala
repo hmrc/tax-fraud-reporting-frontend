@@ -596,6 +596,31 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
       ) mustBe routes.JourneyRecoveryController.onPageLoad()
     }
 
+    "must go from select connection business page" - {
+
+      "to the select connection business page for the first selection" in {
+        val answers = UserAnswers("id").set(
+          SelectConnectionBusinessPage(Index(0)),
+          SelectConnectionBusiness.CurrentEmployer
+        ).success.value
+        navigator.nextPage(
+          SelectConnectionBusinessPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.ApproximateValueController.onPageLoad(NormalMode)
+      }
+
+      "to the business information check page" ignore {}
+
+      "to the journey recovery controller if there is no individual or business set" in {
+        navigator.nextPage(
+          SelectConnectionBusinessPage(Index(0)),
+          NormalMode,
+          UserAnswers("id")
+        ) mustBe routes.JourneyRecoveryController.onPageLoad()
+      }
+    }
+
     "in Check mode" - {
 
       "must go from a page that doesn't exist in the edit route map to CheckYourAnswers" in {

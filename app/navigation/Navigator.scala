@@ -42,6 +42,7 @@ class Navigator @Inject() () {
     case TypeBusinessPage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
     case ReferenceNumbersPage(index)         => businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference)
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
+    case SelectConnectionBusinessPage(index) => selectConnectionBusinessRoutes(_, index)
     case _                                   => _ => routes.IndexController.onPageLoad
   }
 
@@ -123,6 +124,12 @@ class Navigator @Inject() () {
         BusinessInformationCheck.values.find(remainingSections.contains).map(
           businessInformationRoute(_, index, NormalMode)
         )
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def selectConnectionBusinessRoutes(answers: UserAnswers, index: Index): Call =
+    answers.get(SelectConnectionBusinessPage(index)).map {
+      case _: SelectConnectionBusiness =>
+        routes.ApproximateValueController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
