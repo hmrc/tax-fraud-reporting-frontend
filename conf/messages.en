@@ -304,3 +304,16 @@ selectConnectionBusiness.error.required = Select or enter how you know the busin
 selectConnectionBusiness.error.otherValue.required = Select or enter how you know the business.
 selectConnectionBusiness.error.otherValue.maxLength = How you know the business must be 255 characters or fewer
 selectConnectionBusiness.change.hidden = SelectConnectionBusiness
+
+
+approximateValue.title = What is the approximate total value of the activity?
+approximateValue.heading = What is the approximate total value of the activity?
+approximateValue.suffix = £
+approximateValue.hint = Enter the value in pounds.
+approximateValue.checkYourAnswersLabel = What is the approximate total value of the activity?
+approximateValue.details.header = I don''t know the approximate value.
+approximateValue.details.p = HMRC does not require an exact figure, an estimation will still be useful. If you have no estimate then you can <a href="/report-tax-fraud/when-activity-happen">skip to the next question.</a>
+approximateValue.error.nonNumeric = Enter the approximate value as a numerical value
+approximateValue.error.required = Enter the approximate value as a numerical value
+approximateValue.error.wholeNumber = Enter your approximate using whole numbers
+approximateValue.change.hidden = ApproximateValue

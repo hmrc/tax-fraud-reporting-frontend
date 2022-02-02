@@ -102,3 +102,8 @@ GET        /:index/select-connection-business                        controllers
 POST       /:index/select-connection-business                        controllers.SelectConnectionBusinessController.onSubmit(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-select-connection-business                 controllers.SelectConnectionBusinessController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-select-connection-business                 controllers.SelectConnectionBusinessController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /activity-approximate-value                               controllers.ApproximateValueController.onPageLoad(mode: Mode = NormalMode)
+POST       /activity-approximate-value                               controllers.ApproximateValueController.onSubmit(mode: Mode = NormalMode)
+GET        /change-activity-approximate-value                        controllers.ApproximateValueController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-activity-approximate-value                        controllers.ApproximateValueController.onSubmit(mode: Mode = CheckMode)
