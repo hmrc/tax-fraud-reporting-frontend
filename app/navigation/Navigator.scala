@@ -42,7 +42,6 @@ class Navigator @Inject() () {
     case TypeBusinessPage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
     case BusinessContactDetailsPage(index)   => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
-    //case TypeBusinessPage(index) => typeBusinessRoutes(_, index)
     case _ => _ => routes.IndexController.onPageLoad
   }
 
