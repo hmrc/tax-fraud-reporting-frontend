@@ -318,3 +318,5 @@ addAnotherPerson.no = No
 addAnotherPerson.checkYourAnswersLabel = Are there additional people involved in this activity you want to tell us about?
 addAnotherPerson.error.required = Select yes if you need to add another individual.
 addAnotherPerson.change.hidden = AddAnotherPerson
+
+individual.1 = Individual A

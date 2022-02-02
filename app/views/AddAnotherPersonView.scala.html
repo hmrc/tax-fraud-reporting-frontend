@@ -15,13 +15,15 @@
  *@
 
 @import viewmodels.LegendSize
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.listwithactions
 
 @this(
     layout: templates.Layout,
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukRadios: GovukRadios,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    listWithAction: HmrcListWithActions
 )
 
 @(form: Form[_], index:Index, mode: Mode)(implicit request: Request[_], messages: Messages)
@@ -33,6 +35,15 @@
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
         }
+
+<h1>You have added one individual</h1>
+
+@listWithAction(ListWithActions(
+    items = (1 to index.display).map { id =>
+        ListWithActionsItem(name = messages(s"individual.$id"), actions = List(ListWithActionsAction(content = messages("change"), href = ""), ListWithActionsAction(content = messages("remove"), href = "")))
+    }
+    )
+)
 
         @govukRadios(
             RadiosViewModel(
