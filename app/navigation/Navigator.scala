@@ -105,7 +105,7 @@ class Navigator @Inject() () {
       case BusinessInformationCheck.Name              => routes.BusinessNameController.onPageLoad(index, mode)
       case BusinessInformationCheck.Type              => routes.TypeBusinessController.onPageLoad(index, mode)
       case BusinessInformationCheck.BusinessReference => routes.ReferenceNumbersController.onPageLoad(index, mode)
-      case BusinessInformationCheck.Contact => routes.BusinessContactDetailsController.onPageLoad(index, mode)
+      case BusinessInformationCheck.Contact           => routes.BusinessContactDetailsController.onPageLoad(index, mode)
       // TODO add address when the pages are merged
 
     }
