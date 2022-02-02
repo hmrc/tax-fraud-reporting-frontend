@@ -27,6 +27,23 @@ trait ModelGenerators {
       Gen.oneOf(AddAnotherPerson.values.toSeq)
     }
 
+  implicit lazy val arbitrarySelectConnectionBusiness: Arbitrary[SelectConnectionBusiness] =
+    Arbitrary {
+      Gen.oneOf(
+        Gen.alphaStr.map(SelectConnectionBusiness.Other),
+        Gen.const(SelectConnectionBusiness.CurrentEmployer),
+        Gen.const(SelectConnectionBusiness.ExEmployer),
+        Gen.const(SelectConnectionBusiness.BusinessCompetitor),
+        Gen.const(SelectConnectionBusiness.MyClient),
+        Gen.const(SelectConnectionBusiness.MySupplier),
+        Gen.const(SelectConnectionBusiness.Customer),
+        Gen.const(SelectConnectionBusiness.Accountant),
+        Gen.const(SelectConnectionBusiness.Advisor),
+        Gen.const(SelectConnectionBusiness.Auditor),
+        Gen.const(SelectConnectionBusiness.Treasure)
+      )
+    }
+
   implicit lazy val arbitraryBusinessContactDetails: Arbitrary[BusinessContactDetails] =
     Arbitrary {
       for {
