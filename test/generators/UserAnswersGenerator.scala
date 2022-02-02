@@ -30,6 +30,8 @@ trait UserAnswersGenerator extends TryValues {
     arbitrary[(SelectConnectionBusinessPage, JsValue)] ::
       arbitrary[(DescriptionActivityPage.type, JsValue)] ::
     arbitrary[(ApproximateValuePage.type, JsValue)] ::
+    arbitrary[(BusinessContactDetailsPage, JsValue)] ::
+      arbitrary[(ApproximateValuePage.type, JsValue)] ::
       arbitrary[(DescriptionActivityPage.type, JsValue)] ::
       arbitrary[(BusinessInformationCheckPage, JsValue)] ::
       arbitrary[(TypeBusinessPage, JsValue)] ::

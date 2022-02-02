@@ -40,6 +40,7 @@ class Navigator @Inject() () {
     case IndividualInformationPage(index)    => individualInformationRoutes(_, index)
     case BusinessNamePage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Name)
     case TypeBusinessPage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
+    case BusinessContactDetailsPage(index)   => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
     //case TypeBusinessPage(index) => typeBusinessRoutes(_, index)
     case _ => _ => routes.IndexController.onPageLoad
@@ -100,9 +101,10 @@ class Navigator @Inject() () {
 
   private def businessInformationRoute(answer: BusinessInformationCheck, index: Index, mode: Mode): Call =
     answer match {
-      case BusinessInformationCheck.Name => routes.BusinessNameController.onPageLoad(index, mode)
-      case BusinessInformationCheck.Type => routes.TypeBusinessController.onPageLoad(index, mode)
-      // TODO add address, contact and business reference when the pages are merged
+      case BusinessInformationCheck.Name    => routes.BusinessNameController.onPageLoad(index, mode)
+      case BusinessInformationCheck.Type    => routes.TypeBusinessController.onPageLoad(index, mode)
+      case BusinessInformationCheck.Contact => routes.BusinessContactDetailsController.onPageLoad(index, mode)
+      // TODO add address and business reference when the pages are merged
 
     }
 

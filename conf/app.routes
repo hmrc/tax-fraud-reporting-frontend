@@ -107,3 +107,8 @@ GET        /activity-approximate-value                               controllers
 POST       /activity-approximate-value                               controllers.ApproximateValueController.onSubmit(mode: Mode = NormalMode)
 GET        /change-activity-approximate-value                        controllers.ApproximateValueController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-activity-approximate-value                        controllers.ApproximateValueController.onSubmit(mode: Mode = CheckMode)
+
+GET        /:index/business-contact-details                        controllers.BusinessContactDetailsController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/business-contact-details                        controllers.BusinessContactDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-business-contact-details                  controllers.BusinessContactDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-business-contact-details                  controllers.BusinessContactDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
