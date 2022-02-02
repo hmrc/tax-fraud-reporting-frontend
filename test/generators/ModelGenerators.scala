@@ -22,6 +22,15 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryBusinessContactDetails: Arbitrary[BusinessContactDetails] =
+    Arbitrary {
+      for {
+        landlineNumber <- arbitrary[Option[String]]
+        mobileNumber   <- arbitrary[Option[String]]
+        email          <- arbitrary[Option[String]]
+      } yield BusinessContactDetails(landlineNumber, mobileNumber, email)
+    }
+
   implicit lazy val arbitraryBusinessInformationCheck: Arbitrary[BusinessInformationCheck] =
     Arbitrary {
       Gen.oneOf(BusinessInformationCheck.values)
