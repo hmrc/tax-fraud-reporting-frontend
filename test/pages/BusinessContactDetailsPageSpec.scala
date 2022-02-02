@@ -19,7 +19,6 @@ package pages
 import models.{BusinessContactDetails, Index}
 import pages.behaviours.PageBehaviours
 
-
 class BusinessContactDetailsPageSpec extends PageBehaviours {
 
   "BusinessContactDetailsPage" - {

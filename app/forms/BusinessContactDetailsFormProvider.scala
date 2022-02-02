@@ -28,12 +28,11 @@ class BusinessContactDetailsFormProvider @Inject() extends Mappings {
   def apply(): Form[BusinessContactDetails] = Form(
     mapping(
       "landlineNumber" -> optional(
-        text().verifying(maxLength(11, "businessContactDetails.error.landlineNumber.length"))
+        text().verifying(maxLength(100, "businessContactDetails.error.landlineNumber.length"))
       ),
-      "mobileNumber" -> optional(
-        text().verifying(maxLength(11, "businessContactDetails.error.mobileNumber.length"))
-      ),
-      "email" -> optional(text().verifying(maxLength(100, "businessContactDetails.error.email.length")))
+      "mobileNumber" -> optional(text().verifying(maxLength(100, "businessContactDetails.error.mobileNumber.length"))),
+      "email"        -> optional(text().verifying(maxLength(100, "businessContactDetails.error.email.length")))
     )(BusinessContactDetails.apply)(BusinessContactDetails.unapply)
-    )
+  )
+
 }

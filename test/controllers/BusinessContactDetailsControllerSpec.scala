@@ -38,7 +38,7 @@ class BusinessContactDetailsControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new BusinessContactDetailsFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   lazy val businessContactDetailsRoute = routes.BusinessContactDetailsController.onPageLoad(Index(0), NormalMode).url
 
@@ -77,7 +77,10 @@ class BusinessContactDetailsControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(model), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(model), Index(0), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -114,9 +117,9 @@ class BusinessContactDetailsControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, businessContactDetailsRoute)
-            .withFormUrlEncodedBody(("landlineNumber" -> "a" * 12))
+            .withFormUrlEncodedBody(("landlineNumber" -> "a" * 101))
 
-        val boundForm = form.bind(Map("landlineNumber" -> "a" * 12))
+        val boundForm = form.bind(Map("landlineNumber" -> "a" * 101))
 
         val view = application.injector.instanceOf[BusinessContactDetailsView]
 

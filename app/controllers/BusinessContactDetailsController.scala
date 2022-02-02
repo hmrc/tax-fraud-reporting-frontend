@@ -31,38 +31,35 @@ import views.html.BusinessContactDetailsView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class BusinessContactDetailsController @Inject()(
-                                        override val messagesApi: MessagesApi,
-                                        sessionRepository: SessionRepository,
-                                        navigator: Navigator,
-                                        identify: IdentifierAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formProvider: BusinessContactDetailsFormProvider,
-                                        val controllerComponents: MessagesControllerComponents,
-                                        view: BusinessContactDetailsView
-                                    )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class BusinessContactDetailsController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  navigator: Navigator,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: BusinessContactDetailsFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: BusinessContactDetailsView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
       val preparedForm = request.userAnswers.get(BusinessContactDetailsPage(index)) match {
-        case None => form
+        case None        => form
         case Some(value) => form.fill(value)
       }
 
       Ok(view(preparedForm, index, mode))
   }
 
-  def onSubmit(index:Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
       form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, index, mode))),
-
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessContactDetailsPage(index), value))
@@ -70,4 +67,5 @@ class BusinessContactDetailsController @Inject()(
           } yield Redirect(navigator.nextPage(BusinessContactDetailsPage(index), mode, updatedAnswers))
       )
   }
+
 }
