@@ -512,8 +512,18 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         // TODO when address pages are merged
       }
 
-      "to the business contact details page if the user has selected contact details and has not selected previous answers" ignore {
-        // TODO when contact details pages are merged
+      "to the business contact details page if the user has selected contact details and has not selected previous answers" in {
+        forAll(businessInformationCheckGen) { businessInformationCheckCheckAnswer =>
+          val previousAnswers =
+            Set(BusinessInformationCheck.Name, BusinessInformationCheck.Type, BusinessInformationCheck.Address)
+          val answer      = businessInformationCheckCheckAnswer -- previousAnswers + BusinessInformationCheck.Contact
+          val userAnswers = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
+          navigator.nextPage(
+            TypeBusinessPage(Index(0)),
+            NormalMode,
+            userAnswers
+          ) mustBe routes.BusinessContactDetailsController.onPageLoad(Index(0), NormalMode)
+        }
       }
 
       "to the business reference page if the user has selected business reference and has not selected previous answers" ignore {

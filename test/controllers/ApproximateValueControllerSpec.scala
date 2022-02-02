@@ -129,6 +129,66 @@ class ApproximateValueControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
+    "must return a Bad Request and errors when blank data is submitted" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, approximateValueRoute)
+            .withFormUrlEncodedBody(("value", ""))
+
+        val boundForm = form.bind(Map("value" -> ""))
+
+        val view = application.injector.instanceOf[ApproximateValueView]
+
+        val result = route(application, request).value
+
+        status(result) mustEqual BAD_REQUEST
+        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+      }
+    }
+
+    "must return a Bad Request and errors when non numeric data is submitted" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, approximateValueRoute)
+            .withFormUrlEncodedBody(("value", "test"))
+
+        val boundForm = form.bind(Map("value" -> "test"))
+
+        val view = application.injector.instanceOf[ApproximateValueView]
+
+        val result = route(application, request).value
+
+        status(result) mustEqual BAD_REQUEST
+        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+      }
+    }
+
+    "must return a Bad Request and errors when not whole number is submitted" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, approximateValueRoute)
+            .withFormUrlEncodedBody(("value", "1098.90"))
+
+        val boundForm = form.bind(Map("value" -> "1098.90"))
+
+        val view = application.injector.instanceOf[ApproximateValueView]
+
+        val result = route(application, request).value
+
+        status(result) mustEqual BAD_REQUEST
+        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+      }
+    }
+
     "must redirect to Journey Recovery for a GET if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()

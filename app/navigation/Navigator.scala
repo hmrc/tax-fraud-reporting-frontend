@@ -41,6 +41,7 @@ class Navigator @Inject() () {
     case BusinessNamePage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Name)
     case TypeBusinessPage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
     case ReferenceNumbersPage(index)         => businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference)
+    case BusinessContactDetailsPage(index)   => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
     case SelectConnectionBusinessPage(index) => selectConnectionBusinessRoutes(_, index)
     case _                                   => _ => routes.IndexController.onPageLoad
@@ -104,7 +105,8 @@ class Navigator @Inject() () {
       case BusinessInformationCheck.Name              => routes.BusinessNameController.onPageLoad(index, mode)
       case BusinessInformationCheck.Type              => routes.TypeBusinessController.onPageLoad(index, mode)
       case BusinessInformationCheck.BusinessReference => routes.ReferenceNumbersController.onPageLoad(index, mode)
-      // TODO add address, contact and when the pages are merged
+      case BusinessInformationCheck.Contact => routes.BusinessContactDetailsController.onPageLoad(index, mode)
+      // TODO add address when the pages are merged
 
     }
 
