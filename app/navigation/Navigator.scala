@@ -42,7 +42,7 @@ class Navigator @Inject() () {
     case TypeBusinessPage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
     case BusinessContactDetailsPage(index)   => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
-    case _                                   => _ => routes.IndexController.onPageLoad
+    case _ => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
@@ -118,7 +118,7 @@ class Navigator @Inject() () {
     answers.get(BusinessInformationCheckPage(index)).flatMap { businessInformation =>
       val remainingSections = businessInformation & BusinessInformationCheck.values.dropWhile(_ != answer).drop(1).toSet
       if (remainingSections.isEmpty)
-        Some(routes.IndividualConnectionController.onPageLoad(index, NormalMode))
+        Some(routes.SelectConnectionBusinessController.onPageLoad(index, NormalMode))
       else
         BusinessInformationCheck.values.find(remainingSections.contains).map(
           businessInformationRoute(_, index, NormalMode)
