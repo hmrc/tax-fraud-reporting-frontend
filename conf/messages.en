@@ -19,6 +19,8 @@ timeout.title = You’re about to be signed out
 timeout.message = For security reasons, you will be signed out of this service in
 timeout.keepAlive = Stay signed in
 timeout.signOut = Sign out
+timeout.keepAlive.notSignedIn = Return to report
+timeout.deleteAnswers = Delete your answers
 
 error.browser.title.prefix = Error:
 error.boolean = Please give an answer
@@ -308,3 +310,11 @@ businessContactDetails.error.landlineNumber.length = Landline number must be 100
 businessContactDetails.error.mobileNumber.length = Mobile number must be 100 characters or fewer
 businessContactDetails.error.email.length = Email address must be 100 characters or fewer
 businessContactDetails.change.hidden = BusinessContactDetails
+
+addAnotherPerson.title = Are there additional people involved in this activity you want to tell us about?
+addAnotherPerson.heading = Are there additional people involved in this activity you want to tell us about?
+addAnotherPerson.yes = Yes
+addAnotherPerson.no = No
+addAnotherPerson.checkYourAnswersLabel = Are there additional people involved in this activity you want to tell us about?
+addAnotherPerson.error.required = Select yes if you need to add another individual.
+addAnotherPerson.change.hidden = AddAnotherPerson

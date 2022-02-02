@@ -107,3 +107,8 @@ GET        /:index/business-contact-details                        controllers.B
 POST       /:index/business-contact-details                        controllers.BusinessContactDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-business-contact-details                  controllers.BusinessContactDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-business-contact-details                  controllers.BusinessContactDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/add-another-person                        controllers.AddAnotherPersonController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/add-another-person                        controllers.AddAnotherPersonController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-add-another-person                  controllers.AddAnotherPersonController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-add-another-person                  controllers.AddAnotherPersonController.onSubmit(index: Index, mode: Mode = CheckMode)
