@@ -26,20 +26,16 @@ class AddAnotherPersonFormProviderSpec extends OptionFieldBehaviours {
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "addAnotherPerson.error.required"
 
     behave like optionsField[AddAnotherPerson](
       form,
       fieldName,
-      validValues  = AddAnotherPerson.values,
+      validValues = AddAnotherPerson.values,
       invalidError = FormError(fieldName, "error.invalid")
     )
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
   }
 }

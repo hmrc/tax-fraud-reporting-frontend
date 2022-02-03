@@ -31,25 +31,25 @@ import views.html.AddAnotherPersonView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AddAnotherPersonController @Inject()(
-                                       override val messagesApi: MessagesApi,
-                                       sessionRepository: SessionRepository,
-                                       navigator: Navigator,
-                                       identify: IdentifierAction,
-                                       getData: DataRetrievalAction,
-                                       requireData: DataRequiredAction,
-                                       formProvider: AddAnotherPersonFormProvider,
-                                       val controllerComponents: MessagesControllerComponents,
-                                       view: AddAnotherPersonView
-                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class AddAnotherPersonController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  navigator: Navigator,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: AddAnotherPersonFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: AddAnotherPersonView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(index:Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
       val preparedForm = request.userAnswers.get(AddAnotherPersonPage(index)) match {
-        case None => form
+        case None        => form
         case Some(value) => form.fill(value)
       }
 
@@ -58,11 +58,8 @@ class AddAnotherPersonController @Inject()(
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
       form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, index, mode))),
-
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(AddAnotherPersonPage(index), value))
@@ -70,4 +67,5 @@ class AddAnotherPersonController @Inject()(
           } yield Redirect(navigator.nextPage(AddAnotherPersonPage(index), mode, updatedAnswers))
       )
   }
+
 }

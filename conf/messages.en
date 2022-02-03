@@ -3,6 +3,7 @@ service.name = Report tax fraud or evasion
 site.back = Back
 site.remove = Remove
 site.change = Change
+site.hidden-edit = Change {0}
 site.no = No
 site.yes = Yes
 site.continue = Continue
@@ -341,4 +342,5 @@ addAnotherPerson.checkYourAnswersLabel = Are there additional people involved in
 addAnotherPerson.error.required = Select yes if you need to add another individual.
 addAnotherPerson.change.hidden = AddAnotherPerson
 
-individual.1 = Individual A
+individual.addAnother.header = You have added one individual
+individual.1 = Individual 1

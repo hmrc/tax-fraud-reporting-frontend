@@ -34,7 +34,6 @@ class AddAnotherPersonSpec extends AnyFreeSpec with Matchers with ScalaCheckProp
 
       forAll(gen) {
         addAnotherPerson =>
-
           JsString(addAnotherPerson.toString).validate[AddAnotherPerson].asOpt.value mustEqual addAnotherPerson
       }
     }
@@ -45,7 +44,6 @@ class AddAnotherPersonSpec extends AnyFreeSpec with Matchers with ScalaCheckProp
 
       forAll(gen) {
         invalidValue =>
-
           JsString(invalidValue).validate[AddAnotherPerson] mustEqual JsError("error.invalid")
       }
     }
@@ -56,7 +54,6 @@ class AddAnotherPersonSpec extends AnyFreeSpec with Matchers with ScalaCheckProp
 
       forAll(gen) {
         addAnotherPerson =>
-
           Json.toJson(addAnotherPerson) mustEqual JsString(addAnotherPerson.toString)
       }
     }

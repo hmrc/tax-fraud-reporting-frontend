@@ -36,14 +36,14 @@
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
         }
 
-<h1>You have added one individual</h1>
+        <h1 class="govuk-heading-l">@messages("individual.addAnother.header")</h1>
 
-@listWithAction(ListWithActions(
-    items = (1 to index.display).map { id =>
-        ListWithActionsItem(name = messages(s"individual.$id"), actions = List(ListWithActionsAction(content = messages("change"), href = ""), ListWithActionsAction(content = messages("remove"), href = "")))
-    }
-    )
-)
+        @listWithAction(ListWithActions(
+            items = (1 to index.display).map { id =>
+                ListWithActionsItem(name = messages(s"individual $id"), actions = List(ListWithActionsAction(content = messages("change"), href = ""), ListWithActionsAction(content = messages("remove"), href = "")))
+            }
+            )
+        )
 
         @govukRadios(
             RadiosViewModel(

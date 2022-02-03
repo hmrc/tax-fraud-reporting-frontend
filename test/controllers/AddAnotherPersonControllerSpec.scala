@@ -40,7 +40,7 @@ class AddAnotherPersonControllerSpec extends SpecBase with MockitoSugar {
   lazy val addAnotherPersonRoute = routes.AddAnotherPersonController.onPageLoad(Index(0), NormalMode).url
 
   val formProvider = new AddAnotherPersonFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "AddAnotherPerson Controller" - {
 
@@ -62,7 +62,8 @@ class AddAnotherPersonControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(AddAnotherPersonPage(Index(0)), AddAnotherPerson.values.head).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(AddAnotherPersonPage(Index(0)), AddAnotherPerson.values.head).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -74,7 +75,10 @@ class AddAnotherPersonControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(AddAnotherPerson.values.head), Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(AddAnotherPerson.values.head), Index(0), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

@@ -25,7 +25,6 @@ import models.AddAnotherPerson
 class AddAnotherPersonFormProvider @Inject() extends Mappings {
 
   def apply(): Form[AddAnotherPerson] =
-    Form(
-      "value" -> enumerable[AddAnotherPerson]("addAnotherPerson.error.required")
-    )
+    Form("value" -> enumerable[AddAnotherPerson]("addAnotherPerson.error.required"))
+
 }

@@ -25,21 +25,20 @@ sealed trait AddAnotherPerson
 object AddAnotherPerson extends Enumerable.Implicits {
 
   case object Yes extends WithName("yes") with AddAnotherPerson
-  case object No extends WithName("no") with AddAnotherPerson
+  case object No  extends WithName("no") with AddAnotherPerson
 
-  val values: Seq[AddAnotherPerson] = Seq(
-    Yes, No
-  )
+  val values: Seq[AddAnotherPerson] = Seq(Yes, No)
 
   def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
     case (value, index) =>
       RadioItem(
         content = Text(messages(s"addAnotherPerson.${value.toString}")),
-        value   = Some(value.toString),
-        id      = Some(s"value_$index")
+        value = Some(value.toString),
+        id = Some(s"value_$index")
       )
   }
 
   implicit val enumerable: Enumerable[AddAnotherPerson] =
     Enumerable(values.map(v => v.toString -> v): _*)
+
 }
