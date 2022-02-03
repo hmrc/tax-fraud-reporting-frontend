@@ -117,12 +117,6 @@ class Navigator @Inject() () {
       )
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def selectConnectionBusinessRoutes(answers: UserAnswers, index: Index): Call =
-    answers.get(SelectConnectionBusinessPage(index)).map {
-      case _: SelectConnectionBusiness =>
-        routes.ApproximateValueController.onPageLoad(NormalMode)
-    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
-
   private def businessInformationRoutes(answers: UserAnswers, index: Index, answer: BusinessInformationCheck): Call =
     answers.get(BusinessInformationCheckPage(index)).flatMap { businessInformation =>
       val remainingSections = businessInformation & BusinessInformationCheck.values.dropWhile(_ != answer).drop(1).toSet
