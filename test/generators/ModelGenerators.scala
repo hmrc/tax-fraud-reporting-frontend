@@ -22,6 +22,24 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryBusinessContactDetails: Arbitrary[BusinessContactDetails] =
+    Arbitrary {
+      for {
+        landlineNumber <- arbitrary[Option[String]]
+        mobileNumber   <- arbitrary[Option[String]]
+        email          <- arbitrary[Option[String]]
+      } yield BusinessContactDetails(landlineNumber, mobileNumber, email)
+    }
+
+  implicit lazy val arbitraryReferenceNumbers: Arbitrary[ReferenceNumbers] =
+    Arbitrary {
+      for {
+        vatRegistration <- arbitrary[Option[String]]
+        employeeRefNo   <- arbitrary[Option[String]]
+        corporationTax  <- arbitrary[Option[String]]
+      } yield ReferenceNumbers(vatRegistration, employeeRefNo, corporationTax)
+    }
+
   implicit lazy val arbitrarySelectConnectionBusiness: Arbitrary[SelectConnectionBusiness] =
     Arbitrary {
       Gen.oneOf(
@@ -37,15 +55,6 @@ trait ModelGenerators {
         Gen.const(SelectConnectionBusiness.Auditor),
         Gen.const(SelectConnectionBusiness.Treasure)
       )
-    }
-
-  implicit lazy val arbitraryBusinessContactDetails: Arbitrary[BusinessContactDetails] =
-    Arbitrary {
-      for {
-        landlineNumber <- arbitrary[Option[String]]
-        mobileNumber   <- arbitrary[Option[String]]
-        email          <- arbitrary[Option[String]]
-      } yield BusinessContactDetails(landlineNumber, mobileNumber, email)
     }
 
   implicit lazy val arbitraryBusinessInformationCheck: Arbitrary[BusinessInformationCheck] =

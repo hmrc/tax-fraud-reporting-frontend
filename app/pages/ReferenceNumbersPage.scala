@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package models
+package pages
 
-import play.api.libs.json._
+import models.{Index, ReferenceNumbers}
+import play.api.libs.json.JsPath
 
-final case class IndividualContactDetails(
-  landlineNumber: Option[String],
-  mobileNumber: Option[String],
-  email: Option[String]
-)
+final case class ReferenceNumbersPage(index: Index) extends QuestionPage[ReferenceNumbers] {
 
-object IndividualContactDetails {
-  implicit val format: OFormat[IndividualContactDetails] = Json.format[IndividualContactDetails]
+  override def path: JsPath = JsPath \ toString \ index.position
+
+  override def toString: String = "referenceNumbers"
 }
