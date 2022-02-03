@@ -339,4 +339,5 @@ addAnotherPerson.error.required = (W) Select yes if you need to add another indi
 addAnotherPerson.change.hidden = (W) AddAnotherPerson (W)
 
 individual.addAnother.header = (W) You have added one individual (W)
+individual.moreThan5 = (W) You cannot add another individual as you have entered a maximum of 5. (W)
 individual.1 = (W) Individual 1 (W)
