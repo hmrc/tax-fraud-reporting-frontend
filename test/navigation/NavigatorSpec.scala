@@ -620,15 +620,6 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         ) mustBe routes.ApproximateValueController.onPageLoad(NormalMode)
       }
 
-      "to the business information check page" ignore {}
-
-      "to the journey recovery controller if there is no individual or business set" in {
-        navigator.nextPage(
-          SelectConnectionBusinessPage(Index(0)),
-          NormalMode,
-          UserAnswers("id")
-        ) mustBe routes.JourneyRecoveryController.onPageLoad()
-      }
     }
 
     "in Check mode" - {

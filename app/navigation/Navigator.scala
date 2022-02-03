@@ -43,7 +43,7 @@ class Navigator @Inject() () {
     case ReferenceNumbersPage(index)         => businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference)
     case BusinessContactDetailsPage(index)   => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
-    case SelectConnectionBusinessPage(index) => selectConnectionBusinessRoutes(_, index)
+    case SelectConnectionBusinessPage(index) => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
     case _                                   => _ => routes.IndexController.onPageLoad
   }
 
@@ -117,6 +117,12 @@ class Navigator @Inject() () {
       )
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
+  private def selectConnectionBusinessRoutes(answers: UserAnswers, index: Index): Call =
+    answers.get(SelectConnectionBusinessPage(index)).map {
+      case _: SelectConnectionBusiness =>
+        routes.ApproximateValueController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
   private def businessInformationRoutes(answers: UserAnswers, index: Index, answer: BusinessInformationCheck): Call =
     answers.get(BusinessInformationCheckPage(index)).flatMap { businessInformation =>
       val remainingSections = businessInformation & BusinessInformationCheck.values.dropWhile(_ != answer).drop(1).toSet
@@ -126,12 +132,6 @@ class Navigator @Inject() () {
         BusinessInformationCheck.values.find(remainingSections.contains).map(
           businessInformationRoute(_, index, NormalMode)
         )
-    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
-
-  private def selectConnectionBusinessRoutes(answers: UserAnswers, index: Index): Call =
-    answers.get(SelectConnectionBusinessPage(index)).map {
-      case _: SelectConnectionBusiness =>
-        routes.ApproximateValueController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
