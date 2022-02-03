@@ -36,6 +36,7 @@
             field = form("landlineNumber"),
             label = LabelViewModel(messages("individualContactDetails.landlineNumber"))
         )
+        .asTel()
         .withWidth(Fixed20)
     )
 
@@ -44,6 +45,7 @@
             field = form("mobileNumber"),
             label = LabelViewModel(messages("individualContactDetails.mobileNumber"))
         )
+        .asTel()
         .withWidth(Fixed20)
     )
 
@@ -52,6 +54,7 @@
             field = form("email"),
             label = LabelViewModel(messages("individualContactDetails.email"))
         )
+        .asEmail()
         .withWidth(Fixed20)
     )
 }
