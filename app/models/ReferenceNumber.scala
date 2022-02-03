@@ -16,14 +16,14 @@
 
 package models
 
-import play.api.libs.json._
+import play.api.libs.json.{Json, OFormat}
 
-final case class IndividualContactDetails(
-  landlineNumber: Option[String],
-  mobileNumber: Option[String],
-  email: Option[String]
+final case class ReferenceNumbers(
+  vatRegistration: Option[String],
+  employeeRefNo: Option[String],
+  corporationTax: Option[String]
 )
 
-object IndividualContactDetails {
-  implicit val format: OFormat[IndividualContactDetails] = Json.format[IndividualContactDetails]
+object ReferenceNumbers {
+  implicit val format: OFormat[ReferenceNumbers] = Json.format[ReferenceNumbers]
 }

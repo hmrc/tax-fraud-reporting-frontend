@@ -25,6 +25,9 @@ trait PageGenerators {
   implicit lazy val arbitraryAddAnotherPersonPage: Arbitrary[AddAnotherPersonPage] =
     Arbitrary(AddAnotherPersonPage(Index(0)))
 
+  implicit lazy val arbitraryReferenceNumbersPage: Arbitrary[ReferenceNumbersPage] =
+    Arbitrary(ReferenceNumbersPage(Index(0)))
+
   implicit lazy val arbitrarySelectConnectionBusinessPage: Arbitrary[SelectConnectionBusinessPage] =
     Arbitrary(SelectConnectionBusinessPage(Index(0)))
 

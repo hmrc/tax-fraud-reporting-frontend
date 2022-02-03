@@ -27,6 +27,15 @@ trait ModelGenerators {
       Gen.oneOf(AddAnotherPerson.values.toSeq)
     }
 
+  implicit lazy val arbitraryReferenceNumbers: Arbitrary[ReferenceNumbers] =
+    Arbitrary {
+      for {
+        vatRegistration <- arbitrary[Option[String]]
+        employeeRefNo   <- arbitrary[Option[String]]
+        corporationTax  <- arbitrary[Option[String]]
+      } yield ReferenceNumbers(vatRegistration, employeeRefNo, corporationTax)
+    }
+
   implicit lazy val arbitrarySelectConnectionBusiness: Arbitrary[SelectConnectionBusiness] =
     Arbitrary {
       Gen.oneOf(

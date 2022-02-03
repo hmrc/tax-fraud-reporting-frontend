@@ -14,16 +14,19 @@
  * limitations under the License.
  */
 
-package models
+package pages
 
-import play.api.libs.json._
+import models.{Index, ReferenceNumbers}
+import pages.behaviours.PageBehaviours
 
-final case class IndividualContactDetails(
-  landlineNumber: Option[String],
-  mobileNumber: Option[String],
-  email: Option[String]
-)
+class ReferenceNumbersPageSpec extends PageBehaviours {
 
-object IndividualContactDetails {
-  implicit val format: OFormat[IndividualContactDetails] = Json.format[IndividualContactDetails]
+  "ReferenceNumbersPage" - {
+
+    beRetrievable[ReferenceNumbers](ReferenceNumbersPage(Index(0)))
+
+    beSettable[ReferenceNumbers](ReferenceNumbersPage(Index(0)))
+
+    beRemovable[ReferenceNumbers](ReferenceNumbersPage(Index(0)))
+  }
 }

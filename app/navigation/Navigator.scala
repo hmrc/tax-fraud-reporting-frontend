@@ -37,15 +37,16 @@ class Navigator @Inject() () {
       individualInformationRoutes(_, index, IndividualInformation.ContactDetails)
     case IndividualNationalInsuranceNumberPage(index) =>
       individualInformationRoutes(_, index, IndividualInformation.NiNumber)
-    case IndividualInformationPage(index)     => individualInformationRoutes(_, index)
-    case BusinessNamePage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Name)
-    case TypeBusinessPage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
-    case BusinessContactDetailsPage(index)    => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
-    case BusinessInformationCheckPage(index)  => businessInformationRoutes(_, index)
-    case IndividualConnectionPage(index)      => individualConnectionRoutes(_, index)
+    case IndividualInformationPage(index)    => individualInformationRoutes(_, index)
+    case BusinessNamePage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Name)
+    case TypeBusinessPage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
+    case ReferenceNumbersPage(index)         => businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference)
+    case BusinessContactDetailsPage(index)   => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
+    case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
+    case SelectConnectionBusinessPage(index) => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
     case AddAnotherPersonPage(index)          => addAnotherPersonRoutes(_, index)
     case IndividualBusinessDetailsPage(index) => IndividualBusinessDetailsRoutes(_, index)
-    case _                                    => _ => routes.IndexController.onPageLoad
+    case _                                   => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
@@ -103,10 +104,11 @@ class Navigator @Inject() () {
 
   private def businessInformationRoute(answer: BusinessInformationCheck, index: Index, mode: Mode): Call =
     answer match {
-      case BusinessInformationCheck.Name    => routes.BusinessNameController.onPageLoad(index, mode)
-      case BusinessInformationCheck.Type    => routes.TypeBusinessController.onPageLoad(index, mode)
-      case BusinessInformationCheck.Contact => routes.BusinessContactDetailsController.onPageLoad(index, mode)
-      // TODO add address and business reference when the pages are merged
+      case BusinessInformationCheck.Name              => routes.BusinessNameController.onPageLoad(index, mode)
+      case BusinessInformationCheck.Type              => routes.TypeBusinessController.onPageLoad(index, mode)
+      case BusinessInformationCheck.BusinessReference => routes.ReferenceNumbersController.onPageLoad(index, mode)
+      case BusinessInformationCheck.Contact           => routes.BusinessContactDetailsController.onPageLoad(index, mode)
+      // TODO add address when the pages are merged
 
     }
 
