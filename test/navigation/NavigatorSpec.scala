@@ -723,6 +723,47 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         ) mustBe routes.DescriptionActivityController.onPageLoad(NormalMode)
       }
 
+      "to the with activity happen page for the it's going to happen in the future selection" in {
+        val answers = UserAnswers("id").set(WhenActivityHappenPage, WhenActivityHappen.NotHappen).success.value
+        navigator.nextPage(
+          WhenActivityHappenPage,
+          NormalMode,
+          answers
+        ) mustBe routes.ActivityTimePeriodController.onPageLoad(NormalMode)
+      }
+
+      "to the journey recovery controller if there is no period time set" in {
+        navigator.nextPage(
+          WhenActivityHappenPage,
+          NormalMode,
+          UserAnswers("id")
+        ) mustBe routes.JourneyRecoveryController.onPageLoad()
+      }
+
+    }
+
+    "must go from approximate total value page" - {
+
+      "to the with approximate total value page for the next selection" in {
+        val answers = UserAnswers("id").set(ApproximateValuePage, 45).success.value
+        navigator.nextPage(
+          ApproximateValuePage,
+          NormalMode,
+          answers
+        ) mustBe routes.WhenActivityHappenController.onPageLoad(NormalMode)
+      }
+    }
+
+    "must go from when activity likely happen page" - {
+
+      "to the with when activity likely happen page for the first selection" in {
+        val answers = UserAnswers("id").set(ActivityTimePeriodPage, ActivityTimePeriod.NextWeek).success.value
+        navigator.nextPage(
+          ActivityTimePeriodPage,
+          NormalMode,
+          answers
+        ) mustBe routes.DescriptionActivityController.onPageLoad(NormalMode)
+      }
     }
 
     "in Check mode" - {

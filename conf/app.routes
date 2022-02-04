@@ -128,3 +128,8 @@ GET        /when-activity-start                            controllers.WhenActiv
 POST       /when-activity-start                            controllers.WhenActivityHappenController.onSubmit(mode: Mode = NormalMode)
 GET        /change-when-activity-start                     controllers.WhenActivityHappenController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-when-activity-start                     controllers.WhenActivityHappenController.onSubmit(mode: Mode = CheckMode)
+
+GET        /activity-time-period-future                        controllers.ActivityTimePeriodController.onPageLoad(mode: Mode = NormalMode)
+POST       /activity-time-period-future                        controllers.ActivityTimePeriodController.onSubmit(mode: Mode = NormalMode)
+GET        /change-activity-time-period-future                controllers.ActivityTimePeriodController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-activity-time-period-future                  controllers.ActivityTimePeriodController.onSubmit(mode: Mode = CheckMode)

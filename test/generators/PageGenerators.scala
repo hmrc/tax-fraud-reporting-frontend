@@ -22,6 +22,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryActivityTimePeriodPage: Arbitrary[ActivityTimePeriodPage.type] =
+    Arbitrary(ActivityTimePeriodPage)
+
   implicit lazy val arbitraryWhenActivityHappenPage: Arbitrary[WhenActivityHappenPage.type] =
     Arbitrary(WhenActivityHappenPage)
 

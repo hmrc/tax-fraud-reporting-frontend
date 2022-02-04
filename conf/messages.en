@@ -361,3 +361,13 @@ whenActivityHappen.doNotKnow= I don''t know
 whenActivityHappen.checkYourAnswersLabel = What is the length of time this activity has been going on for?
 whenActivityHappen.error.required = Select when the activity you''re reporting started
 whenActivityHappen.change.hidden = WhenActivityHappen
+
+activityTimePeriod.title = When will the activity likely happen?
+activityTimePeriod.heading = When will the activity likely happen?
+activityTimePeriod.nextWeek = In the next week
+activityTimePeriod.threeMonths = In the next 3 months
+activityTimePeriod.later = In the next year or later
+activityTimePeriod.doNotKnow = I don't know
+activityTimePeriod.checkYourAnswersLabel = When will the activity likely happen?
+activityTimePeriod.error.required = Select when the activity you''re reporting will likely happen
+activityTimePeriod.change.hidden = ActivityTimePeriod
