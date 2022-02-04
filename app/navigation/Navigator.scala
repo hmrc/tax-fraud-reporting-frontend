@@ -27,10 +27,12 @@ import models._
 class Navigator @Inject() () {
 
   private val normalRoutes: Page => UserAnswers => Call = {
-    case ActivityTypePage                 => activityPageRoutes
-    case IndividualOrBusinessPage         => individualOrBusinessRoutes
-    case IndividualDateFormatPage(index)  => ageFormatPageRoutes(_, index)
-    case IndividualNamePage(index)        => individualInformationRoutes(_, index, IndividualInformation.Name)
+    case ActivityTypePage                => activityPageRoutes
+    case IndividualOrBusinessPage        => individualOrBusinessRoutes
+    case IndividualDateFormatPage(index) => ageFormatPageRoutes(_, index)
+    case IndividualNamePage(index)       => individualInformationRoutes(_, index, IndividualInformation.Name)
+    case IndividualAddressConfirmationPage(index) =>
+      individualInformationRoutes(_, index, IndividualInformation.Address)
     case IndividualAgePage(index)         => individualInformationRoutes(_, index, IndividualInformation.Age)
     case IndividualDateOfBirthPage(index) => individualInformationRoutes(_, index, IndividualInformation.Age)
     case IndividualContactDetailsPage(index) =>
@@ -53,9 +55,9 @@ class Navigator @Inject() () {
 
   private def individualInformationRoute(answer: IndividualInformation, index: Index, mode: Mode): Call =
     answer match {
-      case IndividualInformation.Name => routes.IndividualNameController.onPageLoad(index, mode)
-      case IndividualInformation.Age  => routes.IndividualDateFormatController.onPageLoad(index, mode)
-      // TODO add address when the pages are merged
+      case IndividualInformation.Name           => routes.IndividualNameController.onPageLoad(index, mode)
+      case IndividualInformation.Age            => routes.IndividualDateFormatController.onPageLoad(index, mode)
+      case IndividualInformation.Address        => routes.IndividualAddressRedirectController.onPageLoad(index, mode)
       case IndividualInformation.ContactDetails => routes.IndividualContactDetailsController.onPageLoad(index, mode)
       case IndividualInformation.NiNumber       => routes.IndividualNationalInsuranceNumberController.onPageLoad(index, mode)
     }

@@ -117,3 +117,9 @@ GET        /:index/business-contact-details                        controllers.B
 POST       /:index/business-contact-details                        controllers.BusinessContactDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-business-contact-details                  controllers.BusinessContactDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-business-contact-details                  controllers.BusinessContactDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/individual-address-start                       controllers.IndividualAddressRedirectController.onPageLoad(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-address-start                controllers.IndividualAddressRedirectController.onPageLoad(index: Index, mode: Mode = CheckMode)
+GET        /:index/individual-address-confirmation                controllers.IndividualAddressConfirmationController.onPageLoad(index: Index, mode: Mode = NormalMode, id: Option[String])
+GET        /:index/change-individual-address-confirmation         controllers.IndividualAddressConfirmationController.onPageLoad(index: Index, mode: Mode = CheckMode, id: Option[String])
+
