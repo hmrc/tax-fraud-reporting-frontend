@@ -14,6 +14,8 @@
  * limitations under the License.
  *@
 
+@import viewmodels.LegendSize
+
 @this(
     layout: templates.Layout,
     formHelper: FormWithCSRF,
@@ -35,7 +37,7 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("whenActivityHappen.heading")).asPageHeading(),
+                legend = LegendViewModel(messages("whenActivityHappen.heading")).asPageHeading(LegendSize.Large),
                 items  = WhenActivityHappen.options
             )
         )
