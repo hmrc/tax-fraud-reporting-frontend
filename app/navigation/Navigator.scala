@@ -46,7 +46,8 @@ class Navigator @Inject() () {
     case BusinessContactDetailsPage(index)   => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
     case SelectConnectionBusinessPage(index) => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
-    case WhenActivityHappenPage              => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
+    case ApproximateValuePage                => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
+    case WhenActivityHappenPage              => _ => routes.DescriptionActivityController.onPageLoad(NormalMode)
     case _                                   => _ => routes.IndexController.onPageLoad
   }
 

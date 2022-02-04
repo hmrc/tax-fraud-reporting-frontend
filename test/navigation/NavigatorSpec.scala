@@ -714,13 +714,13 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must go from when activity start page" - {
 
-      "to the select connection business page for the first selection" in {
+      "to the with activity happen page for the first selection" in {
         val answers = UserAnswers("id").set(WhenActivityHappenPage, WhenActivityHappen.OverFiveYears).success.value
         navigator.nextPage(
           WhenActivityHappenPage,
           NormalMode,
           answers
-        ) mustBe routes.ApproximateValueController.onPageLoad(NormalMode)
+        ) mustBe routes.DescriptionActivityController.onPageLoad(NormalMode)
       }
 
     }
