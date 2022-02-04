@@ -25,7 +25,7 @@ class AddressResponseSpec extends AnyFreeSpec with Matchers {
   "must successfully read from json" - {
 
     "when all fields are present" in {
-      val json = Json.parse("""{
+      val json   = Json.parse("""{
                    |    "auditRef" : "bed4bd24-72da-42a7-9338-f43431b7ed72",
                    |    "id" : "GB990091234524",
                    |    "address" : {
@@ -46,7 +46,7 @@ class AddressResponseSpec extends AnyFreeSpec with Matchers {
     }
 
     "when postcode is missing" in {
-      val json = Json.parse("""{
+      val json   = Json.parse("""{
                               |    "auditRef" : "bed4bd24-72da-42a7-9338-f43431b7ed72",
                               |    "id" : "GB990091234524",
                               |    "address" : {
@@ -66,7 +66,7 @@ class AddressResponseSpec extends AnyFreeSpec with Matchers {
     }
 
     "when country is missing" in {
-      val json = Json.parse("""{
+      val json   = Json.parse("""{
                               |    "auditRef" : "bed4bd24-72da-42a7-9338-f43431b7ed72",
                               |    "id" : "GB990091234524",
                               |    "address" : {
@@ -83,7 +83,7 @@ class AddressResponseSpec extends AnyFreeSpec with Matchers {
     }
 
     "when only lines exists" in {
-      val json = Json.parse("""{
+      val json   = Json.parse("""{
                               |    "auditRef" : "bed4bd24-72da-42a7-9338-f43431b7ed72",
                               |    "id" : "GB990091234524",
                               |    "address" : {

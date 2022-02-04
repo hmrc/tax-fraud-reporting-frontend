@@ -16,12 +16,12 @@
 
 package navigation
 
-import javax.inject.{Inject, Singleton}
-
-import play.api.mvc.Call
 import controllers.routes
+import models.{WhenActivityHappen, _}
 import pages._
-import models._
+import play.api.mvc.Call
+
+import javax.inject.{Inject, Singleton}
 
 @Singleton
 class Navigator @Inject() () {
@@ -46,6 +46,7 @@ class Navigator @Inject() () {
     case BusinessContactDetailsPage(index)   => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
     case SelectConnectionBusinessPage(index) => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
+    case WhenActivityHappenPage              => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
     case _                                   => _ => routes.IndexController.onPageLoad
   }
 

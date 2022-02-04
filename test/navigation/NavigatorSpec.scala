@@ -28,7 +28,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
   val navigator                = new Navigator
   val individualInformationGen = Gen.containerOf[Set, IndividualInformation](Gen.oneOf(IndividualInformation.values))
 
-  val businessInformationCheckGen =
+  val businessInformationCheckGen: Gen[Set[BusinessInformationCheck]] =
     Gen.containerOf[Set, BusinessInformationCheck](Gen.oneOf(BusinessInformationCheck.values))
 
   "Navigator" - {
@@ -454,11 +454,8 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
         "to the individual contact details page if the user has selected contact details and has not selected previous answers" in {
           forAll(individualInformationGen) { individualInformationAnswer =>
-            val previousAnswers = Set(
-              IndividualInformation.Name,
-              IndividualInformation.Age,
-              IndividualInformation.Address
-            )
+            val previousAnswers =
+              Set(IndividualInformation.Name, IndividualInformation.Age, IndividualInformation.Address)
             val answer      = individualInformationAnswer -- previousAnswers + IndividualInformation.ContactDetails
             val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
@@ -708,6 +705,19 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         ).success.value
         navigator.nextPage(
           SelectConnectionBusinessPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.ApproximateValueController.onPageLoad(NormalMode)
+      }
+
+    }
+
+    "must go from when activity start page" - {
+
+      "to the select connection business page for the first selection" in {
+        val answers = UserAnswers("id").set(WhenActivityHappenPage, WhenActivityHappen.OverFiveYears).success.value
+        navigator.nextPage(
+          WhenActivityHappenPage,
           NormalMode,
           answers
         ) mustBe routes.ApproximateValueController.onPageLoad(NormalMode)
