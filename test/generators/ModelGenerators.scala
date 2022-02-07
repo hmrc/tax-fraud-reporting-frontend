@@ -22,6 +22,11 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryHowManyPeopleKnow: Arbitrary[HowManyPeopleKnow] =
+    Arbitrary {
+      Gen.oneOf(HowManyPeopleKnow.values.toSeq)
+    }
+
   implicit lazy val arbitraryActivityTimePeriod: Arbitrary[ActivityTimePeriod] =
     Arbitrary {
       Gen.oneOf(ActivityTimePeriod.values.toSeq)

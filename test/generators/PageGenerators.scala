@@ -22,6 +22,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryHowManyPeopleKnowPage: Arbitrary[HowManyPeopleKnowPage.type] =
+    Arbitrary(HowManyPeopleKnowPage)
+
   implicit lazy val arbitraryActivityTimePeriodPage: Arbitrary[ActivityTimePeriodPage.type] =
     Arbitrary(ActivityTimePeriodPage)
 

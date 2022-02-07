@@ -371,3 +371,15 @@ activityTimePeriod.doNotKnow = I don't know
 activityTimePeriod.checkYourAnswersLabel = When will the activity likely happen?
 activityTimePeriod.error.required = Select when the activity you''re reporting will likely happen
 activityTimePeriod.change.hidden = ActivityTimePeriod
+
+howManyPeopleKnow.title = How many other people know about the activity?
+howManyPeopleKnow.heading = How many other people know about the activity?
+howManyPeopleKnow.hint = Select the number of individuals that know about the activity in addition to yourself and individuals involved.
+howManyPeopleKnow.myselfAndIndividual = Only myself and the individual(s) involved know
+howManyPeopleKnow.oneToFiveIndividuals = 1 to 5 individuals
+howManyPeopleKnow.sixToTenIndividuals = 6 to 10 individuals
+howManyPeopleKnow.moreThanTenIndividuals = More than 10 individuals
+howManyPeopleKnow.doNotKnow = I don''t know
+howManyPeopleKnow.checkYourAnswersLabel = How many other people know about the activity?
+howManyPeopleKnow.error.required = Enter how many people know about the activity or select "I don''t know"
+howManyPeopleKnow.change.hidden = HowManyPeopleKnow
