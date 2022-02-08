@@ -372,6 +372,9 @@ activityTimePeriod.checkYourAnswersLabel = When will the activity likely happen?
 activityTimePeriod.error.required = Select when the activity you''re reporting will likely happen
 activityTimePeriod.change.hidden = ActivityTimePeriod
 
+individualAddress.lookup.title = What is the individual''s address?
+individualAddress.lookup.heading = What is the individual''s address?
+
 howManyPeopleKnow.title = How many other people know about the activity?
 howManyPeopleKnow.heading = How many other people know about the activity?
 howManyPeopleKnow.hint = Select the number of individuals that know about the activity in addition to yourself and individuals involved.
