@@ -17,7 +17,7 @@
 package controllers
 
 import base.SpecBase
-import models.{CheckMode, Index, NormalMode}
+import models.{AddressLookupLabels, CheckMode, Index, LookupPageLabels, NormalMode}
 import org.mockito.ArgumentMatchers.{eq => eqTo, _}
 import org.mockito.Mockito._
 import org.scalatestplus.mockito.MockitoSugar
@@ -36,12 +36,17 @@ class IndividualAddressRedirectControllerSpec extends SpecBase with MockitoSugar
     .overrides(inject.bind[AddressLookupService].toInstance(mockAddressLookupService))
     .build()
 
+  val labels: AddressLookupLabels = AddressLookupLabels(lookupPageLabels =
+    LookupPageLabels(title = "individualAddress.lookup.title", heading = "individualAddress.lookup.heading")
+  )
+
   "IndividualAddressRedirect Controller" - {
 
     "must redirect to address lookup frontend with a new journey in normal mode" in {
       when(
         mockAddressLookupService.startJourney(
-          eqTo(routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, None).url)
+          eqTo(routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, None).url),
+          eqTo(labels)
         )(any())
       )
         .thenReturn(Future.successful("foobar"))
@@ -54,7 +59,8 @@ class IndividualAddressRedirectControllerSpec extends SpecBase with MockitoSugar
     "must redirect to address lookup frontend with a new journey in check mode mode" in {
       when(
         mockAddressLookupService.startJourney(
-          eqTo(routes.IndividualAddressConfirmationController.onPageLoad(Index(0), CheckMode, None).url)
+          eqTo(routes.IndividualAddressConfirmationController.onPageLoad(Index(0), CheckMode, None).url),
+          eqTo(labels)
         )(any())
       )
         .thenReturn(Future.successful("foobar"))
@@ -67,7 +73,8 @@ class IndividualAddressRedirectControllerSpec extends SpecBase with MockitoSugar
     "must fail if the address lookup service fails" in {
       when(
         mockAddressLookupService.startJourney(
-          eqTo(routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, None).url)
+          eqTo(routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, None).url),
+          eqTo(labels)
         )(any())
       )
         .thenReturn(Future.failed(new Exception()))

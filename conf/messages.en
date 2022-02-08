@@ -371,3 +371,6 @@ activityTimePeriod.doNotKnow = I don't know
 activityTimePeriod.checkYourAnswersLabel = When will the activity likely happen?
 activityTimePeriod.error.required = Select when the activity you''re reporting will likely happen
 activityTimePeriod.change.hidden = ActivityTimePeriod
+
+individualAddress.lookup.title = What is the individual''s address?
+individualAddress.lookup.heading = What is the individual''s address?
