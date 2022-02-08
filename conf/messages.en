@@ -349,16 +349,16 @@ businessContactDetails.error.mobileNumber.length = Mobile number must be 100 cha
 businessContactDetails.error.email.length = Email address must be 100 characters or fewer
 businessContactDetails.change.hidden = BusinessContactDetails
 
-whenActivityHappen.title = What is the length of time this activity has been going on for?
-whenActivityHappen.heading = What is the length of time this activity has been going on for?
+whenActivityHappen.title = What is the duration of the reported activity?
+whenActivityHappen.heading = What is the duration of the reported activity?
 whenActivityHappen.overFiveYears = Over 5 years
 whenActivityHappen.betweenOneAndFive = Between 1 and 5 years
-whenActivityHappen.betweenSixMonthAndOneYear= Between 6 months and 1 year
-whenActivityHappen.withingSixMonth= Within in the last 6 months
-whenActivityHappen.onlyOneOccasion= Only on one occasion
-whenActivityHappen.notHappen= It''s going to happen in the future
-whenActivityHappen.doNotKnow= I don''t know
-whenActivityHappen.checkYourAnswersLabel = What is the length of time this activity has been going on for?
+whenActivityHappen.betweenSixMonthAndOneYear = Between 6 months and 1 year
+whenActivityHappen.withinSixMonth = Within in the last 6 months
+whenActivityHappen.onlyOneOccasion = Only on one occasion
+whenActivityHappen.notHappen = It''s going to happen in the future
+whenActivityHappen.doNotKnow = I don''t know
+whenActivityHappen.checkYourAnswersLabel = What is the duration of the reported activity?
 whenActivityHappen.error.required = Select when the activity you''re reporting started
 whenActivityHappen.change.hidden = WhenActivityHappen
 
