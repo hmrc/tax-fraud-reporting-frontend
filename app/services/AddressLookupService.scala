@@ -48,7 +48,7 @@ class AddressLookupService @Inject() (httpClient: HttpClient, configuration: Con
     val request = Json.obj(
       "version" -> 2,
       "options" -> Json.obj(
-        "continueUrl"  -> s"$hostUrl$route",
+        "continueUrl"         -> s"$hostUrl$route",
         "serviceHref"         -> s"$hostUrl/${routes.IndexController.onPageLoad.url}",
         "phaseFeedbackLink"   -> "/help/beta",
         "showPhaseBanner"     -> true,
@@ -65,13 +65,12 @@ class AddressLookupService @Inject() (httpClient: HttpClient, configuration: Con
     )
 
     httpClient.POST[JsObject, HttpResponse](s"$baseUrl/api/init", request).flatMap { response =>
-      if (response.status == ACCEPTED) {
+      if (response.status == ACCEPTED)
         response.header(HeaderNames.LOCATION)
           .map(Future.successful)
           .getOrElse(Future.failed(new Exception("Missing Location header")))
-      } else {
+      else
         Future.failed(new Exception(s"Unexpected response from address lookup frontend: ${response.status}"))
-      }
     }
   }
 

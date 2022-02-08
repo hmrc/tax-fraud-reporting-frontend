@@ -28,7 +28,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
   val navigator                = new Navigator
   val individualInformationGen = Gen.containerOf[Set, IndividualInformation](Gen.oneOf(IndividualInformation.values))
 
-  val businessInformationCheckGen =
+  val businessInformationCheckGen: Gen[Set[BusinessInformationCheck]] =
     Gen.containerOf[Set, BusinessInformationCheck](Gen.oneOf(BusinessInformationCheck.values))
 
   "Navigator" - {
@@ -454,11 +454,8 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
         "to the individual contact details page if the user has selected contact details and has not selected previous answers" in {
           forAll(individualInformationGen) { individualInformationAnswer =>
-            val previousAnswers = Set(
-              IndividualInformation.Name,
-              IndividualInformation.Age,
-              IndividualInformation.Address
-            )
+            val previousAnswers =
+              Set(IndividualInformation.Name, IndividualInformation.Age, IndividualInformation.Address)
             val answer      = individualInformationAnswer -- previousAnswers + IndividualInformation.ContactDetails
             val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
@@ -731,17 +728,92 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
     "must go from select connection business page" - {
 
       "to the select connection business page for the first selection" in {
-        val answers = UserAnswers("id").set(
-          SelectConnectionBusinessPage(Index(0)),
-          SelectConnectionBusiness.CurrentEmployer
-        ).success.value
         navigator.nextPage(
           SelectConnectionBusinessPage(Index(0)),
           NormalMode,
-          answers
+          emptyUserAnswers
         ) mustBe routes.ApproximateValueController.onPageLoad(NormalMode)
       }
 
+    }
+
+    "must go from when activity start page" - {
+
+      "to the when activity happen page for the first selection" in {
+        val answers = UserAnswers("id").set(WhenActivityHappenPage, WhenActivityHappen.OverFiveYears).success.value
+        navigator.nextPage(
+          WhenActivityHappenPage,
+          NormalMode,
+          answers
+        ) mustBe routes.DescriptionActivityController.onPageLoad(NormalMode)
+      }
+
+      "to the when activity happen page for the it's going to happen in the future selection" in {
+        val answers = UserAnswers("id").set(WhenActivityHappenPage, WhenActivityHappen.NotHappen).success.value
+        navigator.nextPage(
+          WhenActivityHappenPage,
+          NormalMode,
+          answers
+        ) mustBe routes.ActivityTimePeriodController.onPageLoad(NormalMode)
+      }
+
+      "to the journey recovery controller if there is no period time set" in {
+        navigator.nextPage(
+          WhenActivityHappenPage,
+          NormalMode,
+          UserAnswers("id")
+        ) mustBe routes.JourneyRecoveryController.onPageLoad()
+      }
+
+    }
+
+    "must go from approximate total value page" - {
+
+      "to the with approximate total value page for the next selection" in {
+        val answers = UserAnswers("id").set(ApproximateValuePage, 45).success.value
+        navigator.nextPage(
+          ApproximateValuePage,
+          NormalMode,
+          answers
+        ) mustBe routes.WhenActivityHappenController.onPageLoad(NormalMode)
+      }
+    }
+
+    "must go from when activity likely happen page" - {
+
+      "to the with when activity likely happen page for the first selection" in {
+        val answers = UserAnswers("id").set(ActivityTimePeriodPage, ActivityTimePeriod.NextWeek).success.value
+        navigator.nextPage(
+          ActivityTimePeriodPage,
+          NormalMode,
+          answers
+        ) mustBe routes.DescriptionActivityController.onPageLoad(NormalMode)
+      }
+    }
+
+    "must go from how do you know the individual page" - {
+
+      "to the with How do you know the individual page for the first selection" in {
+        val answers =
+          UserAnswers("id").set(IndividualConnectionPage(Index(0)), IndividualConnection.Partner).success.value
+        navigator.nextPage(
+          IndividualConnectionPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.IndividualBusinessDetailsController.onPageLoad(Index(0), NormalMode)
+      }
+    }
+
+    "must go from provide description of the activity you are reporting page" - {
+
+      "to the with provide description of the activity you are reporting page for the next selection" in {
+        val answers = UserAnswers("id").set(DescriptionActivityPage, "test").success.value
+        navigator.nextPage(
+          DescriptionActivityPage,
+          NormalMode,
+          answers
+        ) mustBe routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+      }
     }
 
     "in Check mode" - {

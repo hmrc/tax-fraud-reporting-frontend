@@ -21,10 +21,33 @@ import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
-
   implicit lazy val arbitraryAddAnotherPerson: Arbitrary[AddAnotherPerson] =
     Arbitrary {
       Gen.oneOf(AddAnotherPerson.values.toSeq)
+    }
+
+  implicit lazy val arbitraryHowManyPeopleKnow: Arbitrary[HowManyPeopleKnow] =
+    Arbitrary {
+      Gen.oneOf(HowManyPeopleKnow.values.toSeq)
+    }
+
+  implicit lazy val arbitraryActivityTimePeriod: Arbitrary[ActivityTimePeriod] =
+    Arbitrary {
+      Gen.oneOf(ActivityTimePeriod.values.toSeq)
+    }
+
+  implicit lazy val arbitraryWhenActivityHappen: Arbitrary[WhenActivityHappen] =
+    Arbitrary {
+      Gen.oneOf(WhenActivityHappen.values.toSeq)
+    }
+
+  implicit lazy val arbitraryBusinessContactDetails: Arbitrary[BusinessContactDetails] =
+    Arbitrary {
+      for {
+        landlineNumber <- arbitrary[Option[String]]
+        mobileNumber   <- arbitrary[Option[String]]
+        email          <- arbitrary[Option[String]]
+      } yield BusinessContactDetails(landlineNumber, mobileNumber, email)
     }
 
   implicit lazy val arbitraryReferenceNumbers: Arbitrary[ReferenceNumbers] =
@@ -51,15 +74,6 @@ trait ModelGenerators {
         Gen.const(SelectConnectionBusiness.Auditor),
         Gen.const(SelectConnectionBusiness.Treasure)
       )
-    }
-
-  implicit lazy val arbitraryBusinessContactDetails: Arbitrary[BusinessContactDetails] =
-    Arbitrary {
-      for {
-        landlineNumber <- arbitrary[Option[String]]
-        mobileNumber   <- arbitrary[Option[String]]
-        email          <- arbitrary[Option[String]]
-      } yield BusinessContactDetails(landlineNumber, mobileNumber, email)
     }
 
   implicit lazy val arbitraryAddressResponse: Arbitrary[AddressResponse] =

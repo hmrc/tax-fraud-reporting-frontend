@@ -350,6 +350,41 @@ businessContactDetails.error.mobileNumber.length = Mobile number must be 100 cha
 businessContactDetails.error.email.length = Email address must be 100 characters or fewer
 businessContactDetails.change.hidden = BusinessContactDetails
 
+whenActivityHappen.title = What is the duration of the reported activity?
+whenActivityHappen.heading = What is the duration of the reported activity?
+whenActivityHappen.overFiveYears = Over 5 years
+whenActivityHappen.betweenOneAndFive = Between 1 and 5 years
+whenActivityHappen.betweenSixMonthAndOneYear = Between 6 months and 1 year
+whenActivityHappen.withinSixMonth = Within in the last 6 months
+whenActivityHappen.onlyOneOccasion = Only on one occasion
+whenActivityHappen.notHappen = It''s going to happen in the future
+whenActivityHappen.doNotKnow = I don''t know
+whenActivityHappen.checkYourAnswersLabel = What is the duration of the reported activity?
+whenActivityHappen.error.required = Select when the activity you''re reporting started
+whenActivityHappen.change.hidden = WhenActivityHappen
+
+activityTimePeriod.title = When will the activity likely happen?
+activityTimePeriod.heading = When will the activity likely happen?
+activityTimePeriod.nextWeek = In the next week
+activityTimePeriod.threeMonths = In the next 3 months
+activityTimePeriod.later = In the next year or later
+activityTimePeriod.doNotKnow = I don't know
+activityTimePeriod.checkYourAnswersLabel = When will the activity likely happen?
+activityTimePeriod.error.required = Select when the activity you''re reporting will likely happen
+activityTimePeriod.change.hidden = ActivityTimePeriod
+
+howManyPeopleKnow.title = How many other people know about the activity?
+howManyPeopleKnow.heading = How many other people know about the activity?
+howManyPeopleKnow.hint = Select the number of individuals that know about the activity in addition to yourself and individuals involved.
+howManyPeopleKnow.myselfAndIndividual = Only myself and the individual(s) involved know
+howManyPeopleKnow.oneToFiveIndividuals = 1 to 5 individuals
+howManyPeopleKnow.sixToTenIndividuals = 6 to 10 individuals
+howManyPeopleKnow.moreThanTenIndividuals = More than 10 individuals
+howManyPeopleKnow.doNotKnow = I don''t know
+howManyPeopleKnow.checkYourAnswersLabel = How many other people know about the activity?
+howManyPeopleKnow.error.required = Enter how many people know about the activity or select "I don''t know"
+howManyPeopleKnow.change.hidden = HowManyPeopleKnow
+
 addAnotherPerson.title = Are there additional people involved in this activity you want to tell us about?
 addAnotherPerson.heading = Are there additional people involved in this activity you want to tell us about?
 addAnotherPerson.yes = Yes

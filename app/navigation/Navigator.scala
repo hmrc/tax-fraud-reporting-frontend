@@ -16,12 +16,12 @@
 
 package navigation
 
-import javax.inject.{Inject, Singleton}
-
-import play.api.mvc.Call
 import controllers.routes
+import models.{WhenActivityHappen, _}
 import pages._
-import models._
+import play.api.mvc.Call
+
+import javax.inject.{Inject, Singleton}
 
 @Singleton
 class Navigator @Inject() () {
@@ -39,16 +39,22 @@ class Navigator @Inject() () {
       individualInformationRoutes(_, index, IndividualInformation.ContactDetails)
     case IndividualNationalInsuranceNumberPage(index) =>
       individualInformationRoutes(_, index, IndividualInformation.NiNumber)
-    case IndividualInformationPage(index)     => individualInformationRoutes(_, index)
-    case BusinessNamePage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Name)
-    case TypeBusinessPage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
-    case ReferenceNumbersPage(index)          => businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference)
-    case BusinessContactDetailsPage(index)    => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
-    case BusinessInformationCheckPage(index)  => businessInformationRoutes(_, index)
-    case SelectConnectionBusinessPage(index)  => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
+    case IndividualInformationPage(index)    => individualInformationRoutes(_, index)
+    case BusinessNamePage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Name)
+    case TypeBusinessPage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
+    case ReferenceNumbersPage(index)         => businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference)
+    case BusinessContactDetailsPage(index)   => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
+    case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
+    case SelectConnectionBusinessPage(index) => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
     case AddAnotherPersonPage(index)          => addAnotherPersonRoutes(_, index)
-    case IndividualBusinessDetailsPage(index) => IndividualBusinessDetailsRoutes(_, index)
-    case _                                    => _ => routes.IndexController.onPageLoad
+    case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index)
+    case ApproximateValuePage                => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
+    case WhenActivityHappenPage              => whenActivityHappenRoutes
+    case ActivityTimePeriodPage              => _ => routes.DescriptionActivityController.onPageLoad(NormalMode)
+    case IndividualConnectionPage(index) =>
+      _ => routes.IndividualBusinessDetailsController.onPageLoad(index, NormalMode)
+    case DescriptionActivityPage => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+    case _                                   => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
@@ -154,6 +160,14 @@ class Navigator @Inject() () {
         routes.AddAnotherPersonController.onPageLoad(Index(0), NormalMode)
       case IndividualBusinessDetails.DontKnow =>
         routes.AddAnotherPersonController.onPageLoad(Index(0), NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def whenActivityHappenRoutes(answers: UserAnswers): Call =
+    answers.get(WhenActivityHappenPage).map {
+      case WhenActivityHappen.NotHappen =>
+        routes.ActivityTimePeriodController.onPageLoad(NormalMode)
+      case _ =>
+        routes.DescriptionActivityController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
