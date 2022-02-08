@@ -715,11 +715,10 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
     "must go from when activity start page" - {
 
       "to the with activity happen page for the first selection" in {
-        val answers = UserAnswers("id").set(WhenActivityHappenPage, WhenActivityHappen.OverFiveYears).success.value
         navigator.nextPage(
           WhenActivityHappenPage,
           NormalMode,
-          answers
+          emptyUserAnswers
         ) mustBe routes.DescriptionActivityController.onPageLoad(NormalMode)
       }
 

@@ -27,7 +27,7 @@ object WhenActivityHappen extends Enumerable.Implicits {
   case object OverFiveYears             extends WithName("overFiveYears") with WhenActivityHappen
   case object BetweenOneAndFive         extends WithName("betweenOneAndFive") with WhenActivityHappen
   case object BetweenSixMonthAndOneYear extends WithName("betweenSixMonthAndOneYear") with WhenActivityHappen
-  case object WithingSixMonth           extends WithName("withingSixMonth") with WhenActivityHappen
+  case object WithinSixMonth            extends WithName("WithinSixMonth") with WhenActivityHappen
   case object OnlyOneOccasion           extends WithName("onlyOneOccasion") with WhenActivityHappen
   case object NotHappen                 extends WithName("notHappen") with WhenActivityHappen
   case object DoNotKnow                 extends WithName("doNotKnow") with WhenActivityHappen
@@ -36,7 +36,7 @@ object WhenActivityHappen extends Enumerable.Implicits {
     OverFiveYears,
     BetweenOneAndFive,
     BetweenSixMonthAndOneYear,
-    WithingSixMonth,
+    WithinSixMonth,
     OnlyOneOccasion,
     NotHappen,
     DoNotKnow
