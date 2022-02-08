@@ -53,10 +53,10 @@ POST       /:index/national-insurance-number                        controllers.
 GET        /:index/change-national-insurance-number                 controllers.IndividualNationalInsuranceNumberController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-national-insurance-number                 controllers.IndividualNationalInsuranceNumberController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/individual-connection                                       controllers.IndividualConnectionController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/individual-connection                                       controllers.IndividualConnectionController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-individual-connection                                controllers.IndividualConnectionController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-individual-connection                                controllers.IndividualConnectionController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/select-connection                                      controllers.IndividualConnectionController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/select-connection                                      controllers.IndividualConnectionController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-select-connection                               controllers.IndividualConnectionController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-select-connection                               controllers.IndividualConnectionController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /:index/does-person-own-business                        controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/does-person-own-business                        controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
@@ -118,6 +118,11 @@ POST       /:index/business-contact-details                        controllers.B
 GET        /:index/change-business-contact-details                  controllers.BusinessContactDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-business-contact-details                  controllers.BusinessContactDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
 
+GET        /:index/add-another-person                        controllers.AddAnotherPersonController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/add-another-person                        controllers.AddAnotherPersonController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-add-another-person                  controllers.AddAnotherPersonController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-add-another-person                  controllers.AddAnotherPersonController.onSubmit(index: Index, mode: Mode = CheckMode)
+
 GET        /:index/individual-address-start                       controllers.IndividualAddressRedirectController.onPageLoad(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-individual-address-start                controllers.IndividualAddressRedirectController.onPageLoad(index: Index, mode: Mode = CheckMode)
 GET        /:index/individual-address-confirmation                controllers.IndividualAddressConfirmationController.onPageLoad(index: Index, mode: Mode = NormalMode, id: Option[String])
@@ -133,3 +138,8 @@ GET        /activity-time-period-future                        controllers.Activ
 POST       /activity-time-period-future                        controllers.ActivityTimePeriodController.onSubmit(mode: Mode = NormalMode)
 GET        /change-activity-time-period-future                controllers.ActivityTimePeriodController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-activity-time-period-future                  controllers.ActivityTimePeriodController.onSubmit(mode: Mode = CheckMode)
+
+GET        /how-many-people-know                         controllers.HowManyPeopleKnowController.onPageLoad(mode: Mode = NormalMode)
+POST       /how-many-people-know                         controllers.HowManyPeopleKnowController.onSubmit(mode: Mode = NormalMode)
+GET        /change-how-many-people-know                  controllers.HowManyPeopleKnowController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-how-many-people-know                  controllers.HowManyPeopleKnowController.onSubmit(mode: Mode = CheckMode)
