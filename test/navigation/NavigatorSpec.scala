@@ -696,6 +696,35 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
       ) mustBe routes.JourneyRecoveryController.onPageLoad()
     }
 
+    "must go from add another person page" - {
+
+      "to the add another person page page for the yes" in {
+        val answers = UserAnswers("id").set(AddAnotherPersonPage(Index(0)), AddAnotherPerson.Yes).success.value
+        navigator.nextPage(
+          AddAnotherPersonPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.IndividualInformationController.onPageLoad(Index(0), NormalMode)
+      }
+
+      "to the add another person page for the no" in {
+        val answers = UserAnswers("id").set(AddAnotherPersonPage(Index(0)), AddAnotherPerson.No).success.value
+        navigator.nextPage(
+          AddAnotherPersonPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.ApproximateValueController.onPageLoad(NormalMode)
+      }
+
+      "to the journey recovery controller if there is no individual or business set" in {
+        navigator.nextPage(
+          IndividualOrBusinessPage,
+          NormalMode,
+          UserAnswers("id")
+        ) mustBe routes.JourneyRecoveryController.onPageLoad()
+      }
+    }
+
     "must go from select connection business page" - {
 
       "to the select connection business page for the first selection" in {

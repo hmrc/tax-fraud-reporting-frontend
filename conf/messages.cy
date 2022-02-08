@@ -346,6 +346,18 @@ businessContactDetails.error.mobileNumber.length = (W) Mobile number must be 100
 businessContactDetails.error.email.length = (W) Email address must be 100 characters or fewer (W)
 businessContactDetails.change.hidden = (W) BusinessContactDetails (W)
 
+addAnotherPerson.title = (W) Are there additional people involved in this activity you want to tell us about? (W)
+addAnotherPerson.heading = (W) Are there additional people involved in this activity you want to tell us about? (W)
+addAnotherPerson.yes = (W) Yes (W)
+addAnotherPerson.no = (W) No (W)
+addAnotherPerson.checkYourAnswersLabel = (W) Are there additional people involved in this activity you want to tell us about? (W)
+addAnotherPerson.error.required = (W) Select yes if you need to add another individual. (W)
+addAnotherPerson.change.hidden = (W) AddAnotherPerson (W)
+
+individual.addAnother.header = (W) You have added one individual (W)
+individual.moreThan5 = (W) You cannot add another individual as you have entered a maximum of 5. (W)
+individual.1 = (W) Individual 1 (W)
+
 whenActivityHappen.title = (W) What is the length of time this activity has been going on for? (W)
 whenActivityHappen.heading = (W) What is the length of time this activity has been going on for? (W)
 whenActivityHappen.overFiveYears = (W) Over 5 years (W)

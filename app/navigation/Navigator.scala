@@ -39,16 +39,18 @@ class Navigator @Inject() () {
       individualInformationRoutes(_, index, IndividualInformation.ContactDetails)
     case IndividualNationalInsuranceNumberPage(index) =>
       individualInformationRoutes(_, index, IndividualInformation.NiNumber)
-    case IndividualInformationPage(index)    => individualInformationRoutes(_, index)
-    case BusinessNamePage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Name)
-    case TypeBusinessPage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
-    case ReferenceNumbersPage(index)         => businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference)
-    case BusinessContactDetailsPage(index)   => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
-    case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
-    case SelectConnectionBusinessPage(index) => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
-    case ApproximateValuePage                => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
-    case WhenActivityHappenPage              => whenActivityHappenRoutes
-    case ActivityTimePeriodPage              => _ => routes.DescriptionActivityController.onPageLoad(NormalMode)
+    case IndividualInformationPage(index)     => individualInformationRoutes(_, index)
+    case BusinessNamePage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Name)
+    case TypeBusinessPage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
+    case ReferenceNumbersPage(index)          => businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference)
+    case BusinessContactDetailsPage(index)    => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
+    case BusinessInformationCheckPage(index)  => businessInformationRoutes(_, index)
+    case SelectConnectionBusinessPage(index)  => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
+    case AddAnotherPersonPage(index)          => addAnotherPersonRoutes(_, index)
+    case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index)
+    case ApproximateValuePage                 => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
+    case WhenActivityHappenPage               => whenActivityHappenRoutes
+    case ActivityTimePeriodPage               => _ => routes.DescriptionActivityController.onPageLoad(NormalMode)
     case IndividualConnectionPage(index) =>
       _ => routes.IndividualBusinessDetailsController.onPageLoad(index, NormalMode)
     case DescriptionActivityPage => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
@@ -134,6 +136,24 @@ class Navigator @Inject() () {
         BusinessInformationCheck.values.find(remainingSections.contains).map(
           businessInformationRoute(_, index, NormalMode)
         )
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def addAnotherPersonRoutes(answers: UserAnswers, index: Index): Call =
+    answers.get(AddAnotherPersonPage(index)).map {
+      case AddAnotherPerson.Yes =>
+        routes.IndividualInformationController.onPageLoad(Index(0), NormalMode)
+      case AddAnotherPerson.No =>
+        routes.ApproximateValueController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def individualBusinessDetailsRoutes(answers: UserAnswers, index: Index): Call =
+    answers.get(IndividualBusinessDetailsPage(index)).map {
+      case IndividualBusinessDetails.Yes =>
+        routes.BusinessInformationCheckController.onPageLoad(Index(0), NormalMode)
+      case IndividualBusinessDetails.No =>
+        routes.AddAnotherPersonController.onPageLoad(Index(0), NormalMode)
+      case IndividualBusinessDetails.DontKnow =>
+        routes.AddAnotherPersonController.onPageLoad(Index(0), NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def whenActivityHappenRoutes(answers: UserAnswers): Call =
