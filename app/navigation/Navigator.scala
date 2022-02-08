@@ -47,7 +47,8 @@ class Navigator @Inject() () {
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
     case SelectConnectionBusinessPage(index) => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
     case ApproximateValuePage                => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
-    case WhenActivityHappenPage              => _ => routes.DescriptionActivityController.onPageLoad(NormalMode)
+    case WhenActivityHappenPage              => whenActivityHappenRoutes
+    case ActivityTimePeriodPage              => _ => routes.DescriptionActivityController.onPageLoad(NormalMode)
     case _                                   => _ => routes.IndexController.onPageLoad
   }
 
@@ -130,6 +131,14 @@ class Navigator @Inject() () {
         BusinessInformationCheck.values.find(remainingSections.contains).map(
           businessInformationRoute(_, index, NormalMode)
         )
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def whenActivityHappenRoutes(answers: UserAnswers): Call =
+    answers.get(WhenActivityHappenPage).map {
+      case WhenActivityHappen.NotHappen =>
+        routes.ActivityTimePeriodController.onPageLoad(NormalMode)
+      case _ =>
+        routes.DescriptionActivityController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
