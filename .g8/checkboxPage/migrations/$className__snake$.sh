@@ -33,7 +33,7 @@ awk '/trait UserAnswersEntryGenerators/ {\
     print "        value <- arbitrary[$className$].map(Json.toJson(_))";\
     print "      } yield (page, value)";\
     print "    }";\
-    next }1' ../test/generators/UserAnswersEntryGenerators.scala > tmp && mv tmp ../test/generators/UserAnswersEntryGenerators.scala
+    next }1' ../test-util/generators/UserAnswersEntryGenerators.scala > tmp && mv tmp ../test-util/generators/UserAnswersEntryGenerators.scala
 
 echo "Adding to PageGenerators"
 awk '/trait PageGenerators/ {\
@@ -41,7 +41,7 @@ awk '/trait PageGenerators/ {\
     print "";\
     print "  implicit lazy val arbitrary$className$Page: Arbitrary[$className$Page.type] =";\
     print "    Arbitrary($className$Page)";\
-    next }1' ../test/generators/PageGenerators.scala > tmp && mv tmp ../test/generators/PageGenerators.scala
+    next }1' ../test-util/generators/PageGenerators.scala > tmp && mv tmp ../test-util/generators/PageGenerators.scala
 
 echo "Adding to ModelGenerators"
 awk '/trait ModelGenerators/ {\
@@ -51,12 +51,12 @@ awk '/trait ModelGenerators/ {\
     print "    Arbitrary {";\
     print "      Gen.oneOf($className$.values)";\
     print "    }";\
-    next }1' ../test/generators/ModelGenerators.scala > tmp && mv tmp ../test/generators/ModelGenerators.scala
+    next }1' ../test-util/generators/ModelGenerators.scala > tmp && mv tmp ../test-util/generators/ModelGenerators.scala
 
 echo "Adding to UserAnswersGenerator"
 awk '/val generators/ {\
     print;\
     print "    arbitrary[($className$Page.type, JsValue)] ::";\
-    next }1' ../test/generators/UserAnswersGenerator.scala > tmp && mv tmp ../test/generators/UserAnswersGenerator.scala
+    next }1' ../test-util/generators/UserAnswersGenerator.scala > tmp && mv tmp ../test-util/generators/UserAnswersGenerator.scala
 
 echo "Migration $className;format="snake"$ completed"
