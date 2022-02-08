@@ -40,7 +40,7 @@
         <div class="govuk-form-group">
             @listWithAction(ListWithActions(
                 items = (1 to index.display).map { id =>
-                    ListWithActionsItem(name = messages(s"individual $id"), actions = List(ListWithActionsAction(content = messages("change"), href = ""), ListWithActionsAction(content = messages("remove"), href = "")))
+                    ListWithActionsItem(name = messages(s"individual.1", "$id"), actions = List(ListWithActionsAction(content = messages("site.change"), href = ""), ListWithActionsAction(content = messages("site.remove"), href = "")))
                 }
                 )
             )
