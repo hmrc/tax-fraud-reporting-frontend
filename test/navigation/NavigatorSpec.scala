@@ -762,6 +762,31 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
       }
     }
 
+    "must go from how do you know the individual page" - {
+
+      "to the with How do you know the individual page for the first selection" in {
+        val answers =
+          UserAnswers("id").set(IndividualConnectionPage(Index(0)), IndividualConnection.Partner).success.value
+        navigator.nextPage(
+          IndividualConnectionPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.IndividualBusinessDetailsController.onPageLoad(Index(0), NormalMode)
+      }
+    }
+
+    "must go from provide description of the activity you are reporting page" - {
+
+      "to the with provide description of the activity you are reporting page for the next selection" in {
+        val answers = UserAnswers("id").set(DescriptionActivityPage, "test").success.value
+        navigator.nextPage(
+          DescriptionActivityPage,
+          NormalMode,
+          answers
+        ) mustBe routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+      }
+    }
+
     "in Check mode" - {
 
       "must go from a page that doesn't exist in the edit route map to CheckYourAnswers" in {

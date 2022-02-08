@@ -49,7 +49,10 @@ class Navigator @Inject() () {
     case ApproximateValuePage                => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
     case WhenActivityHappenPage              => whenActivityHappenRoutes
     case ActivityTimePeriodPage              => _ => routes.DescriptionActivityController.onPageLoad(NormalMode)
-    case _                                   => _ => routes.IndexController.onPageLoad
+    case IndividualConnectionPage(index) =>
+      _ => routes.IndividualBusinessDetailsController.onPageLoad(index, NormalMode)
+    case DescriptionActivityPage => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+    case _                       => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
