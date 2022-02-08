@@ -34,9 +34,9 @@ import scala.concurrent.Future
 
 class IndividualAddressConfirmationControllerSpec extends SpecBase with MockitoSugar with TryValues with OptionValues {
 
-  val mockSessionRepository = mock[SessionRepository]
+  val mockSessionRepository    = mock[SessionRepository]
   val mockAddressLookupService = mock[AddressLookupService]
-  val onwardRoute = Call(GET, "")
+  val onwardRoute              = Call(GET, "")
 
   val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
     .overrides(
@@ -52,16 +52,18 @@ class IndividualAddressConfirmationControllerSpec extends SpecBase with MockitoS
 
     "must update user answers and redirect to the next page when a confirmed address is available" in {
 
-      val addressResponse = AddressResponse(
-        lines = List("foo", "bar"),
-        postcode = Some("postcode"),
-        country = Some("country")
-      )
+      val addressResponse =
+        AddressResponse(lines = List("foo", "bar"), postcode = Some("postcode"), country = Some("country"))
 
       running(application) {
-        when(mockAddressLookupService.retrieveAddress(eqTo("foo"))(any())).thenReturn(Future.successful(Some(addressResponse)))
+        when(mockAddressLookupService.retrieveAddress(eqTo("foo"))(any())).thenReturn(
+          Future.successful(Some(addressResponse))
+        )
         when(mockSessionRepository.set(any())).thenReturn(Future.successful(true))
-        val request = FakeRequest(GET, routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, Some("foo")).url)
+        val request = FakeRequest(
+          GET,
+          routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, Some("foo")).url
+        )
         val result = route(application, request).value
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual onwardRoute.url
@@ -70,32 +72,41 @@ class IndividualAddressConfirmationControllerSpec extends SpecBase with MockitoS
 
     "must redirect to journey recovery controller if there is no confirmed address available" in {
       when(mockAddressLookupService.retrieveAddress(eqTo("foo"))(any())).thenReturn(Future.successful(None))
-      val request = FakeRequest(GET, routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, Some("foo")).url)
+      val request = FakeRequest(
+        GET,
+        routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, Some("foo")).url
+      )
       val result = controller.onPageLoad(Index(0), NormalMode, Some("foo"))(request)
       status(result) mustEqual SEE_OTHER
       redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
     }
 
     "must fail if the id is missing from the request" in {
-      val request = FakeRequest(GET, routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, None).url)
+      val request =
+        FakeRequest(GET, routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, None).url)
       controller.onPageLoad(Index(0), NormalMode, None)(request).failed.futureValue
     }
 
     "must fail if the address lookup service fails" in {
       when(mockAddressLookupService.retrieveAddress(eqTo("foo"))(any())).thenReturn(Future.failed(new Exception()))
-      val request = FakeRequest(GET, routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, Some("foo")).url)
+      val request = FakeRequest(
+        GET,
+        routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, Some("foo")).url
+      )
       controller.onPageLoad(Index(0), NormalMode, Some("foo"))(request).failed.futureValue
     }
 
     "must fail if the session repository fails" in {
-      val addressResponse = AddressResponse(
-        lines = List("foo", "bar"),
-        postcode = Some("postcode"),
-        country = Some("country")
+      val addressResponse =
+        AddressResponse(lines = List("foo", "bar"), postcode = Some("postcode"), country = Some("country"))
+      when(mockAddressLookupService.retrieveAddress(eqTo("foo"))(any())).thenReturn(
+        Future.successful(Some(addressResponse))
       )
-      when(mockAddressLookupService.retrieveAddress(eqTo("foo"))(any())).thenReturn(Future.successful(Some(addressResponse)))
       when(mockSessionRepository.set(any())).thenReturn(Future.failed(new Exception()))
-      val request = FakeRequest(GET, routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, Some("foo")).url)
+      val request = FakeRequest(
+        GET,
+        routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, Some("foo")).url
+      )
       controller.onPageLoad(Index(0), NormalMode, Some("foo"))(request).failed.futureValue
     }
   }

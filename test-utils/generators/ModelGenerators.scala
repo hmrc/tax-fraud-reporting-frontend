@@ -22,6 +22,11 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryWhenActivityHappen: Arbitrary[WhenActivityHappen] =
+    Arbitrary {
+      Gen.oneOf(WhenActivityHappen.values.toSeq)
+    }
+
   implicit lazy val arbitraryBusinessContactDetails: Arbitrary[BusinessContactDetails] =
     Arbitrary {
       for {

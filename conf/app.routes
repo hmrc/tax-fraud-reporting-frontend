@@ -123,3 +123,8 @@ GET        /:index/change-individual-address-start                controllers.In
 GET        /:index/individual-address-confirmation                controllers.IndividualAddressConfirmationController.onPageLoad(index: Index, mode: Mode = NormalMode, id: Option[String])
 GET        /:index/change-individual-address-confirmation         controllers.IndividualAddressConfirmationController.onPageLoad(index: Index, mode: Mode = CheckMode, id: Option[String])
 
+
+GET        /when-activity-start                            controllers.WhenActivityHappenController.onPageLoad(mode: Mode = NormalMode)
+POST       /when-activity-start                            controllers.WhenActivityHappenController.onSubmit(mode: Mode = NormalMode)
+GET        /change-when-activity-start                     controllers.WhenActivityHappenController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-when-activity-start                     controllers.WhenActivityHappenController.onSubmit(mode: Mode = CheckMode)

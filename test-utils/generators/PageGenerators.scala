@@ -22,6 +22,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryWhenActivityHappenPage: Arbitrary[WhenActivityHappenPage.type] =
+    Arbitrary(WhenActivityHappenPage)
+
   implicit lazy val arbitraryIndividualAddressConfirmationPage: Arbitrary[IndividualAddressConfirmationPage] =
     Arbitrary(IndividualAddressConfirmationPage(Index(0)))
 

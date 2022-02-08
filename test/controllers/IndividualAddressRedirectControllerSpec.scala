@@ -33,36 +33,48 @@ class IndividualAddressRedirectControllerSpec extends SpecBase with MockitoSugar
   val mockAddressLookupService = mock[AddressLookupService]
 
   val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
-    .overrides(
-      inject.bind[AddressLookupService].toInstance(mockAddressLookupService)
-    )
+    .overrides(inject.bind[AddressLookupService].toInstance(mockAddressLookupService))
     .build()
 
   "IndividualAddressRedirect Controller" - {
 
     "must redirect to address lookup frontend with a new journey in normal mode" in {
-      when(mockAddressLookupService.startJourney(eqTo(routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, None).url))(any()))
+      when(
+        mockAddressLookupService.startJourney(
+          eqTo(routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, None).url)
+        )(any())
+      )
         .thenReturn(Future.successful("foobar"))
       val request = FakeRequest(GET, routes.IndividualAddressRedirectController.onPageLoad(Index(0), NormalMode).url)
-      val result = route(application, request).value
+      val result  = route(application, request).value
       status(result) mustEqual SEE_OTHER
       redirectLocation(result).value mustEqual "foobar"
     }
 
     "must redirect to address lookup frontend with a new journey in check mode mode" in {
-      when(mockAddressLookupService.startJourney(eqTo(routes.IndividualAddressConfirmationController.onPageLoad(Index(0), CheckMode, None).url))(any()))
+      when(
+        mockAddressLookupService.startJourney(
+          eqTo(routes.IndividualAddressConfirmationController.onPageLoad(Index(0), CheckMode, None).url)
+        )(any())
+      )
         .thenReturn(Future.successful("foobar"))
       val request = FakeRequest(GET, routes.IndividualAddressRedirectController.onPageLoad(Index(0), CheckMode).url)
-      val result = route(application, request).value
+      val result  = route(application, request).value
       status(result) mustEqual SEE_OTHER
       redirectLocation(result).value mustEqual "foobar"
     }
 
     "must fail if the address lookup service fails" in {
-      when(mockAddressLookupService.startJourney(eqTo(routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, None).url))(any()))
+      when(
+        mockAddressLookupService.startJourney(
+          eqTo(routes.IndividualAddressConfirmationController.onPageLoad(Index(0), NormalMode, None).url)
+        )(any())
+      )
         .thenReturn(Future.failed(new Exception()))
       val request = FakeRequest(GET, routes.IndividualAddressRedirectController.onPageLoad(Index(0), NormalMode).url)
-      application.injector.instanceOf[IndividualAddressRedirectController].onPageLoad(Index(0), NormalMode)(request).failed.futureValue
+      application.injector.instanceOf[IndividualAddressRedirectController].onPageLoad(Index(0), NormalMode)(
+        request
+      ).failed.futureValue
     }
   }
 }
