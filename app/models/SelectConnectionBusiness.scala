@@ -22,28 +22,28 @@ sealed trait SelectConnectionBusiness
 
 object SelectConnectionBusiness extends Enumerable.Implicits {
 
-  case object CurrentEmployer           extends WithName("current-employer") with SelectConnectionBusiness
-  case object ExEmployer                extends WithName("ex-employer") with SelectConnectionBusiness
+  case object Accountant                extends WithName("accountant") with SelectConnectionBusiness
+  case object Auditor                   extends WithName("auditor") with SelectConnectionBusiness
   case object BusinessCompetitor        extends WithName("business-competitor") with SelectConnectionBusiness
   case object MyClient                  extends WithName("my-client") with SelectConnectionBusiness
-  case object MySupplier                extends WithName("my-supplier") with SelectConnectionBusiness
+  case object CurrentEmployer           extends WithName("current-employer") with SelectConnectionBusiness
   case object Customer                  extends WithName("customer") with SelectConnectionBusiness
-  case object Accountant                extends WithName("accountant") with SelectConnectionBusiness
+  case object ExEmployer                extends WithName("ex-employer") with SelectConnectionBusiness
+  case object MySupplier                extends WithName("my-supplier") with SelectConnectionBusiness
   case object Advisor                   extends WithName("advisor") with SelectConnectionBusiness
-  case object Auditor                   extends WithName("auditor") with SelectConnectionBusiness
   case object Treasure                  extends WithName("treasure") with SelectConnectionBusiness
   final case class Other(value: String) extends WithName("other") with SelectConnectionBusiness
 
   val enumerableValues: List[SelectConnectionBusiness] = List(
-    CurrentEmployer,
-    ExEmployer,
+    Accountant,
+    Auditor,
     BusinessCompetitor,
     MyClient,
-    MySupplier,
+    CurrentEmployer,
     Customer,
-    Accountant,
+    ExEmployer,
+    MySupplier,
     Advisor,
-    Auditor,
     Treasure
   )
 
@@ -54,15 +54,15 @@ object SelectConnectionBusiness extends Enumerable.Implicits {
 
   implicit lazy val reads: Reads[SelectConnectionBusiness] =
     (__ \ "type").read[String].flatMap {
-      case "current-employer"    => Reads.pure(CurrentEmployer)
-      case "ex-employer"         => Reads.pure(ExEmployer)
+      case "accountant"          => Reads.pure(Accountant)
+      case "auditor"             => Reads.pure(Auditor)
       case "business-competitor" => Reads.pure(BusinessCompetitor)
       case "my-client"           => Reads.pure(MyClient)
-      case "my-supplier"         => Reads.pure(MySupplier)
+      case "current-employer"    => Reads.pure(CurrentEmployer)
       case "customer"            => Reads.pure(Customer)
-      case "accountant"          => Reads.pure(Accountant)
+      case "ex-employer"         => Reads.pure(ExEmployer)
+      case "my-supplier"         => Reads.pure(MySupplier)
       case "advisor"             => Reads.pure(Advisor)
-      case "auditor"             => Reads.pure(Auditor)
       case "treasure"            => Reads.pure(Treasure)
       case "other"               => (__ \ "value").read[String].map(Other)
     }

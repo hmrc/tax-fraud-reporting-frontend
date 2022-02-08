@@ -62,6 +62,15 @@ trait ModelGenerators {
       } yield BusinessContactDetails(landlineNumber, mobileNumber, email)
     }
 
+  implicit lazy val arbitraryAddressResponse: Arbitrary[AddressResponse] =
+    Arbitrary {
+      for {
+        lines    <- arbitrary[List[String]]
+        postcode <- arbitrary[Option[String]]
+        country  <- arbitrary[Option[String]]
+      } yield AddressResponse(lines, postcode, country)
+    }
+
   implicit lazy val arbitraryBusinessInformationCheck: Arbitrary[BusinessInformationCheck] =
     Arbitrary {
       Gen.oneOf(BusinessInformationCheck.values)

@@ -122,3 +122,9 @@ GET        /:index/add-another-person                        controllers.AddAnot
 POST       /:index/add-another-person                        controllers.AddAnotherPersonController.onSubmit(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-add-another-person                  controllers.AddAnotherPersonController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-add-another-person                  controllers.AddAnotherPersonController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/individual-address-start                       controllers.IndividualAddressRedirectController.onPageLoad(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-address-start                controllers.IndividualAddressRedirectController.onPageLoad(index: Index, mode: Mode = CheckMode)
+GET        /:index/individual-address-confirmation                controllers.IndividualAddressConfirmationController.onPageLoad(index: Index, mode: Mode = NormalMode, id: Option[String])
+GET        /:index/change-individual-address-confirmation         controllers.IndividualAddressConfirmationController.onPageLoad(index: Index, mode: Mode = CheckMode, id: Option[String])
+
