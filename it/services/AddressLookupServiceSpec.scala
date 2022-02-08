@@ -2,7 +2,7 @@ package services
 
 import com.github.tomakehurst.wiremock.client.WireMock._
 import controllers.routes
-import models.{AddressResponse, Index, NormalMode}
+import models.{AddressLookupLabels, AddressResponse, Index, LookupPageLabels, NormalMode}
 import org.scalatest.OptionValues
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
@@ -32,6 +32,13 @@ class AddressLookupServiceSpec extends AnyFreeSpec with Matchers with WireMockHe
   lazy val service: AddressLookupService = application.injector.instanceOf[AddressLookupService]
   lazy val messagesApi: MessagesApi = application.injector.instanceOf[MessagesApi]
 
+  val labels: AddressLookupLabels = AddressLookupLabels(
+    lookupPageLabels = LookupPageLabels(
+      title = "lookup.title",
+      heading = "lookup.heading"
+    )
+  )
+
   "startJourney" - {
 
     lazy val english = messagesApi.preferred(List(Lang("en")))
@@ -57,11 +64,19 @@ class AddressLookupServiceSpec extends AnyFreeSpec with Matchers with WireMockHe
         "en" -> Json.obj(
           "appLevelLabels" -> Json.obj(
             "navTitle" -> english("service.name"),
+          ),
+          "lookupPageLabels" -> Json.obj(
+            "title" -> english("lookup.title"),
+            "heading" -> english("lookup.heading")
           )
         ),
         "cy" -> Json.obj(
           "appLevelLabels" -> Json.obj(
             "navTitle" -> welsh("service.name")
+          ),
+          "lookupPageLabels" -> Json.obj(
+            "title" -> welsh("lookup.title"),
+            "heading" -> welsh("lookup.heading")
           )
         )
       )
@@ -74,7 +89,7 @@ class AddressLookupServiceSpec extends AnyFreeSpec with Matchers with WireMockHe
           .willReturn(status(ACCEPTED).withHeader(HeaderNames.LOCATION, "foobar"))
       )
 
-      service.startJourney("/foo").futureValue mustBe "foobar"
+      service.startJourney("/foo", labels).futureValue mustBe "foobar"
 
       server.verify(
         postRequestedFor(urlEqualTo("/api/init"))
@@ -89,7 +104,7 @@ class AddressLookupServiceSpec extends AnyFreeSpec with Matchers with WireMockHe
           .willReturn(status(ACCEPTED))
       )
 
-      service.startJourney("foo").failed.futureValue.getMessage mustEqual "Missing Location header"
+      service.startJourney("foo", labels).failed.futureValue.getMessage mustEqual "Missing Location header"
     }
 
     "must fail when the server responds with other status codes" in {
@@ -99,7 +114,7 @@ class AddressLookupServiceSpec extends AnyFreeSpec with Matchers with WireMockHe
           .willReturn(serverError())
       )
 
-      service.startJourney("foo").failed.futureValue.getMessage mustEqual "Unexpected response from address lookup frontend: 500"
+      service.startJourney("foo", labels).failed.futureValue.getMessage mustEqual "Unexpected response from address lookup frontend: 500"
     }
   }
 
