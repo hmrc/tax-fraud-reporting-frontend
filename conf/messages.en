@@ -398,6 +398,6 @@ addAnotherPerson.change.hidden = AddAnotherPerson
 
 individual.addAnother.header = You have added one individual
 individual.items.moreThan5 = You cannot add another individual as you have entered a maximum of 5.
-individual.1 = Individual 1
+individual.1 = Individual A
 individualAddress.lookup.title = What is the individual''s address?
 individualAddress.lookup.heading = What is the individual''s address?

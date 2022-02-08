@@ -356,7 +356,7 @@ addAnotherPerson.change.hidden = (W) AddAnotherPerson (W)
 
 individual.addAnother.header = (W) You have added one individual (W)
 individual.moreThan5 = (W) You cannot add another individual as you have entered a maximum of 5. (W)
-individual.1 = (W) Individual 1 (W)
+individual.1 = (W) Individual A (W)
 
 whenActivityHappen.title = (W) What is the length of time this activity has been going on for? (W)
 whenActivityHappen.heading = (W) What is the length of time this activity has been going on for? (W)
