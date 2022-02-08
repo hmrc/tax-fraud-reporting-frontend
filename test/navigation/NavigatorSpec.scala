@@ -714,7 +714,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must go from when activity start page" - {
 
-      "to the with activity happen page for the first selection" in {
+      "to the when activity happen page for the first selection" in {
         navigator.nextPage(
           WhenActivityHappenPage,
           NormalMode,
