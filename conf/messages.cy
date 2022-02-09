@@ -404,3 +404,6 @@ supportingDocument.change.hidden = (W) SupportingDocument (W)
 
 individualAddress.lookup.title = (W) What is the individual''''s address? (W)
 individualAddress.lookup.heading = (W) What is the individual''''s address? (W)
+
+businessAddress.lookup.title = (W) What is the business''''s address? (W)
+businessAddress.lookup.heading = (W) What is the business''''s address? (W)

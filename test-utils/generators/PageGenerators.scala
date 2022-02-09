@@ -97,4 +97,7 @@ trait PageGenerators {
   implicit lazy val arbitraryActivityTypePage: Arbitrary[ActivityTypePage.type] =
     Arbitrary(ActivityTypePage)
 
+  implicit lazy val arbitraryBusinessAddressConfirmationPage: Arbitrary[BusinessAddressConfirmationPage] =
+    Arbitrary(BusinessAddressConfirmationPage(Index(0)))
+
 }
