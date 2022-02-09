@@ -775,7 +775,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           SelectConnectionBusinessPage(Index(0)),
           NormalMode,
           emptyUserAnswers
-        ) mustBe routes.ApproximateValueController.onPageLoad(NormalMode)
+        ) mustBe routes.AddAnotherPersonController.onPageLoad(Index(0), NormalMode)
       }
 
     }

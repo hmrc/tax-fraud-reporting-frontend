@@ -401,3 +401,6 @@ supportingDocument.no = (W) No (W)
 supportingDocument.checkYourAnswersLabel = (W) Do you have any supporting information? (W)
 supportingDocument.error.required = (W) Select whether you have any supporting information you could provide if requested by HMRC. (W)
 supportingDocument.change.hidden = (W) SupportingDocument (W)
+
+individualAddress.lookup.title = (W) What is the individual''''s address? (W)
+individualAddress.lookup.heading = (W) What is the individual''''s address? (W)
