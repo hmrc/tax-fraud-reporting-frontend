@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package models
+package pages
 
-import play.api.libs.json.{Json, OFormat}
+import models.SupportingDocument
+import pages.behaviours.PageBehaviours
 
-final case class LookupPageLabels(title: String, heading: String)
+class SupportingDocumentSpec extends PageBehaviours {
 
-object LookupPageLabels {
-  implicit lazy val formats: OFormat[LookupPageLabels] = Json.format
-}
+  "SupportingDocumentPage" - {
 
-final case class AddressLookupLabels(lookupPageLabels: LookupPageLabels)
+    beRetrievable[SupportingDocument](SupportingDocumentPage)
 
-object AddressLookupLabels {
-  implicit lazy val formats: OFormat[AddressLookupLabels] = Json.format
+    beSettable[SupportingDocument](SupportingDocumentPage)
+
+    beRemovable[SupportingDocument](SupportingDocumentPage)
+  }
 }
