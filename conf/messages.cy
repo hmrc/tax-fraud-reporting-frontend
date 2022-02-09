@@ -393,5 +393,5 @@ howManyPeopleKnow.checkYourAnswersLabel = (W) How many other people know about t
 howManyPeopleKnow.error.required = (W) Enter how many people know about the activity or select "I don''t know" (W)
 howManyPeopleKnow.change.hidden = (W) HowManyPeopleKnow (W)
 
-individualAddress.lookup.title = (W) What is the individual''s address? (W)
-individualAddress.lookup.heading = (W) What is the individual''s address? (W)
+individualAddress.lookup.title = (W) What is the individual''''s address? (W)
+individualAddress.lookup.heading = (W) What is the individual''''s address? (W)
