@@ -148,3 +148,8 @@ GET        /provide-supporting-documentation                         controllers
 POST       /provide-supporting-documentation                         controllers.SupportingDocumentController.onSubmit(mode: Mode = NormalMode)
 GET        /change-provide-supporting-documentation                  controllers.SupportingDocumentController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-provide-supporting-documentation                  controllers.SupportingDocumentController.onSubmit(mode: Mode = CheckMode)
+
+GET        /provide-your-contact-details                         controllers.ProvideContactDetailsController.onPageLoad(mode: Mode = NormalMode)
+POST       /provide-your-contact-details                         controllers.ProvideContactDetailsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-provide-your-contact-details                  controllers.ProvideContactDetailsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-provide-your-contact-details                  controllers.ProvideContactDetailsController.onSubmit(mode: Mode = CheckMode)
