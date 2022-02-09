@@ -22,6 +22,11 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitrarySupportingDocument: Arbitrary[SupportingDocument] =
+    Arbitrary {
+      Gen.oneOf(SupportingDocument.values.toSeq)
+    }
+
   implicit lazy val arbitraryAddAnotherPerson: Arbitrary[AddAnotherPerson] =
     Arbitrary {
       Gen.oneOf(AddAnotherPerson.values.toSeq)

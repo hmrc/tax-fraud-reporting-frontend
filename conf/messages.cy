@@ -393,5 +393,14 @@ howManyPeopleKnow.checkYourAnswersLabel = (W) How many other people know about t
 howManyPeopleKnow.error.required = (W) Enter how many people know about the activity or select "I don''t know" (W)
 howManyPeopleKnow.change.hidden = (W) HowManyPeopleKnow (W)
 
+supportingDocument.title = (W) Do you have any supporting information? (W)
+supportingDocument.heading = (W) Do you have any supporting information? (W)
+supportingDocument.hint = (W) Only refer to the information that is currently in your possession. Do not try to obtain supporting information you do not already have. (W)
+supportingDocument.yes = (W) Yes (W)
+supportingDocument.no = (W) No (W)
+supportingDocument.checkYourAnswersLabel = (W) Do you have any supporting information? (W)
+supportingDocument.error.required = (W) Select whether you have any supporting information you could provide if requested by HMRC. (W)
+supportingDocument.change.hidden = (W) SupportingDocument (W)
+
 individualAddress.lookup.title = (W) What is the individual''''s address? (W)
 individualAddress.lookup.heading = (W) What is the individual''''s address? (W)

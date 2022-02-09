@@ -402,3 +402,12 @@ individual.1 = Individual A
 
 individualAddress.lookup.title = What is the individual''''s address?
 individualAddress.lookup.heading = What is the individual''''s address?
+
+supportingDocument.title = Do you have any supporting information?
+supportingDocument.heading = Do you have any supporting information?
+supportingDocument.hint = Only refer to the information that is currently in your possession. Do not try to obtain supporting information you do not already have.
+supportingDocument.yes = Yes
+supportingDocument.no = No
+supportingDocument.checkYourAnswersLabel = Do you have any supporting information?
+supportingDocument.error.required = Select whether you have any supporting information you could provide if requested by HMRC.
+supportingDocument.change.hidden = SupportingDocument

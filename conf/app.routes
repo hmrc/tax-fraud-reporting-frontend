@@ -143,3 +143,8 @@ GET        /how-many-people-know                         controllers.HowManyPeop
 POST       /how-many-people-know                         controllers.HowManyPeopleKnowController.onSubmit(mode: Mode = NormalMode)
 GET        /change-how-many-people-know                  controllers.HowManyPeopleKnowController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-how-many-people-know                  controllers.HowManyPeopleKnowController.onSubmit(mode: Mode = CheckMode)
+
+GET        /provide-supporting-documentation                         controllers.SupportingDocumentController.onPageLoad(mode: Mode = NormalMode)
+POST       /provide-supporting-documentation                         controllers.SupportingDocumentController.onSubmit(mode: Mode = NormalMode)
+GET        /change-provide-supporting-documentation                  controllers.SupportingDocumentController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-provide-supporting-documentation                  controllers.SupportingDocumentController.onSubmit(mode: Mode = CheckMode)

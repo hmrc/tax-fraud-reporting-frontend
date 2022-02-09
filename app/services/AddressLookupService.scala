@@ -38,19 +38,21 @@ class AddressLookupService @Inject() (httpClient: HttpClient, configuration: Con
   private val baseUrl: String = configuration.get[Service]("microservice.services.address-lookup-frontend").baseUrl
   private val hostUrl: String = configuration.get[String]("host")
 
-  def startJourney(route: String, addressLookupLabels: AddressLookupLabels)(implicit hc: HeaderCarrier): Future[String] = {
+  def startJourney(route: String, addressLookupLabels: AddressLookupLabels)(implicit
+    hc: HeaderCarrier
+  ): Future[String] = {
 
     val labels = List("en", "cy").map { lang =>
       val messages = messagesApi.preferred(List(Lang(lang)))
-      Json.obj(lang -> Json.obj(
-        "appLevelLabels" -> Json.obj(
-          "navTitle" -> messages("service.name")
-        ),
-        "lookupPageLabels" -> Json.obj(
-          "title" -> messages(addressLookupLabels.lookupPageLabels.title),
-          "heading" -> messages(addressLookupLabels.lookupPageLabels.heading)
+      Json.obj(
+        lang -> Json.obj(
+          "appLevelLabels" -> Json.obj("navTitle" -> messages("service.name")),
+          "lookupPageLabels" -> Json.obj(
+            "title"   -> messages(addressLookupLabels.lookupPageLabels.title),
+            "heading" -> messages(addressLookupLabels.lookupPageLabels.heading)
+          )
         )
-      ))
+      )
     }.foldLeft(Json.obj())(_ deepMerge _)
 
     val request = Json.obj(

@@ -716,6 +716,49 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         ) mustBe routes.ApproximateValueController.onPageLoad(NormalMode)
       }
 
+      "must go from individual have business details page" - {
+
+        "to the individual have business details page for the answer yes" in {
+          val answers =
+            UserAnswers("id").set(IndividualBusinessDetailsPage(Index(0)), IndividualBusinessDetails.Yes).success.value
+          navigator.nextPage(
+            IndividualBusinessDetailsPage(Index(0)),
+            NormalMode,
+            answers
+          ) mustBe routes.BusinessInformationCheckController.onPageLoad(Index(0), NormalMode)
+        }
+
+        "to the individual have business details for the answer no" in {
+          val answers =
+            UserAnswers("id").set(IndividualBusinessDetailsPage(Index(0)), IndividualBusinessDetails.No).success.value
+          navigator.nextPage(
+            IndividualBusinessDetailsPage(Index(0)),
+            NormalMode,
+            answers
+          ) mustBe routes.AddAnotherPersonController.onPageLoad(Index(0), NormalMode)
+        }
+
+        "to the individual have business details for the answer don't know" in {
+          val answers = UserAnswers("id").set(
+            IndividualBusinessDetailsPage(Index(0)),
+            IndividualBusinessDetails.DontKnow
+          ).success.value
+          navigator.nextPage(
+            IndividualBusinessDetailsPage(Index(0)),
+            NormalMode,
+            answers
+          ) mustBe routes.AddAnotherPersonController.onPageLoad(Index(0), NormalMode)
+        }
+
+        "to the journey recovery controller if there is no individual have business details set" in {
+          navigator.nextPage(
+            IndividualBusinessDetailsPage(Index(0)),
+            NormalMode,
+            UserAnswers("id")
+          ) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+      }
+
       "to the journey recovery controller if there is no individual or business set" in {
         navigator.nextPage(
           IndividualOrBusinessPage,

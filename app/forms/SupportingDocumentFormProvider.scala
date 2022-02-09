@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package models
+package forms
 
-import play.api.libs.json.{Json, OFormat}
+import javax.inject.Inject
 
-final case class LookupPageLabels(title: String, heading: String)
+import forms.mappings.Mappings
+import play.api.data.Form
+import models.SupportingDocument
 
-object LookupPageLabels {
-  implicit lazy val formats: OFormat[LookupPageLabels] = Json.format
-}
+class SupportingDocumentFormProvider @Inject() extends Mappings {
 
-final case class AddressLookupLabels(lookupPageLabels: LookupPageLabels)
+  def apply(): Form[SupportingDocument] =
+    Form("value" -> enumerable[SupportingDocument]("supportingDocument.error.required"))
 
-object AddressLookupLabels {
-  implicit lazy val formats: OFormat[AddressLookupLabels] = Json.format
 }

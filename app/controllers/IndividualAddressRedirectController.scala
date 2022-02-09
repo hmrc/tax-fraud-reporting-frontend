@@ -36,17 +36,16 @@ class IndividualAddressRedirectController @Inject() (
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
-  private val labels: AddressLookupLabels = AddressLookupLabels(
-    lookupPageLabels = LookupPageLabels(
-      title = "individualAddress.lookup.title",
-      heading = "individualAddress.lookup.heading"
-    )
+  private val labels: AddressLookupLabels = AddressLookupLabels(lookupPageLabels =
+    LookupPageLabels(title = "individualAddress.lookup.title", heading = "individualAddress.lookup.heading")
   )
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       addressLookupService.startJourney(
-        routes.IndividualAddressConfirmationController.onPageLoad(index, mode, None).url, labels).map(Redirect(_, SEE_OTHER))
+        routes.IndividualAddressConfirmationController.onPageLoad(index, mode, None).url,
+        labels
+      ).map(Redirect(_, SEE_OTHER))
   }
 
 }

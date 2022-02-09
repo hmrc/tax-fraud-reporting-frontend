@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 
-package models
+package pages
 
-import play.api.libs.json.{Json, OFormat}
+import models.SupportingDocument
+import play.api.libs.json.JsPath
 
-final case class LookupPageLabels(title: String, heading: String)
+case object SupportingDocumentPage extends QuestionPage[SupportingDocument] {
 
-object LookupPageLabels {
-  implicit lazy val formats: OFormat[LookupPageLabels] = Json.format
-}
+  override def path: JsPath = JsPath \ toString
 
-final case class AddressLookupLabels(lookupPageLabels: LookupPageLabels)
-
-object AddressLookupLabels {
-  implicit lazy val formats: OFormat[AddressLookupLabels] = Json.format
+  override def toString: String = "supportingDocument"
 }
