@@ -25,16 +25,12 @@ class YourContactDetailsFormProviderSpec extends StringFieldBehaviours {
 
   ".firstName" - {
 
-    val fieldName = "firstName"
+    val fieldName   = "firstName"
     val requiredKey = "yourContactDetails.error.firstName.required"
-    val lengthKey = "yourContactDetails.error.firstName.length"
-    val maxLength = 255
+    val lengthKey   = "yourContactDetails.error.firstName.length"
+    val maxLength   = 255
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
     behave like fieldWithMaxLength(
       form,
@@ -43,25 +39,17 @@ class YourContactDetailsFormProviderSpec extends StringFieldBehaviours {
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
     )
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
   }
 
   ".lastName" - {
 
-    val fieldName = "lastName"
+    val fieldName   = "lastName"
     val requiredKey = "yourContactDetails.error.lastName.required"
-    val lengthKey = "yourContactDetails.error.lastName.length"
-    val maxLength = 255
+    val lengthKey   = "yourContactDetails.error.lastName.length"
+    val maxLength   = 255
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
     behave like fieldWithMaxLength(
       form,
@@ -70,25 +58,17 @@ class YourContactDetailsFormProviderSpec extends StringFieldBehaviours {
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
     )
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
   }
 
   ".tel" - {
 
-    val fieldName = "tel"
+    val fieldName   = "tel"
     val requiredKey = "yourContactDetails.error.tel.required"
-    val lengthKey = "yourContactDetails.error.tel.length"
-    val maxLength = 255
+    val lengthKey   = "yourContactDetails.error.tel.length"
+    val maxLength   = 255
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
     behave like fieldWithMaxLength(
       form,
@@ -97,11 +77,7 @@ class YourContactDetailsFormProviderSpec extends StringFieldBehaviours {
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
     )
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
   }
 
   ".email" - {
@@ -110,11 +86,7 @@ class YourContactDetailsFormProviderSpec extends StringFieldBehaviours {
     val lengthKey = "yourContactDetails.error.email.length"
     val maxLength = 255
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
     behave like fieldWithMaxLength(
       form,
@@ -127,16 +99,12 @@ class YourContactDetailsFormProviderSpec extends StringFieldBehaviours {
 
   ".memorableWord" - {
 
-    val fieldName = "memorableWord"
+    val fieldName   = "memorableWord"
     val requiredKey = "yourContactDetails.error.memorableWord.required"
-    val lengthKey = "yourContactDetails.error.memorableWord.length"
-    val maxLength = 255
+    val lengthKey   = "yourContactDetails.error.memorableWord.length"
+    val maxLength   = 255
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
     behave like fieldWithMaxLength(
       form,
@@ -145,10 +113,6 @@ class YourContactDetailsFormProviderSpec extends StringFieldBehaviours {
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
     )
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
   }
 }

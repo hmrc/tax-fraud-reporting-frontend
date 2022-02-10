@@ -25,12 +25,11 @@ trait ModelGenerators {
   implicit lazy val arbitraryYourContactDetails: Arbitrary[YourContactDetails] =
     Arbitrary {
       for {
-        firstName <- arbitrary[String]
-        lastName <- arbitrary[String]
-        tel <- arbitrary[String]
-        email <- arbitrary[Option[String]]
+        firstName     <- arbitrary[String]
+        lastName      <- arbitrary[String]
+        tel           <- arbitrary[String]
+        email         <- arbitrary[Option[String]]
         memorableWord <- arbitrary[String]
-
 
       } yield YourContactDetails(firstName, lastName, tel, email, memorableWord)
     }

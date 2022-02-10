@@ -25,17 +25,23 @@ import javax.inject.Inject
 
 class YourContactDetailsFormProvider @Inject() extends Mappings {
 
-   def apply(): Form[YourContactDetails] = Form(
-     mapping(
+  val emailPattern                     = "^(.+@.+\\..+)?$"
+  val phoneValidation ="\\s*((?:[48+][- ]?)?(?:\\(?\\d{3}\\)?[- ]?)?[\\d -]{7,10})"
+
+  def apply(): Form[YourContactDetails] = Form(
+    mapping(
       "firstName" -> text("yourContactDetails.error.firstName.required")
         .verifying(maxLength(255, "yourContactDetails.error.firstName.length")),
       "lastName" -> text("yourContactDetails.error.lastName.required")
         .verifying(maxLength(255, "yourContactDetails.error.lastName.length")),
-       "tel" -> text("yourContactDetails.error.tel.required")
-         .verifying(maxLength(255, "yourContactDetails.error.tel.length")),
-       "email" -> optional(text().verifying(maxLength(255, "yourContactDetails.error.email.length"))),
-        "memorableWord" -> text("yourContactDetails.error.memorableWord.required")
+      "tel" -> text("yourContactDetails.error.tel.required")
+        .verifying(maxLength(255, "yourContactDetails.error.tel.length"))
+      .verifying(regexp(phoneValidation, "yourContactDetails.error.tel.invalid")),
+      "email" -> optional(text().verifying(maxLength(255, "yourContactDetails.error.email.length"))
+        .verifying(regexp(emailPattern, "yourContactDetails.error.email.invalid"))),
+      "memorableWord" -> text("yourContactDetails.error.memorableWord.required")
         .verifying(maxLength(255, "yourContactDetails.error.memorableWord.length"))
     )(YourContactDetails.apply)(YourContactDetails.unapply)
-   )
- }
+  )
+
+}

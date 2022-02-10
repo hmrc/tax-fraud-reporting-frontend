@@ -18,14 +18,13 @@ package controllers
 
 import base.SpecBase
 import forms.YourContactDetailsFormProvider
-import models.{NormalMode, YourContactDetails, UserAnswers}
+import models.{NormalMode, UserAnswers, YourContactDetails}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.YourContactDetailsPage
 import play.api.inject.bind
-import play.api.libs.json.Json
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -39,25 +38,20 @@ class YourContactDetailsControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new YourContactDetailsFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val yourContactDetailsRoute = routes.YourContactDetailsController.onPageLoad(NormalMode).url
-
-  val userAnswers = UserAnswers(
-    userAnswersId,
-    Json.obj(
-      YourContactDetailsPage.toString -> Json.obj(
-        "firstName" -> "David",
-        "fastName" -> "Dixon",
-        "tel" -> "0742007088",
-        "email" -> Some("david@gmail.com"),
-        "memorableWord" -> "test"
-      )
-    )
-  )
+  private lazy val yourContactDetailsRoute = routes.YourContactDetailsController.onPageLoad(NormalMode).url
 
   private val model =
-    YourContactDetails(FirstName = "David", LastName = "Dixon", Tel = "0742007088", Email = Some("david@gmail.com"), MemorableWord = "test")
+    YourContactDetails(
+      FirstName = "David",
+      LastName = "Dixon",
+      Tel = "0742007088",
+      Email = Some("david@gmail.com"),
+      MemorableWord = "test"
+    )
+
+  private val userAnswers = UserAnswers(userAnswersId).set(YourContactDetailsPage, model).success.value
 
   "YourContactDetails Controller" - {
 
@@ -110,7 +104,13 @@ class YourContactDetailsControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, yourContactDetailsRoute)
-            .withFormUrlEncodedBody(("firstName", "David"), ("lastName", "Dixon"), ("tel", "0742007088"), ("email", "david@gmail.com"), ("memorableWord", "test"))
+            .withFormUrlEncodedBody(
+              ("firstName", "David"),
+              ("lastName", "Dixon"),
+              ("tel", "0742007088"),
+              ("email", "david@gmail.com"),
+              ("memorableWord", "test")
+            )
 
         val result = route(application, request).value
 
@@ -126,9 +126,9 @@ class YourContactDetailsControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, yourContactDetailsRoute)
-            .withFormUrlEncodedBody(("value", "invalid value"))
+            .withFormUrlEncodedBody("firstName" -> "a" * 256)
 
-        val boundForm = form.bind(Map("value" -> "invalid value"))
+        val boundForm = form.bind(Map("firstName" -> "a" * 256))
 
         val view = application.injector.instanceOf[YourContactDetailsView]
 
@@ -158,9 +158,7 @@ class YourContactDetailsControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request =
-          FakeRequest(POST, yourContactDetailsRoute)
-            .withFormUrlEncodedBody(("firstName", "David"), ("lastName", "Dixon"), ("tel", "0742007088"), ("email", "david@gmail.com"), ("memorableWord", "test"))
+        val request = FakeRequest(GET, yourContactDetailsRoute)
 
         val result = route(application, request).value
 
