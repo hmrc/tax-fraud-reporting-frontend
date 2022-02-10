@@ -420,3 +420,6 @@ provideContactDetails.no = No, I want to report anonymously
 provideContactDetails.checkYourAnswersLabel = Do you wish to provide your contact details?
 provideContactDetails.error.required = Select yes if you will provide your contact details.
 provideContactDetails.change.hidden = ProvideContactDetails
+
+businessAddress.lookup.title = What is the business''''s address?
+businessAddress.lookup.heading = What is the business''''s address?

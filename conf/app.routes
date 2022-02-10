@@ -128,6 +128,11 @@ GET        /:index/change-individual-address-start                controllers.In
 GET        /:index/individual-address-confirmation                controllers.IndividualAddressConfirmationController.onPageLoad(index: Index, mode: Mode = NormalMode, id: Option[String])
 GET        /:index/change-individual-address-confirmation         controllers.IndividualAddressConfirmationController.onPageLoad(index: Index, mode: Mode = CheckMode, id: Option[String])
 
+GET        /:index/business-address-start                       controllers.BusinessAddressRedirectController.onPageLoad(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-business-address-start                controllers.BusinessAddressRedirectController.onPageLoad(index: Index, mode: Mode = CheckMode)
+GET        /:index/business-address-confirmation                controllers.BusinessAddressConfirmationController.onPageLoad(index: Index, mode: Mode = NormalMode, id: Option[String])
+GET        /:index/change-business-address-confirmation         controllers.BusinessAddressConfirmationController.onPageLoad(index: Index, mode: Mode = CheckMode, id: Option[String])
+
 
 GET        /when-activity-start                            controllers.WhenActivityHappenController.onPageLoad(mode: Mode = NormalMode)
 POST       /when-activity-start                            controllers.WhenActivityHappenController.onSubmit(mode: Mode = NormalMode)
