@@ -39,12 +39,14 @@ class Navigator @Inject() () {
       individualInformationRoutes(_, index, IndividualInformation.ContactDetails)
     case IndividualNationalInsuranceNumberPage(index) =>
       individualInformationRoutes(_, index, IndividualInformation.NiNumber)
-    case IndividualInformationPage(index)     => individualInformationRoutes(_, index)
-    case BusinessNamePage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Name)
-    case TypeBusinessPage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
-    case ReferenceNumbersPage(index)          => businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference)
-    case BusinessContactDetailsPage(index)    => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
-    case BusinessInformationCheckPage(index)  => businessInformationRoutes(_, index)
+    case IndividualInformationPage(index)    => individualInformationRoutes(_, index)
+    case BusinessNamePage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Name)
+    case TypeBusinessPage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
+    case ReferenceNumbersPage(index)         => businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference)
+    case BusinessContactDetailsPage(index)   => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
+    case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
+    case BusinessAddressConfirmationPage(index) =>
+      businessInformationRoutes(_, index, BusinessInformationCheck.Address)
     case SelectConnectionBusinessPage(index)  => _ => routes.AddAnotherPersonController.onPageLoad(index, NormalMode)
     case AddAnotherPersonPage(index)          => addAnotherPersonRoutes(_, index)
     case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index)
@@ -116,7 +118,7 @@ class Navigator @Inject() () {
       case BusinessInformationCheck.Type              => routes.TypeBusinessController.onPageLoad(index, mode)
       case BusinessInformationCheck.BusinessReference => routes.ReferenceNumbersController.onPageLoad(index, mode)
       case BusinessInformationCheck.Contact           => routes.BusinessContactDetailsController.onPageLoad(index, mode)
-      // TODO add address when the pages are merged
+      case BusinessInformationCheck.Address           => routes.BusinessAddressRedirectController.onPageLoad(index, mode)
 
     }
 

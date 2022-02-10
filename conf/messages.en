@@ -411,3 +411,6 @@ supportingDocument.no = No
 supportingDocument.checkYourAnswersLabel = Do you have any supporting information?
 supportingDocument.error.required = Select whether you have any supporting information you could provide if requested by HMRC.
 supportingDocument.change.hidden = SupportingDocument
+
+businessAddress.lookup.title = What is the business''''s address?
+businessAddress.lookup.heading = What is the business''''s address?
