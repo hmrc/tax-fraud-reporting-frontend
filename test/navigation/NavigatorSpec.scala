@@ -627,9 +627,14 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
       "to the business reference page if the user has selected business reference and has not selected previous answers" in {
         forAll(businessInformationCheckGen) { businessInformationAnswer =>
-          val previousAnswers = Set(BusinessInformationCheck.Name, BusinessInformationCheck.Type, BusinessInformationCheck.Address, BusinessInformationCheck.Contact)
-          val answer          = businessInformationAnswer -- previousAnswers + BusinessInformationCheck.BusinessReference
-          val userAnswers     = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
+          val previousAnswers = Set(
+            BusinessInformationCheck.Name,
+            BusinessInformationCheck.Type,
+            BusinessInformationCheck.Address,
+            BusinessInformationCheck.Contact
+          )
+          val answer      = businessInformationAnswer -- previousAnswers + BusinessInformationCheck.BusinessReference
+          val userAnswers = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
           navigator.nextPage(
             BusinessInformationCheckPage(Index(0)),
             NormalMode,
@@ -677,9 +682,10 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
       "to the business contact details page if the user has selected contact details and has not selected previous answers" in {
         forAll(businessInformationCheckGen) { businessInformationAnswer =>
-          val previousAnswers = Set(BusinessInformationCheck.Name, BusinessInformationCheck.Type,BusinessInformationCheck.Address)
-          val answer          = businessInformationAnswer -- previousAnswers + BusinessInformationCheck.Contact
-          val userAnswers     = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
+          val previousAnswers =
+            Set(BusinessInformationCheck.Name, BusinessInformationCheck.Type, BusinessInformationCheck.Address)
+          val answer      = businessInformationAnswer -- previousAnswers + BusinessInformationCheck.Contact
+          val userAnswers = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
           navigator.nextPage(
             BusinessInformationCheckPage(Index(0)),
             NormalMode,
@@ -690,9 +696,14 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
       "to the business reference page if the user has selected reference and has not selected previous answers" in {
         forAll(businessInformationCheckGen) { businessInformationAnswer =>
-          val previousAnswers = Set(BusinessInformationCheck.Name, BusinessInformationCheck.Type, BusinessInformationCheck.Address, BusinessInformationCheck.Contact)
-          val answer          = businessInformationAnswer -- previousAnswers + BusinessInformationCheck.BusinessReference
-          val userAnswers     = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
+          val previousAnswers = Set(
+            BusinessInformationCheck.Name,
+            BusinessInformationCheck.Type,
+            BusinessInformationCheck.Address,
+            BusinessInformationCheck.Contact
+          )
+          val answer      = businessInformationAnswer -- previousAnswers + BusinessInformationCheck.BusinessReference
+          val userAnswers = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
           navigator.nextPage(
             BusinessInformationCheckPage(Index(0)),
             NormalMode,
