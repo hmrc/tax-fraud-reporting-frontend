@@ -625,8 +625,17 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         }
       }
 
-      "to the business reference page if the user has selected business reference and has not selected previous answers" ignore {
-        // TODO when reference pages are merged
+      "to the business reference page if the user has selected business reference and has not selected previous answers" in {
+        forAll(businessInformationCheckGen) { businessInformationAnswer =>
+          val previousAnswers = Set(BusinessInformationCheck.Name, BusinessInformationCheck.Type, BusinessInformationCheck.Address, BusinessInformationCheck.Contact)
+          val answer          = businessInformationAnswer -- previousAnswers + BusinessInformationCheck.BusinessReference
+          val userAnswers     = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
+          navigator.nextPage(
+            BusinessInformationCheckPage(Index(0)),
+            NormalMode,
+            userAnswers
+          ) mustBe routes.ReferenceNumbersController.onPageLoad(Index(0), NormalMode)
+        }
       }
 
       "to the journey recovery page if there is no business information set" in {
@@ -666,12 +675,30 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         }
       }
 
-      "to the business contact details page if the user has selected contact details and has not selected previous answers" ignore {
-        // TODO when address pages are done
+      "to the business contact details page if the user has selected contact details and has not selected previous answers" in {
+        forAll(businessInformationCheckGen) { businessInformationAnswer =>
+          val previousAnswers = Set(BusinessInformationCheck.Name, BusinessInformationCheck.Type,BusinessInformationCheck.Address)
+          val answer          = businessInformationAnswer -- previousAnswers + BusinessInformationCheck.Contact
+          val userAnswers     = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
+          navigator.nextPage(
+            BusinessInformationCheckPage(Index(0)),
+            NormalMode,
+            userAnswers
+          ) mustBe routes.BusinessContactDetailsController.onPageLoad(Index(0), NormalMode)
+        }
       }
 
-      "to the business reference page if the user has selected reference and has not selected previous answers" ignore {
-        // TODO when address pages are done
+      "to the business reference page if the user has selected reference and has not selected previous answers" in {
+        forAll(businessInformationCheckGen) { businessInformationAnswer =>
+          val previousAnswers = Set(BusinessInformationCheck.Name, BusinessInformationCheck.Type, BusinessInformationCheck.Address, BusinessInformationCheck.Contact)
+          val answer          = businessInformationAnswer -- previousAnswers + BusinessInformationCheck.BusinessReference
+          val userAnswers     = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
+          navigator.nextPage(
+            BusinessInformationCheckPage(Index(0)),
+            NormalMode,
+            userAnswers
+          ) mustBe routes.ReferenceNumbersController.onPageLoad(Index(0), NormalMode)
+        }
       }
 
       "to the connection page if there are no following options selected" in {
@@ -717,7 +744,15 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
       }
 
       "to the business contact details page if the user has selected contact details and has not selected previous answers" ignore {
-        // TODO when address pages are done
+        forAll(businessInformationCheckGen) { businessInformationAnswer =>
+          val answer      = businessInformationAnswer + BusinessInformationCheck.Address
+          val userAnswers = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
+          navigator.nextPage(
+            BusinessInformationCheckPage(Index(0)),
+            NormalMode,
+            userAnswers
+          ) mustBe routes.BusinessAddressRedirectController.onPageLoad(Index(0), NormalMode)
+        }
       }
 
       "to the business reference page if the user has selected reference and has not selected previous answers" ignore {
