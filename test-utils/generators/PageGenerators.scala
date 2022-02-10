@@ -22,6 +22,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryDocumentationDescriptionPage: Arbitrary[DocumentationDescriptionPage.type] =
+    Arbitrary(DocumentationDescriptionPage)
+
   implicit lazy val arbitrarySupportingDocumentPage: Arbitrary[SupportingDocumentPage.type] =
     Arbitrary(SupportingDocumentPage)
 

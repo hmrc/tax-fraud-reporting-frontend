@@ -56,6 +56,7 @@ class Navigator @Inject() () {
     case IndividualConnectionPage(index) =>
       _ => routes.IndividualBusinessDetailsController.onPageLoad(index, NormalMode)
     case DescriptionActivityPage => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+    case SupportingDocumentPage  => supportingDocumentRoutes
     case _                       => _ => routes.IndexController.onPageLoad
   }
 
@@ -164,6 +165,14 @@ class Navigator @Inject() () {
         routes.ActivityTimePeriodController.onPageLoad(NormalMode)
       case _ =>
         routes.DescriptionActivityController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def supportingDocumentRoutes(answers: UserAnswers): Call =
+    answers.get(SupportingDocumentPage).map {
+      case SupportingDocument.Yes =>
+        routes.DocumentationDescriptionController.onPageLoad(NormalMode)
+      case SupportingDocument.No =>
+        routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {

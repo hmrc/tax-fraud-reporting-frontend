@@ -986,6 +986,37 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
       }
     }
 
+    "must go from do you have any supporting information page" - {
+
+      "to the describe any supporting information page for the answer yes" in {
+        val answers = UserAnswers("id").set(SupportingDocumentPage, SupportingDocument.Yes).success.value
+        navigator.nextPage(
+          SupportingDocumentPage,
+          NormalMode,
+          answers
+        ) mustBe routes.DocumentationDescriptionController.onPageLoad(NormalMode)
+      }
+
+      "to the check your answers page for the answer no" in {
+        val answers = UserAnswers("id").set(SupportingDocumentPage, SupportingDocument.No).success.value
+        navigator.nextPage(
+          SupportingDocumentPage,
+          NormalMode,
+          answers
+        ) mustBe routes.CheckYourAnswersController.onPageLoad
+      }
+
+      "to the business information check page" ignore {}
+
+      "to the journey recovery controller if there is no do you have any supporting information set" in {
+        navigator.nextPage(
+          SupportingDocumentPage,
+          NormalMode,
+          UserAnswers("id")
+        ) mustBe routes.JourneyRecoveryController.onPageLoad()
+      }
+    }
+
     "in Check mode" - {
 
       "must go from a page that doesn't exist in the edit route map to CheckYourAnswers" in {
