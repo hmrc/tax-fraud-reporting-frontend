@@ -16,31 +16,49 @@
 
 package forms
 
+import com.google.i18n.phonenumbers.PhoneNumberUtil
 import forms.mappings.Mappings
 import models.YourContactDetails
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.data.validation.{Constraint, Invalid, Valid}
 
 import javax.inject.Inject
+import scala.util.{Success, Try}
 
 class YourContactDetailsFormProvider @Inject() extends Mappings {
 
-  val emailPattern                     = "^(.+@.+\\..+)?$"
-  val phoneValidation ="\\s*((?:[48+][- ]?)?(?:\\(?\\d{3}\\)?[- ]?)?[\\d -]{7,10})"
+  private def telephoneNumberValidation(errorMessage: String = "error.invalid"): Constraint[String] =
+    Constraint {
+      str =>
+        val phoneNumberUtil = PhoneNumberUtil.getInstance()
+        Try(phoneNumberUtil.isPossibleNumber(phoneNumberUtil.parse(str, "GB"))) match {
+          case Success(true) => Valid
+          case _             => Invalid(errorMessage)
+        }
+    }
+
+  private val errorPrefix = "yourContactDetails.error"
+
+  private def field(key: String, isOptional: Boolean = false) = {
+    def errorMsg(problem: String) = s"$errorPrefix.$key.$problem"
+
+    val textMapping = if (isOptional) text() else text(errorMsg("required"))
+
+    textMapping verifying maxLength(255, errorMsg("length"))
+  }
 
   def apply(): Form[YourContactDetails] = Form(
     mapping(
-      "firstName" -> text("yourContactDetails.error.firstName.required")
-        .verifying(maxLength(255, "yourContactDetails.error.firstName.length")),
-      "lastName" -> text("yourContactDetails.error.lastName.required")
-        .verifying(maxLength(255, "yourContactDetails.error.lastName.length")),
-      "tel" -> text("yourContactDetails.error.tel.required")
-        .verifying(maxLength(255, "yourContactDetails.error.tel.length"))
-      .verifying(regexp(phoneValidation, "yourContactDetails.error.tel.invalid")),
-      "email" -> optional(text().verifying(maxLength(255, "yourContactDetails.error.email.length"))
-        .verifying(regexp(emailPattern, "yourContactDetails.error.email.invalid"))),
-      "memorableWord" -> text("yourContactDetails.error.memorableWord.required")
-        .verifying(maxLength(255, "yourContactDetails.error.memorableWord.length"))
+      "firstName" -> field("firstName"),
+      "lastName"  -> field("lastName"),
+      "tel" -> (
+        field("tel") verifying telephoneNumberValidation(errorPrefix + ".tel.invalid")
+      ),
+      "email" -> optional(
+        field("email", isOptional = true) verifying validEmailAddress(errorPrefix + ".email.invalid")
+      ),
+      "memorableWord" -> field("memorableWord")
     )(YourContactDetails.apply)(YourContactDetails.unapply)
   )
 

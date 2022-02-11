@@ -17,9 +17,10 @@
 package forms
 
 import forms.behaviours.StringFieldBehaviours
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.data.FormError
 
-class YourContactDetailsFormProviderSpec extends StringFieldBehaviours {
+class YourContactDetailsFormProviderSpec extends StringFieldBehaviours with ScalaCheckPropertyChecks {
 
   val form = new YourContactDetailsFormProvider()()
 
@@ -62,38 +63,39 @@ class YourContactDetailsFormProviderSpec extends StringFieldBehaviours {
   }
 
   ".tel" - {
+    val fieldName = "tel"
+    val maxLength = 255
 
-    val fieldName   = "tel"
-    val requiredKey = "yourContactDetails.error.tel.required"
-    val lengthKey   = "yourContactDetails.error.tel.length"
-    val maxLength   = 255
+    "must not bind an invalid option" in {
+      val result = form.bind(Map(fieldName -> "test"))
+      result.errors must contain(FormError(fieldName, "yourContactDetails.error.tel.invalid"))
+    }
 
-    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
+    "must not bind an empty map" in {
+      val result = form.bind(Map.empty[String, String])
+      result.errors must contain(FormError(fieldName, "yourContactDetails.error.tel.required"))
+    }
 
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
+    "must not bind when phone number is longer than 255 characters" in {
+      val result = form.bind(Map(fieldName -> "a" * 256))(fieldName)
+      result.errors must contain(FormError(fieldName, "yourContactDetails.error.tel.length", Seq(maxLength)))
+    }
 
-    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
   }
 
   ".email" - {
-
     val fieldName = "email"
-    val lengthKey = "yourContactDetails.error.email.length"
     val maxLength = 255
 
-    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
+    "must not bind an invalid option" in {
+      val result = form.bind(Map(fieldName -> "yournamegmail.com"))
+      result.errors must contain(FormError("email", "yourContactDetails.error.email.invalid"))
+    }
 
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
+    "must not bind when email is longer than 255 characters" in {
+      val result = form.bind(Map(fieldName -> "a" * 256))(fieldName)
+      result.errors must contain(FormError(fieldName, "yourContactDetails.error.email.length", Seq(maxLength)))
+    }
 
   }
 
@@ -115,4 +117,5 @@ class YourContactDetailsFormProviderSpec extends StringFieldBehaviours {
 
     behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
   }
+
 }

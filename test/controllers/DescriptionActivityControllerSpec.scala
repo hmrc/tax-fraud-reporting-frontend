@@ -28,7 +28,6 @@ import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.filters.csrf.CSRF
 import repositories.SessionRepository
 import views.html.DescriptionActivityView
 
@@ -36,12 +35,12 @@ import scala.concurrent.Future
 
 class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
 
-  def onwardRoute = Call("GET", "/foo")
+  private def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new DescriptionActivityFormProvider()
-  val form         = formProvider()
+  private val formProvider = new DescriptionActivityFormProvider()
+  private val form         = formProvider()
 
-  lazy val descriptionActivityRoute = routes.DescriptionActivityController.onPageLoad(NormalMode).url
+  private lazy val descriptionActivityRoute = routes.DescriptionActivityController.onPageLoad(NormalMode).url
 
   "DescriptionActivity Controller" - {
 

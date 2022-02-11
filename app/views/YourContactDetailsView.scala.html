@@ -21,10 +21,59 @@
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukInput: GovukInput,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    fieldset: GovukFieldset
 )
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+
+@content = {
+
+    <div id="hint-text" class="govuk-hint">@messages("yourContactDetails.hint")</div>
+
+    @govukInput(
+        InputViewModel(
+            field = form("firstName"),
+            label = LabelViewModel(messages("yourContactDetails.firstName"))
+        )
+        .withWidth(Full)
+    )
+
+    @govukInput(
+        InputViewModel(
+            field = form("lastName"),
+            label = LabelViewModel(messages("yourContactDetails.lastName"))
+        )
+        .withWidth(Full)
+        )
+
+    @govukInput(
+        InputViewModel(
+            field = form("tel"),
+            label = LabelViewModel(messages("yourContactDetails.tel"))
+        )
+        .asTel()
+        .withWidth(Full)
+        )
+
+    @govukInput(
+        InputViewModel(
+            field = form("email"),
+            label = LabelViewModel(messages("yourContactDetails.email"))
+        )
+        .asEmail()
+        .withWidth(Full)
+        )
+
+    @govukInput(
+        InputViewModel(
+            field = form("memorableWord"),
+            label = LabelViewModel(messages("yourContactDetails.memorableWord"))
+        )
+        .withHint(Hint(content = "yourContactDetails.memorableWord.hint"))
+        .withWidth(Full)
+        )
+}
 
 @layout(pageTitle = title(form, messages("yourContactDetails.title"))) {
 
@@ -34,47 +83,18 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        <h1 class="govuk-heading-xl">@messages("yourContactDetails.heading")</h1>
 
-        @govukInput(
-            InputViewModel(
-                field = form("firstName"),
-                label = LabelViewModel(messages("yourContactDetails.firstName"))
-            )
-            .withWidth(Full)
-        )
+        @fieldset(Fieldset(
+            legend = Some(Legend(
+                content = messages("yourContactDetails.heading"),
+                isPageHeading = true,
+                classes = "govuk-fieldset__legend--l"
+            )),
+            describedBy = Some("hint-text"),
+            role = Some("group"),
+            html = content
+        ))
 
-        @govukInput(
-            InputViewModel(
-                field = form("lastName"),
-                label = LabelViewModel(messages("yourContactDetails.lastName"))
-            )
-            .withWidth(Full)
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("tel"),
-                label = LabelViewModel(messages("yourContactDetails.tel"))
-            )
-            .withWidth(Full)
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("email"),
-                label = LabelViewModel(messages("yourContactDetails.email"))
-            )
-            .withWidth(Full)
-        )
-
-        @govukInput(
-            InputViewModel(
-                field = form("memorableWord"),
-                label = LabelViewModel(messages("yourContactDetails.memorableWord"))
-            )
-            .withWidth(Full)
-        )
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))

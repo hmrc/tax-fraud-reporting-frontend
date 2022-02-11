@@ -55,9 +55,11 @@ class Navigator @Inject() () {
     case ActivityTimePeriodPage               => _ => routes.DescriptionActivityController.onPageLoad(NormalMode)
     case IndividualConnectionPage(index) =>
       _ => routes.IndividualBusinessDetailsController.onPageLoad(index, NormalMode)
-    case DescriptionActivityPage => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
-    case HowManyPeopleKnowPage   => _ => routes.ProvideContactDetailsController.onPageLoad(NormalMode)
-    case _                       => _ => routes.IndexController.onPageLoad
+    case DescriptionActivityPage   => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+    case HowManyPeopleKnowPage     => _ => routes.ProvideContactDetailsController.onPageLoad(NormalMode)
+    case ProvideContactDetailsPage => provideContactDetailsRoutes
+    case YourContactDetailsPage    => _ => routes.SupportingDocumentController.onPageLoad(NormalMode)
+    case _                         => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
@@ -165,6 +167,14 @@ class Navigator @Inject() () {
         routes.ActivityTimePeriodController.onPageLoad(NormalMode)
       case _ =>
         routes.DescriptionActivityController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def provideContactDetailsRoutes(answers: UserAnswers): Call =
+    answers.get(ProvideContactDetailsPage).map {
+      case ProvideContactDetails.Yes =>
+        routes.YourContactDetailsController.onPageLoad(NormalMode)
+      case ProvideContactDetails.No =>
+        routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {

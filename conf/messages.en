@@ -423,11 +423,13 @@ provideContactDetails.change.hidden = ProvideContactDetails
 
 yourContactDetails.title = What are your details?
 yourContactDetails.heading = What are your details?
+yourContactDetails.hint = Enter your contact details.
 yourContactDetails.firstName = First name
 yourContactDetails.lastName = Last name
 yourContactDetails.tel = Telephone number
 yourContactDetails.email = Email address (optional)
 yourContactDetails.memorableWord = Memorable word or phrase
+yourContactDetails.memorableWord.hint = If HMRC contact you, we will quote your memorable word or phrase so that you can confirm the HMRC contact is genuine. Enter a memorable word or phrase that is not related to personal information.
 yourContactDetails.checkYourAnswersLabel = What are your details?
 yourContactDetails.error.firstName.required = Enter your first name.
 yourContactDetails.error.lastName.required = Enter your last name.
