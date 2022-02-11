@@ -36,7 +36,9 @@ class AddressLookupService @Inject() (httpClient: HttpClient, configuration: Con
 ) {
 
   private val baseUrl: String = configuration.get[Service]("microservice.services.address-lookup-frontend").baseUrl
-  private val hostUrl: String = configuration.get[String]("host")
+
+  private val hostUrl: String =
+    configuration.getOptional[String]("platform.frontend.host").getOrElse(configuration.get[String]("host"))
 
   def startJourney(route: String, addressLookupLabels: AddressLookupLabels)(implicit
     hc: HeaderCarrier
