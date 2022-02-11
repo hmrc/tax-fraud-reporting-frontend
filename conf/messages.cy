@@ -413,3 +413,7 @@ provideContactDetails.no = (W) No, I want to report anonymously (W)
 provideContactDetails.checkYourAnswersLabel = (W) Do you wish to provide your contact details? (W)
 provideContactDetails.error.required = (W) Select yes if you will provide your contact details. (W)
 provideContactDetails.change.hidden = (W) ProvideContactDetails (W)
+
+
+businessAddress.lookup.title = (W) What is the business''''s address? (W)
+businessAddress.lookup.heading = (W) What is the business''''s address? (W)

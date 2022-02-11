@@ -443,3 +443,6 @@ yourContactDetails.error.email.length = Email address's must be 255 characters o
 yourContactDetails.error.memorableWord.length = Memorable word or phrase must be 255 characters or fewer.
 yourContactDetails.FirstName.change.hidden = FirstName
 yourContactDetails.LastName.change.hidden = LastName
+
+businessAddress.lookup.title = What is the business''''s address?
+businessAddress.lookup.heading = What is the business''''s address?

@@ -247,4 +247,13 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
+  implicit lazy val arbitraryBusinessAddressConfirmationUserAnswersEntry
+    : Arbitrary[(BusinessAddressConfirmationPage, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[BusinessAddressConfirmationPage]
+        value <- arbitrary[AddressResponse].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
 }
