@@ -56,6 +56,7 @@ class Navigator @Inject() () {
     case IndividualConnectionPage(index) =>
       _ => routes.IndividualBusinessDetailsController.onPageLoad(index, NormalMode)
     case DescriptionActivityPage => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+    case HowManyPeopleKnowPage   => _ => routes.ProvideContactDetailsController.onPageLoad(NormalMode)
     case _                       => _ => routes.IndexController.onPageLoad
   }
 

@@ -405,5 +405,15 @@ supportingDocument.change.hidden = (W) SupportingDocument (W)
 individualAddress.lookup.title = (W) What is the individual''''s address? (W)
 individualAddress.lookup.heading = (W) What is the individual''''s address? (W)
 
+provideContactDetails.title = (W) Do you wish to provide your contact details? (W)
+provideContactDetails.heading = (W) Do you wish to provide your contact details? (W)
+provideContactDetails.hint = (W) Personal information will remain confidential. (W)
+provideContactDetails.yes = (W) Yes, I will provide my contact details (W)
+provideContactDetails.no = (W) No, I want to report anonymously (W)
+provideContactDetails.checkYourAnswersLabel = (W) Do you wish to provide your contact details? (W)
+provideContactDetails.error.required = (W) Select yes if you will provide your contact details. (W)
+provideContactDetails.change.hidden = (W) ProvideContactDetails (W)
+
+
 businessAddress.lookup.title = (W) What is the business''''s address? (W)
 businessAddress.lookup.heading = (W) What is the business''''s address? (W)

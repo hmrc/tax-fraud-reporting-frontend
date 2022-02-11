@@ -89,7 +89,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           ) mustBe routes.IndividualInformationController.onPageLoad(Index(0), NormalMode)
         }
 
-        "to the individual information check page for the first business" in {
+        "to the business information check page for the first business" in {
           val answers = UserAnswers("id").set(IndividualOrBusinessPage, IndividualOrBusiness.Business).success.value
           navigator.nextPage(
             IndividualOrBusinessPage,
@@ -825,7 +825,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must go from add another person page" - {
 
-      "to the add another person page page for the yes" in {
+      "to the individual information page page for the yes" in {
         val answers = UserAnswers("id").set(AddAnotherPersonPage(Index(0)), AddAnotherPerson.Yes).success.value
         navigator.nextPage(
           AddAnotherPersonPage(Index(0)),
@@ -834,7 +834,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         ) mustBe routes.IndividualInformationController.onPageLoad(Index(0), NormalMode)
       }
 
-      "to the add another person page for the no" in {
+      "to the total value of the activity page for the no" in {
         val answers = UserAnswers("id").set(AddAnotherPersonPage(Index(0)), AddAnotherPerson.No).success.value
         navigator.nextPage(
           AddAnotherPersonPage(Index(0)),
@@ -845,7 +845,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
       "must go from individual have business details page" - {
 
-        "to the individual have business details page for the answer yes" in {
+        "to the business information page for the answer yes" in {
           val answers =
             UserAnswers("id").set(IndividualBusinessDetailsPage(Index(0)), IndividualBusinessDetails.Yes).success.value
           navigator.nextPage(
@@ -855,7 +855,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           ) mustBe routes.BusinessInformationCheckController.onPageLoad(Index(0), NormalMode)
         }
 
-        "to the individual have business details for the answer no" in {
+        "to the add another person page for the answer no" in {
           val answers =
             UserAnswers("id").set(IndividualBusinessDetailsPage(Index(0)), IndividualBusinessDetails.No).success.value
           navigator.nextPage(
@@ -865,7 +865,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           ) mustBe routes.AddAnotherPersonController.onPageLoad(Index(0), NormalMode)
         }
 
-        "to the individual have business details for the answer don't know" in {
+        "to the add another page for the answer don't know" in {
           val answers = UserAnswers("id").set(
             IndividualBusinessDetailsPage(Index(0)),
             IndividualBusinessDetails.DontKnow
@@ -897,7 +897,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must go from select connection business page" - {
 
-      "to the select connection business page for the first selection" in {
+      "to the add another person page for the first selection" in {
         navigator.nextPage(
           SelectConnectionBusinessPage(Index(0)),
           NormalMode,
@@ -909,7 +909,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must go from when activity start page" - {
 
-      "to the when activity happen page for the first selection" in {
+      "to the description of activity page for the first selection" in {
         val answers = UserAnswers("id").set(WhenActivityHappenPage, WhenActivityHappen.OverFiveYears).success.value
         navigator.nextPage(
           WhenActivityHappenPage,
@@ -918,7 +918,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         ) mustBe routes.DescriptionActivityController.onPageLoad(NormalMode)
       }
 
-      "to the when activity happen page for the it's going to happen in the future selection" in {
+      "to the When will the activity likely happen page for the it's going to happen in the future selection" in {
         val answers = UserAnswers("id").set(WhenActivityHappenPage, WhenActivityHappen.NotHappen).success.value
         navigator.nextPage(
           WhenActivityHappenPage,
@@ -939,7 +939,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must go from approximate total value page" - {
 
-      "to the with approximate total value page for the next selection" in {
+      "to the What is the duration of the reported activity page for the next selection" in {
         val answers = UserAnswers("id").set(ApproximateValuePage, 45).success.value
         navigator.nextPage(
           ApproximateValuePage,
@@ -951,7 +951,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must go from when activity likely happen page" - {
 
-      "to the with when activity likely happen page for the first selection" in {
+      "to the description of the activity page for the first selection" in {
         val answers = UserAnswers("id").set(ActivityTimePeriodPage, ActivityTimePeriod.NextWeek).success.value
         navigator.nextPage(
           ActivityTimePeriodPage,
@@ -963,7 +963,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must go from how do you know the individual page" - {
 
-      "to the with How do you know the individual page for the first selection" in {
+      "to the does the individual have business details page for the first selection" in {
         val answers =
           UserAnswers("id").set(IndividualConnectionPage(Index(0)), IndividualConnection.Partner).success.value
         navigator.nextPage(
@@ -976,7 +976,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must go from provide description of the activity you are reporting page" - {
 
-      "to the with provide description of the activity you are reporting page for the next selection" in {
+      "to the how many other people know about the activity page for the next selection" in {
         val answers = UserAnswers("id").set(DescriptionActivityPage, "test").success.value
         navigator.nextPage(
           DescriptionActivityPage,
@@ -984,6 +984,18 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           answers
         ) mustBe routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
       }
+    }
+
+    "must go from how many other people know about the activity page" - {
+
+      "to the do you wish to provide your contact details page for the first selection" in {
+        navigator.nextPage(
+          HowManyPeopleKnowPage,
+          NormalMode,
+          emptyUserAnswers
+        ) mustBe routes.ProvideContactDetailsController.onPageLoad(NormalMode)
+      }
+
     }
 
     "in Check mode" - {
