@@ -27,6 +27,10 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+<div id="hint-text2" class="govuk-hint">test</div>
+}
+
 @content = {
 
     <div id="hint-text" class="govuk-hint">@messages("yourContactDetails.hint")</div>

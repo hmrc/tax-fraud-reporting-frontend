@@ -456,3 +456,6 @@ documentationDescription.checkYourAnswersLabel = Describe any supporting informa
 documentationDescription.error.required = Enter a description of the supporting information you hold.
 documentationDescription.error.length = The description of the supporting information you hold must be 500 characters or fewer.
 documentationDescription.change.hidden = DocumentationDescription
+
+checkYourAnswers.activityDetails = The activity you are reporting
+checkYourAnswers.yourDetails = Your details

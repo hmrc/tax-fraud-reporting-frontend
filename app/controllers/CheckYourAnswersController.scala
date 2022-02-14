@@ -21,6 +21,7 @@ import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierA
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import viewmodels.checkAnswers.{ActivityTimePeriodSummary, ActivityTypeSummary, ApproximateValueSummary, DescriptionActivitySummary, HowManyPeopleKnowSummary, ProvideContactDetailsSummary, SupportingDocumentSummary, YourContactDetailsSummary}
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 
@@ -35,9 +36,27 @@ class CheckYourAnswersController @Inject() (
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      val list = SummaryListViewModel(rows = Seq.empty)
 
-      Ok(view(list))
+      val answers = request.userAnswers
+
+      val activityDetails = SummaryListViewModel(Seq(
+        ActivityTypeSummary.row(answers),
+        ApproximateValueSummary.row(answers),
+        ActivityTimePeriodSummary.row(answers),
+        HowManyPeopleKnowSummary.row(answers),
+        DescriptionActivitySummary.row(answers)
+      ).flatten)
+
+      val yourDetails = SummaryListViewModel(Seq(
+        ProvideContactDetailsSummary.row(answers),
+        YourContactDetailsSummary.row(answers)
+      ).flatten)
+
+      val supportingDocuments = SummaryListViewModel(Seq(
+        SupportingDocumentSummary.row(answers)
+      ).flatten)
+
+      Ok(view(activityDetails, yourDetails, supportingDocuments))
   }
 
 }
