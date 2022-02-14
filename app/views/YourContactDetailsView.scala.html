@@ -70,7 +70,7 @@
             field = form("memorableWord"),
             label = LabelViewModel(messages("yourContactDetails.memorableWord"))
         )
-        .withHint(Hint(content = "yourContactDetails.memorableWord.hint"))
+        .withHint(HintViewModel(HtmlContent(messages("yourContactDetails.memorableWord.hint"))))
         .withWidth(Full)
         )
 }
