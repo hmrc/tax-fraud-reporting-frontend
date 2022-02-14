@@ -414,6 +414,15 @@ provideContactDetails.checkYourAnswersLabel = (W) Do you wish to provide your co
 provideContactDetails.error.required = (W) Select yes if you will provide your contact details. (W)
 provideContactDetails.change.hidden = (W) ProvideContactDetails (W)
 
-
 businessAddress.lookup.title = (W) What is the business''''s address? (W)
 businessAddress.lookup.heading = (W) What is the business''''s address? (W)
+
+reportSubmitted.title = (W) Your report has been submitted (W)
+reportSubmitted.heading = (W) Your report has been submitted (W)
+reportSubmitted.whatHappensNext.header = (W) What happens next? (W)
+reportSubmitted.list.line1 = (W) we will review your submitted report (W)
+reportSubmitted.list.line2 = (W) due to confidentiality, updates cannot be provided (W)
+reportSubmitted.list.line3 = (W) information you have provided will be treated as private and confidential (W)
+reportSubmitted.feedback.text = (W) When providing feedback about our service, do not enter details about yourself or the activity you have reported. (W)
+reportSubmitted.feedback.url.text = (W) Tell us what you think about our service. (W)
+reportSubmitted.take.time = (W) (takes 30 seconds) (W)

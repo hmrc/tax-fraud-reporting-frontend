@@ -1,0 +1,46 @@
+@*
+ * Copyright 2022 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import config.FrontendAppConfig
+
+@this(
+        layout: templates.Layout,
+        govukButton: GovukButton
+)
+
+@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
+
+@layout(pageTitle = titleNoForm(messages("reportSubmitted.title"))) {
+
+        <div class="govuk-panel govuk-panel--confirmation">
+             <h1 class="govuk-panel__title">
+              @messages("reportSubmitted.heading")
+             </h1>
+        </div>
+
+        <h2 class="govuk-heading-m">@messages("reportSubmitted.whatHappensNext.header")</h2>
+
+        <ul class="govuk-list govuk-list--bullet">
+            <li>@messages("reportSubmitted.list.line1")</li>
+            <li>@messages("reportSubmitted.list.line2")</li>
+            <li>@messages("reportSubmitted.list.line3")</li>
+        </ul>
+
+        <p class="govuk-body govuk-!-font-size-16">@messages("reportSubmitted.feedback.text")
+         <a href="@appConfig.feedbackUrl" class="govuk-link">@messages("reportSubmitted.feedback.url.text")</a>
+            @messages("reportSubmitted.take.time")
+        </p>
+}
