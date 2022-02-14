@@ -421,6 +421,31 @@ provideContactDetails.checkYourAnswersLabel = Do you wish to provide your contac
 provideContactDetails.error.required = Select yes if you will provide your contact details.
 provideContactDetails.change.hidden = ProvideContactDetails
 
+yourContactDetails.title = What are your details?
+yourContactDetails.heading = What are your details?
+yourContactDetails.hint = Enter your contact details.
+yourContactDetails.firstName = First name
+yourContactDetails.lastName = Last name
+yourContactDetails.tel = Telephone number
+yourContactDetails.email = Email address (optional)
+yourContactDetails.memorableWord = Memorable word or phrase
+yourContactDetails.memorableWord.hint = If HMRC contact you, we will quote your memorable word or phrase so that you can confirm the HMRC contact is genuine. Enter a memorable word or phrase that is not related to personal information.
+yourContactDetails.checkYourAnswersLabel = What are your details?
+yourContactDetails.error.firstName.required = Enter your first name.
+yourContactDetails.error.lastName.required = Enter your last name.
+yourContactDetails.error.tel.required = Enter your telephone number.
+yourContactDetails.error.memorableWord.required = Enter your memorable word or phrase.
+yourContactDetails.error.tel.invalid = Enter your telephone number, like 01632 960 001, 07700 900 982 or +44 808 157 0192
+yourContactDetails.error.email.required = Enter Email
+yourContactDetails.error.email.invalid = Enter your email address in the correct format, like name@example.com
+yourContactDetails.error.firstName.length = First names must be 255 characters or fewer.
+yourContactDetails.error.lastName.length = Last names must be 255 characters or fewer.
+yourContactDetails.error.tel.length = Telephone numbers must be 255 characters or fewer.
+yourContactDetails.error.email.length = Email address's must be 255 characters or fewer.
+yourContactDetails.error.memorableWord.length = Memorable word or phrase must be 255 characters or fewer.
+yourContactDetails.FirstName.change.hidden = FirstName
+yourContactDetails.LastName.change.hidden = LastName
+
 businessAddress.lookup.title = What is the business''''s address?
 businessAddress.lookup.heading = What is the business''''s address?
 

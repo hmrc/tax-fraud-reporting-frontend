@@ -163,3 +163,8 @@ GET        /provide-your-contact-details                         controllers.Pro
 POST       /provide-your-contact-details                         controllers.ProvideContactDetailsController.onSubmit(mode: Mode = NormalMode)
 GET        /change-provide-your-contact-details                  controllers.ProvideContactDetailsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-provide-your-contact-details                  controllers.ProvideContactDetailsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /your-contact-details                         controllers.YourContactDetailsController.onPageLoad(mode: Mode = NormalMode)
+POST       /your-contact-details                         controllers.YourContactDetailsController.onSubmit(mode: Mode = NormalMode)
+GET        /change-your-contact-details                  controllers.YourContactDetailsController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-your-contact-details                  controllers.YourContactDetailsController.onSubmit(mode: Mode = CheckMode)

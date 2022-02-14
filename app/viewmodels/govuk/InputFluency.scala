@@ -39,13 +39,11 @@ trait InputFluency {
     def asEmail(): Input =
       input
         .withInputType("email")
-        .withAutocomplete("email")
         .withSpellcheck(on = false)
 
     def asTel(): Input =
       input
         .withInputType("tel")
-        .withAutocomplete("tel")
         .withSpellcheck(on = false)
 
     def asNumeric(): Input =

@@ -58,7 +58,9 @@ class Navigator @Inject() () {
     case DescriptionActivityPage => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
     case SupportingDocumentPage  => supportingDocumentRoutes
     case HowManyPeopleKnowPage   => _ => routes.ProvideContactDetailsController.onPageLoad(NormalMode)
-    case _                       => _ => routes.IndexController.onPageLoad
+    case ProvideContactDetailsPage => provideContactDetailsRoutes
+    case YourContactDetailsPage    => _ => routes.SupportingDocumentController.onPageLoad(NormalMode)
+    case _                         => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
@@ -173,6 +175,14 @@ class Navigator @Inject() () {
       case SupportingDocument.Yes =>
         routes.DocumentationDescriptionController.onPageLoad(NormalMode)
       case SupportingDocument.No =>
+        routes.CheckYourAnswersController.onPageLoad
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def provideContactDetailsRoutes(answers: UserAnswers): Call =
+    answers.get(ProvideContactDetailsPage).map {
+      case ProvideContactDetails.Yes =>
+        routes.YourContactDetailsController.onPageLoad(NormalMode)
+      case ProvideContactDetails.No =>
         routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
