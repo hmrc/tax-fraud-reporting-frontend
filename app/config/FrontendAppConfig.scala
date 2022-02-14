@@ -29,11 +29,12 @@ class FrontendAppConfig @Inject() (configuration: Configuration) {
   val appName: String = configuration.get[String]("appName")
 
   private val contactHost                  = configuration.get[String]("contact-frontend.host")
-  private val feedbackHost                  = configuration.get[String]("feedback-frontend.host")
+  private val feedbackHost                 = configuration.get[String]("feedback-frontend.host")
   private val contactFormServiceIdentifier = "tax-fraud-reporting-frontend"
 
   def feedbackUrl(implicit request: RequestHeader): String =
     s"$feedbackHost/feedback/beta-feedback?service=$contactFormServiceIdentifier&backUrl=${SafeRedirectUrl(host + request.uri).encodedUrl}"
+
   def contactFeedbackUrl(implicit request: RequestHeader): String =
     s"$contactHost/contact/beta-feedback-unauthenticated??service=$contactFormServiceIdentifier&backUrl=${SafeRedirectUrl(host + request.uri).encodedUrl}"
 
