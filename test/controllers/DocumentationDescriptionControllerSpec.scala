@@ -17,43 +17,43 @@
 package controllers
 
 import base.SpecBase
-import forms.DescriptionActivityFormProvider
+import forms.DocumentationDescriptionFormProvider
 import models.{NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.DescriptionActivityPage
+import pages.DocumentationDescriptionPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.DescriptionActivityView
+import views.html.DocumentationDescriptionView
 
 import scala.concurrent.Future
 
-class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
+class DocumentationDescriptionControllerSpec extends SpecBase with MockitoSugar {
 
-  private def onwardRoute = Call("GET", "/foo")
+  def onwardRoute = Call("GET", "/foo")
 
-  private val formProvider = new DescriptionActivityFormProvider()
-  private val form         = formProvider()
+  val formProvider = new DocumentationDescriptionFormProvider()
+  val form         = formProvider()
 
-  private lazy val descriptionActivityRoute = routes.DescriptionActivityController.onPageLoad(NormalMode).url
+  lazy val documentationDescriptionRoute = routes.DocumentationDescriptionController.onPageLoad(NormalMode).url
 
-  "DescriptionActivity Controller" - {
+  "DocumentationDescription Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, descriptionActivityRoute)
+        val request = FakeRequest(GET, documentationDescriptionRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[DescriptionActivityView]
+        val view = application.injector.instanceOf[DocumentationDescriptionView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -62,14 +62,14 @@ class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(DescriptionActivityPage, "answer").success.value
+      val userAnswers = UserAnswers(userAnswersId).set(DocumentationDescriptionPage, "answer").success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, descriptionActivityRoute)
+        val request = FakeRequest(GET, documentationDescriptionRoute)
 
-        val view = application.injector.instanceOf[DescriptionActivityView]
+        val view = application.injector.instanceOf[DocumentationDescriptionView]
 
         val result = route(application, request).value
 
@@ -94,7 +94,7 @@ class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, descriptionActivityRoute)
+          FakeRequest(POST, documentationDescriptionRoute)
             .withFormUrlEncodedBody(("value", "answer"))
 
         val result = route(application, request).value
@@ -110,12 +110,12 @@ class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, descriptionActivityRoute)
+          FakeRequest(POST, documentationDescriptionRoute)
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[DescriptionActivityView]
+        val view = application.injector.instanceOf[DocumentationDescriptionView]
 
         val result = route(application, request).value
 
@@ -129,7 +129,7 @@ class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, descriptionActivityRoute)
+        val request = FakeRequest(GET, documentationDescriptionRoute)
 
         val result = route(application, request).value
 
@@ -144,7 +144,7 @@ class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, descriptionActivityRoute)
+          FakeRequest(POST, documentationDescriptionRoute)
             .withFormUrlEncodedBody(("value", "answer"))
 
         val result = route(application, request).value

@@ -17,43 +17,54 @@
 package controllers
 
 import base.SpecBase
-import forms.DescriptionActivityFormProvider
-import models.{NormalMode, UserAnswers}
+import forms.YourContactDetailsFormProvider
+import models.{NormalMode, UserAnswers, YourContactDetails}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.DescriptionActivityPage
+import pages.YourContactDetailsPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.DescriptionActivityView
+import views.html.YourContactDetailsView
 
 import scala.concurrent.Future
 
-class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
+class YourContactDetailsControllerSpec extends SpecBase with MockitoSugar {
 
-  private def onwardRoute = Call("GET", "/foo")
+  def onwardRoute = Call("GET", "/foo")
 
-  private val formProvider = new DescriptionActivityFormProvider()
-  private val form         = formProvider()
+  val formProvider = new YourContactDetailsFormProvider()
+  val form         = formProvider()
 
-  private lazy val descriptionActivityRoute = routes.DescriptionActivityController.onPageLoad(NormalMode).url
+  private lazy val yourContactDetailsRoute = routes.YourContactDetailsController.onPageLoad(NormalMode).url
 
-  "DescriptionActivity Controller" - {
+  private val model =
+    YourContactDetails(
+      FirstName = "David",
+      LastName = "Dixon",
+      Tel = "0742007088",
+      Email = Some("david@gmail.com"),
+      MemorableWord = "test"
+    )
+
+  private val userAnswers = UserAnswers(userAnswersId).set(YourContactDetailsPage, model).success.value
+
+  "YourContactDetails Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, descriptionActivityRoute)
+        val request = FakeRequest(GET, yourContactDetailsRoute)
+
+        val view = application.injector.instanceOf[YourContactDetailsView]
 
         val result = route(application, request).value
-
-        val view = application.injector.instanceOf[DescriptionActivityView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -62,19 +73,17 @@ class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(DescriptionActivityPage, "answer").success.value
-
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, descriptionActivityRoute)
+        val request = FakeRequest(GET, yourContactDetailsRoute)
 
-        val view = application.injector.instanceOf[DescriptionActivityView]
+        val view = application.injector.instanceOf[YourContactDetailsView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill("answer"), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(model), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -94,8 +103,14 @@ class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, descriptionActivityRoute)
-            .withFormUrlEncodedBody(("value", "answer"))
+          FakeRequest(POST, yourContactDetailsRoute)
+            .withFormUrlEncodedBody(
+              ("firstName", "David"),
+              ("lastName", "Dixon"),
+              ("tel", "0742007088"),
+              ("email", "david@gmail.com"),
+              ("memorableWord", "test")
+            )
 
         val result = route(application, request).value
 
@@ -110,12 +125,12 @@ class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, descriptionActivityRoute)
-            .withFormUrlEncodedBody(("value", ""))
+          FakeRequest(POST, yourContactDetailsRoute)
+            .withFormUrlEncodedBody("firstName" -> "a" * 256)
 
-        val boundForm = form.bind(Map("value" -> ""))
+        val boundForm = form.bind(Map("firstName" -> "a" * 256))
 
-        val view = application.injector.instanceOf[DescriptionActivityView]
+        val view = application.injector.instanceOf[YourContactDetailsView]
 
         val result = route(application, request).value
 
@@ -129,7 +144,7 @@ class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, descriptionActivityRoute)
+        val request = FakeRequest(GET, yourContactDetailsRoute)
 
         val result = route(application, request).value
 
@@ -143,9 +158,7 @@ class DescriptionActivityControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request =
-          FakeRequest(POST, descriptionActivityRoute)
-            .withFormUrlEncodedBody(("value", "answer"))
+        val request = FakeRequest(GET, yourContactDetailsRoute)
 
         val result = route(application, request).value
 
