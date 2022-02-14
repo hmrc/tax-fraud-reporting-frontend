@@ -55,9 +55,9 @@ class Navigator @Inject() () {
     case ActivityTimePeriodPage               => _ => routes.DescriptionActivityController.onPageLoad(NormalMode)
     case IndividualConnectionPage(index) =>
       _ => routes.IndividualBusinessDetailsController.onPageLoad(index, NormalMode)
-    case DescriptionActivityPage => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
-    case SupportingDocumentPage  => supportingDocumentRoutes
-    case HowManyPeopleKnowPage   => _ => routes.ProvideContactDetailsController.onPageLoad(NormalMode)
+    case DescriptionActivityPage   => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+    case SupportingDocumentPage    => supportingDocumentRoutes
+    case HowManyPeopleKnowPage     => _ => routes.ProvideContactDetailsController.onPageLoad(NormalMode)
     case ProvideContactDetailsPage => provideContactDetailsRoutes
     case YourContactDetailsPage    => _ => routes.SupportingDocumentController.onPageLoad(NormalMode)
     case _                         => _ => routes.IndexController.onPageLoad
