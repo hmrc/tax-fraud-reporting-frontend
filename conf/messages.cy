@@ -441,3 +441,11 @@ yourContactDetails.LastName.change.hidden = (W) LastName (W)
 
 businessAddress.lookup.title = (W) What is the business''''s address? (W)
 businessAddress.lookup.heading = (W) What is the business''''s address? (W)
+
+documentationDescription.title = (W) Describe any supporting information you currently have (W)
+documentationDescription.heading = (W) Describe any supporting information you currently have (W)
+documentationDescription.hint = (W) HMRC will not ask you to attach any documentation to this report. (W)
+documentationDescription.checkYourAnswersLabel = (W) Describe any supporting information you currently have (W)
+documentationDescription.error.required = (W) Enter a description of the supporting information you hold. (W)
+documentationDescription.error.length = (W) The description of the supporting information you hold must be 500 characters or fewer. (W)
+documentationDescription.change.hidden = (W) DocumentationDescription (W)

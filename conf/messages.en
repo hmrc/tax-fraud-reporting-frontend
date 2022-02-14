@@ -448,3 +448,11 @@ yourContactDetails.LastName.change.hidden = LastName
 
 businessAddress.lookup.title = What is the business''''s address?
 businessAddress.lookup.heading = What is the business''''s address?
+
+documentationDescription.title = Describe any supporting information you currently have
+documentationDescription.heading = Describe any supporting information you currently have
+documentationDescription.hint = HMRC will not ask you to attach any documentation to this report.
+documentationDescription.checkYourAnswersLabel = Describe any supporting information you currently have
+documentationDescription.error.required = Enter a description of the supporting information you hold.
+documentationDescription.error.length = The description of the supporting information you hold must be 500 characters or fewer.
+documentationDescription.change.hidden = DocumentationDescription
