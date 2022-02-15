@@ -1018,11 +1018,38 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         ) mustBe routes.CheckYourAnswersController.onPageLoad
       }
 
-      "to the business information check page" ignore {}
-
       "to the journey recovery controller if there is no do you have any supporting information set" in {
         navigator.nextPage(
           SupportingDocumentPage,
+          NormalMode,
+          UserAnswers("id")
+        ) mustBe routes.JourneyRecoveryController.onPageLoad()
+      }
+    }
+
+    "must go from do you wish to provide your contact details page" - {
+
+      "to the what are your details page for the answer yes" in {
+        val answers = UserAnswers("id").set(ProvideContactDetailsPage, ProvideContactDetails.Yes).success.value
+        navigator.nextPage(
+          ProvideContactDetailsPage,
+          NormalMode,
+          answers
+        ) mustBe routes.YourContactDetailsController.onPageLoad(NormalMode)
+      }
+
+      "to the check your answers page for the answer no" in {
+        val answers = UserAnswers("id").set(ProvideContactDetailsPage, ProvideContactDetails.No).success.value
+        navigator.nextPage(
+          ProvideContactDetailsPage,
+          NormalMode,
+          answers
+        ) mustBe routes.CheckYourAnswersController.onPageLoad
+      }
+
+      "to the journey recovery controller if there is no do you wish to provide your contact details set" in {
+        navigator.nextPage(
+          ProvideContactDetailsPage,
           NormalMode,
           UserAnswers("id")
         ) mustBe routes.JourneyRecoveryController.onPageLoad()

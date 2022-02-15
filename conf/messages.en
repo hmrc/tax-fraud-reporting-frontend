@@ -429,7 +429,7 @@ yourContactDetails.tel = Telephone number
 yourContactDetails.email = Email address (optional)
 yourContactDetails.emailLabel = Email address
 yourContactDetails.memorableWord = Memorable word or phrase
-yourContactDetails.memorableWord.hint = If HMRC contact you, we will quote your memorable word or phrase so that you can confirm the HMRC contact is genuine. Enter a memorable word or phrase that is not related to personal information.
+yourContactDetails.memorableWord.hint = If HMRC contact you, we will quote your memorable word or phrase so that you can confirm the HMRC contact is genuine. <br>Enter a memorable word or phrase that is not related to personal information.
 yourContactDetails.checkYourAnswersLabel = What are your details?
 yourContactDetails.error.firstName.required = Enter your first name.
 yourContactDetails.error.lastName.required = Enter your last name.
@@ -449,6 +449,16 @@ yourContactDetails.LastName.change.hidden = LastName
 businessAddress.lookup.title = What is the business''''s address?
 businessAddress.lookup.heading = What is the business''''s address?
 
+reportSubmitted.title = Your report has been submitted
+reportSubmitted.heading = Your report has been submitted
+reportSubmitted.whatHappensNext.header = What happens next?
+reportSubmitted.list.line1 = we will review your submitted report
+reportSubmitted.list.line2 = due to confidentiality, updates cannot be provided
+reportSubmitted.list.line3 = information you have provided will be treated as private and confidential
+reportSubmitted.feedback.text = When providing feedback about our service, do not enter details about yourself or the activity you have reported.
+reportSubmitted.feedback.url.text = Tell us what you think about our service.
+reportSubmitted.take.time = (takes 30 seconds)
+
 documentationDescription.title = Describe any supporting information you currently have
 documentationDescription.heading = Describe any supporting information you currently have
 documentationDescription.hint = HMRC will not ask you to attach any documentation to this report.
@@ -467,3 +477,10 @@ individualCheckYourAnswers.title = Check your submission
 individualCheckYourAnswers.heading = Check your submission
 individualCheckYourAnswers.individualDetails = Information on Individual A
 
+submitYourReport.title = Submit your report
+submitYourReport.heading = Submit your report
+submitYourReport.p1 = HMRC appreciate the time taken to report this activity.
+submitYourReport.p2 = Your security is taken seriously. Once you have submitted your report:
+submitYourReport.list1 = do not find out more about the activity
+submitYourReport.list2 = do not make further reports on the same activity
+submitYourReport.submit = Submit your report
