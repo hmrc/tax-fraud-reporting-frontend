@@ -170,3 +170,5 @@ GET        /change-your-contact-details                  controllers.YourContact
 POST       /change-your-contact-details                  controllers.YourContactDetailsController.onSubmit(mode: Mode = CheckMode)
 
 GET        /report-submitted                                     controllers.ReportSubmittedController.onPageLoad()
+
+GET        /submit-your-report                       controllers.SubmitYourReportController.onPageLoad()

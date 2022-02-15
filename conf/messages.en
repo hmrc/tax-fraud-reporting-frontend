@@ -466,3 +466,11 @@ documentationDescription.checkYourAnswersLabel = Describe any supporting informa
 documentationDescription.error.required = Enter a description of the supporting information you hold.
 documentationDescription.error.length = The description of the supporting information you hold must be 500 characters or fewer.
 documentationDescription.change.hidden = DocumentationDescription
+
+submitYourReport.title = Submit your report
+submitYourReport.heading = Submit your report
+submitYourReport.p1 = HMRC appreciate the time taken to report this activity.
+submitYourReport.p2 = Your security is taken seriously. Once you have submitted your report:
+submitYourReport.list1 = do not find out more about the activity
+submitYourReport.list2 = do not make further reports on the same activity
+submitYourReport.submit = Submit your report
