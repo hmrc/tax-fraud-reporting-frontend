@@ -30,10 +30,15 @@ object BusinessContactDetailsSummary {
 
   def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(BusinessContactDetailsPage(Index(index))).map {
+
       answer =>
-        val value = List(answer.landlineNumber, answer.mobileNumber, answer.email).flatten.map(
-          HtmlFormat.escape
-        ).mkString("<br />")
+        val value = List(
+          "Landline" -> answer.landlineNumber,
+          "Mobile" -> answer.mobileNumber,
+          "Email" -> answer.email
+        ) flatMap { case (label, valueOpt) =>
+          valueOpt map { value => HtmlFormat.escape( label + ": " + value) }
+        } mkString "<br>"
 
         SummaryListRowViewModel(
           key = "businessContactDetails.checkYourAnswersLabel",

@@ -37,7 +37,7 @@ object ReferenceNumbersSummary {
 
         SummaryListRowViewModel(
           key = "referenceNumbers.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent(value)),
+          value = ValueViewModel(HtmlContent("VAT Registration number: <br /> "+ value)),
           actions = Seq(
             ActionItemViewModel(
               "site.change",

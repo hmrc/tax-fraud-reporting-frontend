@@ -16,11 +16,10 @@
 
 package viewmodels.checkAnswers
 
-import controllers.routes
 import models.{CheckMode, UserAnswers}
 import pages.YourContactDetailsPage
 import play.api.i18n.Messages
-import play.twirl.api.HtmlFormat
+import controllers.routes
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
@@ -28,19 +27,28 @@ import viewmodels.implicits._
 
 object YourContactDetailsSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(YourContactDetailsPage).map {
+  def rows(answers: UserAnswers)(implicit messages: Messages): List[SummaryListRow] =
+    answers.get(YourContactDetailsPage).toList.flatMap {
       answer =>
-        val value = HtmlFormat.escape(answer.FirstName).toString + "<br/>" + HtmlFormat.escape(answer.LastName).toString
+        val values = List(
+          Some("firstName" -> answer.FirstName),
+          Some("lastName" -> answer.LastName),
+          Some("tel" -> answer.Tel),
+          answer.Email map {
+            "emailLabel" -> _
+          },
+          Some("memorableWord" -> answer.MemorableWord)
+        ).flatten
 
-        SummaryListRowViewModel(
-          key = "yourContactDetails.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent(value)),
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.YourContactDetailsController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("yourContactDetails.change.hidden"))
-          )
-        )
+        values map { case (key, value) =>
+          SummaryListRowViewModel(
+            key = "yourContactDetails." + key,
+            value = ValueViewModel(HtmlContent(value)),
+            actions = Seq(
+              ActionItemViewModel("site.change", routes.YourContactDetailsController.onPageLoad(CheckMode).url)
+                .withVisuallyHiddenText(messages("yourContactDetails.change.hidden"))
+            ))
+        }
     }
 
 }

@@ -14,12 +14,14 @@
  * limitations under the License.
  *@
 
+@import models.IndividualOrBusiness._
+
 @this(
     layout: templates.Layout,
     govukSummaryList: GovukSummaryList
 )
 
-@(activityDetails: SummaryList, yourDetails: SummaryList, supportingDocuments: SummaryList)(implicit request: Request[_], messages: Messages)
+@(isBusinessJourney: Boolean, activityDetails: SummaryList, yourDetails: SummaryList, supportingDocuments: SummaryList, businessDetails: SummaryList, individualDetails: SummaryList)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 
@@ -28,9 +30,31 @@
         <h2 class="govuk-heading-m">@messages("checkYourAnswers.activityDetails")</h2>
         @govukSummaryList(activityDetails.withCssClass("govuk-!-margin-bottom-6"))
 
-        <h2 class="govuk-heading-m">@messages("checkYourAnswers.activityDetails")</h2>
+        @if(isBusinessJourney){
+            <h2 class="govuk-heading-m">@messages("checkYourAnswers.businessDetails")</h2>
+            @govukSummaryList(businessDetails.withCssClass("govuk-!-margin-bottom-6"))
+        }
+
+<!--TO DO after individuals logic implement-->
+        @if(!isBusinessJourney) {
+            <h2 class="govuk-heading-m">@messages("checkYourAnswers.individualDetails")</h2>
+                <div class="hmrc-list-with-actions__item">
+                    <dt class="hmrc-list-with-actions__name govuk-body">Individual A</dt>
+                    <div class="hmrc-list-with-actions__actions">
+                        <dd class="hmrc-list-with-actions__action govuk-body">
+                            <a class="govuk-link" href="./check-answers-Individual1"><span aria-hidden="true">Change</span><span class="govuk-visually-hidden">Change Individual1</span></a>
+                        </dd>
+                        <dd class="hmrc-list-with-actions__action govuk-body">
+                            <a class="govuk-link" href="#"><span aria-hidden="true">Remove</span><span class="govuk-visually-hidden">Remove Individual1 from the list</span></a>
+                        </dd>
+                    </div>
+                </div>
+        }
+
         <h2 class="govuk-heading-m">@messages("checkYourAnswers.yourDetails")</h2>
         @govukSummaryList(yourDetails.withCssClass("govuk-!-margin-bottom-6"))
 
-
+        <a id="continue-button" href="@routes.CheckYourAnswersController.onPageLoad" role="button" class="govuk-button" data-module="govuk-button">
+            @messages("site.continue")
+        </a>
 }

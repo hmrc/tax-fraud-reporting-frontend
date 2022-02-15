@@ -30,10 +30,15 @@ object IndividualNameSummary {
 
   def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(IndividualNamePage(Index(index))).map {
-      answer =>
-        val value = List(answer.firstName, answer.middleName, answer.lastName, answer.aliases).flatten.map(
-          HtmlFormat.escape
-        ).mkString("<br/>")
+    answer =>
+      val value = List(
+        "First Name" -> answer.firstName,
+        "Middle Name" -> answer.middleName,
+        "lase Name" -> answer.lastName,
+        "Nickname" -> answer.aliases
+      ) flatMap { case (label, valueOpt) =>
+        valueOpt map { value => HtmlFormat.escape( label + ": " + value) }
+      } mkString "<br>"
 
         SummaryListRowViewModel(
           key = "individualName.checkYourAnswersLabel",
