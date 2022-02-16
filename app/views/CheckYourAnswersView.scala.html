@@ -54,7 +54,7 @@
         <h2 class="govuk-heading-m">@messages("checkYourAnswers.yourDetails")</h2>
         @govukSummaryList(yourDetails.withCssClass("govuk-!-margin-bottom-6"))
 
-        <a id="continue-button" href="@routes.CheckYourAnswersController.onPageLoad" role="button" class="govuk-button" data-module="govuk-button">
+        <a id="continue-button" href="@routes.SubmitYourReportController.onPageLoad" role="button" class="govuk-button" data-module="govuk-button">
             @messages("site.continue")
         </a>
 }
