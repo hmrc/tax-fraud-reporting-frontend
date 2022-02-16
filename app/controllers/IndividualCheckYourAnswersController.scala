@@ -26,7 +26,7 @@ import viewmodels.checkAnswers._
 import viewmodels.govuk.summarylist._
 import views.html.IndividualCheckYourAnswersView
 
-class IndividualCheckYourAnswersController @Inject()(
+class IndividualCheckYourAnswersController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
@@ -37,7 +37,6 @@ class IndividualCheckYourAnswersController @Inject()(
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
       val answers = request.userAnswers
 
       val individualDetails = {
@@ -45,18 +44,16 @@ class IndividualCheckYourAnswersController @Inject()(
         val y = (0 until individualInformationChecks).flatMap { index =>
           Seq(
             IndividualNameSummary.row(answers, index),
-            IndividualAgeSummary.row(answers,index),
+            IndividualAgeSummary.row(answers, index),
             IndividualDateOfBirthSummary.row(answers, index),
             IndividualAddressSummary.row(answers, index),
             IndividualContactDetailsSummary.row(index, answers),
             IndividualNationalInsuranceNumberSummary.row(answers, index),
             IndividualConnectionSummary.row(answers, index),
-            IndividualBusinessDetailsSummary.row(answers,index)
+            IndividualBusinessDetailsSummary.row(answers, index)
           ).flatten
         }
-        SummaryListViewModel(Seq(
-          SelectConnectionBusinessSummary.row(answers,index = 0),
-        ).flatten ++ y)
+        SummaryListViewModel(Seq(SelectConnectionBusinessSummary.row(answers, index = 0)).flatten ++ y)
       }
 
       Ok(view(individualDetails))

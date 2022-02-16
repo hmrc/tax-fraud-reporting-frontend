@@ -32,13 +32,11 @@ object BusinessContactDetailsSummary {
     answers.get(BusinessContactDetailsPage(Index(index))).map {
 
       answer =>
-        val value = List(
-          "Landline" -> answer.landlineNumber,
-          "Mobile" -> answer.mobileNumber,
-          "Email" -> answer.email
-        ) flatMap { case (label, valueOpt) =>
-          valueOpt map { value => HtmlFormat.escape( label + ": " + value) }
-        } mkString "<br>"
+        val value =
+          List("Landline" -> answer.landlineNumber, "Mobile" -> answer.mobileNumber, "Email" -> answer.email) flatMap {
+            case (label, valueOpt) =>
+              valueOpt map { value => HtmlFormat.escape(label + ": " + value) }
+          } mkString "<br>"
 
         SummaryListRowViewModel(
           key = "businessContactDetails.checkYourAnswersLabel",

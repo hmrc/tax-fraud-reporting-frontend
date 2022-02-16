@@ -17,8 +17,11 @@
 package controllers
 
 import base.SpecBase
+import models._
+import pages._
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import viewmodels.checkAnswers._
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAnswersView
 
@@ -28,6 +31,10 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
     "must return OK and the correct view for a GET" in {
 
+      val answers = emptyUserAnswers
+
+      val isBusinessJourney = answers.isBusinessJourney
+
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
@@ -36,10 +43,61 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         val result = route(application, request).value
 
         val view = application.injector.instanceOf[CheckYourAnswersView]
-        val list = SummaryListViewModel(Seq.empty)
+
+        val activityDetails = SummaryListViewModel(
+          Seq(
+            ActivityTypeSummary.row(answers)(messages(application)),
+            ApproximateValueSummary.row(answers)(messages(application)),
+            ActivityTimePeriodSummary.row(answers)(messages(application)),
+            HowManyPeopleKnowSummary.row(answers)(messages(application)),
+            DescriptionActivitySummary.row(answers)(messages(application))
+          ).flatten
+        )
+
+        val yourDetails = SummaryListViewModel(
+          Seq(
+            ProvideContactDetailsSummary.row(answers)(messages(application)).toList ++
+              YourContactDetailsSummary.rows(answers)(messages(application))
+          ).flatten
+        )
+
+        val supportingDocuments =
+          SummaryListViewModel(Seq(SupportingDocumentSummary.row(answers)(messages(application))).flatten)
+
+        val businessDetails = SummaryListViewModel(
+          Seq(
+            SelectConnectionBusinessSummary.row(answers, 0)(messages(application)),
+            BusinessNameSummary.row(answers, 0)(messages(application)),
+            TypeBusinessSummary.row(answers, 0)(messages(application)),
+            BusinessAddressSummary.row(answers, 0)(messages(application)),
+            BusinessContactDetailsSummary.row(answers, 0)(messages(application)),
+            ReferenceNumbersSummary.row(answers, 0)(messages(application)),
+            SelectConnectionBusinessSummary.row(answers, 0)(messages(application))
+          ).flatten
+        )
+
+        val individualDetails = SummaryListViewModel(
+          Seq(
+            IndividualNameSummary.row(answers, 0)(messages(application)),
+            IndividualAgeSummary.row(answers, 0)(messages(application)),
+            IndividualDateOfBirthSummary.row(answers, 0)(messages(application)),
+            IndividualAddressSummary.row(answers, 0)(messages(application)),
+            IndividualContactDetailsSummary.row(0, answers)(messages(application)),
+            IndividualNationalInsuranceNumberSummary.row(answers, 0)(messages(application)),
+            IndividualConnectionSummary.row(answers, 0)(messages(application)),
+            IndividualBusinessDetailsSummary.row(answers, 0)(messages(application))
+          ).flatten
+        )
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(list)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(
+          isBusinessJourney,
+          activityDetails,
+          yourDetails,
+          supportingDocuments,
+          businessDetails,
+          individualDetails
+        )(request, messages(application)).toString
       }
     }
 

@@ -26,13 +26,11 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-
 object BusinessAddressSummary {
 
   def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(BusinessAddressConfirmationPage(Index(index))).map {
       answer =>
-
         val value = List(answer.lines, answer.postcode.toList, answer.country.toList).flatten.map(
           HtmlFormat.escape
         ).mkString("<br/>")

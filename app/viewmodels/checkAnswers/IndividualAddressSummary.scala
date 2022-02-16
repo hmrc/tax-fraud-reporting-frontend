@@ -31,7 +31,6 @@ object IndividualAddressSummary {
   def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(IndividualAddressConfirmationPage(Index(index))).map {
       answer =>
-
         val value = List(answer.lines, answer.postcode.toList, answer.country.toList).flatten.map(
           HtmlFormat.escape
         ).mkString("<br/>")

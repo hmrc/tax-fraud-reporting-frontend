@@ -32,22 +32,24 @@ object YourContactDetailsSummary {
       answer =>
         val values = List(
           Some("firstName" -> answer.FirstName),
-          Some("lastName" -> answer.LastName),
-          Some("tel" -> answer.Tel),
+          Some("lastName"  -> answer.LastName),
+          Some("tel"       -> answer.Tel),
           answer.Email map {
             "emailLabel" -> _
           },
           Some("memorableWord" -> answer.MemorableWord)
         ).flatten
 
-        values map { case (key, value) =>
-          SummaryListRowViewModel(
-            key = "yourContactDetails." + key,
-            value = ValueViewModel(HtmlContent(value)),
-            actions = Seq(
-              ActionItemViewModel("site.change", routes.YourContactDetailsController.onPageLoad(CheckMode).url)
-                .withVisuallyHiddenText(messages("yourContactDetails.change.hidden"))
-            ))
+        values map {
+          case (key, value) =>
+            SummaryListRowViewModel(
+              key = "yourContactDetails." + key,
+              value = ValueViewModel(HtmlContent(value)),
+              actions = Seq(
+                ActionItemViewModel("site.change", routes.YourContactDetailsController.onPageLoad(CheckMode).url)
+                  .withVisuallyHiddenText(messages("yourContactDetails.change.hidden"))
+              )
+            )
         }
     }
 

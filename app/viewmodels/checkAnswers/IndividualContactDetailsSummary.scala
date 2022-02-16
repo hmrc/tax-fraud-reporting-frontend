@@ -31,13 +31,11 @@ object IndividualContactDetailsSummary {
   def row(index: Int, answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(IndividualContactDetailsPage(Index(index))).map {
       answer =>
-        val value = List(
-          "Landline" -> answer.landlineNumber,
-          "Mobile" -> answer.mobileNumber,
-          "Email" -> answer.email
-        ) flatMap { case (label, valueOpt) =>
-          valueOpt map { value => HtmlFormat.escape( label + ": " + value) }
-        } mkString "<br>"
+        val value =
+          List("Landline" -> answer.landlineNumber, "Mobile" -> answer.mobileNumber, "Email" -> answer.email) flatMap {
+            case (label, valueOpt) =>
+              valueOpt map { value => HtmlFormat.escape(label + ": " + value) }
+          } mkString "<br>"
 
         SummaryListRowViewModel(
           key = "individualContactDetails.checkYourAnswersLabel",

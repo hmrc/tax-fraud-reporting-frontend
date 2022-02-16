@@ -37,42 +37,39 @@ class CheckYourAnswersController @Inject() (
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
-      val answers = request.userAnswers
+      val answers           = request.userAnswers
       val isBusinessJourney = request.userAnswers.isBusinessJourney
 
-      val activityDetails = SummaryListViewModel(Seq(
-        ActivityTypeSummary.row(answers),
-        ApproximateValueSummary.row(answers),
-        ActivityTimePeriodSummary.row(answers),
-        HowManyPeopleKnowSummary.row(answers),
-        DescriptionActivitySummary.row(answers)
-      ).flatten)
-
-      val yourDetails = SummaryListViewModel(
-        ProvideContactDetailsSummary.row(answers).toList++
-        YourContactDetailsSummary.rows(answers)
+      val activityDetails = SummaryListViewModel(
+        Seq(
+          ActivityTypeSummary.row(answers),
+          ApproximateValueSummary.row(answers),
+          ActivityTimePeriodSummary.row(answers),
+          HowManyPeopleKnowSummary.row(answers),
+          DescriptionActivitySummary.row(answers)
+        ).flatten
       )
 
-      val supportingDocuments = SummaryListViewModel(Seq(
-        SupportingDocumentSummary.row(answers)
-      ).flatten)
+      val yourDetails = SummaryListViewModel(
+        ProvideContactDetailsSummary.row(answers).toList ++
+          YourContactDetailsSummary.rows(answers)
+      )
+
+      val supportingDocuments = SummaryListViewModel(Seq(SupportingDocumentSummary.row(answers)).flatten)
 
       val businessDetails = {
-          val businessInformationChecks = answers.get(PreviousBusinessInformation).getOrElse(List.empty).length
-          val x = (0 until businessInformationChecks).flatMap { index =>
-            Seq(
-              BusinessNameSummary.row(answers, index),
-              TypeBusinessSummary.row(answers, index),
-              BusinessAddressSummary.row(answers,index),
-              BusinessContactDetailsSummary.row(answers, index),
-              ReferenceNumbersSummary.row(answers, index),
-              SelectConnectionBusinessSummary.row(answers,index)
-            ).flatten
-          }
-          SummaryListViewModel(Seq(
-            SelectConnectionBusinessSummary.row(answers,index = 0),
-          ).flatten ++ x)
+        val businessInformationChecks = answers.get(PreviousBusinessInformation).getOrElse(List.empty).length
+        val x = (0 until businessInformationChecks).flatMap { index =>
+          Seq(
+            BusinessNameSummary.row(answers, index),
+            TypeBusinessSummary.row(answers, index),
+            BusinessAddressSummary.row(answers, index),
+            BusinessContactDetailsSummary.row(answers, index),
+            ReferenceNumbersSummary.row(answers, index),
+            SelectConnectionBusinessSummary.row(answers, index)
+          ).flatten
+        }
+        SummaryListViewModel(Seq(SelectConnectionBusinessSummary.row(answers, index = 0)).flatten ++ x)
       }
 
       val individualDetails = {
@@ -80,18 +77,16 @@ class CheckYourAnswersController @Inject() (
         val y = (0 until individualInformationChecks).flatMap { index =>
           Seq(
             IndividualNameSummary.row(answers, index),
-            IndividualAgeSummary.row(answers,index),
+            IndividualAgeSummary.row(answers, index),
             IndividualDateOfBirthSummary.row(answers, index),
             IndividualAddressSummary.row(answers, index),
             IndividualContactDetailsSummary.row(index, answers),
             IndividualNationalInsuranceNumberSummary.row(answers, index),
             IndividualConnectionSummary.row(answers, index),
-            IndividualBusinessDetailsSummary.row(answers,index)
+            IndividualBusinessDetailsSummary.row(answers, index)
           ).flatten
         }
-        SummaryListViewModel(Seq(
-          SelectConnectionBusinessSummary.row(answers,index = 0),
-        ).flatten ++ y)
+        SummaryListViewModel(Seq(SelectConnectionBusinessSummary.row(answers, index = 0)).flatten ++ y)
       }
 
       Ok(view(isBusinessJourney, activityDetails, yourDetails, supportingDocuments, businessDetails, individualDetails))

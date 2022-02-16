@@ -31,7 +31,6 @@ object ProvideContactDetailsSummary {
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(ProvideContactDetailsPage).map {
       answer =>
-
         val value = ValueViewModel(HtmlContent(HtmlFormat.escape(messages(s"provideContactDetails.$answer"))))
 
         SummaryListRowViewModel(

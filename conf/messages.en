@@ -277,7 +277,7 @@ descriptionActivity.hint = A concise description allows HMRC to process your inf
 descriptionActivity.checkYourAnswersLabel = Activity description
 descriptionActivity.error.required = Enter a description on the activity you''re reporting.
 descriptionActivity.error.length = The description of the activity must be 1200 characters or fewer.
-descriptionActivity.change.hidden = Activity description
+descriptionActivity.change.hidden = The Activity description
 
 typeBusiness.title = What type of business is it?
 typeBusiness.heading = What type of business is it?
@@ -385,7 +385,7 @@ howManyPeopleKnow.moreThanTenIndividuals = More than 10 individuals
 howManyPeopleKnow.doNotKnow = I don''t know
 howManyPeopleKnow.checkYourAnswersLabel = How many other people know
 howManyPeopleKnow.error.required = Enter how many people know about the activity or select "I don''t know"
-howManyPeopleKnow.change.hidden = HowManyPeopleKnow
+howManyPeopleKnow.change.hidden = How many other people know
 
 addAnotherPerson.title = Are there additional people involved in this activity you want to tell us about?
 addAnotherPerson.heading = Are there additional people involved in this activity you want to tell us about?
@@ -418,7 +418,7 @@ provideContactDetails.yes = Yes, I will provide my contact details
 provideContactDetails.no = No, I want to report anonymously
 provideContactDetails.checkYourAnswersLabel = Details provided
 provideContactDetails.error.required = Select yes if you will provide your contact details.
-provideContactDetails.change.hidden = Details provided
+provideContactDetails.change.hidden = Whether you are providing your details or reporting anonymously
 
 yourContactDetails.title = What are your details?
 yourContactDetails.heading = What are your details?
@@ -445,6 +445,8 @@ yourContactDetails.error.email.length = Email address's must be 255 characters o
 yourContactDetails.error.memorableWord.length = Memorable word or phrase must be 255 characters or fewer.
 yourContactDetails.FirstName.change.hidden = FirstName
 yourContactDetails.LastName.change.hidden = LastName
+yourContactDetails.tel.change.hidden = Telephone number
+yourContactDetails.memorableWord.change.hidden = Memorable Word
 
 businessAddress.lookup.title = What is the business''''s address?
 businessAddress.lookup.heading = What is the business''''s address?
