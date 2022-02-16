@@ -30,24 +30,26 @@ object YourContactDetailsSummary {
   def rows(answers: UserAnswers)(implicit messages: Messages): List[SummaryListRow] =
     answers.get(YourContactDetailsPage).toList.flatMap {
       answer =>
+        def msg(key: String) = messages("yourContactDetails." + key)
+
         val values = List(
-          Some("firstName" -> answer.FirstName),
-          Some("lastName"  -> answer.LastName),
-          Some("tel"       -> answer.Tel),
-          answer.Email map {
-            "emailLabel" -> _
-          },
-          Some("memorableWord" -> answer.MemorableWord)
-        ).flatten
+          "firstName" -> Some(answer.FirstName),
+          "lastName"  -> Some(answer.LastName),
+          "tel"       -> Some(answer.Tel),
+          "emailLabel" -> answer.Email,
+          "memorableWord" -> Some(answer.MemorableWord)
+        ) flatMap { case (key, valueOpt) =>
+          valueOpt map { key -> _ }
+        }
 
         values map {
           case (key, value) =>
             SummaryListRowViewModel(
-              key = "yourContactDetails." + key,
+              key = msg(key),
               value = ValueViewModel(HtmlContent(value)),
               actions = Seq(
                 ActionItemViewModel("site.change", routes.YourContactDetailsController.onPageLoad(CheckMode).url)
-                  .withVisuallyHiddenText(messages("yourContactDetails.change.hidden"))
+                  .withVisuallyHiddenText(msg(key))
               )
             )
         }

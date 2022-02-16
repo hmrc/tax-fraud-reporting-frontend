@@ -26,12 +26,15 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
+import scala.language.postfixOps
+
 object ProvideContactDetailsSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(ProvideContactDetailsPage).map {
       answer =>
-        val value = ValueViewModel(HtmlContent(HtmlFormat.escape(messages(s"provideContactDetails.$answer") split "," head)))
+        val value =
+          ValueViewModel(HtmlContent(HtmlFormat.escape(messages(s"provideContactDetails.$answer") split "," head)))
 
         SummaryListRowViewModel(
           key = "provideContactDetails.checkYourAnswersLabel",
