@@ -64,7 +64,7 @@ class ActivitySourceOfInformationControllerSpec extends SpecBase with MockitoSug
 
       val userAnswers = UserAnswers(userAnswersId).set(
         ActivitySourceOfInformationPage,
-        ActivitySourceOfInformation.values.head
+        ActivitySourceOfInformation.ReportedIndividuals
       ).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
@@ -77,7 +77,7 @@ class ActivitySourceOfInformationControllerSpec extends SpecBase with MockitoSug
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ActivitySourceOfInformation.values.head), NormalMode)(
+        contentAsString(result) mustEqual view(form.fill(ActivitySourceOfInformation.ReportedIndividuals), NormalMode)(
           request,
           messages(application)
         ).toString
@@ -101,7 +101,7 @@ class ActivitySourceOfInformationControllerSpec extends SpecBase with MockitoSug
       running(application) {
         val request =
           FakeRequest(POST, activitySourceOfInformationRoute)
-            .withFormUrlEncodedBody(("value", ActivitySourceOfInformation.values.head.toString))
+            .withFormUrlEncodedBody(("value" -> "reportedIndividuals"))
 
         val result = route(application, request).value
 
@@ -151,7 +151,7 @@ class ActivitySourceOfInformationControllerSpec extends SpecBase with MockitoSug
       running(application) {
         val request =
           FakeRequest(POST, activitySourceOfInformationRoute)
-            .withFormUrlEncodedBody(("value", ActivitySourceOfInformation.values.head.toString))
+            .withFormUrlEncodedBody(("value" -> "reportedIndividuals"))
 
         val result = route(application, request).value
 

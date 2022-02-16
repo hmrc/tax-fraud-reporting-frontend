@@ -48,14 +48,14 @@ object ActivitySourceOfInformation extends Enumerable.Implicits {
 
   implicit lazy val reads: Reads[ActivitySourceOfInformation] =
     (__ \ "type").read[String].flatMap {
-      case "reportedIndividuals"            => Reads.pure(ReportedIndividuals)
-      case "informationInLocalArea"         => Reads.pure(InformationInLocalArea)
-      case "observedTheActivity-competitor" => Reads.pure(ObservedTheActivity)
-      case "overheardTheActivity"           => Reads.pure(OverheardTheActivity)
-      case "speculatedThisActivity"         => Reads.pure(SpeculatedThisActivity)
-      case "reportedByIndividual"           => Reads.pure(ReportedByIndividual)
-      case "byThirdPart"                    => Reads.pure(ByThirdPart)
-      case "other"                          => (__ \ "value").read[String].map(Other)
+      case "reportedIndividuals"    => Reads.pure(ReportedIndividuals)
+      case "informationInLocalArea" => Reads.pure(InformationInLocalArea)
+      case "observedTheActivity"    => Reads.pure(ObservedTheActivity)
+      case "overheardTheActivity"   => Reads.pure(OverheardTheActivity)
+      case "speculatedThisActivity" => Reads.pure(SpeculatedThisActivity)
+      case "reportedByIndividual"   => Reads.pure(ReportedByIndividual)
+      case "byThirdPart"            => Reads.pure(ByThirdPart)
+      case "other"                  => (__ \ "value").read[String].map(Other)
     }
 
 }
