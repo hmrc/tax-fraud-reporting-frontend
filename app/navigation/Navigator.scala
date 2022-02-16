@@ -47,7 +47,7 @@ class Navigator @Inject() () {
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
     case BusinessAddressConfirmationPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.Address)
-    case SelectConnectionBusinessPage(index)  => _ => routes.AddAnotherPersonController.onPageLoad(index, NormalMode)
+    case SelectConnectionBusinessPage(index)  => _ => routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
     case AddAnotherPersonPage(index)          => addAnotherPersonRoutes(_, index)
     case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index)
     case ApproximateValuePage                 => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
@@ -55,12 +55,13 @@ class Navigator @Inject() () {
     case ActivityTimePeriodPage               => _ => routes.DescriptionActivityController.onPageLoad(NormalMode)
     case IndividualConnectionPage(index) =>
       _ => routes.IndividualBusinessDetailsController.onPageLoad(index, NormalMode)
-    case DescriptionActivityPage   => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
-    case SupportingDocumentPage    => supportingDocumentRoutes
-    case HowManyPeopleKnowPage     => _ => routes.ProvideContactDetailsController.onPageLoad(NormalMode)
-    case ProvideContactDetailsPage => provideContactDetailsRoutes
-    case YourContactDetailsPage    => _ => routes.SupportingDocumentController.onPageLoad(NormalMode)
-    case _                         => _ => routes.IndexController.onPageLoad
+    case DescriptionActivityPage         => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+    case SupportingDocumentPage          => supportingDocumentRoutes
+    case HowManyPeopleKnowPage           => _ => routes.ProvideContactDetailsController.onPageLoad(NormalMode)
+    case ProvideContactDetailsPage       => provideContactDetailsRoutes
+    case YourContactDetailsPage          => _ => routes.SupportingDocumentController.onPageLoad(NormalMode)
+    case ActivitySourceOfInformationPage => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
+    case _                               => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
@@ -149,7 +150,7 @@ class Navigator @Inject() () {
       case AddAnotherPerson.Yes =>
         routes.IndividualInformationController.onPageLoad(Index(0), NormalMode)
       case AddAnotherPerson.No =>
-        routes.ApproximateValueController.onPageLoad(NormalMode)
+        routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def individualBusinessDetailsRoutes(answers: UserAnswers, index: Index): Call =

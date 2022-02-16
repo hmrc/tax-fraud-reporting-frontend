@@ -840,7 +840,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           AddAnotherPersonPage(Index(0)),
           NormalMode,
           answers
-        ) mustBe routes.ApproximateValueController.onPageLoad(NormalMode)
+        ) mustBe routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
       }
 
       "must go from individual have business details page" - {
@@ -902,7 +902,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           SelectConnectionBusinessPage(Index(0)),
           NormalMode,
           emptyUserAnswers
-        ) mustBe routes.AddAnotherPersonController.onPageLoad(Index(0), NormalMode)
+        ) mustBe routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
       }
 
     }
@@ -1054,6 +1054,18 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           UserAnswers("id")
         ) mustBe routes.JourneyRecoveryController.onPageLoad()
       }
+    }
+
+    "must go from how do you know this information page" - {
+
+      "to the what is the total value of the activity page for the first selection" in {
+        navigator.nextPage(
+          ActivitySourceOfInformationPage,
+          NormalMode,
+          emptyUserAnswers
+        ) mustBe routes.ApproximateValueController.onPageLoad(NormalMode)
+      }
+
     }
 
     "in Check mode" - {
