@@ -150,7 +150,10 @@ class Navigator @Inject() () {
   private def addAnotherPersonRoutes(answers: UserAnswers, index: Index): Call =
     answers.get(AddAnotherPersonPage(index)).map {
       case AddAnotherPerson.Yes =>
-        routes.IndividualInformationController.onPageLoad(Index(0), NormalMode)
+        routes.IndividualInformationController.onPageLoad(
+          Index(answers.get(IndividualIndexPage).getOrElse(List.empty).length),
+          NormalMode
+        )
       case AddAnotherPerson.No =>
         routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
@@ -158,12 +161,18 @@ class Navigator @Inject() () {
   private def individualBusinessDetailsRoutes(answers: UserAnswers, index: Index): Call =
     answers.get(IndividualBusinessDetailsPage(index)).map {
       case IndividualBusinessDetails.Yes =>
-        routes.BusinessInformationCheckController.onPageLoad(Index(0), NormalMode)
+        routes.BusinessInformationCheckController.onPageLoad(index, NormalMode)
       case IndividualBusinessDetails.No =>
-        routes.AddAnotherPersonController.onPageLoad(Index(0), NormalMode)
+        skipAddAnotherPersonPage(answers, index)
       case IndividualBusinessDetails.DontKnow =>
-        routes.AddAnotherPersonController.onPageLoad(Index(0), NormalMode)
+        skipAddAnotherPersonPage(answers, index)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def skipAddAnotherPersonPage(answers: UserAnswers, index: Index): Call =
+    answers.get(IndividualIndexPage) match {
+      case individuals if index.display < 5 => routes.AddAnotherPersonController.onPageLoad(index, NormalMode)
+      case _                                => routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
+    }
 
   private def whenActivityHappenRoutes(answers: UserAnswers): Call =
     answers.get(WhenActivityHappenPage).map {

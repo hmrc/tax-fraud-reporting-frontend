@@ -831,7 +831,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           AddAnotherPersonPage(Index(0)),
           NormalMode,
           answers
-        ) mustBe routes.IndividualInformationController.onPageLoad(Index(0), NormalMode)
+        ) mustBe routes.IndividualInformationController.onPageLoad(Index(1), NormalMode)
       }
 
       "to the total value of the activity page for the no" in {
