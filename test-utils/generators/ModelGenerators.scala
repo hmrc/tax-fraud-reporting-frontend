@@ -22,6 +22,20 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryActivitySourceOfInformation: Arbitrary[ActivitySourceOfInformation] =
+    Arbitrary {
+      Gen.oneOf(
+        Gen.alphaStr.map(ActivitySourceOfInformation.Other),
+        Gen.const(ActivitySourceOfInformation.ReportedIndividuals),
+        Gen.const(ActivitySourceOfInformation.InformationInLocalArea),
+        Gen.const(ActivitySourceOfInformation.ObservedTheActivity),
+        Gen.const(ActivitySourceOfInformation.OverheardTheActivity),
+        Gen.const(ActivitySourceOfInformation.SpeculatedThisActivity),
+        Gen.const(ActivitySourceOfInformation.ReportedByIndividual),
+        Gen.const(ActivitySourceOfInformation.ByThirdPart)
+      )
+    }
+
   implicit lazy val arbitraryYourContactDetails: Arbitrary[YourContactDetails] =
     Arbitrary {
       for {
