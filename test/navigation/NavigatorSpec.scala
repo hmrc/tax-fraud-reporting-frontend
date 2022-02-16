@@ -1056,6 +1056,18 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
       }
     }
 
+    "must go from how do you know this information page" - {
+
+      "to the what is the total value of the activity page for the first selection" in {
+        navigator.nextPage(
+          ActivitySourceOfInformationPage,
+          NormalMode,
+          emptyUserAnswers
+        ) mustBe routes.ApproximateValueController.onPageLoad(NormalMode)
+      }
+
+    }
+
     "in Check mode" - {
 
       "must go from a page that doesn't exist in the edit route map to CheckYourAnswers" in {
