@@ -69,7 +69,7 @@ class CheckYourAnswersController @Inject() (
             SelectConnectionBusinessSummary.row(answers, index)
           ).flatten
         }
-        SummaryListViewModel(Seq(SelectConnectionBusinessSummary.row(answers, index = 0)).flatten ++ x)
+        SummaryListViewModel(x)
       }
 
       val individualDetails = {

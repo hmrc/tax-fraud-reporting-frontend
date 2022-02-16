@@ -176,3 +176,5 @@ GET        /activity-source-of-information                        controllers.Ac
 POST       /activity-source-of-information                        controllers.ActivitySourceOfInformationController.onSubmit(mode: Mode = NormalMode)
 GET        /change-activity-source-of-information                  controllers.ActivitySourceOfInformationController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-activity-source-of-information                  controllers.ActivitySourceOfInformationController.onSubmit(mode: Mode = CheckMode)
+
+GET        /submit-your-report                       controllers.SubmitYourReportController.onPageLoad()
