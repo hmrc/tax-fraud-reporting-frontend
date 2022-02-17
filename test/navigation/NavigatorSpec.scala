@@ -825,7 +825,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must go from add another person page" - {
 
-      "to the individual information page page for the yes" in {
+      "to the individual information page page when the user answers yes" in {
         val answers = UserAnswers("id").set(AddAnotherPersonPage(Index(0)), AddAnotherPerson.Yes).success.value
         navigator.nextPage(
           AddAnotherPersonPage(Index(0)),
@@ -834,7 +834,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         ) mustBe routes.IndividualInformationController.onPageLoad(Index(1), NormalMode)
       }
 
-      "to the total value of the activity page for the no" in {
+      "to the total value of the activity page when the user answers no" in {
         val answers = UserAnswers("id").set(AddAnotherPersonPage(Index(0)), AddAnotherPerson.No).success.value
         navigator.nextPage(
           AddAnotherPersonPage(Index(0)),
