@@ -460,6 +460,21 @@ documentationDescription.error.required = (W) Enter a description of the support
 documentationDescription.error.length = (W) The description of the supporting information you hold must be 500 characters or fewer. (W)
 documentationDescription.change.hidden = (W) DocumentationDescription (W)
 
+submitYourReport.title = (W) Submit your report (W)
+submitYourReport.heading = (W) Submit your report (W)
+submitYourReport.p1 = (W) HMRC appreciate the time taken to report this activity. (W)
+submitYourReport.p2 = (W) Your security is taken seriously. Once you have submitted your report: (W)
+submitYourReport.list1 = (W) do not find out more about the activity (W)
+submitYourReport.list2 = (W) do not make further reports on the same activity (W)
+
+submitYourReport.title = (W) Submit your report (W)
+submitYourReport.heading = (W) Submit your report (W)
+submitYourReport.p1 = (W) HMRC appreciate the time taken to report this activity. (W)
+submitYourReport.p2 = (W) Your security is taken seriously. Once you have submitted your report: (W)
+submitYourReport.list1 = (W) do not find out more about the activity (W)
+submitYourReport.list2 = (W) do not make further reports on the same activity (W)
+submitYourReport.submit = (W) Submit your report (W)
+
 activitySourceOfInformation.title = (W) How do you know this information? (W)
 activitySourceOfInformation.heading = (W) How do you know this information? (W)
 activitySourceOfInformation.hint = (W) Select the closest description. (W)
