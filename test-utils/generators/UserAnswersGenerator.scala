@@ -32,7 +32,7 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(YourContactDetailsPage.type, JsValue)] ::
       arbitrary[(ProvideContactDetailsPage.type, JsValue)] ::
       arbitrary[(SupportingDocumentPage.type, JsValue)] ::
-      arbitrary[(AddAnotherPersonPage, JsValue)] ::
+      arbitrary[(AddAnotherPersonPage.type, JsValue)] ::
       arbitrary[(HowManyPeopleKnowPage.type, JsValue)] ::
       arbitrary[(ActivityTimePeriodPage.type, JsValue)] ::
       arbitrary[(WhenActivityHappenPage.type, JsValue)] ::

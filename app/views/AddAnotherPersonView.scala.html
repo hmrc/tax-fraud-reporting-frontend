@@ -26,21 +26,21 @@
     listWithAction: HmrcListWithActions
 )
 
-@(form: Form[_], index:Index, mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("addAnotherPerson.title"))) {
 
-    @formHelper(action = routes.AddAnotherPersonController.onSubmit(index, mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.AddAnotherPersonController.onSubmit(mode), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
         }
 
-        <h1 class="govuk-heading-l">@messages("individual.addAnother.header", {index.display})</h1>
+        <h1 class="govuk-heading-l">@messages("individual.addAnother.header")</h1>
         <div class="govuk-form-group">
             @listWithAction(ListWithActions(
-                items = (1 to index.display).map { id =>
-                    ListWithActionsItem(name = messages(s"individual.${id}"), actions = List(ListWithActionsAction(content = messages("site.change"), href = ""), ListWithActionsAction(content = messages("site.remove"), href = "")))
+                items = (1 to 5).map { id =>
+                    ListWithActionsItem(name = messages(s"individual.$id"), actions = List(ListWithActionsAction(content = messages("site.change"), href = ""), ListWithActionsAction(content = messages("site.remove"), href = "")))
                 }
                 )
             )

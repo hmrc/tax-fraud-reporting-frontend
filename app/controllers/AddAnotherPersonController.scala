@@ -18,9 +18,7 @@ package controllers
 
 import controllers.actions._
 import forms.AddAnotherPersonFormProvider
-
-import javax.inject.Inject
-import models.{Index, Mode}
+import models.Mode
 import navigation.Navigator
 import pages.AddAnotherPersonPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -29,6 +27,7 @@ import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.AddAnotherPersonView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class AddAnotherPersonController @Inject() (
@@ -46,19 +45,19 @@ class AddAnotherPersonController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      Ok(view(form, index, mode))
+      Ok(view(form, mode))
   }
 
-  def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode))),
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(AddAnotherPersonPage(index), value))
-          } yield Redirect(navigator.nextPage(AddAnotherPersonPage(index), mode, updatedAnswers))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(AddAnotherPersonPage, value))
+          } yield Redirect(navigator.nextPage(AddAnotherPersonPage, mode, updatedAnswers))
       )
   }
 

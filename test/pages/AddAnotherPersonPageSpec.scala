@@ -19,14 +19,14 @@ package pages
 import models.{AddAnotherPerson, Index}
 import pages.behaviours.PageBehaviours
 
-class AddAnotherPersonSpec extends PageBehaviours {
+class AddAnotherPersonPageSpec extends PageBehaviours {
 
   "AddAnotherPersonPage" - {
 
-    beRetrievable[AddAnotherPerson](AddAnotherPersonPage(Index(0)))
+    beRetrievable[AddAnotherPerson](AddAnotherPersonPage)
 
-    beSettable[AddAnotherPerson](AddAnotherPersonPage(Index(0)))
+    beSettable[AddAnotherPerson](AddAnotherPersonPage)
 
-    beRemovable[AddAnotherPerson](AddAnotherPersonPage(Index(0)))
+    beRemovable[AddAnotherPerson](AddAnotherPersonPage)
   }
 }

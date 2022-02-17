@@ -47,8 +47,8 @@ class Navigator @Inject() () {
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
     case BusinessAddressConfirmationPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.Address)
-    case SelectConnectionBusinessPage(index)  => _ => routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
-    case AddAnotherPersonPage(index)          => addAnotherPersonRoutes(_, index)
+    case SelectConnectionBusinessPage(_)      => _ => routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
+    case AddAnotherPersonPage                 => addAnotherPersonRoutes
     case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index)
     case ApproximateValuePage                 => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
     case WhenActivityHappenPage               => whenActivityHappenRoutes
@@ -147,8 +147,8 @@ class Navigator @Inject() () {
         )
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def addAnotherPersonRoutes(answers: UserAnswers, index: Index): Call =
-    answers.get(AddAnotherPersonPage(index)).map {
+  private def addAnotherPersonRoutes(answers: UserAnswers): Call =
+    answers.get(AddAnotherPersonPage).map {
       case AddAnotherPerson.Yes =>
         routes.IndividualInformationController.onPageLoad(
           Index(answers.get(IndividualIndexPage).getOrElse(List.empty).length),
@@ -163,7 +163,7 @@ class Navigator @Inject() () {
       case IndividualBusinessDetails.Yes =>
         routes.BusinessInformationCheckController.onPageLoad(index, NormalMode)
       case _ =>
-        routes.AddAnotherPersonController.onPageLoad(index, NormalMode)
+        routes.AddAnotherPersonController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def whenActivityHappenRoutes(answers: UserAnswers): Call =

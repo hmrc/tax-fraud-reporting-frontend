@@ -826,18 +826,20 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
     "must go from add another person page" - {
 
       "to the individual information page page when the user answers yes" in {
-        val answers = UserAnswers("id").set(AddAnotherPersonPage(Index(0)), AddAnotherPerson.Yes).success.value
+        val answers = UserAnswers("id")
+          .set(AddAnotherPersonPage, AddAnotherPerson.Yes).success.value
+          .set(IndividualInformationPage(Index(0)), IndividualInformation.values.toSet).success.value
         navigator.nextPage(
-          AddAnotherPersonPage(Index(0)),
+          AddAnotherPersonPage,
           NormalMode,
           answers
         ) mustBe routes.IndividualInformationController.onPageLoad(Index(1), NormalMode)
       }
 
       "to the total value of the activity page when the user answers no" in {
-        val answers = UserAnswers("id").set(AddAnotherPersonPage(Index(0)), AddAnotherPerson.No).success.value
+        val answers = UserAnswers("id").set(AddAnotherPersonPage, AddAnotherPerson.No).success.value
         navigator.nextPage(
-          AddAnotherPersonPage(Index(0)),
+          AddAnotherPersonPage,
           NormalMode,
           answers
         ) mustBe routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
@@ -862,7 +864,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             IndividualBusinessDetailsPage(Index(0)),
             NormalMode,
             answers
-          ) mustBe routes.AddAnotherPersonController.onPageLoad(Index(0), NormalMode)
+          ) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
         }
 
         "to the add another page for the answer don't know" in {
@@ -874,7 +876,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             IndividualBusinessDetailsPage(Index(0)),
             NormalMode,
             answers
-          ) mustBe routes.AddAnotherPersonController.onPageLoad(Index(0), NormalMode)
+          ) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
         }
 
         "to the journey recovery controller if there is no individual have business details set" in {

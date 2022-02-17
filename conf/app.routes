@@ -118,10 +118,10 @@ POST       /:index/business-contact-details                        controllers.B
 GET        /:index/change-business-contact-details                  controllers.BusinessContactDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-business-contact-details                  controllers.BusinessContactDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/add-another-person                        controllers.AddAnotherPersonController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/add-another-person                        controllers.AddAnotherPersonController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-add-another-person                  controllers.AddAnotherPersonController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-add-another-person                  controllers.AddAnotherPersonController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /add-another-person                        controllers.AddAnotherPersonController.onPageLoad(mode: Mode = NormalMode)
+POST       /add-another-person                        controllers.AddAnotherPersonController.onSubmit(mode: Mode = NormalMode)
+GET        /change-add-another-person                  controllers.AddAnotherPersonController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-add-another-person                  controllers.AddAnotherPersonController.onSubmit(mode: Mode = CheckMode)
 
 GET        /:index/individual-address-start                       controllers.IndividualAddressRedirectController.onPageLoad(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-individual-address-start                controllers.IndividualAddressRedirectController.onPageLoad(index: Index, mode: Mode = CheckMode)

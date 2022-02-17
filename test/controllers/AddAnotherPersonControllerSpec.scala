@@ -18,12 +18,9 @@ package controllers
 
 import base.SpecBase
 import forms.AddAnotherPersonFormProvider
-import models.{AddAnotherPerson, Index, NormalMode, UserAnswers}
+import models.{AddAnotherPerson, NormalMode}
 import navigation.{FakeNavigator, Navigator}
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.AddAnotherPersonPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -31,13 +28,11 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.AddAnotherPersonView
 
-import scala.concurrent.Future
-
 class AddAnotherPersonControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val addAnotherPersonRoute = routes.AddAnotherPersonController.onPageLoad(Index(0), NormalMode).url
+  lazy val addAnotherPersonRoute = routes.AddAnotherPersonController.onPageLoad(NormalMode).url
 
   val formProvider = new AddAnotherPersonFormProvider()
   val form         = formProvider()
@@ -56,7 +51,7 @@ class AddAnotherPersonControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[AddAnotherPersonView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -100,7 +95,7 @@ class AddAnotherPersonControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 

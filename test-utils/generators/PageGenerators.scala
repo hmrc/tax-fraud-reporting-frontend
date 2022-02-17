@@ -37,8 +37,8 @@ trait PageGenerators {
   implicit lazy val arbitrarySupportingDocumentPage: Arbitrary[SupportingDocumentPage.type] =
     Arbitrary(SupportingDocumentPage)
 
-  implicit lazy val arbitraryAddAnotherPersonPage: Arbitrary[AddAnotherPersonPage] =
-    Arbitrary(AddAnotherPersonPage(Index(0)))
+  implicit lazy val arbitraryAddAnotherPersonPage: Arbitrary[AddAnotherPersonPage.type] =
+    Arbitrary(AddAnotherPersonPage)
 
   implicit lazy val arbitraryHowManyPeopleKnowPage: Arbitrary[HowManyPeopleKnowPage.type] =
     Arbitrary(HowManyPeopleKnowPage)
