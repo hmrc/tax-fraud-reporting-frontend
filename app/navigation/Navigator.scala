@@ -67,6 +67,7 @@ class Navigator @Inject() () {
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
+    case SupportingDocumentPage => supportingDocumentCheckRoutes
     case _ => _ => routes.CheckYourAnswersController.onPageLoad
   }
 
@@ -180,6 +181,17 @@ class Navigator @Inject() () {
       case SupportingDocument.No =>
         routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def supportingDocumentCheckRoutes(answers: UserAnswers): Call =
+    answers.get(SupportingDocumentPage).map {
+      case SupportingDocument.Yes =>
+        if (answers.get(DocumentationDescriptionPage).isDefined) {
+          routes.CheckYourAnswersController.onPageLoad
+        } else {
+          routes.DocumentationDescriptionController.onPageLoad(CheckMode)
+        }
+      case SupportingDocument.No => routes.CheckYourAnswersController.onPageLoad
+    }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
 
   private def provideContactDetailsRoutes(answers: UserAnswers): Call =
     answers.get(ProvideContactDetailsPage).map {

@@ -1079,6 +1079,31 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           UserAnswers("id")
         ) mustBe routes.CheckYourAnswersController.onPageLoad
       }
+
+      "must go from the supporting document page" - {
+
+        "to the document description page when the user selects yes and there is no answer for the document description" in {
+          val answers = emptyUserAnswers.set(SupportingDocumentPage, SupportingDocument.Yes).success.value
+          navigator.nextPage(SupportingDocumentPage, CheckMode, answers) mustBe routes.DocumentationDescriptionController.onPageLoad(CheckMode)
+        }
+
+        "to the check your answers page when the user selects yes and there is an answer for the document description" in {
+          val answers = emptyUserAnswers
+            .set(SupportingDocumentPage, SupportingDocument.Yes).success.value
+            .set(DocumentationDescriptionPage, "foobar").success.value
+          navigator.nextPage(SupportingDocumentPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the check your answers page when the user selects no" in {
+          val answers = emptyUserAnswers
+            .set(SupportingDocumentPage, SupportingDocument.No).success.value
+          navigator.nextPage(SupportingDocumentPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the check your answers page when there is no user selection" in {
+          navigator.nextPage(SupportingDocumentPage, CheckMode, emptyUserAnswers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+      }
     }
   }
 }
