@@ -30,4 +30,6 @@ object ViewUtils {
   def errorPrefix(form: Form[_])(implicit messages: Messages): String =
     if (form.hasErrors || form.hasGlobalErrors) messages("error.browser.title.prefix") else ""
 
+  val individualMap: Map[Int, String] = Map(1 -> "A", 2 -> "B", 3 -> "C", 4 -> "D", 5 -> "C")
+
 }

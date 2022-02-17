@@ -36,11 +36,11 @@
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
         }
 
-        <h1 class="govuk-heading-l">@messages("individual.addAnother.header")</h1>
+        <h1 class="govuk-heading-l">@messages("individual.addAnother.header", {index.display})</h1>
         <div class="govuk-form-group">
             @listWithAction(ListWithActions(
                 items = (1 to index.display).map { id =>
-                    ListWithActionsItem(name = messages(s"individual.1", "$id"), actions = List(ListWithActionsAction(content = messages("site.change"), href = ""), ListWithActionsAction(content = messages("site.remove"), href = "")))
+                    ListWithActionsItem(name = messages(s"individual.${id}"), actions = List(ListWithActionsAction(content = messages("site.change"), href = ""), ListWithActionsAction(content = messages("site.remove"), href = "")))
                 }
                 )
             )

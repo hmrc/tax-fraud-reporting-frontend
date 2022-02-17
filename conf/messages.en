@@ -390,9 +390,13 @@ addAnotherPerson.checkYourAnswersLabel = Are there additional people involved in
 addAnotherPerson.error.required = Select yes if you need to add another individual.
 addAnotherPerson.change.hidden = AddAnotherPerson
 
-individual.addAnother.header = You have added one individual
+individual.addAnother.header = You have added {0} individual
 individual.items.moreThan5 = You cannot add another individual as you have entered a maximum of 5.
 individual.1 = Individual A
+individual.2 = Individual B
+individual.3 = Individual C
+individual.4 = Individual D
+individual.5 = Individual E
 
 individualAddress.lookup.title = What is the individual''''s address?
 individualAddress.lookup.heading = What is the individual''''s address?
