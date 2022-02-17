@@ -30,13 +30,13 @@ class SupportingDocumentPageSpec extends PageBehaviours {
     beRemovable[SupportingDocument](SupportingDocumentPage)
 
     "must remove documentation description when the user selects no" in {
-      val answers = UserAnswers("id").set(DocumentationDescriptionPage, "foobar").success.value
+      val answers        = UserAnswers("id").set(DocumentationDescriptionPage, "foobar").success.value
       val updatedAnswers = answers.set(SupportingDocumentPage, SupportingDocument.No).success.value
-      updatedAnswers.get(DocumentationDescriptionPage) mustNot be (defined)
+      updatedAnswers.get(DocumentationDescriptionPage) mustNot be(defined)
     }
 
     "must not remove documentation description when the user selects yes" in {
-      val answers = UserAnswers("id").set(DocumentationDescriptionPage, "foobar").success.value
+      val answers        = UserAnswers("id").set(DocumentationDescriptionPage, "foobar").success.value
       val updatedAnswers = answers.set(SupportingDocumentPage, SupportingDocument.Yes).success.value
       updatedAnswers.get(DocumentationDescriptionPage).value mustBe "foobar"
     }

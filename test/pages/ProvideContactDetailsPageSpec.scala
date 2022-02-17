@@ -16,10 +16,10 @@
 
 package pages
 
-import models.ProvideContactDetails
+import models.{ProvideContactDetails, UserAnswers, YourContactDetails}
 import pages.behaviours.PageBehaviours
 
-class ProvideContactDetailsSpec extends PageBehaviours {
+class ProvideContactDetailsPageSpec extends PageBehaviours {
 
   "ProvideContactDetailsPage" - {
 
@@ -29,4 +29,29 @@ class ProvideContactDetailsSpec extends PageBehaviours {
 
     beRemovable[ProvideContactDetails](ProvideContactDetailsPage)
   }
+
+  "must remove contact details when the user selects no" in {
+    val answers = UserAnswers("id").set(
+      YourContactDetailsPage,
+      YourContactDetails("firstname", "lastname", "tel", Some("email"), "test")
+    ).success.value
+    val updatedAnswers = answers.set(ProvideContactDetailsPage, ProvideContactDetails.No).success.value
+    updatedAnswers.get(YourContactDetailsPage) mustNot be(defined)
+  }
+
+  "must not remove contact details when the user selects yes" in {
+    val answers = UserAnswers("id").set(
+      YourContactDetailsPage,
+      YourContactDetails("firstname", "lastname", "tel", Some("email"), "test")
+    ).success.value
+    val updatedAnswers = answers.set(ProvideContactDetailsPage, ProvideContactDetails.Yes).success.value
+    updatedAnswers.get(YourContactDetailsPage).value mustBe YourContactDetails(
+      "firstname",
+      "lastname",
+      "tel",
+      Some("email"),
+      "test"
+    )
+  }
+
 }

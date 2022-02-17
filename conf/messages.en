@@ -469,6 +469,7 @@ checkYourAnswers.individualDetails = The individual you are reporting
 individualCheckYourAnswers.title = Check your submission
 individualCheckYourAnswers.heading = Check your submission
 individualCheckYourAnswers.individualDetails = Information on Individual A
+individualCheckYourAnswers.individualBusinessDetails = Information on this individual''s business
 
 submitYourReport.title = Submit your report
 submitYourReport.heading = Submit your report

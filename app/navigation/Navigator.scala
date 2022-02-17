@@ -61,14 +61,14 @@ class Navigator @Inject() () {
     case ProvideContactDetailsPage       => provideContactDetailsRoutes
     case YourContactDetailsPage          => _ => routes.SupportingDocumentController.onPageLoad(NormalMode)
     case ActivitySourceOfInformationPage => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
-    case DocumentationDescriptionPage => _ => routes.CheckYourAnswersController.onPageLoad
-    //case BusinessInformationCheckPage(index) => previousBusinessInformationRoutes
+    case DocumentationDescriptionPage    => _ => routes.CheckYourAnswersController.onPageLoad
     case _                               => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
-    case SupportingDocumentPage => supportingDocumentCheckRoutes
-    case _ => _ => routes.CheckYourAnswersController.onPageLoad
+    case SupportingDocumentPage    => supportingDocumentCheckRoutes
+    case ProvideContactDetailsPage => provideContactDetailsCheckRoutes
+    case _                         => _ => routes.CheckYourAnswersController.onPageLoad
   }
 
   private def individualInformationRoute(answer: IndividualInformation, index: Index, mode: Mode): Call =
@@ -127,7 +127,6 @@ class Navigator @Inject() () {
       case BusinessInformationCheck.BusinessReference => routes.ReferenceNumbersController.onPageLoad(index, mode)
       case BusinessInformationCheck.Contact           => routes.BusinessContactDetailsController.onPageLoad(index, mode)
       case BusinessInformationCheck.Address           => routes.BusinessAddressRedirectController.onPageLoad(index, mode)
-
     }
 
   private def businessInformationRoutes(answers: UserAnswers, index: Index): Call =
@@ -182,15 +181,14 @@ class Navigator @Inject() () {
         routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def supportingDocumentCheckRoutes(answers: UserAnswers): Call =
-    answers.get(SupportingDocumentPage).map {
-      case SupportingDocument.Yes =>
-        if (answers.get(DocumentationDescriptionPage).isDefined) {
+  private def provideContactDetailsCheckRoutes(answers: UserAnswers): Call =
+    answers.get(ProvideContactDetailsPage).map {
+      case ProvideContactDetails.Yes =>
+        if (answers.get(YourContactDetailsPage).isDefined)
           routes.CheckYourAnswersController.onPageLoad
-        } else {
-          routes.DocumentationDescriptionController.onPageLoad(CheckMode)
-        }
-      case SupportingDocument.No => routes.CheckYourAnswersController.onPageLoad
+        else
+          routes.YourContactDetailsController.onPageLoad(CheckMode)
+      case ProvideContactDetails.No => routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
 
   private def provideContactDetailsRoutes(answers: UserAnswers): Call =
@@ -201,13 +199,15 @@ class Navigator @Inject() () {
         routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
- /* private def previousBusinessInformationRoutes(answers: UserAnswers): Call =
-    answers.get(ProvideContactDetailsPage).map {
-      case ProvideContactDetails.Yes  =>
-        val businessInformationChecks = answers.get(PreviousBusinessInformation).getOrElse(List.empty)
-        routes.ProvideContactDetailsController.onPageLoad(NormalMode)
-      case _ => routes.CheckYourAnswersController.onPageLoad
-    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())*/
+  private def supportingDocumentCheckRoutes(answers: UserAnswers): Call =
+    answers.get(SupportingDocumentPage).map {
+      case SupportingDocument.Yes =>
+        if (answers.get(DocumentationDescriptionPage).isDefined)
+          routes.CheckYourAnswersController.onPageLoad
+        else
+          routes.DocumentationDescriptionController.onPageLoad(CheckMode)
+      case SupportingDocument.No => routes.CheckYourAnswersController.onPageLoad
+    }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
     case NormalMode =>

@@ -33,13 +33,14 @@ object YourContactDetailsSummary {
         def msg(key: String) = messages("yourContactDetails." + key)
 
         val values = List(
-          "firstName" -> Some(answer.FirstName),
-          "lastName"  -> Some(answer.LastName),
-          "tel"       -> Some(answer.Tel),
-          "emailLabel" -> answer.Email,
+          "firstName"     -> Some(answer.FirstName),
+          "lastName"      -> Some(answer.LastName),
+          "tel"           -> Some(answer.Tel),
+          "emailLabel"    -> answer.Email,
           "memorableWord" -> Some(answer.MemorableWord)
-        ) flatMap { case (key, valueOpt) =>
-          valueOpt map { key -> _ }
+        ) flatMap {
+          case (key, valueOpt) =>
+            valueOpt map { key -> _ }
         }
 
         values map {

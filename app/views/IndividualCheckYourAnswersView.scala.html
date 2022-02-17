@@ -21,7 +21,7 @@
     govukSummaryList: GovukSummaryList
 )
 
-@(individualDetails: SummaryList)(implicit request: Request[_], messages: Messages)
+@(individualDetails: SummaryList, individualBusinessDetails: SummaryList)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("individualCheckYourAnswers.title"))) {
 
@@ -29,6 +29,9 @@
 
      <h2 class="govuk-heading-m">@messages("individualCheckYourAnswers.individualDetails")</h2>
      @govukSummaryList(individualDetails.withCssClass("govuk-!-margin-bottom-6"))
+
+    <h2 class="govuk-heading-m">@messages("individualCheckYourAnswers.individualBusinessDetails")</h2>
+    @govukSummaryList(individualBusinessDetails.withCssClass("govuk-!-margin-bottom-6"))
 
     <a id="continue-button" href="@routes.SubmitYourReportController.onPageLoad" role="button" class="govuk-button" data-module="govuk-button">
      @messages("site.continue")

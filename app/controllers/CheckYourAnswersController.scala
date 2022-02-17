@@ -56,11 +56,8 @@ class CheckYourAnswersController @Inject() (
           YourContactDetailsSummary.rows(answers)
       )
 
-      val supportDoc = SummaryListViewModel (
-        Seq(
-          SupportingDocumentSummary.row(answers),
-          DocumentationDescriptionSummary.row(answers)
-        ).flatten
+      val supportDoc = SummaryListViewModel(
+        Seq(SupportingDocumentSummary.row(answers), DocumentationDescriptionSummary.row(answers)).flatten
       )
 
       val supportingDocuments = SummaryListViewModel(Seq(SupportingDocumentSummary.row(answers)).flatten)
@@ -97,7 +94,17 @@ class CheckYourAnswersController @Inject() (
         SummaryListViewModel(v)
       }
 
-      Ok(view(isBusinessJourney, activityDetails, yourDetails, supportingDocuments, businessDetails, individualDetails, supportDoc))
+      Ok(
+        view(
+          isBusinessJourney,
+          activityDetails,
+          yourDetails,
+          supportingDocuments,
+          businessDetails,
+          individualDetails,
+          supportDoc
+        )
+      )
   }
 
 }

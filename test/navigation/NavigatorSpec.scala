@@ -1068,6 +1068,30 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     }
 
+    "must go from your details page" - {
+
+      "to the Do you have any supporting information page for the first selection" in {
+        navigator.nextPage(
+          YourContactDetailsPage,
+          NormalMode,
+          emptyUserAnswers
+        ) mustBe routes.SupportingDocumentController.onPageLoad(NormalMode)
+      }
+
+    }
+
+    "must go from supporting information you currently have page" - {
+
+      "to the check your answers page for the first selection" in {
+        navigator.nextPage(
+          DocumentationDescriptionPage,
+          NormalMode,
+          emptyUserAnswers
+        ) mustBe routes.CheckYourAnswersController.onPageLoad
+      }
+
+    }
+
     "in Check mode" - {
 
       "must go from a page that doesn't exist in the edit route map to CheckYourAnswers" in {
@@ -1084,26 +1108,87 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
         "to the document description page when the user selects yes and there is no answer for the document description" in {
           val answers = emptyUserAnswers.set(SupportingDocumentPage, SupportingDocument.Yes).success.value
-          navigator.nextPage(SupportingDocumentPage, CheckMode, answers) mustBe routes.DocumentationDescriptionController.onPageLoad(CheckMode)
+          navigator.nextPage(
+            SupportingDocumentPage,
+            CheckMode,
+            answers
+          ) mustBe routes.DocumentationDescriptionController.onPageLoad(CheckMode)
         }
 
         "to the check your answers page when the user selects yes and there is an answer for the document description" in {
           val answers = emptyUserAnswers
             .set(SupportingDocumentPage, SupportingDocument.Yes).success.value
             .set(DocumentationDescriptionPage, "foobar").success.value
-          navigator.nextPage(SupportingDocumentPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+          navigator.nextPage(
+            SupportingDocumentPage,
+            CheckMode,
+            answers
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
         }
 
         "to the check your answers page when the user selects no" in {
           val answers = emptyUserAnswers
             .set(SupportingDocumentPage, SupportingDocument.No).success.value
-          navigator.nextPage(SupportingDocumentPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+          navigator.nextPage(
+            SupportingDocumentPage,
+            CheckMode,
+            answers
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
         }
 
         "to the check your answers page when there is no user selection" in {
-          navigator.nextPage(SupportingDocumentPage, CheckMode, emptyUserAnswers) mustBe routes.CheckYourAnswersController.onPageLoad
+          navigator.nextPage(
+            SupportingDocumentPage,
+            CheckMode,
+            emptyUserAnswers
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
         }
       }
+
+      "must go from the provide your contact details page" - {
+
+        "to the your details page when the user selects yes and there is no answer for the your details" in {
+          val answers = emptyUserAnswers.set(ProvideContactDetailsPage, ProvideContactDetails.Yes).success.value
+          navigator.nextPage(
+            ProvideContactDetailsPage,
+            CheckMode,
+            answers
+          ) mustBe routes.YourContactDetailsController.onPageLoad(CheckMode)
+        }
+
+        "to the check your answers page when the user selects yes and there is an answer for the your details" in {
+          val answers = emptyUserAnswers
+            .set(ProvideContactDetailsPage, ProvideContactDetails.Yes).success.value
+            .set(
+              YourContactDetailsPage,
+              YourContactDetails("firstname", "lastname", "tel", Some("email"), "test")
+            ).success.value
+          navigator.nextPage(
+            ProvideContactDetailsPage,
+            CheckMode,
+            answers
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the check your answers page when the user selects no" in {
+          val answers = emptyUserAnswers
+            .set(ProvideContactDetailsPage, ProvideContactDetails.No).success.value
+          navigator.nextPage(
+            ProvideContactDetailsPage,
+            CheckMode,
+            answers
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the check your answers page when there is no user selection" in {
+          navigator.nextPage(
+            ProvideContactDetailsPage,
+            CheckMode,
+            emptyUserAnswers
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+      }
+
     }
   }
 }

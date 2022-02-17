@@ -18,7 +18,7 @@ package controllers
 
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import pages.{PreviousIndividualInformation}
+import pages.{PreviousBusinessInformation, PreviousIndividualInformation}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -56,7 +56,22 @@ class IndividualCheckYourAnswersController @Inject() (
         SummaryListViewModel(Seq(SelectConnectionBusinessSummary.row(answers, index = 0)).flatten ++ y)
       }
 
-      Ok(view(individualDetails))
+      val individualBusinessDetails = {
+        val businessInformationChecks = answers.get(PreviousBusinessInformation).getOrElse(List.empty).length
+        val x = (0 until businessInformationChecks).flatMap { index =>
+          Seq(
+            BusinessNameSummary.row(answers, index),
+            TypeBusinessSummary.row(answers, index),
+            BusinessAddressSummary.row(answers, index),
+            BusinessContactDetailsSummary.row(answers, index),
+            ReferenceNumbersSummary.row(answers, index),
+            SelectConnectionBusinessSummary.row(answers, index)
+          ).flatten
+        }
+        SummaryListViewModel(x)
+      }
+
+      Ok(view(individualDetails, individualBusinessDetails))
   }
 
 }

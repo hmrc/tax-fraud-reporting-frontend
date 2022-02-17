@@ -16,12 +16,21 @@
 
 package pages
 
-import models.ProvideContactDetails
+import models.{ProvideContactDetails, UserAnswers}
 import play.api.libs.json.JsPath
+
+import scala.util.{Success, Try}
 
 case object ProvideContactDetailsPage extends QuestionPage[ProvideContactDetails] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "provideContactDetails"
+
+  override def cleanup(value: Option[ProvideContactDetails], userAnswers: UserAnswers): Try[UserAnswers] =
+    value match {
+      case Some(ProvideContactDetails.No) => userAnswers.remove(YourContactDetailsPage)
+      case _                              => Success(userAnswers)
+    }
+
 }

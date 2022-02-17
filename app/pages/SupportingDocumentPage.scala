@@ -27,10 +27,10 @@ case object SupportingDocumentPage extends QuestionPage[SupportingDocument] {
 
   override def toString: String = "supportingDocument"
 
-  override def cleanup(value: Option[SupportingDocument], userAnswers: UserAnswers): Try[UserAnswers] = {
+  override def cleanup(value: Option[SupportingDocument], userAnswers: UserAnswers): Try[UserAnswers] =
     value match {
       case Some(SupportingDocument.No) => userAnswers.remove(DocumentationDescriptionPage)
       case _                           => Success(userAnswers)
     }
-  }
+
 }

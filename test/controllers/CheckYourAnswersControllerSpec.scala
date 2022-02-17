@@ -25,6 +25,8 @@ import viewmodels.checkAnswers._
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAnswersView
 
+import java.time.LocalDate
+
 class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
   "Check Your Answers Controller" - {
@@ -32,10 +34,42 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
     "must return OK and the correct view for a GET" in {
 
       val answers = emptyUserAnswers
+        .set(BusinessNamePage(Index(0)), "name").success.value
+        .set(TypeBusinessPage(Index(0)), "businessType").success.value
+        .set(
+          BusinessAddressConfirmationPage(Index(0)),
+          AddressResponse(List("line"), Some("postcode"), Some("country"))
+        ).success.value
+        .set(
+          BusinessContactDetailsPage(Index(0)),
+          BusinessContactDetails(Some("landLine"), Some("mobileNumber"), Some("email"))
+        ).success.value
+        .set(
+          ReferenceNumbersPage(Index(0)),
+          ReferenceNumbers(Some("vatRegistration"), Some("employeeRefNo"), Some("corporationTax"))
+        ).success.value
+        .set(SelectConnectionBusinessPage(Index(0)), SelectConnectionBusiness.Accountant).success.value
+        .set(
+          IndividualNamePage(Index(0)),
+          IndividualName(Some("firstname"), Some("middlename"), Some("lastname"), Some("aliases"))
+        ).success.value
+        .set(IndividualAgePage(Index(0)), 45).success.value
+        .set(IndividualDateOfBirthPage(Index(0)), LocalDate.now).success.value
+        .set(
+          IndividualAddressConfirmationPage(Index(0)),
+          AddressResponse(List("line"), Some("postcode"), Some("country"))
+        ).success.value
+        .set(
+          IndividualContactDetailsPage(Index(0)),
+          IndividualContactDetails(Some("landLine"), Some("mobileNumber"), Some("email"))
+        ).success.value
+        .set(IndividualNationalInsuranceNumberPage(Index(0)), "AB123456A").success.value
+        .set(IndividualConnectionPage(Index(0)), IndividualConnection.Partner).success.value
+        .set(IndividualBusinessDetailsPage(Index(0)), IndividualBusinessDetails.Yes).success.value
 
       val isBusinessJourney = answers.isBusinessJourney
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(answers)).build()
 
       running(application) {
         val request = FakeRequest(GET, routes.CheckYourAnswersController.onPageLoad.url)
@@ -90,6 +124,14 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           ).flatten
         )
 
+        val supportDoc =
+          SummaryListViewModel(
+            Seq(
+              SupportingDocumentSummary.row(answers)(messages(application)),
+              DocumentationDescriptionSummary.row(answers)(messages(application))
+            ).flatten
+          )
+
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
           isBusinessJourney,
@@ -97,7 +139,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           yourDetails,
           supportingDocuments,
           businessDetails,
-          individualDetails
+          individualDetails,
+          supportDoc
         )(request, messages(application)).toString
       }
     }
