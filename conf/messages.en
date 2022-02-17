@@ -496,3 +496,4 @@ activitySourceOfInformation.error.required = Select or enter how you know the in
 activitySourceOfInformation.error.otherValue.required = Select or enter how you know the information.
 activitySourceOfInformation.error.otherValue.maxLength = How you know the information must be 100 characters or fewer.
 activitySourceOfInformation.change.hidden = Source of Information
+activitySourceOfInformation.change.hidden = ActivitySourceOfInformation
