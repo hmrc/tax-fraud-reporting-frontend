@@ -48,12 +48,7 @@ class AddAnotherPersonController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.get(AddAnotherPersonPage(index)) match {
-        case None        => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm, index, mode))
+      Ok(view(form, index, mode))
   }
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
@@ -63,7 +58,6 @@ class AddAnotherPersonController @Inject() (
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(AddAnotherPersonPage(index), value))
-            _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(AddAnotherPersonPage(index), mode, updatedAnswers))
       )
   }

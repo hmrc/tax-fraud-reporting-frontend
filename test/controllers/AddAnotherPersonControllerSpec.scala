@@ -60,33 +60,9 @@ class AddAnotherPersonControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must populate the view correctly on a GET when the question has previously been answered" in {
-
-      val userAnswers =
-        UserAnswers(userAnswersId).set(AddAnotherPersonPage(Index(0)), AddAnotherPerson.values.head).success.value
-
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
-
-      running(application) {
-        val request = FakeRequest(GET, addAnotherPersonRoute)
-
-        val view = application.injector.instanceOf[AddAnotherPersonView]
-
-        val result = route(application, request).value
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(AddAnotherPerson.values.head), Index(0), NormalMode)(
-          request,
-          messages(application)
-        ).toString
-      }
-    }
-
     "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
