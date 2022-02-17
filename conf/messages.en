@@ -391,6 +391,7 @@ addAnotherPerson.error.required = Select yes if you need to add another individu
 addAnotherPerson.change.hidden = AddAnotherPerson
 
 individual.addAnother.header = You have added {0} individual
+individual.addAnother.header.plural = You have added {0} individuals
 individual.items.moreThan5 = You cannot add another individual as you have entered a maximum of 5.
 individual.1 = Individual A
 individual.2 = Individual B

@@ -26,7 +26,15 @@
     listWithAction: HmrcListWithActions
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], numberOfNominals: Int, mode: Mode)(implicit request: Request[_], messages: Messages)
+
+@headingMessage = @{
+    if (numberOfNominals < 2) {
+        messages("individual.addAnother.header", numberOfNominals)
+    } else {
+        messages("individual.addAnother.header.plural", numberOfNominals)
+    }
+}
 
 @layout(pageTitle = title(form, messages("addAnotherPerson.title"))) {
 
@@ -36,10 +44,10 @@
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
         }
 
-        <h1 class="govuk-heading-l">@messages("individual.addAnother.header")</h1>
+        <h1 class="govuk-heading-l">@headingMessage</h1>
         <div class="govuk-form-group">
             @listWithAction(ListWithActions(
-                items = (1 to 5).map { id =>
+                items = (1 to numberOfNominals).map { id =>
                     ListWithActionsItem(name = messages(s"individual.$id"), actions = List(ListWithActionsAction(content = messages("site.change"), href = ""), ListWithActionsAction(content = messages("site.remove"), href = "")))
                 }
                 )
@@ -51,7 +59,7 @@
                 field  = form("value"),
                 legend = LegendViewModel(messages("addAnotherPerson.heading")).withCssClass("govuk-fieldset__legend--m"),
                 items  = AddAnotherPerson.options
-            )
+            ).inline()
         )
 
         @govukButton(

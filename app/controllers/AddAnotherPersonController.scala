@@ -20,10 +20,9 @@ import controllers.actions._
 import forms.AddAnotherPersonFormProvider
 import models.Mode
 import navigation.Navigator
-import pages.AddAnotherPersonPage
+import pages.{AddAnotherPersonPage, NominalsQuery}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.AddAnotherPersonView
 
@@ -32,7 +31,6 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class AddAnotherPersonController @Inject() (
   override val messagesApi: MessagesApi,
-  sessionRepository: SessionRepository,
   navigator: Navigator,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
@@ -47,18 +45,21 @@ class AddAnotherPersonController @Inject() (
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      Ok(view(form, mode))
+      val numberOfNominals = request.userAnswers.get(NominalsQuery).getOrElse(List.empty).length
+      Ok(view(form, numberOfNominals, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+        formWithErrors => {
+          val numberOfNominals = request.userAnswers.get(NominalsQuery).getOrElse(List.empty).length
+          Future.successful(BadRequest(view(formWithErrors, numberOfNominals, mode)))
+        },
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(AddAnotherPersonPage, value))
           } yield Redirect(navigator.nextPage(AddAnotherPersonPage, mode, updatedAnswers))
       )
   }
-
 }

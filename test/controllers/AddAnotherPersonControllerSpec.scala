@@ -51,7 +51,7 @@ class AddAnotherPersonControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[AddAnotherPersonView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, 0, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -95,7 +95,7 @@ class AddAnotherPersonControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, 0, NormalMode)(request, messages(application)).toString
       }
     }
 
