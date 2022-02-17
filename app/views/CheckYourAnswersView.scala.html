@@ -21,7 +21,7 @@
     govukSummaryList: GovukSummaryList
 )
 
-@(isBusinessJourney: Boolean, activityDetails: SummaryList, yourDetails: SummaryList, supportingDocuments: SummaryList, businessDetails: SummaryList, individualDetails: SummaryList)(implicit request: Request[_], messages: Messages)
+@(isBusinessJourney: Boolean, activityDetails: SummaryList, yourDetails: SummaryList, supportingDocuments: SummaryList, businessDetails: SummaryList, individualDetails: SummaryList, supportDoc: SummaryList)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 
@@ -38,13 +38,13 @@
 <!--TO DO after individuals logic implement-->
         @if(!isBusinessJourney) {
             <h2 class="govuk-heading-m">@messages("checkYourAnswers.individualDetails")</h2>
-                <div class="hmrc-list-with-actions__item">
-                    <dt class="hmrc-list-with-actions__name govuk-body">Individual A</dt>
+                <div class="hmrc-list-with-actions__item govuk-!-margin-bottom-3">
+                    <dt class="hmrc-list-with-actions__name govuk-body govuk-!-margin-bottom-0">Individual A</dt>
                     <div class="hmrc-list-with-actions__actions">
-                        <dd class="hmrc-list-with-actions__action govuk-body">
+                        <dd class="hmrc-list-with-actions__action govuk-body govuk-!-margin-bottom-0">
                             <a class="govuk-link" href="./check-answers-Individual1"><span aria-hidden="true">Change</span><span class="govuk-visually-hidden">Individual A's details</span></a>
                         </dd>
-                        <dd class="hmrc-list-with-actions__action govuk-body">
+                        <dd class="hmrc-list-with-actions__action govuk-body govuk-!-margin-bottom-0">
                             <a class="govuk-link" href="#"><span aria-hidden="true">Remove</span><span class="govuk-visually-hidden">Individual A's from the list</span></a>
                         </dd>
                     </div>
@@ -52,7 +52,9 @@
         }
 
         <h2 class="govuk-heading-m">@messages("checkYourAnswers.yourDetails")</h2>
-        @govukSummaryList(yourDetails.withCssClass("govuk-!-margin-bottom-6"))
+        @govukSummaryList(yourDetails.withCssClass("govuk-!-margin-bottom-0"))
+
+        @govukSummaryList(supportDoc.withCssClass("govuk-!-margin-bottom-6"))
 
         <a id="continue-button" href="@routes.SubmitYourReportController.onPageLoad" role="button" class="govuk-button" data-module="govuk-button">
             @messages("site.continue")

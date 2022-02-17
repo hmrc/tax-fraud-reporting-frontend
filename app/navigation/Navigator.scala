@@ -61,6 +61,8 @@ class Navigator @Inject() () {
     case ProvideContactDetailsPage       => provideContactDetailsRoutes
     case YourContactDetailsPage          => _ => routes.SupportingDocumentController.onPageLoad(NormalMode)
     case ActivitySourceOfInformationPage => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
+    case DocumentationDescriptionPage => _ => routes.CheckYourAnswersController.onPageLoad
+    //case BusinessInformationCheckPage(index) => previousBusinessInformationRoutes
     case _                               => _ => routes.IndexController.onPageLoad
   }
 
@@ -186,6 +188,14 @@ class Navigator @Inject() () {
       case ProvideContactDetails.No =>
         routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+ /* private def previousBusinessInformationRoutes(answers: UserAnswers): Call =
+    answers.get(ProvideContactDetailsPage).map {
+      case ProvideContactDetails.Yes  =>
+        val businessInformationChecks = answers.get(PreviousBusinessInformation).getOrElse(List.empty)
+        routes.ProvideContactDetailsController.onPageLoad(NormalMode)
+      case _ => routes.CheckYourAnswersController.onPageLoad
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())*/
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
     case NormalMode =>

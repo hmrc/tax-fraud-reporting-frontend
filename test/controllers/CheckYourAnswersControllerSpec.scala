@@ -50,7 +50,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
             ApproximateValueSummary.row(answers)(messages(application)),
             ActivityTimePeriodSummary.row(answers)(messages(application)),
             HowManyPeopleKnowSummary.row(answers)(messages(application)),
-            DescriptionActivitySummary.row(answers)(messages(application))
+            DescriptionActivitySummary.row(answers)(messages(application)),
+            ActivitySourceOfInformationSummary.row(answers)(messages(application))
           ).flatten
         )
 

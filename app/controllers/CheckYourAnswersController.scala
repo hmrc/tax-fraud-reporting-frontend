@@ -46,13 +46,21 @@ class CheckYourAnswersController @Inject() (
           ApproximateValueSummary.row(answers),
           ActivityTimePeriodSummary.row(answers),
           HowManyPeopleKnowSummary.row(answers),
-          DescriptionActivitySummary.row(answers)
+          DescriptionActivitySummary.row(answers),
+          ActivitySourceOfInformationSummary.row(answers)
         ).flatten
       )
 
       val yourDetails = SummaryListViewModel(
         ProvideContactDetailsSummary.row(answers).toList ++
           YourContactDetailsSummary.rows(answers)
+      )
+
+      val supportDoc = SummaryListViewModel (
+        Seq(
+          SupportingDocumentSummary.row(answers),
+          DocumentationDescriptionSummary.row(answers)
+        ).flatten
       )
 
       val supportingDocuments = SummaryListViewModel(Seq(SupportingDocumentSummary.row(answers)).flatten)
@@ -74,7 +82,7 @@ class CheckYourAnswersController @Inject() (
 
       val individualDetails = {
         val individualInformationChecks = answers.get(PreviousIndividualInformation).getOrElse(List.empty).length
-        val y = (0 until individualInformationChecks).flatMap { index =>
+        val v = (0 until individualInformationChecks).flatMap { index =>
           Seq(
             IndividualNameSummary.row(answers, index),
             IndividualAgeSummary.row(answers, index),
@@ -86,10 +94,10 @@ class CheckYourAnswersController @Inject() (
             IndividualBusinessDetailsSummary.row(answers, index)
           ).flatten
         }
-        SummaryListViewModel(Seq(SelectConnectionBusinessSummary.row(answers, index = 0)).flatten ++ y)
+        SummaryListViewModel(v)
       }
 
-      Ok(view(isBusinessJourney, activityDetails, yourDetails, supportingDocuments, businessDetails, individualDetails))
+      Ok(view(isBusinessJourney, activityDetails, yourDetails, supportingDocuments, businessDetails, individualDetails, supportDoc))
   }
 
 }
