@@ -16,10 +16,10 @@
 
 package pages
 
-import models.SupportingDocument
+import models.{SupportingDocument, UserAnswers}
 import pages.behaviours.PageBehaviours
 
-class SupportingDocumentSpec extends PageBehaviours {
+class SupportingDocumentPageSpec extends PageBehaviours {
 
   "SupportingDocumentPage" - {
 
@@ -28,5 +28,17 @@ class SupportingDocumentSpec extends PageBehaviours {
     beSettable[SupportingDocument](SupportingDocumentPage)
 
     beRemovable[SupportingDocument](SupportingDocumentPage)
+
+    "must remove documentation description when the user selects no" in {
+      val answers = UserAnswers("id").set(DocumentationDescriptionPage, "foobar").success.value
+      val updatedAnswers = answers.set(SupportingDocumentPage, SupportingDocument.No).success.value
+      updatedAnswers.get(DocumentationDescriptionPage) mustNot be (defined)
+    }
+
+    "must not remove documentation description when the user selects yes" in {
+      val answers = UserAnswers("id").set(DocumentationDescriptionPage, "foobar").success.value
+      val updatedAnswers = answers.set(SupportingDocumentPage, SupportingDocument.Yes).success.value
+      updatedAnswers.get(DocumentationDescriptionPage).value mustBe "foobar"
+    }
   }
 }
