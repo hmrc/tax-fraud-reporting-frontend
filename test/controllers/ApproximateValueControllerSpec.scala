@@ -40,7 +40,7 @@ class ApproximateValueControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = 5
+  val validAnswer = "£500,00"
 
   lazy val approximateValueRoute = routes.ApproximateValueController.onPageLoad(NormalMode).url
 
@@ -176,9 +176,9 @@ class ApproximateValueControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, approximateValueRoute)
-            .withFormUrlEncodedBody(("value", "1098.90"))
+            .withFormUrlEncodedBody(("value", "1098.90ab"))
 
-        val boundForm = form.bind(Map("value" -> "1098.90"))
+        val boundForm = form.bind(Map("value" -> "1098.90ab"))
 
         val view = application.injector.instanceOf[ApproximateValueView]
 

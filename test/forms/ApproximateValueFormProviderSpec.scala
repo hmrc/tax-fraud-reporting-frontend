@@ -23,17 +23,23 @@ class ApproximateValueFormProviderSpec extends IntFieldBehaviours {
 
   val form = new ApproximateValueFormProvider()()
 
+  private val currencyRegex =
+    "^[',\",\\+,<,>,\\(,\\*,\\-,%]?([£]?\\s*\\d+([\\,,\\.]\\d+)?[£]?\\s*[\\-,\\/,\\,,\\.,\\+]?[\\/]?\\s*)+[',\",\\+,   <,>,\\),\\*,\\-,%]?$"
+
   ".value" - {
 
     val fieldName = "value"
+    val required  = "approximateValue.error.required"
 
-    behave like intField(
-      form,
-      fieldName,
-      nonNumericError = FormError(fieldName, "approximateValue.error.nonNumeric"),
-      wholeNumberError = FormError(fieldName, "approximateValue.error.wholeNumber")
-    )
+    "must not bind an empty map" in {
+      val result = form.bind(Map.empty[String, String])
+      result.errors must contain(FormError(fieldName, required))
+    }
 
-    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, "approximateValue.error.required"))
+    "must not bind an invalid option" in {
+      val result = form.bind(Map(fieldName -> "49,000.90ab"))
+      result.errors must contain(FormError(fieldName, required, Seq(currencyRegex)))
+
+    }
   }
 }

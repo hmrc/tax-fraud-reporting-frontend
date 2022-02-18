@@ -18,7 +18,6 @@ package controllers
 
 import controllers.actions._
 import forms.ApproximateValueFormProvider
-import javax.inject.Inject
 import models.Mode
 import navigation.Navigator
 import pages.ApproximateValuePage
@@ -28,6 +27,7 @@ import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ApproximateValueView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class ApproximateValueController @Inject() (
@@ -61,8 +61,10 @@ class ApproximateValueController @Inject() (
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(ApproximateValuePage, value))
-            _              <- sessionRepository.set(updatedAnswers)
+            updatedAnswers <- Future.fromTry(
+              request.userAnswers.set(ApproximateValuePage, value.replaceAll("\\s|,|£", ""))
+            )
+            _ <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(ApproximateValuePage, mode, updatedAnswers))
       )
   }
