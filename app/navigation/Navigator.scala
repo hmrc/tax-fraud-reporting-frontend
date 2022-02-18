@@ -49,6 +49,7 @@ class Navigator @Inject() () {
       businessInformationRoutes(_, index, BusinessInformationCheck.Address)
     case SelectConnectionBusinessPage(_)      => _ => routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
     case AddAnotherPersonPage                 => addAnotherPersonRoutes
+    case IndividualConfirmRemovePage(_)       => individualConfirmRemoveRoutes
     case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index)
     case ApproximateValuePage                 => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
     case WhenActivityHappenPage               => whenActivityHappenRoutes
@@ -157,6 +158,13 @@ class Navigator @Inject() () {
       case AddAnotherPerson.No =>
         routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def individualConfirmRemoveRoutes(answers: UserAnswers): Call =
+    if (answers.get(NominalsQuery).getOrElse(List.empty).isEmpty) {
+      routes.IndividualOrBusinessController.onPageLoad(NormalMode)
+    } else {
+      routes.AddAnotherPersonController.onPageLoad(NormalMode)
+    }
 
   private def individualBusinessDetailsRoutes(answers: UserAnswers, index: Index): Call =
     answers.get(IndividualBusinessDetailsPage(index)).map {

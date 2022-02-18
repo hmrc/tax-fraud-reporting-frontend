@@ -47,8 +47,11 @@
         <h1 class="govuk-heading-l">@headingMessage</h1>
         <div class="govuk-form-group">
             @listWithAction(ListWithActions(
-                items = (1 to numberOfNominals).map { id =>
-                    ListWithActionsItem(name = messages(s"individual.$id"), actions = List(ListWithActionsAction(content = messages("site.change"), href = ""), ListWithActionsAction(content = messages("site.remove"), href = "")))
+                items = (0 until numberOfNominals).map { id =>
+                    ListWithActionsItem(name = messages(s"individual.${id + 1}"), actions = List(
+                        ListWithActionsAction(content = messages("site.change"), href = ""),
+                        ListWithActionsAction(content = messages("site.remove"), href = routes.IndividualConfirmRemoveController.onPageLoad(Index(id), mode).url))
+                    )
                 }
                 )
             )

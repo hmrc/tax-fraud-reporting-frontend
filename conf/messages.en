@@ -508,3 +508,7 @@ individualContactDetails.cya.mobile = Mobile
 individualContactDetails.cya.email = Email
 individualName.nickname = Nickname
 referenceNumbers.cya.label = VAT Registration number:
+
+individualConfirmRemove.title = Are you sure you want to remove this individual?
+individualConfirmRemove.heading = Are you sure you want to remove {0}?
+individualConfirmRemove.error.required = Select yes if you want to remove this individual
