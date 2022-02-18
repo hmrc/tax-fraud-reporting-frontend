@@ -169,7 +169,7 @@ POST       /your-contact-details                         controllers.YourContact
 GET        /change-your-contact-details                  controllers.YourContactDetailsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-your-contact-details                  controllers.YourContactDetailsController.onSubmit(mode: Mode = CheckMode)
 
-GET        /check-answers-individual1                          controllers.IndividualCheckYourAnswersController.onPageLoad
+GET        /check-answers-individual                          controllers.IndividualCheckYourAnswersController.onPageLoad
 GET        /report-submitted                                     controllers.ReportSubmittedController.onPageLoad()
 
 GET        /activity-source-of-information                        controllers.ActivitySourceOfInformationController.onPageLoad(mode: Mode = NormalMode)
