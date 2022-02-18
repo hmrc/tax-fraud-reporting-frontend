@@ -169,11 +169,12 @@ POST       /your-contact-details                         controllers.YourContact
 GET        /change-your-contact-details                  controllers.YourContactDetailsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-your-contact-details                  controllers.YourContactDetailsController.onSubmit(mode: Mode = CheckMode)
 
+GET        /check-answers-individual                          controllers.IndividualCheckYourAnswersController.onPageLoad
 GET        /report-submitted                                     controllers.ReportSubmittedController.onPageLoad()
-
-GET        /submit-your-report                       controllers.SubmitYourReportController.onPageLoad()
 
 GET        /activity-source-of-information                        controllers.ActivitySourceOfInformationController.onPageLoad(mode: Mode = NormalMode)
 POST       /activity-source-of-information                        controllers.ActivitySourceOfInformationController.onSubmit(mode: Mode = NormalMode)
 GET        /change-activity-source-of-information                  controllers.ActivitySourceOfInformationController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-activity-source-of-information                  controllers.ActivitySourceOfInformationController.onSubmit(mode: Mode = CheckMode)
+
+GET        /submit-your-report                       controllers.SubmitYourReportController.onPageLoad()

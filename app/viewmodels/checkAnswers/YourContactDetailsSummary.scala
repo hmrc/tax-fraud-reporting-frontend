@@ -16,11 +16,10 @@
 
 package viewmodels.checkAnswers
 
-import controllers.routes
 import models.{CheckMode, UserAnswers}
 import pages.YourContactDetailsPage
 import play.api.i18n.Messages
-import play.twirl.api.HtmlFormat
+import controllers.routes
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
@@ -28,19 +27,33 @@ import viewmodels.implicits._
 
 object YourContactDetailsSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(YourContactDetailsPage).map {
+  def rows(answers: UserAnswers)(implicit messages: Messages): List[SummaryListRow] =
+    answers.get(YourContactDetailsPage).toList.flatMap {
       answer =>
-        val value = HtmlFormat.escape(answer.FirstName).toString + "<br/>" + HtmlFormat.escape(answer.LastName).toString
+        def msg(key: String) = messages("yourContactDetails." + key)
 
-        SummaryListRowViewModel(
-          key = "yourContactDetails.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent(value)),
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.YourContactDetailsController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("yourContactDetails.change.hidden"))
-          )
-        )
+        val values = List(
+          "firstName"     -> Some(answer.FirstName),
+          "lastName"      -> Some(answer.LastName),
+          "tel"           -> Some(answer.Tel),
+          "emailLabel"    -> answer.Email,
+          "memorableWord" -> Some(answer.MemorableWord)
+        ) flatMap {
+          case (key, valueOpt) =>
+            valueOpt map { key -> _ }
+        }
+
+        values map {
+          case (key, value) =>
+            SummaryListRowViewModel(
+              key = msg(key),
+              value = ValueViewModel(HtmlContent(value)),
+              actions = Seq(
+                ActionItemViewModel("site.change", routes.YourContactDetailsController.onPageLoad(CheckMode).url)
+                  .withVisuallyHiddenText(msg(key))
+              )
+            )
+        }
     }
 
 }

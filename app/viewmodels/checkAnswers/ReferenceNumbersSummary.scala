@@ -33,11 +33,11 @@ object ReferenceNumbersSummary {
       answer =>
         val value = List(answer.vatRegistration, answer.employeeRefNo, answer.corporationTax).flatten.map(
           HtmlFormat.escape
-        ).mkString("<br />")
+        ).mkString("<br>")
 
         SummaryListRowViewModel(
           key = "referenceNumbers.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent(value)),
+          value = ValueViewModel(HtmlContent(messages("referenceNumbers.cya.label")+" <br> " + value)),
           actions = Seq(
             ActionItemViewModel(
               "site.change",

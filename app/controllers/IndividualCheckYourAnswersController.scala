@@ -24,45 +24,39 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers._
 import viewmodels.govuk.summarylist._
-import views.html.CheckYourAnswersView
+import views.html.IndividualCheckYourAnswersView
 
-class CheckYourAnswersController @Inject() (
+class IndividualCheckYourAnswersController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: CheckYourAnswersView
+  view: IndividualCheckYourAnswersView
 ) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      val answers           = request.userAnswers
-      val isBusinessJourney = request.userAnswers.isBusinessJourney
+      val answers = request.userAnswers
 
-      val activityDetails = SummaryListViewModel(
-        Seq(
-          ActivityTypeSummary.row(answers),
-          ApproximateValueSummary.row(answers),
-          ActivityTimePeriodSummary.row(answers),
-          HowManyPeopleKnowSummary.row(answers),
-          DescriptionActivitySummary.row(answers),
-          ActivitySourceOfInformationSummary.row(answers)
-        ).flatten
-      )
+      val individualDetails = {
+        val individualInformationChecks = answers.get(PreviousIndividualInformation).getOrElse(List.empty).length
+        val y = (0 until individualInformationChecks).flatMap { index =>
+          Seq(
+            IndividualNameSummary.row(answers, index),
+            IndividualAgeSummary.row(answers, index),
+            IndividualDateOfBirthSummary.row(answers, index),
+            IndividualAddressSummary.row(answers, index),
+            IndividualContactDetailsSummary.row(index, answers),
+            IndividualNationalInsuranceNumberSummary.row(answers, index),
+            IndividualConnectionSummary.row(answers, index),
+            IndividualBusinessDetailsSummary.row(answers, index)
+          ).flatten
+        }
+        SummaryListViewModel(Seq(SelectConnectionBusinessSummary.row(answers, index = 0)).flatten ++ y)
+      }
 
-      val yourDetails = SummaryListViewModel(
-        ProvideContactDetailsSummary.row(answers).toList ++
-          YourContactDetailsSummary.rows(answers)
-      )
-
-      val supportDoc = SummaryListViewModel(
-        Seq(SupportingDocumentSummary.row(answers), DocumentationDescriptionSummary.row(answers)).flatten
-      )
-
-      val supportingDocuments = SummaryListViewModel(Seq(SupportingDocumentSummary.row(answers)).flatten)
-
-      val businessDetails = {
+      val individualBusinessDetails = {
         val businessInformationChecks = answers.get(PreviousBusinessInformation).getOrElse(List.empty).length
         val x = (0 until businessInformationChecks).flatMap { index =>
           Seq(
@@ -77,34 +71,7 @@ class CheckYourAnswersController @Inject() (
         SummaryListViewModel(x)
       }
 
-      val individualDetails = {
-        val individualInformationChecks = answers.get(PreviousIndividualInformation).getOrElse(List.empty).length
-        val v = (0 until individualInformationChecks).flatMap { index =>
-          Seq(
-            IndividualNameSummary.row(answers, index),
-            IndividualAgeSummary.row(answers, index),
-            IndividualDateOfBirthSummary.row(answers, index),
-            IndividualAddressSummary.row(answers, index),
-            IndividualContactDetailsSummary.row(index, answers),
-            IndividualNationalInsuranceNumberSummary.row(answers, index),
-            IndividualConnectionSummary.row(answers, index),
-            IndividualBusinessDetailsSummary.row(answers, index)
-          ).flatten
-        }
-        SummaryListViewModel(v)
-      }
-
-      Ok(
-        view(
-          isBusinessJourney,
-          activityDetails,
-          yourDetails,
-          supportingDocuments,
-          businessDetails,
-          individualDetails,
-          supportDoc
-        )
-      )
+      Ok(view(individualDetails, individualBusinessDetails))
   }
 
 }

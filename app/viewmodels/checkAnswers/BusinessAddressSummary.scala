@@ -18,7 +18,7 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{CheckMode, Index, UserAnswers}
-import pages.IndividualContactDetailsPage
+import pages.BusinessAddressConfirmationPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
@@ -26,26 +26,24 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object IndividualContactDetailsSummary {
+object BusinessAddressSummary {
 
-  def row(index: Int, answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(IndividualContactDetailsPage(Index(index))).map {
+  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(BusinessAddressConfirmationPage(Index(index))).map {
       answer =>
-        val value =
-          List(messages("individualContactDetails.cya.landline") -> answer.landlineNumber, messages("individualContactDetails.cya.mobile") -> answer.mobileNumber, messages("individualContactDetails.cya.email") -> answer.email) flatMap {
-            case (label, valueOpt) =>
-              valueOpt map { value => HtmlFormat.escape(label + ": " + value) }
-          } mkString "<br>"
+        val value = List(answer.lines, answer.postcode.toList, answer.country.toList).flatten.map(
+          HtmlFormat.escape
+        ).mkString("<br/>")
 
         SummaryListRowViewModel(
-          key = "individualContactDetails.checkYourAnswersLabel",
+          key = "businessAddress.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent(value)),
           actions = Seq(
             ActionItemViewModel(
               "site.change",
-              routes.IndividualContactDetailsController.onPageLoad(Index(index), CheckMode).url
+              routes.BusinessAddressRedirectController.onPageLoad(Index(index), CheckMode).url
             )
-              .withVisuallyHiddenText(messages("individualContactDetails.change.hidden"))
+              .withVisuallyHiddenText(messages("businessAddress.change.hidden"))
           )
         )
     }
