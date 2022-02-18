@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, Index, UserAnswers}
+import models.{CheckMode, Index, Mode, UserAnswers}
 import pages.IndividualNamePage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -28,27 +28,22 @@ import viewmodels.implicits._
 
 object IndividualNameSummary {
 
-  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(IndividualNamePage(Index(index))).map {
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] = {
+    val answer = answers.get(IndividualNamePage(Index(index))).map {
       answer =>
-        val value = List(
-          messages("individualName.firstName")  -> answer.firstName,
-          messages("individualName.middleName") -> answer.middleName,
-          messages("individualName.lastName")   -> answer.lastName,
-          messages("individualName.nickname")    -> answer.aliases
-        ) flatMap {
-          case (label, valueOpt) =>
-            valueOpt map { value => HtmlFormat.escape(label + ": " + value) }
-        } mkString "<br>"
+        val name = List(answer.firstName, answer.middleName, answer.lastName)
+          .flatten.map(HtmlFormat.escape).mkString(" ")
+        val nickName = answer.aliases.map(aliases => s"${messages("individualName.nickname")}: $aliases")
+        List(Some(name), nickName).flatten.mkString("<br/>")
+    }.getOrElse(messages("site.unknown"))
 
-        SummaryListRowViewModel(
-          key = "individualName.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent(value)),
-          actions = Seq(
-            ActionItemViewModel("site.change", routes.IndividualNameController.onPageLoad(Index(index), CheckMode).url)
-              .withVisuallyHiddenText(messages("individualName.change.hidden"))
-          )
-        )
-    }
-
+    Some(SummaryListRowViewModel(
+      key = "individualName.checkYourAnswersLabel",
+      value = ValueViewModel(HtmlContent(answer)),
+      actions = Seq(
+        ActionItemViewModel("site.change", routes.IndividualNameController.onPageLoad(Index(index), mode).url)
+          .withVisuallyHiddenText(messages("individualName.change.hidden"))
+      )
+    ))
+  }
 }

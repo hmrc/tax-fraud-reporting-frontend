@@ -30,12 +30,12 @@
         <h2 class="govuk-heading-m">@messages("checkYourAnswers.activityDetails")</h2>
         @govukSummaryList(activityDetails.withCssClass("govuk-!-margin-bottom-6"))
 
-        @if(isBusinessJourney){
+        @if(isBusinessJourney) {
             <h2 class="govuk-heading-m">@messages("checkYourAnswers.businessDetails")</h2>
             @govukSummaryList(businessDetails.withCssClass("govuk-!-margin-bottom-6"))
         }
 
-<!--TO DO after individuals logic implement-->
+        @* TODO *@
         @if(!isBusinessJourney) {
             <h2 class="govuk-heading-m">@messages("checkYourAnswers.individualDetails")</h2>
                 <div class="hmrc-list-with-actions__item govuk-!-margin-bottom-3">

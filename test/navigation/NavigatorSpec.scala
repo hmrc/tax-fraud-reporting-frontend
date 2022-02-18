@@ -845,65 +845,69 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         ) mustBe routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
       }
 
-      "must go from the are you sure you want to remove this individual page" - {
-
-        "to the add another individual page if there is at least 1 individual" in {
-          val answers = emptyUserAnswers
-            .set(IndividualInformationPage(Index(0)), IndividualInformation.values.toSet).success.value
-          navigator.nextPage(IndividualConfirmRemovePage(Index(0)), NormalMode, answers) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
-        }
-
-        "to the individual or business page if there are no individuals" in {
-          navigator.nextPage(IndividualConfirmRemovePage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.IndividualOrBusinessController.onPageLoad(NormalMode)
-        }
-      }
-
-      "must go from individual have business details page" - {
-
-        "to the business information page for the answer yes" in {
-          val answers =
-            UserAnswers("id").set(IndividualBusinessDetailsPage(Index(0)), IndividualBusinessDetails.Yes).success.value
-          navigator.nextPage(
-            IndividualBusinessDetailsPage(Index(0)),
-            NormalMode,
-            answers
-          ) mustBe routes.BusinessInformationCheckController.onPageLoad(Index(0), NormalMode)
-        }
-
-        "to the add another person page for the answer no" in {
-          val answers =
-            UserAnswers("id").set(IndividualBusinessDetailsPage(Index(0)), IndividualBusinessDetails.No).success.value
-          navigator.nextPage(
-            IndividualBusinessDetailsPage(Index(0)),
-            NormalMode,
-            answers
-          ) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
-        }
-
-        "to the add another page for the answer don't know" in {
-          val answers = UserAnswers("id").set(
-            IndividualBusinessDetailsPage(Index(0)),
-            IndividualBusinessDetails.DontKnow
-          ).success.value
-          navigator.nextPage(
-            IndividualBusinessDetailsPage(Index(0)),
-            NormalMode,
-            answers
-          ) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
-        }
-
-        "to the journey recovery controller if there is no individual have business details set" in {
-          navigator.nextPage(
-            IndividualBusinessDetailsPage(Index(0)),
-            NormalMode,
-            UserAnswers("id")
-          ) mustBe routes.JourneyRecoveryController.onPageLoad()
-        }
-      }
-
       "to the journey recovery controller if there is no individual or business set" in {
         navigator.nextPage(
           IndividualOrBusinessPage,
+          NormalMode,
+          UserAnswers("id")
+        ) mustBe routes.JourneyRecoveryController.onPageLoad()
+      }
+    }
+
+    "must go from the are you sure you want to remove this individual page" - {
+
+      "to the add another individual page if there is at least 1 individual" in {
+        val answers = emptyUserAnswers
+          .set(IndividualInformationPage(Index(0)), IndividualInformation.values.toSet).success.value
+        navigator.nextPage(IndividualConfirmRemovePage(Index(0)), NormalMode, answers) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
+      }
+
+      "to the individual or business page if there are no individuals" in {
+        navigator.nextPage(IndividualConfirmRemovePage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.IndividualOrBusinessController.onPageLoad(NormalMode)
+      }
+    }
+
+    "must go from the individual check your answer page to the add another individual page" in {
+      navigator.nextPage(IndividualCheckYourAnswersPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
+    }
+
+    "must go from individual have business details page" - {
+
+      "to the business information page for the answer yes" in {
+        val answers =
+          UserAnswers("id").set(IndividualBusinessDetailsPage(Index(0)), IndividualBusinessDetails.Yes).success.value
+        navigator.nextPage(
+          IndividualBusinessDetailsPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.BusinessInformationCheckController.onPageLoad(Index(0), NormalMode)
+      }
+
+      "to the add another person page for the answer no" in {
+        val answers =
+          UserAnswers("id").set(IndividualBusinessDetailsPage(Index(0)), IndividualBusinessDetails.No).success.value
+        navigator.nextPage(
+          IndividualBusinessDetailsPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
+      }
+
+      "to the add another page for the answer don't know" in {
+        val answers = UserAnswers("id").set(
+          IndividualBusinessDetailsPage(Index(0)),
+          IndividualBusinessDetails.DontKnow
+        ).success.value
+        navigator.nextPage(
+          IndividualBusinessDetailsPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
+      }
+
+      "to the journey recovery controller if there is no individual have business details set" in {
+        navigator.nextPage(
+          IndividualBusinessDetailsPage(Index(0)),
           NormalMode,
           UserAnswers("id")
         ) mustBe routes.JourneyRecoveryController.onPageLoad()

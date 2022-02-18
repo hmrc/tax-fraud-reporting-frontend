@@ -18,7 +18,7 @@ package viewmodels.checkAnswers
 
 import java.time.format.DateTimeFormatter
 import controllers.routes
-import models.{CheckMode, Index, UserAnswers}
+import models.{CheckMode, Index, Mode, UserAnswers}
 import pages.IndividualDateOfBirthPage
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
@@ -27,22 +27,23 @@ import viewmodels.implicits._
 
 object IndividualDateOfBirthSummary {
 
-  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(IndividualDateOfBirthPage(Index(index))).map {
-      answer =>
-        val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+  private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
 
-        SummaryListRowViewModel(
-          key = "individualDateOfBirth.checkYourAnswersLabel",
-          value = ValueViewModel(answer.format(dateFormatter)),
-          actions = Seq(
-            ActionItemViewModel(
-              "site.change",
-              routes.IndividualDateOfBirthController.onPageLoad(Index(index), CheckMode).url
-            )
-              .withVisuallyHiddenText(messages("individualDateOfBirth.change.hidden"))
-          )
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] = {
+    val answer = answers.get(IndividualDateOfBirthPage(Index(index)))
+      .map(_.format(dateFormatter))
+      .getOrElse(messages("site.unknown"))
+
+    Some(SummaryListRowViewModel(
+      key = "individualDateOfBirth.checkYourAnswersLabel",
+      value = ValueViewModel(answer),
+      actions = Seq(
+        ActionItemViewModel(
+          "site.change",
+          routes.IndividualDateOfBirthController.onPageLoad(Index(index), mode).url
         )
-    }
-
+          .withVisuallyHiddenText(messages("individualDateOfBirth.change.hidden"))
+      )
+    ))
+  }
 }

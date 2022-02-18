@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, Index, UserAnswers}
+import models.{CheckMode, Index, Mode, UserAnswers}
 import pages.BusinessContactDetailsPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -28,27 +28,25 @@ import viewmodels.implicits._
 
 object BusinessContactDetailsSummary {
 
-  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(BusinessContactDetailsPage(Index(index))).map {
-
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] = {
+    val answer = answers.get(BusinessContactDetailsPage(Index(index))).map {
       answer =>
-        val value =
-          List("Landline" -> answer.landlineNumber, "Mobile" -> answer.mobileNumber, "Email" -> answer.email) flatMap {
-            case (label, valueOpt) =>
-              valueOpt map { value => HtmlFormat.escape(label + ": " + value) }
-          } mkString "<br>"
+        List("Landline" -> answer.landlineNumber, "Mobile" -> answer.mobileNumber, "Email" -> answer.email) flatMap {
+          case (label, valueOpt) =>
+            valueOpt map { value => HtmlFormat.escape(label + ": " + value) }
+        } mkString "<br>"
+    }.getOrElse(messages("site.unknown"))
 
-        SummaryListRowViewModel(
-          key = "businessContactDetails.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent(value)),
-          actions = Seq(
-            ActionItemViewModel(
-              "site.change",
-              routes.BusinessContactDetailsController.onPageLoad(Index(index), CheckMode).url
-            )
-              .withVisuallyHiddenText(messages("businessContactDetails.change.hidden"))
-          )
+    Some(SummaryListRowViewModel(
+      key = "businessContactDetails.checkYourAnswersLabel",
+      value = ValueViewModel(HtmlContent(answer)),
+      actions = Seq(
+        ActionItemViewModel(
+          "site.change",
+          routes.BusinessContactDetailsController.onPageLoad(Index(index), mode).url
         )
-    }
-
+          .withVisuallyHiddenText(messages("businessContactDetails.change.hidden"))
+      )
+    ))
+  }
 }

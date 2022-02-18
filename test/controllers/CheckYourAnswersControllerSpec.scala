@@ -117,7 +117,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
             IndividualAgeSummary.row(answers, 0)(messages(application)),
             IndividualDateOfBirthSummary.row(answers, 0)(messages(application)),
             IndividualAddressSummary.row(answers, 0)(messages(application)),
-            IndividualContactDetailsSummary.row(0, answers)(messages(application)),
+            IndividualContactDetailsSummary.row(answers, 0)(messages(application)),
             IndividualNationalInsuranceNumberSummary.row(answers, 0)(messages(application)),
             IndividualConnectionSummary.row(answers, 0)(messages(application)),
             IndividualBusinessDetailsSummary.row(answers, 0)(messages(application))

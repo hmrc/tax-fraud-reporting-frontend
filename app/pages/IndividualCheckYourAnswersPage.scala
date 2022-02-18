@@ -16,10 +16,6 @@
 
 package pages
 
-import play.api.libs.json.{JsPath, JsValue}
-import queries.Gettable
+import models.Index
 
-case object PreviousIndividualInformation extends Gettable[List[JsValue]] {
-
-  override def path: JsPath = JsPath \ "individualName"
-}
+final case class IndividualCheckYourAnswersPage(index: Index) extends Page

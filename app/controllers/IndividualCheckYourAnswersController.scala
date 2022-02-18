@@ -18,7 +18,9 @@ package controllers
 
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import pages.{PreviousBusinessInformation, PreviousIndividualInformation}
+import models.{Index, IndividualBusinessDetails, Mode}
+import navigation.Navigator
+import pages.{IndividualBusinessDetailsPage, IndividualCheckYourAnswersPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -32,46 +34,46 @@ class IndividualCheckYourAnswersController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: IndividualCheckYourAnswersView
+  view: IndividualCheckYourAnswersView,
+  navigator: Navigator
 ) extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+
       val answers = request.userAnswers
 
       val individualDetails = {
-        val individualInformationChecks = answers.get(PreviousIndividualInformation).getOrElse(List.empty).length
-        val y = (0 until individualInformationChecks).flatMap { index =>
-          Seq(
-            IndividualNameSummary.row(answers, index),
-            IndividualAgeSummary.row(answers, index),
-            IndividualDateOfBirthSummary.row(answers, index),
-            IndividualAddressSummary.row(answers, index),
-            IndividualContactDetailsSummary.row(index, answers),
-            IndividualNationalInsuranceNumberSummary.row(answers, index),
-            IndividualConnectionSummary.row(answers, index),
-            IndividualBusinessDetailsSummary.row(answers, index)
-          ).flatten
-        }
-        SummaryListViewModel(Seq(SelectConnectionBusinessSummary.row(answers, index = 0)).flatten ++ y)
+        SummaryListViewModel(Seq(
+          IndividualNameSummary.row(answers, index.position, mode),
+          IndividualDateFormatSummary.row(answers, index.position, mode),
+          IndividualAgeSummary.row(answers, index.position, mode),
+          IndividualDateOfBirthSummary.row(answers, index.position, mode),
+          IndividualAddressSummary.row(answers, index.position, mode),
+          IndividualContactDetailsSummary.row(answers, index.position, mode),
+          IndividualNationalInsuranceNumberSummary.row(answers, index.position, mode),
+          IndividualConnectionSummary.row(answers, index.position, mode),
+          IndividualBusinessDetailsSummary.row(answers, index.position, mode)
+        ).flatten)
       }
 
       val individualBusinessDetails = {
-        val businessInformationChecks = answers.get(PreviousBusinessInformation).getOrElse(List.empty).length
-        val x = (0 until businessInformationChecks).flatMap { index =>
+        val rows = if (answers.get(IndividualBusinessDetailsPage(index)).contains(IndividualBusinessDetails.Yes)) {
           Seq(
-            BusinessNameSummary.row(answers, index),
-            TypeBusinessSummary.row(answers, index),
-            BusinessAddressSummary.row(answers, index),
-            BusinessContactDetailsSummary.row(answers, index),
-            ReferenceNumbersSummary.row(answers, index),
-            SelectConnectionBusinessSummary.row(answers, index)
+            BusinessNameSummary.row(answers, index.position, mode),
+            TypeBusinessSummary.row(answers, index.position, mode),
+            BusinessAddressSummary.row(answers, index.position, mode),
+            BusinessContactDetailsSummary.row(answers, index.position, mode),
+            ReferenceNumbersSummary.row(answers, index.position, mode),
+            SelectConnectionBusinessSummary.row(answers, index.position, mode)
           ).flatten
+        } else {
+          List.empty
         }
-        SummaryListViewModel(x)
+        SummaryListViewModel(rows)
       }
 
-      Ok(view(individualDetails, individualBusinessDetails))
+      Ok(view(individualDetails, individualBusinessDetails, navigator.nextPage(IndividualCheckYourAnswersPage(index), mode, answers)))
   }
 
 }

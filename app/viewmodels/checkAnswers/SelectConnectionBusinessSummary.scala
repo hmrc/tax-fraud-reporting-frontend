@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, Index, UserAnswers}
+import models.{CheckMode, Index, Mode, UserAnswers}
 import pages.SelectConnectionBusinessPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -28,22 +28,20 @@ import viewmodels.implicits._
 
 object SelectConnectionBusinessSummary {
 
-  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(SelectConnectionBusinessPage(Index(index))).map {
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] = {
+    val answer = answers.get(SelectConnectionBusinessPage(Index(index))).map {
       answer =>
-        val value = ValueViewModel(HtmlContent(HtmlFormat.escape(messages(s"selectConnectionBusiness.$answer"))))
-
-        SummaryListRowViewModel(
-          key = "selectConnectionBusiness.checkYourAnswersLabel",
-          value = value,
-          actions = Seq(
-            ActionItemViewModel(
-              "site.change",
-              routes.SelectConnectionBusinessController.onPageLoad(Index(index), CheckMode).url
-            )
-              .withVisuallyHiddenText(messages("selectConnectionBusiness.change.hidden"))
-          )
-        )
-    }
-
+        HtmlFormat.escape(messages(s"selectConnectionBusiness.$answer")).toString
+    }.getOrElse(messages("site.unknown"))
+    Some(SummaryListRowViewModel(
+      key = "selectConnectionBusiness.checkYourAnswersLabel",
+      value = ValueViewModel(HtmlContent(answer)),
+      actions = Seq(
+        ActionItemViewModel(
+          "site.change",
+          routes.SelectConnectionBusinessController.onPageLoad(Index(index), mode).url
+        ).withVisuallyHiddenText(messages("selectConnectionBusiness.change.hidden"))
+      )
+    ))
+  }
 }

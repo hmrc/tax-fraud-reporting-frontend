@@ -49,6 +49,7 @@ class Navigator @Inject() () {
       businessInformationRoutes(_, index, BusinessInformationCheck.Address)
     case SelectConnectionBusinessPage(_)      => _ => routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
     case AddAnotherPersonPage                 => addAnotherPersonRoutes
+    case IndividualCheckYourAnswersPage(_)    => _ => routes.AddAnotherPersonController.onPageLoad(NormalMode)
     case IndividualConfirmRemovePage(_)       => individualConfirmRemoveRoutes
     case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index)
     case ApproximateValuePage                 => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
