@@ -37,6 +37,7 @@
             label = LabelViewModel(messages("individualContactDetails.landlineNumber"))
         )
         .asTel()
+        .withAutocomplete("tel")
         .withWidth(Fixed20)
     )
 
@@ -46,6 +47,7 @@
             label = LabelViewModel(messages("individualContactDetails.mobileNumber"))
         )
         .asTel()
+        .withAutocomplete("tel")
         .withWidth(Fixed20)
     )
 

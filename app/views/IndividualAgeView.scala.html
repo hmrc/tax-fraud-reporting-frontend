@@ -40,8 +40,11 @@
                 field = form("value"),
                 label = LabelViewModel(messages("individualAge.heading")).asPageHeading(LabelSize.Large)
             )
-            .asNumeric()
+            .withInputType("text")
+            .withInputMode("numeric")
+            .withPattern("[0-9]*")
             .withWidth(Fixed3)
+            .withSpellcheck("false")
             .withSuffix(PrefixOrSuffix(content = "individualAge.suffix"))
         )
 

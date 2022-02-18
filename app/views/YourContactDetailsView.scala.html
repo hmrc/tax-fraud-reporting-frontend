@@ -36,6 +36,7 @@
             field = form("firstName"),
             label = LabelViewModel(messages("yourContactDetails.firstName"))
         )
+        .withSpellcheck(false)
         .withWidth(Full)
     )
 
@@ -44,6 +45,7 @@
             field = form("lastName"),
             label = LabelViewModel(messages("yourContactDetails.lastName"))
         )
+        .withSpellcheck(false)
         .withWidth(Full)
         )
 
@@ -53,6 +55,7 @@
             label = LabelViewModel(messages("yourContactDetails.tel"))
         )
         .asTel()
+        .withAutocomplete("tel")
         .withWidth(Full)
         )
 
