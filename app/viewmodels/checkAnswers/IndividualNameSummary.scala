@@ -32,10 +32,10 @@ object IndividualNameSummary {
     answers.get(IndividualNamePage(Index(index))).map {
       answer =>
         val value = List(
-          "First Name"  -> answer.firstName,
-          "Middle Name" -> answer.middleName,
-          "lase Name"   -> answer.lastName,
-          "Nickname"    -> answer.aliases
+          messages("individualName.firstName")  -> answer.firstName,
+          messages("individualName.middleName") -> answer.middleName,
+          messages("individualName.lastName")   -> answer.lastName,
+          messages("individualName.nickname")    -> answer.aliases
         ) flatMap {
           case (label, valueOpt) =>
             valueOpt map { value => HtmlFormat.escape(label + ": " + value) }

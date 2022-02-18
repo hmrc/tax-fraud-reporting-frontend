@@ -497,3 +497,9 @@ activitySourceOfInformation.error.otherValue.required = Select or enter how you 
 activitySourceOfInformation.error.otherValue.maxLength = How you know the information must be 100 characters or fewer.
 activitySourceOfInformation.change.hidden = Source of Information
 activitySourceOfInformation.change.hidden = ActivitySourceOfInformation
+
+individualContactDetails.cya.landline = Landline
+individualContactDetails.cya.mobile = Mobile
+individualContactDetails.cya.email = Email
+individualName.nickname = Nickname
+referenceNumbers.cya.label = VAT Registration number:

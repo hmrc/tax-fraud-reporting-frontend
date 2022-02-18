@@ -32,7 +32,7 @@ object IndividualContactDetailsSummary {
     answers.get(IndividualContactDetailsPage(Index(index))).map {
       answer =>
         val value =
-          List("Landline" -> answer.landlineNumber, "Mobile" -> answer.mobileNumber, "Email" -> answer.email) flatMap {
+          List(messages("individualContactDetails.cya.landline") -> answer.landlineNumber, messages("individualContactDetails.cya.mobile") -> answer.mobileNumber, messages("individualContactDetails.cya.email") -> answer.email) flatMap {
             case (label, valueOpt) =>
               valueOpt map { value => HtmlFormat.escape(label + ": " + value) }
           } mkString "<br>"
