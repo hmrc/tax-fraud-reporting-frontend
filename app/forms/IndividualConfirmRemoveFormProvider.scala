@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.{BusinessContactDetails, Index}
-import play.api.libs.json.JsPath
+import javax.inject.Inject
 
-final case class BusinessContactDetailsPage(index: Index) extends QuestionPage[BusinessContactDetails] {
+import forms.mappings.Mappings
+import play.api.data.Form
 
-  override def path: JsPath = JsPath \ "nominals" \ index.position \ toString
+class IndividualConfirmRemoveFormProvider @Inject() extends Mappings {
 
-  override def toString: String = "businessContactDetails"
+  def apply(): Form[Boolean] =
+    Form(
+      "value" -> boolean("individualConfirmRemove.error.required")
+    )
 }

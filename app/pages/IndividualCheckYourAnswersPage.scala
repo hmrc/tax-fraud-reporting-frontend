@@ -16,12 +16,6 @@
 
 package pages
 
-import models.{BusinessContactDetails, Index}
-import play.api.libs.json.JsPath
+import models.Index
 
-final case class BusinessContactDetailsPage(index: Index) extends QuestionPage[BusinessContactDetails] {
-
-  override def path: JsPath = JsPath \ "nominals" \ index.position \ toString
-
-  override def toString: String = "businessContactDetails"
-}
+final case class IndividualCheckYourAnswersPage(index: Index) extends Page

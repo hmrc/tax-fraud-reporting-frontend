@@ -14,19 +14,32 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.{AddAnotherPerson, Index}
-import pages.behaviours.PageBehaviours
+import forms.behaviours.BooleanFieldBehaviours
+import play.api.data.FormError
 
-class AddAnotherPersonPageSpec extends PageBehaviours {
+class IndividualConfirmRemoveFormProviderSpec extends BooleanFieldBehaviours {
 
-  "AddAnotherPersonPage" - {
+  val requiredKey = "individualConfirmRemove.error.required"
+  val invalidKey = "error.boolean"
 
-    beRetrievable[AddAnotherPerson](AddAnotherPersonPage)
+  val form = new IndividualConfirmRemoveFormProvider()()
 
-    beSettable[AddAnotherPerson](AddAnotherPersonPage)
+  ".value" - {
 
-    beRemovable[AddAnotherPerson](AddAnotherPersonPage)
+    val fieldName = "value"
+
+    behave like booleanField(
+      form,
+      fieldName,
+      invalidError = FormError(fieldName, invalidKey)
+    )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
   }
 }

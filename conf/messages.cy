@@ -354,9 +354,14 @@ addAnotherPerson.checkYourAnswersLabel = (W) Are there additional people involve
 addAnotherPerson.error.required = (W) Select yes if you need to add another individual. (W)
 addAnotherPerson.change.hidden = (W) AddAnotherPerson (W)
 
-individual.addAnother.header = (W) You have added one individual (W)
+individual.addAnother.header = (W) You have added {0} individual (W)
+individual.addAnother.header.plural = (W) You have added {0} individuals (W)
 individual.moreThan5 = (W) You cannot add another individual as you have entered a maximum of 5. (W)
 individual.1 = (W) Individual A (W)
+individual.2 = (W) Individual B (W)
+individual.3 = (W) Individual C (W)
+individual.4 = (W) Individual D (W)
+individual.5 = (W) Individual E (W)
 
 whenActivityHappen.title = (W) What is the duration of the reported activity? (W)
 whenActivityHappen.heading = (W) What is the duration of the reported activity? (W)

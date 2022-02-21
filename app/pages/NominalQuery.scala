@@ -16,12 +16,11 @@
 
 package pages
 
-import models.{BusinessContactDetails, Index}
-import play.api.libs.json.JsPath
+import models.Index
+import play.api.libs.json.{JsPath, JsValue}
+import queries.Settable
 
-final case class BusinessContactDetailsPage(index: Index) extends QuestionPage[BusinessContactDetails] {
+final case class NominalQuery(index: Index) extends Settable[JsValue] {
 
-  override def path: JsPath = JsPath \ "nominals" \ index.position \ toString
-
-  override def toString: String = "businessContactDetails"
+  override def path: JsPath = JsPath \ "nominals" \ index.position
 }

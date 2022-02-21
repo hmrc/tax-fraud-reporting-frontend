@@ -18,10 +18,11 @@
 
 @this(
     layout: templates.Layout,
-    govukSummaryList: GovukSummaryList
+    govukSummaryList: GovukSummaryList,
+    listWithAction: HmrcListWithActions
 )
 
-@(isBusinessJourney: Boolean, activityDetails: SummaryList, yourDetails: SummaryList, supportingDocuments: SummaryList, businessDetails: SummaryList, individualDetails: SummaryList, supportDoc: SummaryList)(implicit request: Request[_], messages: Messages)
+@(isBusinessJourney: Boolean, activityDetails: SummaryList, yourDetails: SummaryList, supportingDocuments: SummaryList, businessDetails: SummaryList, numberOfNominals: Int, supportDoc: SummaryList)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 
@@ -30,25 +31,20 @@
         <h2 class="govuk-heading-m">@messages("checkYourAnswers.activityDetails")</h2>
         @govukSummaryList(activityDetails.withCssClass("govuk-!-margin-bottom-6"))
 
-        @if(isBusinessJourney){
+        @if(isBusinessJourney) {
             <h2 class="govuk-heading-m">@messages("checkYourAnswers.businessDetails")</h2>
             @govukSummaryList(businessDetails.withCssClass("govuk-!-margin-bottom-6"))
         }
 
-<!--TO DO after individuals logic implement-->
         @if(!isBusinessJourney) {
             <h2 class="govuk-heading-m">@messages("checkYourAnswers.individualDetails")</h2>
-                <div class="hmrc-list-with-actions__item govuk-!-margin-bottom-3">
-                    <dt class="hmrc-list-with-actions__name govuk-body govuk-!-margin-bottom-0">Individual A</dt>
-                    <div class="hmrc-list-with-actions__actions">
-                        <dd class="hmrc-list-with-actions__action govuk-body govuk-!-margin-bottom-0">
-                            <a class="govuk-link" href="./check-answers-individual"><span aria-hidden="true">Change</span><span class="govuk-visually-hidden">Individual A's details</span></a>
-                        </dd>
-                        <dd class="hmrc-list-with-actions__action govuk-body govuk-!-margin-bottom-0">
-                            <a class="govuk-link" href="#"><span aria-hidden="true">Remove</span><span class="govuk-visually-hidden">Individual A's from the list</span></a>
-                        </dd>
-                    </div>
-                </div>
+            @listWithAction(ListWithActions(
+                items = (0 until numberOfNominals).map { id =>
+                    ListWithActionsItem(name = messages(s"individual.${id + 1}"), actions = List(
+                        ListWithActionsAction(content = messages("site.change"), href = routes.IndividualCheckYourAnswersController.onPageLoad(Index(id), CheckMode).url)
+                    ))
+                }
+            ))
         }
 
         <h2 class="govuk-heading-m">@messages("checkYourAnswers.yourDetails")</h2>

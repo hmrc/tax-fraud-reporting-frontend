@@ -16,12 +16,17 @@
 
 package pages
 
-import models.{BusinessContactDetails, Index}
-import play.api.libs.json.JsPath
+import models.Index
+import pages.behaviours.PageBehaviours
 
-final case class BusinessContactDetailsPage(index: Index) extends QuestionPage[BusinessContactDetails] {
+class IndividualConfirmRemovePageSpec extends PageBehaviours {
 
-  override def path: JsPath = JsPath \ "nominals" \ index.position \ toString
+  "IndividualConfirmRemovePage" - {
 
-  override def toString: String = "businessContactDetails"
+    beRetrievable[Boolean](IndividualConfirmRemovePage(Index(0)))
+
+    beSettable[Boolean](IndividualConfirmRemovePage(Index(0)))
+
+    beRemovable[Boolean](IndividualConfirmRemovePage(Index(0)))
+  }
 }

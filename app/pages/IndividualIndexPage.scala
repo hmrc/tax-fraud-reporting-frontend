@@ -19,7 +19,6 @@ package pages
 import play.api.libs.json.{JsPath, JsValue}
 import queries.Gettable
 
-case object PreviousIndividualInformation extends Gettable[List[JsValue]] {
-
-  override def path: JsPath = JsPath \ "individualName"
+case object IndividualIndexPage extends Gettable[List[JsValue]] {
+  override def path: JsPath = JsPath \ "nominals"
 }

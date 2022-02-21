@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, Index, UserAnswers}
+import models.{CheckMode, Index, Mode, UserAnswers}
 import pages.IndividualDateFormatPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -28,22 +28,22 @@ import viewmodels.implicits._
 
 object IndividualDateFormatSummary {
 
-  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(IndividualDateFormatPage(Index(index))).map {
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] = {
+    val answer = answers.get(IndividualDateFormatPage(Index(index))).map {
       answer =>
-        val value = ValueViewModel(HtmlContent(HtmlFormat.escape(messages(s"dateFormat.$answer"))))
+        messages(s"dateFormat.$answer")
+    }.getOrElse(messages("site.unknown"))
 
-        SummaryListRowViewModel(
-          key = "dateFormat.checkYourAnswersLabel",
-          value = value,
-          actions = Seq(
-            ActionItemViewModel(
-              "site.change",
-              routes.IndividualDateFormatController.onPageLoad(Index(index), CheckMode).url
-            )
-              .withVisuallyHiddenText(messages("dateFormat.change.hidden"))
-          )
+    Some(SummaryListRowViewModel(
+      key = "dateFormat.checkYourAnswersLabel",
+      value = ValueViewModel(HtmlContent(HtmlFormat.escape(answer))),
+        actions = Seq(
+        ActionItemViewModel(
+          "site.change",
+          routes.IndividualDateFormatController.onPageLoad(Index(index), mode).url
         )
-    }
-
+          .withVisuallyHiddenText(messages("dateFormat.change.hidden"))
+      )
+    ))
+  }
 }

@@ -18,19 +18,12 @@ package controllers
 
 import base.SpecBase
 import models._
+import navigation.{FakeNavigator, Navigator}
 import pages._
 import play.api.http.Status.{OK, SEE_OTHER}
+import play.api.inject
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{
-  contentAsString,
-  defaultAwaitTimeout,
-  redirectLocation,
-  route,
-  running,
-  status,
-  writeableOf_AnyContentAsEmpty,
-  GET
-}
+import play.api.test.Helpers.{GET, contentAsString, defaultAwaitTimeout, redirectLocation, route, running, status, writeableOf_AnyContentAsEmpty}
 import viewmodels.checkAnswers._
 import viewmodels.govuk.SummaryListFluency
 import views.html.IndividualCheckYourAnswersView
@@ -42,6 +35,8 @@ class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryList
   "Individual Check Your Answers Controller" - {
 
     "must return OK and the correct view for a GET" in {
+
+      val onwardRoute = routes.CheckYourAnswersController.onPageLoad
 
       val answers = emptyUserAnswers
         .set(
@@ -75,12 +70,15 @@ class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryList
           ReferenceNumbersPage(Index(0)),
           ReferenceNumbers(Some("vatRegistration"), Some("employeeRefNo"), Some("corporationTax"))
         ).success.value
-      //.set(SelectConnectionBusinessPage(Index(0)), SelectConnectionBusiness.Accountant).success.value
+      .set(SelectConnectionBusinessPage(Index(0)), SelectConnectionBusiness.Accountant).success.value
 
-      val application = applicationBuilder(userAnswers = Some(answers)).build()
+      val application = applicationBuilder(userAnswers = Some(answers))
+        .overrides(
+          inject.bind[Navigator].toInstance(new FakeNavigator(onwardRoute))
+        ).build()
 
       running(application) {
-        val request = FakeRequest(GET, routes.IndividualCheckYourAnswersController.onPageLoad.url)
+        val request = FakeRequest(GET, routes.IndividualCheckYourAnswersController.onPageLoad(Index(0), NormalMode).url)
 
         val result = route(application, request).value
 
@@ -88,31 +86,32 @@ class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryList
 
         val individualsDetails = SummaryListViewModel(
           Seq(
-            IndividualNameSummary.row(answers, 0)(messages(application)),
-            IndividualAgeSummary.row(answers, 0)(messages(application)),
-            IndividualDateOfBirthSummary.row(answers, 0)(messages(application)),
-            IndividualAddressSummary.row(answers, 0)(messages(application)),
-            IndividualContactDetailsSummary.row(0, answers)(messages(application)),
-            IndividualNationalInsuranceNumberSummary.row(answers, 0)(messages(application)),
-            IndividualConnectionSummary.row(answers, 0)(messages(application)),
-            IndividualBusinessDetailsSummary.row(answers, 0)(messages(application))
+            IndividualNameSummary.row(answers, 0, NormalMode)(messages(application)),
+            IndividualDateFormatSummary.row(answers, 0, NormalMode)(messages(application)),
+            IndividualAgeSummary.row(answers, 0, NormalMode)(messages(application)),
+            IndividualDateOfBirthSummary.row(answers, 0, NormalMode)(messages(application)),
+            IndividualAddressSummary.row(answers, 0, NormalMode)(messages(application)),
+            IndividualContactDetailsSummary.row(answers, 0, NormalMode)(messages(application)),
+            IndividualNationalInsuranceNumberSummary.row(answers, 0, NormalMode)(messages(application)),
+            IndividualConnectionSummary.row(answers, 0, NormalMode)(messages(application)),
+            IndividualBusinessDetailsSummary.row(answers, 0, NormalMode)(messages(application))
           ).flatten
         )
 
         val individualBusinessDetails = SummaryListViewModel(
           Seq(
-            BusinessNameSummary.row(answers, 0)(messages(application)),
-            TypeBusinessSummary.row(answers, 0)(messages(application)),
-            BusinessAddressSummary.row(answers, 0)(messages(application)),
-            BusinessContactDetailsSummary.row(answers, 0)(messages(application)),
-            ReferenceNumbersSummary.row(answers, 0)(messages(application)),
-            SelectConnectionBusinessSummary.row(answers, 0)(messages(application))
+            BusinessNameSummary.row(answers, 0, NormalMode)(messages(application)),
+            TypeBusinessSummary.row(answers, 0, NormalMode)(messages(application)),
+            BusinessAddressSummary.row(answers, 0, NormalMode)(messages(application)),
+            BusinessContactDetailsSummary.row(answers, 0, NormalMode)(messages(application)),
+            ReferenceNumbersSummary.row(answers, 0, NormalMode)(messages(application)),
+            SelectConnectionBusinessSummary.row(answers, 0, NormalMode)(messages(application))
           ).flatten
         )
 
         status(result) mustEqual OK
 
-        contentAsString(result) mustEqual view(individualsDetails, individualBusinessDetails)(
+        contentAsString(result) mustEqual view(individualsDetails, individualBusinessDetails, onwardRoute)(
           request,
           messages(application)
         ).toString
@@ -124,7 +123,7 @@ class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryList
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, routes.IndividualCheckYourAnswersController.onPageLoad.url)
+        val request = FakeRequest(GET, routes.IndividualCheckYourAnswersController.onPageLoad(Index(0), NormalMode).url)
 
         val result = route(application, request).value
 

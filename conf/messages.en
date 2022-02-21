@@ -11,6 +11,7 @@ site.start = Start now
 site.startAgain = Start again
 site.signIn = Sign in
 site.govuk = GOV.UK
+site.unknown = Unknown
 
 date.day = Day
 date.month = Month
@@ -390,9 +391,14 @@ addAnotherPerson.checkYourAnswersLabel = Are there additional people involved in
 addAnotherPerson.error.required = Select yes if you need to add another individual.
 addAnotherPerson.change.hidden = AddAnotherPerson
 
-individual.addAnother.header = You have added one individual
+individual.addAnother.header = You have added {0} individual
+individual.addAnother.header.plural = You have added {0} individuals
 individual.items.moreThan5 = You cannot add another individual as you have entered a maximum of 5.
 individual.1 = Individual A
+individual.2 = Individual B
+individual.3 = Individual C
+individual.4 = Individual D
+individual.5 = Individual E
 
 individualAddress.lookup.title = What is the individual''''s address?
 individualAddress.lookup.heading = What is the individual''''s address?
@@ -503,3 +509,7 @@ individualContactDetails.cya.mobile = Mobile
 individualContactDetails.cya.email = Email
 individualName.nickname = Nickname
 referenceNumbers.cya.label = VAT Registration number:
+
+individualConfirmRemove.title = Are you sure you want to remove this individual?
+individualConfirmRemove.heading = Are you sure you want to remove {0}?
+individualConfirmRemove.error.required = Select yes if you want to remove this individual

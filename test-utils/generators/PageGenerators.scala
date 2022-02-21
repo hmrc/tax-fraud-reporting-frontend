@@ -22,6 +22,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryIndividualConfirmRemovePage: Arbitrary[IndividualConfirmRemovePage] =
+    Arbitrary(IndividualConfirmRemovePage(Index(0)))
+
   implicit lazy val arbitraryActivitySourceOfInformationPage: Arbitrary[ActivitySourceOfInformationPage.type] =
     Arbitrary(ActivitySourceOfInformationPage)
 
@@ -37,8 +40,8 @@ trait PageGenerators {
   implicit lazy val arbitrarySupportingDocumentPage: Arbitrary[SupportingDocumentPage.type] =
     Arbitrary(SupportingDocumentPage)
 
-  implicit lazy val arbitraryAddAnotherPersonPage: Arbitrary[AddAnotherPersonPage] =
-    Arbitrary(AddAnotherPersonPage(Index(0)))
+  implicit lazy val arbitraryAddAnotherPersonPage: Arbitrary[AddAnotherPersonPage.type] =
+    Arbitrary(AddAnotherPersonPage)
 
   implicit lazy val arbitraryHowManyPeopleKnowPage: Arbitrary[HowManyPeopleKnowPage.type] =
     Arbitrary(HowManyPeopleKnowPage)

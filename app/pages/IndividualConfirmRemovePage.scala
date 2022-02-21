@@ -16,10 +16,12 @@
 
 package pages
 
-import play.api.libs.json.{JsPath, JsValue}
-import queries.Gettable
+import models.Index
+import play.api.libs.json.JsPath
 
-case object PreviousBusinessInformation extends Gettable[List[JsValue]] {
+final case class IndividualConfirmRemovePage(index: Index) extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ "businessName"
+  override def path: JsPath = JsPath \ "nominals" \ index.position \ toString
+
+  override def toString: String = "individualConfirmRemove"
 }

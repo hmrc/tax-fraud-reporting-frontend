@@ -18,7 +18,7 @@ package controllers
 
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import pages.{PreviousBusinessInformation, PreviousIndividualInformation}
+import pages.NominalsQuery
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -35,6 +35,7 @@ class CheckYourAnswersController @Inject() (
   view: CheckYourAnswersView
 ) extends FrontendBaseController with I18nSupport {
 
+  // scalastyle:off
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val answers           = request.userAnswers
@@ -63,36 +64,17 @@ class CheckYourAnswersController @Inject() (
       val supportingDocuments = SummaryListViewModel(Seq(SupportingDocumentSummary.row(answers)).flatten)
 
       val businessDetails = {
-        val businessInformationChecks = answers.get(PreviousBusinessInformation).getOrElse(List.empty).length
-        val x = (0 until businessInformationChecks).flatMap { index =>
-          Seq(
-            BusinessNameSummary.row(answers, index),
-            TypeBusinessSummary.row(answers, index),
-            BusinessAddressSummary.row(answers, index),
-            BusinessContactDetailsSummary.row(answers, index),
-            ReferenceNumbersSummary.row(answers, index),
-            SelectConnectionBusinessSummary.row(answers, index)
-          ).flatten
-        }
-        SummaryListViewModel(x)
+        SummaryListViewModel(Seq(
+          BusinessNameSummary.row(answers, 0),
+          TypeBusinessSummary.row(answers, 0),
+          BusinessAddressSummary.row(answers, 0),
+          BusinessContactDetailsSummary.row(answers, 0),
+          ReferenceNumbersSummary.row(answers, 0),
+          SelectConnectionBusinessSummary.row(answers, 0)
+        ).flatten)
       }
 
-      val individualDetails = {
-        val individualInformationChecks = answers.get(PreviousIndividualInformation).getOrElse(List.empty).length
-        val v = (0 until individualInformationChecks).flatMap { index =>
-          Seq(
-            IndividualNameSummary.row(answers, index),
-            IndividualAgeSummary.row(answers, index),
-            IndividualDateOfBirthSummary.row(answers, index),
-            IndividualAddressSummary.row(answers, index),
-            IndividualContactDetailsSummary.row(index, answers),
-            IndividualNationalInsuranceNumberSummary.row(answers, index),
-            IndividualConnectionSummary.row(answers, index),
-            IndividualBusinessDetailsSummary.row(answers, index)
-          ).flatten
-        }
-        SummaryListViewModel(v)
-      }
+      val numberOfNominals = answers.get(NominalsQuery).getOrElse(List.empty).length
 
       Ok(
         view(
@@ -101,7 +83,7 @@ class CheckYourAnswersController @Inject() (
           yourDetails,
           supportingDocuments,
           businessDetails,
-          individualDetails,
+          numberOfNominals,
           supportDoc
         )
       )

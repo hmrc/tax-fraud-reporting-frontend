@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, Index, UserAnswers}
+import models.{CheckMode, Index, Mode, UserAnswers}
 import pages.IndividualNationalInsuranceNumberPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -27,20 +27,18 @@ import viewmodels.implicits._
 
 object IndividualNationalInsuranceNumberSummary {
 
-  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(IndividualNationalInsuranceNumberPage(Index(index))).map {
-      answer =>
-        SummaryListRowViewModel(
-          key = "individualNationalInsuranceNumber.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlFormat.escape(answer).toString),
-          actions = Seq(
-            ActionItemViewModel(
-              "site.change",
-              routes.IndividualNationalInsuranceNumberController.onPageLoad(Index(index), CheckMode).url
-            )
-              .withVisuallyHiddenText(messages("individualNationalInsuranceNumber.change.hidden"))
-          )
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] = {
+    val answer = answers.get(IndividualNationalInsuranceNumberPage(Index(index))).getOrElse(messages("site.unknown"))
+    Some(SummaryListRowViewModel(
+      key = "individualNationalInsuranceNumber.checkYourAnswersLabel",
+      value = ValueViewModel(HtmlFormat.escape(answer).toString),
+      actions = Seq(
+        ActionItemViewModel(
+          "site.change",
+          routes.IndividualNationalInsuranceNumberController.onPageLoad(Index(index), mode).url
         )
-    }
-
+          .withVisuallyHiddenText(messages("individualNationalInsuranceNumber.change.hidden"))
+      )
+    ))
+  }
 }
