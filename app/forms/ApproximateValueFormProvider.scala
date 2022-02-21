@@ -30,7 +30,7 @@ class ApproximateValueFormProvider @Inject() extends Mappings {
           "approximateValue.error.required",
           string => Try(string.replaceAll("""[,£\s]""", "").toFloat).isSuccess
         )
-        .transform(_.replaceAll("""[,£\s]""", "").toFloat, (_: Float).toString)
+        .transform(_.replaceAll("""[,£\s]""", "").toFloat, (_: Float).toString.replaceFirst("\\.0+$", ""))
     )
 
 }
