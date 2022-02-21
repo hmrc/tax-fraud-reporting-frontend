@@ -40,7 +40,7 @@ class ApproximateValueControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = "£500,00"
+  val validAnswer = 5.78
 
   lazy val approximateValueRoute = routes.ApproximateValueController.onPageLoad(NormalMode).url
 
@@ -64,7 +64,7 @@ class ApproximateValueControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ApproximateValuePage, validAnswer).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(ApproximateValuePage, validAnswer.floatValue).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -76,7 +76,7 @@ class ApproximateValueControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(
+        contentAsString(result) mustEqual view(form.fill(validAnswer.floatValue), NormalMode)(
           request,
           messages(application)
         ).toString

@@ -17,18 +17,22 @@
 package forms
 
 import forms.mappings.Mappings
-import javax.inject.Inject
 import play.api.data.Form
+import play.api.data.Forms._
+
+import javax.inject.Inject
+import scala.util.Try
 
 class ApproximateValueFormProvider @Inject() extends Mappings {
 
-  private val currencyRegex =
-    "^[',\",\\+,<,>,\\(,\\*,\\-,%]?([£]?\\s*\\d+([\\,,\\.]\\d+)?[£]?\\s*[\\-,\\/,\\,,\\.,\\+]?[\\/]?\\s*)+[',\",\\+,   <,>,\\),\\*,\\-,%]?$"
-
-  def apply(): Form[String] =
+  def apply(): Form[Float] =
     Form(
       "value" -> text("approximateValue.error.required")
-        .verifying(regexp(currencyRegex, "approximateValue.error.required"))
+        .verifying(
+          "approximateValue.error.required",
+          string => Try(string.replaceAll("""[,£\s]""", "").toFloat).isSuccess
+        )
+        .transform(_.replaceAll("""[,£\s]""", "").toFloat, (_: Float).toString)
     )
 
 }

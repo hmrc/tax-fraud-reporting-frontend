@@ -61,10 +61,8 @@ class ApproximateValueController @Inject() (
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
         value =>
           for {
-            updatedAnswers <- Future.fromTry(
-              request.userAnswers.set(ApproximateValuePage, value.replaceAll("\\s|,|£", ""))
-            )
-            _ <- sessionRepository.set(updatedAnswers)
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(ApproximateValuePage, value))
+            _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(ApproximateValuePage, mode, updatedAnswers))
       )
   }
