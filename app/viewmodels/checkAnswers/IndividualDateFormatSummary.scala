@@ -28,22 +28,24 @@ import viewmodels.implicits._
 
 object IndividualDateFormatSummary {
 
-  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] = {
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
+    messages: Messages
+  ): Option[SummaryListRow] = {
     val answer = answers.get(IndividualDateFormatPage(Index(index))).map {
       answer =>
         messages(s"dateFormat.$answer")
     }.getOrElse(messages("site.unknown"))
 
-    Some(SummaryListRowViewModel(
-      key = "dateFormat.checkYourAnswersLabel",
-      value = ValueViewModel(HtmlContent(HtmlFormat.escape(answer))),
+    Some(
+      SummaryListRowViewModel(
+        key = "dateFormat.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(HtmlFormat.escape(answer))),
         actions = Seq(
-        ActionItemViewModel(
-          "site.change",
-          routes.IndividualDateFormatController.onPageLoad(Index(index), mode).url
+          ActionItemViewModel("site.change", routes.IndividualDateFormatController.onPageLoad(Index(index), mode).url)
+            .withVisuallyHiddenText(messages("dateFormat.change.hidden"))
         )
-          .withVisuallyHiddenText(messages("dateFormat.change.hidden"))
       )
-    ))
+    )
   }
+
 }

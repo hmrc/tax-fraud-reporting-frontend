@@ -859,16 +859,28 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
       "to the add another individual page if there is at least 1 individual" in {
         val answers = emptyUserAnswers
           .set(IndividualInformationPage(Index(0)), IndividualInformation.values.toSet).success.value
-        navigator.nextPage(IndividualConfirmRemovePage(Index(0)), NormalMode, answers) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
+        navigator.nextPage(
+          IndividualConfirmRemovePage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
       }
 
       "to the individual or business page if there are no individuals" in {
-        navigator.nextPage(IndividualConfirmRemovePage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.IndividualOrBusinessController.onPageLoad(NormalMode)
+        navigator.nextPage(
+          IndividualConfirmRemovePage(Index(0)),
+          NormalMode,
+          emptyUserAnswers
+        ) mustBe routes.IndividualOrBusinessController.onPageLoad(NormalMode)
       }
     }
 
     "must go from the individual check your answer page to the add another individual page" in {
-      navigator.nextPage(IndividualCheckYourAnswersPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
+      navigator.nextPage(
+        IndividualCheckYourAnswersPage(Index(0)),
+        NormalMode,
+        emptyUserAnswers
+      ) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
     }
 
     "must go from individual have business details page" - {

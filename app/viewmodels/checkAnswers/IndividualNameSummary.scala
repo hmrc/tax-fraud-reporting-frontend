@@ -28,7 +28,9 @@ import viewmodels.implicits._
 
 object IndividualNameSummary {
 
-  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] = {
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
+    messages: Messages
+  ): Option[SummaryListRow] = {
     val answer = answers.get(IndividualNamePage(Index(index))).map {
       answer =>
         val name = List(answer.firstName, answer.middleName, answer.lastName)
@@ -37,13 +39,16 @@ object IndividualNameSummary {
         List(Some(name), nickName).flatten.mkString("<br/>")
     }.getOrElse(messages("site.unknown"))
 
-    Some(SummaryListRowViewModel(
-      key = "individualName.checkYourAnswersLabel",
-      value = ValueViewModel(HtmlContent(answer)),
-      actions = Seq(
-        ActionItemViewModel("site.change", routes.IndividualNameController.onPageLoad(Index(index), mode).url)
-          .withVisuallyHiddenText(messages("individualName.change.hidden"))
+    Some(
+      SummaryListRowViewModel(
+        key = "individualName.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(answer)),
+        actions = Seq(
+          ActionItemViewModel("site.change", routes.IndividualNameController.onPageLoad(Index(index), mode).url)
+            .withVisuallyHiddenText(messages("individualName.change.hidden"))
+        )
       )
-    ))
+    )
   }
+
 }

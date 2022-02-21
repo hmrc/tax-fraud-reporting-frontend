@@ -28,24 +28,29 @@ import viewmodels.implicits._
 
 object IndividualAddressSummary {
 
-  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] = {
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
+    messages: Messages
+  ): Option[SummaryListRow] = {
     val answer = answers.get(IndividualAddressConfirmationPage(Index(index))).map {
       answer =>
-        List(answer.lines, answer.postcode.toList, answer.country.toList).flatten.map(
-          HtmlFormat.escape
-        ).mkString("<br/>")
+        List(answer.lines, answer.postcode.toList, answer.country.toList).flatten.map(HtmlFormat.escape).mkString(
+          "<br/>"
+        )
     }.getOrElse(messages("site.unknown"))
 
-    Some(SummaryListRowViewModel(
-      key = "businessAddress.checkYourAnswersLabel",
-      value = ValueViewModel(HtmlContent(answer)),
-      actions = Seq(
-        ActionItemViewModel(
-          "site.change",
-          routes.IndividualAddressRedirectController.onPageLoad(Index(index), mode).url
+    Some(
+      SummaryListRowViewModel(
+        key = "businessAddress.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(answer)),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            routes.IndividualAddressRedirectController.onPageLoad(Index(index), mode).url
+          )
+            .withVisuallyHiddenText(messages("businessAddress.change.hidden"))
         )
-          .withVisuallyHiddenText(messages("businessAddress.change.hidden"))
       )
-    ))
+    )
   }
+
 }

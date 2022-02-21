@@ -26,15 +26,20 @@ import viewmodels.implicits._
 
 object IndividualAgeSummary {
 
-  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] = {
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
+    messages: Messages
+  ): Option[SummaryListRow] = {
     val answer = answers.get(IndividualAgePage(Index(index))).map(_.toString).getOrElse(messages("site.unknown"))
-    Some(SummaryListRowViewModel(
-      key = "individualAge.checkYourAnswersLabel",
-      value = ValueViewModel(answer),
-      actions = Seq(
-        ActionItemViewModel("site.change", routes.IndividualAgeController.onPageLoad(Index(index), mode).url)
-          .withVisuallyHiddenText(messages("individualAge.change.hidden"))
+    Some(
+      SummaryListRowViewModel(
+        key = "individualAge.checkYourAnswersLabel",
+        value = ValueViewModel(answer),
+        actions = Seq(
+          ActionItemViewModel("site.change", routes.IndividualAgeController.onPageLoad(Index(index), mode).url)
+            .withVisuallyHiddenText(messages("individualAge.change.hidden"))
+        )
       )
-    ))
+    )
   }
+
 }

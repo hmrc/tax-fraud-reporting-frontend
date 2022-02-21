@@ -45,6 +45,7 @@ class CheckYourAnswersController @Inject() (
         Seq(
           ActivityTypeSummary.row(answers),
           ApproximateValueSummary.row(answers),
+          WhenActivityHappenSummary.row(answers),
           ActivityTimePeriodSummary.row(answers),
           HowManyPeopleKnowSummary.row(answers),
           DescriptionActivitySummary.row(answers),
@@ -63,16 +64,17 @@ class CheckYourAnswersController @Inject() (
 
       val supportingDocuments = SummaryListViewModel(Seq(SupportingDocumentSummary.row(answers)).flatten)
 
-      val businessDetails = {
-        SummaryListViewModel(Seq(
-          BusinessNameSummary.row(answers, 0),
-          TypeBusinessSummary.row(answers, 0),
-          BusinessAddressSummary.row(answers, 0),
-          BusinessContactDetailsSummary.row(answers, 0),
-          ReferenceNumbersSummary.row(answers, 0),
-          SelectConnectionBusinessSummary.row(answers, 0)
-        ).flatten)
-      }
+      val businessDetails =
+        SummaryListViewModel(
+          Seq(
+            BusinessNameSummary.row(answers, 0),
+            TypeBusinessSummary.row(answers, 0),
+            BusinessAddressSummary.row(answers, 0),
+            BusinessContactDetailsSummary.row(answers, 0),
+            ReferenceNumbersSummary.row(answers, 0),
+            SelectConnectionBusinessSummary.row(answers, 0)
+          ).flatten
+        )
 
       val numberOfNominals = answers.get(NominalsQuery).getOrElse(List.empty).length
 

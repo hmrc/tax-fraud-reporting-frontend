@@ -38,7 +38,7 @@ class IndividualConfirmRemoveControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new IndividualConfirmRemoveFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   lazy val individualConfirmRemoveRoute = routes.IndividualConfirmRemoveController.onPageLoad(Index(0), NormalMode).url
 
