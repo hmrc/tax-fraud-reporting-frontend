@@ -74,22 +74,7 @@ class CheckYourAnswersController @Inject() (
         ).flatten)
       }
 
-      val individualDetails = {
-        val individualInformationChecks = answers.get(NominalsQuery).getOrElse(List.empty).length
-        val v = (0 until individualInformationChecks).flatMap { index =>
-          Seq(
-            IndividualNameSummary.row(answers, index),
-            IndividualAgeSummary.row(answers, index),
-            IndividualDateOfBirthSummary.row(answers, index),
-            IndividualAddressSummary.row(answers, index),
-            IndividualContactDetailsSummary.row(answers, index),
-            IndividualNationalInsuranceNumberSummary.row(answers, index),
-            IndividualConnectionSummary.row(answers, index),
-            IndividualBusinessDetailsSummary.row(answers, index)
-          ).flatten
-        }
-        SummaryListViewModel(v)
-      }
+      val numberOfNominals = answers.get(NominalsQuery).getOrElse(List.empty).length
 
       Ok(
         view(
@@ -98,7 +83,7 @@ class CheckYourAnswersController @Inject() (
           yourDetails,
           supportingDocuments,
           businessDetails,
-          individualDetails,
+          numberOfNominals,
           supportDoc
         )
       )

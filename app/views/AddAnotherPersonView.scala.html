@@ -29,7 +29,7 @@
 @(form: Form[_], numberOfNominals: Int, mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @headingMessage = @{
-    if (numberOfNominals < 2) {
+    if (numberOfNominals == 1) {
         messages("individual.addAnother.header", numberOfNominals)
     } else {
         messages("individual.addAnother.header.plural", numberOfNominals)
@@ -57,17 +57,23 @@
             )
         </div>
 
-        @govukRadios(
-            RadiosViewModel(
-                field  = form("value"),
-                legend = LegendViewModel(messages("addAnotherPerson.heading")).withCssClass("govuk-fieldset__legend--m"),
-                items  = AddAnotherPerson.options
-            ).inline()
-        )
+        @if(numberOfNominals > 4) {
+            <a href="@routes.ActivitySourceOfInformationController.onPageLoad(mode)" class="govuk-button" id="continue-button">
+                @messages("site.continue")
+            </a>
+        } else {
+            @govukRadios(
+                RadiosViewModel(
+                    field  = form("value"),
+                    legend = LegendViewModel(messages("addAnotherPerson.heading")).withCssClass("govuk-fieldset__legend--m"),
+                    items  = AddAnotherPerson.options
+                ).inline()
+            )
 
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-                .withAttribute("id" -> "continue-button")
-        )
+            @govukButton(
+                ButtonViewModel(messages("site.continue"))
+                        .withAttribute("id" -> "continue-button")
+            )
+        }
     }
 }

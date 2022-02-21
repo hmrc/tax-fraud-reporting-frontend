@@ -45,10 +45,10 @@ class IndividualConfirmRemoveController @Inject()(
 
   val form = formProvider()
 
-  private def removeIndividual(answers: UserAnswers, index: Index): Future[Unit] = for {
+  private def removeIndividual(answers: UserAnswers, index: Index): Future[UserAnswers] = for {
     updatedAnswers <- Future.fromTry(answers.remove(NominalQuery(index)))
     _              <- sessionRepository.set(updatedAnswers)
-  } yield ()
+  } yield updatedAnswers
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
@@ -65,7 +65,7 @@ class IndividualConfirmRemoveController @Inject()(
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualConfirmRemovePage(index), value))
-            _              <- if (value) removeIndividual(request.userAnswers, index) else Future.successful(())
+            updatedAnswers <- if (value) removeIndividual(request.userAnswers, index) else Future.successful(updatedAnswers)
           } yield Redirect(navigator.nextPage(IndividualConfirmRemovePage(index), mode, updatedAnswers))
       )
   }

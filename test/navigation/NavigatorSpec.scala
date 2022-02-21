@@ -1207,7 +1207,6 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           ) mustBe routes.CheckYourAnswersController.onPageLoad
         }
       }
-
     }
   }
 }
