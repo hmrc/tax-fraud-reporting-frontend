@@ -16,21 +16,17 @@
 
 package pages
 
-import models.{SupportingDocument, UserAnswers}
-import play.api.libs.json.JsPath
+import models.Index
+import pages.behaviours.PageBehaviours
 
-import scala.util.{Success, Try}
+class IndividualConfirmRemovePageSpec extends PageBehaviours {
 
-case object SupportingDocumentPage extends QuestionPage[SupportingDocument] {
+  "IndividualConfirmRemovePage" - {
 
-  override def path: JsPath = JsPath \ toString
+    beRetrievable[Boolean](IndividualConfirmRemovePage(Index(0)))
 
-  override def toString: String = "supportingDocument"
+    beSettable[Boolean](IndividualConfirmRemovePage(Index(0)))
 
-  override def cleanup(value: Option[SupportingDocument], userAnswers: UserAnswers): Try[UserAnswers] =
-    value match {
-      case Some(SupportingDocument.No) => userAnswers.remove(DocumentationDescriptionPage)
-      case _                           => Success(userAnswers)
-    }
-
+    beRemovable[Boolean](IndividualConfirmRemovePage(Index(0)))
+  }
 }

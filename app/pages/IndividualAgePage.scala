@@ -21,7 +21,7 @@ import play.api.libs.json.JsPath
 
 final case class IndividualAgePage(index: Index) extends QuestionPage[Int] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "nominals" \ index.position \ toString
 
   override def toString: String = "individualAge"
 }

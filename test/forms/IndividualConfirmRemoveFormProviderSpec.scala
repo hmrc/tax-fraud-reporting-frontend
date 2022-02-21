@@ -14,23 +14,32 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.{SupportingDocument, UserAnswers}
-import play.api.libs.json.JsPath
+import forms.behaviours.BooleanFieldBehaviours
+import play.api.data.FormError
 
-import scala.util.{Success, Try}
+class IndividualConfirmRemoveFormProviderSpec extends BooleanFieldBehaviours {
 
-case object SupportingDocumentPage extends QuestionPage[SupportingDocument] {
+  val requiredKey = "individualConfirmRemove.error.required"
+  val invalidKey = "error.boolean"
 
-  override def path: JsPath = JsPath \ toString
+  val form = new IndividualConfirmRemoveFormProvider()()
 
-  override def toString: String = "supportingDocument"
+  ".value" - {
 
-  override def cleanup(value: Option[SupportingDocument], userAnswers: UserAnswers): Try[UserAnswers] =
-    value match {
-      case Some(SupportingDocument.No) => userAnswers.remove(DocumentationDescriptionPage)
-      case _                           => Success(userAnswers)
-    }
+    val fieldName = "value"
 
+    behave like booleanField(
+      form,
+      fieldName,
+      invalidError = FormError(fieldName, invalidKey)
+    )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
+  }
 }

@@ -18,7 +18,7 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{CheckMode, Index, Mode, UserAnswers}
-import pages.BusinessContactDetailsPage
+import pages.BusinessAddressConfirmationPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
@@ -26,26 +26,24 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object BusinessContactDetailsSummary {
+object BusinessAddressSummary {
 
   def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] = {
-    val answer = answers.get(BusinessContactDetailsPage(Index(index))).map {
+    val answer = answers.get(BusinessAddressConfirmationPage(Index(index))).map {
       answer =>
-        List("Landline" -> answer.landlineNumber, "Mobile" -> answer.mobileNumber, "Email" -> answer.email) flatMap {
-          case (label, valueOpt) =>
-            valueOpt map { value => HtmlFormat.escape(label + ": " + value) }
-        } mkString "<br>"
+        List(answer.lines, answer.postcode.toList, answer.country.toList).flatten.map(
+          HtmlFormat.escape
+        ).mkString("<br/>")
     }.getOrElse(messages("site.unknown"))
 
     Some(SummaryListRowViewModel(
-      key = "businessContactDetails.checkYourAnswersLabel",
+      key = "businessAddress.checkYourAnswersLabel",
       value = ValueViewModel(HtmlContent(answer)),
       actions = Seq(
         ActionItemViewModel(
           "site.change",
-          routes.BusinessContactDetailsController.onPageLoad(Index(index), mode).url
-        )
-          .withVisuallyHiddenText(messages("businessContactDetails.change.hidden"))
+          routes.BusinessAddressRedirectController.onPageLoad(Index(index), mode).url
+        ).withVisuallyHiddenText(messages("businessAddress.change.hidden"))
       )
     ))
   }

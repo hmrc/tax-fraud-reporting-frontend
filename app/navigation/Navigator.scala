@@ -47,8 +47,10 @@ class Navigator @Inject() () {
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
     case BusinessAddressConfirmationPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.Address)
-    case SelectConnectionBusinessPage(index)  => _ => routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
-    case AddAnotherPersonPage(index)          => addAnotherPersonRoutes(_, index)
+    case SelectConnectionBusinessPage(_)      => _ => routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
+    case AddAnotherPersonPage                 => addAnotherPersonRoutes
+    case IndividualCheckYourAnswersPage(_)    => _ => routes.AddAnotherPersonController.onPageLoad(NormalMode)
+    case IndividualConfirmRemovePage(_)       => individualConfirmRemoveRoutes
     case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index)
     case ApproximateValuePage                 => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
     case WhenActivityHappenPage               => whenActivityHappenRoutes
@@ -61,11 +63,14 @@ class Navigator @Inject() () {
     case ProvideContactDetailsPage       => provideContactDetailsRoutes
     case YourContactDetailsPage          => _ => routes.SupportingDocumentController.onPageLoad(NormalMode)
     case ActivitySourceOfInformationPage => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
+    case DocumentationDescriptionPage    => _ => routes.CheckYourAnswersController.onPageLoad
     case _                               => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
-    case _ => _ => routes.CheckYourAnswersController.onPageLoad
+    case SupportingDocumentPage    => supportingDocumentCheckRoutes
+    case ProvideContactDetailsPage => provideContactDetailsCheckRoutes
+    case _                         => _ => routes.CheckYourAnswersController.onPageLoad
   }
 
   private def individualInformationRoute(answer: IndividualInformation, index: Index, mode: Mode): Call =
@@ -124,7 +129,6 @@ class Navigator @Inject() () {
       case BusinessInformationCheck.BusinessReference => routes.ReferenceNumbersController.onPageLoad(index, mode)
       case BusinessInformationCheck.Contact           => routes.BusinessContactDetailsController.onPageLoad(index, mode)
       case BusinessInformationCheck.Address           => routes.BusinessAddressRedirectController.onPageLoad(index, mode)
-
     }
 
   private def businessInformationRoutes(answers: UserAnswers, index: Index): Call =
@@ -145,22 +149,30 @@ class Navigator @Inject() () {
         )
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def addAnotherPersonRoutes(answers: UserAnswers, index: Index): Call =
-    answers.get(AddAnotherPersonPage(index)).map {
+  private def addAnotherPersonRoutes(answers: UserAnswers): Call =
+    answers.get(AddAnotherPersonPage).map {
       case AddAnotherPerson.Yes =>
-        routes.IndividualInformationController.onPageLoad(Index(0), NormalMode)
+        routes.IndividualInformationController.onPageLoad(
+          Index(answers.get(IndividualIndexPage).getOrElse(List.empty).length),
+          NormalMode
+        )
       case AddAnotherPerson.No =>
         routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
+  private def individualConfirmRemoveRoutes(answers: UserAnswers): Call =
+    if (answers.get(NominalsQuery).getOrElse(List.empty).isEmpty) {
+      routes.IndividualOrBusinessController.onPageLoad(NormalMode)
+    } else {
+      routes.AddAnotherPersonController.onPageLoad(NormalMode)
+    }
+
   private def individualBusinessDetailsRoutes(answers: UserAnswers, index: Index): Call =
     answers.get(IndividualBusinessDetailsPage(index)).map {
       case IndividualBusinessDetails.Yes =>
-        routes.BusinessInformationCheckController.onPageLoad(Index(0), NormalMode)
-      case IndividualBusinessDetails.No =>
-        routes.AddAnotherPersonController.onPageLoad(Index(0), NormalMode)
-      case IndividualBusinessDetails.DontKnow =>
-        routes.AddAnotherPersonController.onPageLoad(Index(0), NormalMode)
+        routes.BusinessInformationCheckController.onPageLoad(index, NormalMode)
+      case _ =>
+        routes.AddAnotherPersonController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def whenActivityHappenRoutes(answers: UserAnswers): Call =
@@ -179,6 +191,16 @@ class Navigator @Inject() () {
         routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
+  private def provideContactDetailsCheckRoutes(answers: UserAnswers): Call =
+    answers.get(ProvideContactDetailsPage).map {
+      case ProvideContactDetails.Yes =>
+        if (answers.get(YourContactDetailsPage).isDefined)
+          routes.CheckYourAnswersController.onPageLoad
+        else
+          routes.YourContactDetailsController.onPageLoad(CheckMode)
+      case ProvideContactDetails.No => routes.CheckYourAnswersController.onPageLoad
+    }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
+
   private def provideContactDetailsRoutes(answers: UserAnswers): Call =
     answers.get(ProvideContactDetailsPage).map {
       case ProvideContactDetails.Yes =>
@@ -186,6 +208,16 @@ class Navigator @Inject() () {
       case ProvideContactDetails.No =>
         routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def supportingDocumentCheckRoutes(answers: UserAnswers): Call =
+    answers.get(SupportingDocumentPage).map {
+      case SupportingDocument.Yes =>
+        if (answers.get(DocumentationDescriptionPage).isDefined)
+          routes.CheckYourAnswersController.onPageLoad
+        else
+          routes.DocumentationDescriptionController.onPageLoad(CheckMode)
+      case SupportingDocument.No => routes.CheckYourAnswersController.onPageLoad
+    }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
     case NormalMode =>

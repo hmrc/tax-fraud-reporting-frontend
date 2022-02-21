@@ -21,7 +21,7 @@ import play.api.libs.json.JsPath
 
 final case class ReferenceNumbersPage(index: Index) extends QuestionPage[ReferenceNumbers] {
 
-  override def path: JsPath = JsPath \ toString \ index.position
+  override def path: JsPath = JsPath \ "nominals" \ index.position \ toString
 
   override def toString: String = "referenceNumbers"
 }

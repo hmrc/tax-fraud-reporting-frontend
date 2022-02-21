@@ -14,23 +14,17 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.{SupportingDocument, UserAnswers}
-import play.api.libs.json.JsPath
+import javax.inject.Inject
 
-import scala.util.{Success, Try}
+import forms.mappings.Mappings
+import play.api.data.Form
 
-case object SupportingDocumentPage extends QuestionPage[SupportingDocument] {
+class IndividualConfirmRemoveFormProvider @Inject() extends Mappings {
 
-  override def path: JsPath = JsPath \ toString
-
-  override def toString: String = "supportingDocument"
-
-  override def cleanup(value: Option[SupportingDocument], userAnswers: UserAnswers): Try[UserAnswers] =
-    value match {
-      case Some(SupportingDocument.No) => userAnswers.remove(DocumentationDescriptionPage)
-      case _                           => Success(userAnswers)
-    }
-
+  def apply(): Form[Boolean] =
+    Form(
+      "value" -> boolean("individualConfirmRemove.error.required")
+    )
 }

@@ -17,8 +17,8 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, Index, UserAnswers}
-import pages.AddAnotherPersonPage
+import models.{CheckMode, Index, Mode, UserAnswers}
+import pages.IndividualAddressConfirmationPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
@@ -26,24 +26,26 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object AddAnotherPersonSummary {
+object IndividualAddressSummary {
 
-  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(AddAnotherPersonPage(Index(index))).map {
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] = {
+    val answer = answers.get(IndividualAddressConfirmationPage(Index(index))).map {
       answer =>
-        val value = ValueViewModel(HtmlContent(HtmlFormat.escape(messages(s"addAnotherPerson.$answer"))))
+        List(answer.lines, answer.postcode.toList, answer.country.toList).flatten.map(
+          HtmlFormat.escape
+        ).mkString("<br/>")
+    }.getOrElse(messages("site.unknown"))
 
-        SummaryListRowViewModel(
-          key = "addAnotherPerson.checkYourAnswersLabel",
-          value = value,
-          actions = Seq(
-            ActionItemViewModel(
-              "site.change",
-              routes.AddAnotherPersonController.onPageLoad(Index(index), CheckMode).url
-            )
-              .withVisuallyHiddenText(messages("addAnotherPerson.change.hidden"))
-          )
+    Some(SummaryListRowViewModel(
+      key = "businessAddress.checkYourAnswersLabel",
+      value = ValueViewModel(HtmlContent(answer)),
+      actions = Seq(
+        ActionItemViewModel(
+          "site.change",
+          routes.IndividualAddressRedirectController.onPageLoad(Index(index), mode).url
         )
-    }
-
+          .withVisuallyHiddenText(messages("businessAddress.change.hidden"))
+      )
+    ))
+  }
 }

@@ -14,16 +14,45 @@
  * limitations under the License.
  *@
 
+@import models.IndividualOrBusiness._
+
 @this(
     layout: templates.Layout,
-    govukSummaryList: GovukSummaryList
+    govukSummaryList: GovukSummaryList,
+    listWithAction: HmrcListWithActions
 )
 
-@(list: SummaryList)(implicit request: Request[_], messages: Messages)
+@(isBusinessJourney: Boolean, activityDetails: SummaryList, yourDetails: SummaryList, supportingDocuments: SummaryList, businessDetails: SummaryList, numberOfNominals: Int, supportDoc: SummaryList)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 
     <h1 class="govuk-heading-l">@messages("checkYourAnswers.heading")</h1>
 
-    @govukSummaryList(list)
+        <h2 class="govuk-heading-m">@messages("checkYourAnswers.activityDetails")</h2>
+        @govukSummaryList(activityDetails.withCssClass("govuk-!-margin-bottom-6"))
+
+        @if(isBusinessJourney) {
+            <h2 class="govuk-heading-m">@messages("checkYourAnswers.businessDetails")</h2>
+            @govukSummaryList(businessDetails.withCssClass("govuk-!-margin-bottom-6"))
+        }
+
+        @if(!isBusinessJourney) {
+            <h2 class="govuk-heading-m">@messages("checkYourAnswers.individualDetails")</h2>
+            @listWithAction(ListWithActions(
+                items = (0 until numberOfNominals).map { id =>
+                    ListWithActionsItem(name = messages(s"individual.${id + 1}"), actions = List(
+                        ListWithActionsAction(content = messages("site.change"), href = routes.IndividualCheckYourAnswersController.onPageLoad(Index(id), CheckMode).url)
+                    ))
+                }
+            ))
+        }
+
+        <h2 class="govuk-heading-m">@messages("checkYourAnswers.yourDetails")</h2>
+        @govukSummaryList(yourDetails.withCssClass("govuk-!-margin-bottom-0"))
+
+        @govukSummaryList(supportDoc.withCssClass("govuk-!-margin-bottom-6"))
+
+        <a id="continue-button" href="@routes.SubmitYourReportController.onPageLoad" role="button" class="govuk-button" data-module="govuk-button">
+            @messages("site.continue")
+        </a>
 }

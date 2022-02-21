@@ -16,21 +16,11 @@
 
 package pages
 
-import models.{SupportingDocument, UserAnswers}
-import play.api.libs.json.JsPath
+import models.Index
+import play.api.libs.json.{JsPath, JsValue}
+import queries.Settable
 
-import scala.util.{Success, Try}
+final case class NominalQuery(index: Index) extends Settable[JsValue] {
 
-case object SupportingDocumentPage extends QuestionPage[SupportingDocument] {
-
-  override def path: JsPath = JsPath \ toString
-
-  override def toString: String = "supportingDocument"
-
-  override def cleanup(value: Option[SupportingDocument], userAnswers: UserAnswers): Try[UserAnswers] =
-    value match {
-      case Some(SupportingDocument.No) => userAnswers.remove(DocumentationDescriptionPage)
-      case _                           => Success(userAnswers)
-    }
-
+  override def path: JsPath = JsPath \ "nominals" \ index.position
 }

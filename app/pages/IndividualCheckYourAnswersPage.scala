@@ -16,21 +16,6 @@
 
 package pages
 
-import models.{SupportingDocument, UserAnswers}
-import play.api.libs.json.JsPath
+import models.Index
 
-import scala.util.{Success, Try}
-
-case object SupportingDocumentPage extends QuestionPage[SupportingDocument] {
-
-  override def path: JsPath = JsPath \ toString
-
-  override def toString: String = "supportingDocument"
-
-  override def cleanup(value: Option[SupportingDocument], userAnswers: UserAnswers): Try[UserAnswers] =
-    value match {
-      case Some(SupportingDocument.No) => userAnswers.remove(DocumentationDescriptionPage)
-      case _                           => Success(userAnswers)
-    }
-
-}
+final case class IndividualCheckYourAnswersPage(index: Index) extends Page

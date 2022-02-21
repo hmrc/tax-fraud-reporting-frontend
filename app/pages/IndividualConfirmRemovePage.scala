@@ -16,21 +16,12 @@
 
 package pages
 
-import models.{SupportingDocument, UserAnswers}
+import models.Index
 import play.api.libs.json.JsPath
 
-import scala.util.{Success, Try}
+final case class IndividualConfirmRemovePage(index: Index) extends QuestionPage[Boolean] {
 
-case object SupportingDocumentPage extends QuestionPage[SupportingDocument] {
+  override def path: JsPath = JsPath \ "nominals" \ index.position \ toString
 
-  override def path: JsPath = JsPath \ toString
-
-  override def toString: String = "supportingDocument"
-
-  override def cleanup(value: Option[SupportingDocument], userAnswers: UserAnswers): Try[UserAnswers] =
-    value match {
-      case Some(SupportingDocument.No) => userAnswers.remove(DocumentationDescriptionPage)
-      case _                           => Success(userAnswers)
-    }
-
+  override def toString: String = "individualConfirmRemove"
 }

@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, Index, UserAnswers}
+import models.{CheckMode, Index, Mode, UserAnswers}
 import pages.ReferenceNumbersPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -28,24 +28,24 @@ import viewmodels.implicits._
 
 object ReferenceNumbersSummary {
 
-  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ReferenceNumbersPage(Index(index))).map {
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] = {
+    val answer = answers.get(ReferenceNumbersPage(Index(index))).map {
       answer =>
         val value = List(answer.vatRegistration, answer.employeeRefNo, answer.corporationTax).flatten.map(
           HtmlFormat.escape
-        ).mkString("<br />")
-
-        SummaryListRowViewModel(
-          key = "referenceNumbers.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlContent(value)),
-          actions = Seq(
-            ActionItemViewModel(
-              "site.change",
-              routes.ReferenceNumbersController.onPageLoad(Index(index), CheckMode).url
-            )
-              .withVisuallyHiddenText(messages("referenceNumbers.change.hidden"))
-          )
+        ).mkString("<br>")
+        HtmlFormat.escape(s"${messages("referenceNumbers.cya.label")} <br/> $value").toString
+    }.getOrElse(messages("site.unknown"))
+    Some(SummaryListRowViewModel(
+      key = "referenceNumbers.checkYourAnswersLabel",
+      value = ValueViewModel(HtmlContent(answer)),
+      actions = Seq(
+        ActionItemViewModel(
+          "site.change",
+          routes.ReferenceNumbersController.onPageLoad(Index(index), mode).url
         )
-    }
-
+          .withVisuallyHiddenText(messages("referenceNumbers.change.hidden"))
+      )
+    ))
+  }
 }
