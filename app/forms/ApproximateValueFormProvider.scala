@@ -17,18 +17,23 @@
 package forms
 
 import forms.mappings.Mappings
-import javax.inject.Inject
 import play.api.data.Form
+
+import java.text.DecimalFormat
+import javax.inject.Inject
+import scala.util.Try
 
 class ApproximateValueFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Int] =
-    Form(
-      "value" -> int(
-        "approximateValue.error.required",
-        "approximateValue.error.wholeNumber",
-        "approximateValue.error.nonNumeric"
-      )
-    )
+  val formatter = new DecimalFormat("#.##")
 
+  def apply(): Form[Float] =
+    Form(
+      "value" -> text("approximateValue.error.required")
+        .verifying(
+          "approximateValue.error.required",
+          string => Try(string.replaceAll("""[,£\s]""", "").toFloat).isSuccess
+        )
+        .transform(_.replaceAll("""[,£\s]""", "").toFloat, (value: Float) => formatter.format(value))
+    )
 }

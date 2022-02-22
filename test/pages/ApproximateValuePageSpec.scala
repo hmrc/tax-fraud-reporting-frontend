@@ -22,10 +22,10 @@ class ApproximateValuePageSpec extends PageBehaviours {
 
   "ApproximateValuePage" - {
 
-    beRetrievable[Int](ApproximateValuePage)
+    beRetrievable[Float](ApproximateValuePage)
 
-    beSettable[Int](ApproximateValuePage)
+    beSettable[Float](ApproximateValuePage)
 
-    beRemovable[Int](ApproximateValuePage)
+    beRemovable[Float](ApproximateValuePage)
   }
 }
