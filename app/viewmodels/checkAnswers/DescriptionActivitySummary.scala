@@ -32,7 +32,7 @@ object DescriptionActivitySummary {
       answer =>
         SummaryListRowViewModel(
           key = "descriptionActivity.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlFormat.escape(answer).toString),
+          value = ValueViewModel(HtmlFormat.raw(answer).toString),
           actions = Seq(
             ActionItemViewModel("site.change", routes.DescriptionActivityController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText(messages("descriptionActivity.change.hidden"))

@@ -62,4 +62,5 @@ class AddAnotherPersonController @Inject() (
           } yield Redirect(navigator.nextPage(AddAnotherPersonPage, mode, updatedAnswers))
       )
   }
+
 }

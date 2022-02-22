@@ -47,7 +47,7 @@ class Navigator @Inject() () {
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
     case BusinessAddressConfirmationPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.Address)
-    case SelectConnectionBusinessPage(_)      => _ => routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
+    case SelectConnectionBusinessPage(_)      => _ => routes.AddAnotherPersonController.onPageLoad(NormalMode)
     case AddAnotherPersonPage                 => addAnotherPersonRoutes
     case IndividualCheckYourAnswersPage(_)    => _ => routes.AddAnotherPersonController.onPageLoad(NormalMode)
     case IndividualConfirmRemovePage(_)       => individualConfirmRemoveRoutes
@@ -57,9 +57,9 @@ class Navigator @Inject() () {
     case ActivityTimePeriodPage               => _ => routes.DescriptionActivityController.onPageLoad(NormalMode)
     case IndividualConnectionPage(index) =>
       _ => routes.IndividualBusinessDetailsController.onPageLoad(index, NormalMode)
-    case DescriptionActivityPage         => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+    case DescriptionActivityPage         => _ => routes.ProvideContactDetailsController.onPageLoad(NormalMode)
     case SupportingDocumentPage          => supportingDocumentRoutes
-    case HowManyPeopleKnowPage           => _ => routes.ProvideContactDetailsController.onPageLoad(NormalMode)
+    case HowManyPeopleKnowPage           => _ => routes.DescriptionActivityController.onPageLoad(NormalMode)
     case ProvideContactDetailsPage       => provideContactDetailsRoutes
     case YourContactDetailsPage          => _ => routes.SupportingDocumentController.onPageLoad(NormalMode)
     case ActivitySourceOfInformationPage => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
@@ -161,11 +161,10 @@ class Navigator @Inject() () {
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def individualConfirmRemoveRoutes(answers: UserAnswers): Call =
-    if (answers.get(NominalsQuery).getOrElse(List.empty).isEmpty) {
+    if (answers.get(NominalsQuery).getOrElse(List.empty).isEmpty)
       routes.IndividualOrBusinessController.onPageLoad(NormalMode)
-    } else {
+    else
       routes.AddAnotherPersonController.onPageLoad(NormalMode)
-    }
 
   private def individualBusinessDetailsRoutes(answers: UserAnswers, index: Index): Call =
     answers.get(IndividualBusinessDetailsPage(index)).map {
@@ -180,7 +179,7 @@ class Navigator @Inject() () {
       case WhenActivityHappen.NotHappen =>
         routes.ActivityTimePeriodController.onPageLoad(NormalMode)
       case _ =>
-        routes.DescriptionActivityController.onPageLoad(NormalMode)
+        routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def supportingDocumentRoutes(answers: UserAnswers): Call =

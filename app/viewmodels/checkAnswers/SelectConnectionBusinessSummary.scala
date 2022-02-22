@@ -28,20 +28,25 @@ import viewmodels.implicits._
 
 object SelectConnectionBusinessSummary {
 
-  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] = {
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
+    messages: Messages
+  ): Option[SummaryListRow] = {
     val answer = answers.get(SelectConnectionBusinessPage(Index(index))).map {
       answer =>
         HtmlFormat.escape(messages(s"selectConnectionBusiness.$answer")).toString
     }.getOrElse(messages("site.unknown"))
-    Some(SummaryListRowViewModel(
-      key = "selectConnectionBusiness.checkYourAnswersLabel",
-      value = ValueViewModel(HtmlContent(answer)),
-      actions = Seq(
-        ActionItemViewModel(
-          "site.change",
-          routes.SelectConnectionBusinessController.onPageLoad(Index(index), mode).url
-        ).withVisuallyHiddenText(messages("selectConnectionBusiness.change.hidden"))
+    Some(
+      SummaryListRowViewModel(
+        key = "selectConnectionBusiness.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(answer)),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            routes.SelectConnectionBusinessController.onPageLoad(Index(index), mode).url
+          ).withVisuallyHiddenText(messages("selectConnectionBusiness.change.hidden"))
+        )
       )
-    ))
+    )
   }
+
 }

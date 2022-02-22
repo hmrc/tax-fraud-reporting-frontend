@@ -24,7 +24,6 @@ import play.api.data.Form
 class IndividualConfirmRemoveFormProvider @Inject() extends Mappings {
 
   def apply(): Form[Boolean] =
-    Form(
-      "value" -> boolean("individualConfirmRemove.error.required")
-    )
+    Form("value" -> boolean("individualConfirmRemove.error.required"))
+
 }

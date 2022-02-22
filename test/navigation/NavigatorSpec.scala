@@ -859,16 +859,28 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
       "to the add another individual page if there is at least 1 individual" in {
         val answers = emptyUserAnswers
           .set(IndividualInformationPage(Index(0)), IndividualInformation.values.toSet).success.value
-        navigator.nextPage(IndividualConfirmRemovePage(Index(0)), NormalMode, answers) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
+        navigator.nextPage(
+          IndividualConfirmRemovePage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
       }
 
       "to the individual or business page if there are no individuals" in {
-        navigator.nextPage(IndividualConfirmRemovePage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.IndividualOrBusinessController.onPageLoad(NormalMode)
+        navigator.nextPage(
+          IndividualConfirmRemovePage(Index(0)),
+          NormalMode,
+          emptyUserAnswers
+        ) mustBe routes.IndividualOrBusinessController.onPageLoad(NormalMode)
       }
     }
 
     "must go from the individual check your answer page to the add another individual page" in {
-      navigator.nextPage(IndividualCheckYourAnswersPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
+      navigator.nextPage(
+        IndividualCheckYourAnswersPage(Index(0)),
+        NormalMode,
+        emptyUserAnswers
+      ) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
     }
 
     "must go from individual have business details page" - {
@@ -921,7 +933,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           SelectConnectionBusinessPage(Index(0)),
           NormalMode,
           emptyUserAnswers
-        ) mustBe routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
+        ) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
       }
 
     }
@@ -934,7 +946,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           WhenActivityHappenPage,
           NormalMode,
           answers
-        ) mustBe routes.DescriptionActivityController.onPageLoad(NormalMode)
+        ) mustBe routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
       }
 
       "to the When will the activity likely happen page for the it's going to happen in the future selection" in {
@@ -1001,7 +1013,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           DescriptionActivityPage,
           NormalMode,
           answers
-        ) mustBe routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+        ) mustBe routes.ProvideContactDetailsController.onPageLoad(NormalMode)
       }
     }
 
@@ -1012,7 +1024,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           HowManyPeopleKnowPage,
           NormalMode,
           emptyUserAnswers
-        ) mustBe routes.ProvideContactDetailsController.onPageLoad(NormalMode)
+        ) mustBe routes.DescriptionActivityController.onPageLoad(NormalMode)
       }
 
     }

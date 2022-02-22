@@ -28,7 +28,9 @@ import viewmodels.implicits._
 
 object IndividualConnectionSummary {
 
-  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] =
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
+    messages: Messages
+  ): Option[SummaryListRow] =
     answers.get(IndividualConnectionPage(Index(index))).map {
       answer =>
         val value = ValueViewModel(HtmlContent(HtmlFormat.escape(messages(s"individualConnection.$answer"))))
@@ -37,10 +39,7 @@ object IndividualConnectionSummary {
           key = "individualConnection.checkYourAnswersLabel",
           value = value,
           actions = Seq(
-            ActionItemViewModel(
-              "site.change",
-              routes.IndividualConnectionController.onPageLoad(Index(index), mode).url
-            )
+            ActionItemViewModel("site.change", routes.IndividualConnectionController.onPageLoad(Index(index), mode).url)
               .withVisuallyHiddenText(messages("individualConnection.change.hidden"))
           )
         )

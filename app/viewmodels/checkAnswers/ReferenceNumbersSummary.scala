@@ -28,7 +28,9 @@ import viewmodels.implicits._
 
 object ReferenceNumbersSummary {
 
-  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] = {
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
+    messages: Messages
+  ): Option[SummaryListRow] = {
     val answer = answers.get(ReferenceNumbersPage(Index(index))).map {
       answer =>
         val value = List(answer.vatRegistration, answer.employeeRefNo, answer.corporationTax).flatten.map(
@@ -36,16 +38,16 @@ object ReferenceNumbersSummary {
         ).mkString("<br>")
         HtmlFormat.escape(s"${messages("referenceNumbers.cya.label")} <br/> $value").toString
     }.getOrElse(messages("site.unknown"))
-    Some(SummaryListRowViewModel(
-      key = "referenceNumbers.checkYourAnswersLabel",
-      value = ValueViewModel(HtmlContent(answer)),
-      actions = Seq(
-        ActionItemViewModel(
-          "site.change",
-          routes.ReferenceNumbersController.onPageLoad(Index(index), mode).url
+    Some(
+      SummaryListRowViewModel(
+        key = "referenceNumbers.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(answer)),
+        actions = Seq(
+          ActionItemViewModel("site.change", routes.ReferenceNumbersController.onPageLoad(Index(index), mode).url)
+            .withVisuallyHiddenText(messages("referenceNumbers.change.hidden"))
         )
-          .withVisuallyHiddenText(messages("referenceNumbers.change.hidden"))
       )
-    ))
+    )
   }
+
 }

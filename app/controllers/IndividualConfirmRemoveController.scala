@@ -31,17 +31,18 @@ import views.html.IndividualConfirmRemoveView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class IndividualConfirmRemoveController @Inject()(
-                                         override val messagesApi: MessagesApi,
-                                         sessionRepository: SessionRepository,
-                                         navigator: Navigator,
-                                         identify: IdentifierAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: IndividualConfirmRemoveFormProvider,
-                                         val controllerComponents: MessagesControllerComponents,
-                                         view: IndividualConfirmRemoveView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class IndividualConfirmRemoveController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  navigator: Navigator,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: IndividualConfirmRemoveFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: IndividualConfirmRemoveView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()
 
@@ -57,16 +58,15 @@ class IndividualConfirmRemoveController @Inject()(
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
       form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, index, mode))),
-
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualConfirmRemovePage(index), value))
-            updatedAnswers <- if (value) removeIndividual(request.userAnswers, index) else Future.successful(updatedAnswers)
+            updatedAnswers <- if (value) removeIndividual(request.userAnswers, index)
+            else Future.successful(updatedAnswers)
           } yield Redirect(navigator.nextPage(IndividualConfirmRemovePage(index), mode, updatedAnswers))
       )
   }
+
 }
