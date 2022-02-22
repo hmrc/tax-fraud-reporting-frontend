@@ -31,22 +31,22 @@ object IndividualContactDetailsSummary {
   def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
     messages: Messages
   ): Option[SummaryListRow] = {
-    val answer = answers.get(IndividualContactDetailsPage(Index(index))).map {
-      answer =>
-        List(
-          messages("individualContactDetails.cya.landline") -> answer.landlineNumber,
-          messages("individualContactDetails.cya.mobile")   -> answer.mobileNumber,
-          messages("individualContactDetails.cya.email")    -> answer.email
+    val answer = answers.get(IndividualContactDetailsPage(Index(index)))
+
+        val value = List(
+          messages("individualContactDetails.cya.landline") -> answer.flatMap(_.landlineNumber),
+          messages("individualContactDetails.cya.mobile")   -> answer.flatMap(_.mobileNumber),
+          messages("individualContactDetails.cya.email")    -> answer.flatMap(_.email)
         ) map {
           case (label, valueOpt) =>
-            valueOpt map { value => HtmlFormat.raw(label + ": " + value) }
+            HtmlFormat.escape(label + ": " + valueOpt.getOrElse(messages("site.unknown")))
         } mkString "<br>"
-    }.getOrElse(messages("site.unknown"))
+
 
     Some(
       SummaryListRowViewModel(
         key = "individualContactDetails.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlContent(answer)),
+        value = ValueViewModel(HtmlContent(value)),
         actions = Seq(
           ActionItemViewModel(
             "site.change",

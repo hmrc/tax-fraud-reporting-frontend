@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, Index, Mode, UserAnswers}
+import models.{CheckMode, Index, IndividualConnection, Mode, UserAnswers}
 import pages.IndividualConnectionPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -33,11 +33,14 @@ object IndividualConnectionSummary {
   ): Option[SummaryListRow] =
     answers.get(IndividualConnectionPage(Index(index))).map {
       answer =>
-        val value = ValueViewModel(HtmlContent(HtmlFormat.escape(messages(s"individualConnection.$answer"))))
+        val value = answer match {
+          case IndividualConnection.Other(value) => HtmlFormat.escape(value)
+          case connection                        => HtmlFormat.escape(messages(s"individualConnection.$connection"))
+        }
 
         SummaryListRowViewModel(
           key = "individualConnection.checkYourAnswersLabel",
-          value = value,
+          value = ValueViewModel(HtmlContent(value)),
           actions = Seq(
             ActionItemViewModel("site.change", routes.IndividualConnectionController.onPageLoad(Index(index), mode).url)
               .withVisuallyHiddenText(messages("individualConnection.change.hidden"))
