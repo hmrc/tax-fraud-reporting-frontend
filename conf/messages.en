@@ -508,7 +508,9 @@ individualContactDetails.cya.landline = Landline
 individualContactDetails.cya.mobile = Mobile
 individualContactDetails.cya.email = Email
 individualName.nickname = Nickname
-referenceNumbers.cya.label = VAT Registration number:
+referenceNumbers.cya.vat = VAT Registration number
+referenceNumbers.cya.ern = ERN
+referenceNumbers.cya.cturn = CTUTR
 
 individualConfirmRemove.title = Are you sure you want to remove this individual?
 individualConfirmRemove.heading = Are you sure you want to remove {0}?
