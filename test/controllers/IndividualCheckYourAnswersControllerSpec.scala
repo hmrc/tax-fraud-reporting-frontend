@@ -23,7 +23,16 @@ import pages._
 import play.api.http.Status.{OK, SEE_OTHER}
 import play.api.inject
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, contentAsString, defaultAwaitTimeout, redirectLocation, route, running, status, writeableOf_AnyContentAsEmpty}
+import play.api.test.Helpers.{
+  contentAsString,
+  defaultAwaitTimeout,
+  redirectLocation,
+  route,
+  running,
+  status,
+  writeableOf_AnyContentAsEmpty,
+  GET
+}
 import viewmodels.checkAnswers._
 import viewmodels.govuk.SummaryListFluency
 import views.html.IndividualCheckYourAnswersView
@@ -70,12 +79,10 @@ class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryList
           ReferenceNumbersPage(Index(0)),
           ReferenceNumbers(Some("vatRegistration"), Some("employeeRefNo"), Some("corporationTax"))
         ).success.value
-      .set(SelectConnectionBusinessPage(Index(0)), SelectConnectionBusiness.Accountant).success.value
+        .set(SelectConnectionBusinessPage(Index(0)), SelectConnectionBusiness.Accountant).success.value
 
       val application = applicationBuilder(userAnswers = Some(answers))
-        .overrides(
-          inject.bind[Navigator].toInstance(new FakeNavigator(onwardRoute))
-        ).build()
+        .overrides(inject.bind[Navigator].toInstance(new FakeNavigator(onwardRoute))).build()
 
       running(application) {
         val request = FakeRequest(GET, routes.IndividualCheckYourAnswersController.onPageLoad(Index(0), NormalMode).url)

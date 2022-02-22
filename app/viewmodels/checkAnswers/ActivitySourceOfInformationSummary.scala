@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{ActivitySourceOfInformation, CheckMode, UserAnswers}
 import pages.ActivitySourceOfInformationPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -31,11 +31,14 @@ object ActivitySourceOfInformationSummary {
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(ActivitySourceOfInformationPage).map {
       answer =>
-        val value = ValueViewModel(HtmlContent(HtmlFormat.escape(messages(s"activitySourceOfInformation.$answer"))))
+        val value = answer match {
+          case ActivitySourceOfInformation.Other(value) => HtmlFormat.escape(value)
+          case connection                        => HtmlFormat.escape(messages(s"activitySourceOfInformation.$connection"))
+        }
 
         SummaryListRowViewModel(
           key = "activitySourceOfInformation.checkYourAnswersLabel",
-          value = value,
+          value = ValueViewModel(HtmlContent(value)),
           actions = Seq(
             ActionItemViewModel("site.change", routes.ActivitySourceOfInformationController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText(messages("activitySourceOfInformation.change.hidden"))

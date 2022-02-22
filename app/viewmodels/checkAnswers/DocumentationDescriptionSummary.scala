@@ -32,7 +32,7 @@ object DocumentationDescriptionSummary {
       answer =>
         SummaryListRowViewModel(
           key = "documentationDescription.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlFormat.escape(answer).toString),
+          value = ValueViewModel(HtmlFormat.raw(answer).toString),
           actions = Seq(
             ActionItemViewModel("site.change", routes.DocumentationDescriptionController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText(messages("documentationDescription.change.hidden"))

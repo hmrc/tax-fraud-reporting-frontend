@@ -27,18 +27,23 @@ import viewmodels.implicits._
 
 object IndividualNationalInsuranceNumberSummary {
 
-  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] = {
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
+    messages: Messages
+  ): Option[SummaryListRow] = {
     val answer = answers.get(IndividualNationalInsuranceNumberPage(Index(index))).getOrElse(messages("site.unknown"))
-    Some(SummaryListRowViewModel(
-      key = "individualNationalInsuranceNumber.checkYourAnswersLabel",
-      value = ValueViewModel(HtmlFormat.escape(answer).toString),
-      actions = Seq(
-        ActionItemViewModel(
-          "site.change",
-          routes.IndividualNationalInsuranceNumberController.onPageLoad(Index(index), mode).url
+    Some(
+      SummaryListRowViewModel(
+        key = "individualNationalInsuranceNumber.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlFormat.escape(answer).toString),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            routes.IndividualNationalInsuranceNumberController.onPageLoad(Index(index), mode).url
+          )
+            .withVisuallyHiddenText(messages("individualNationalInsuranceNumber.change.hidden"))
         )
-          .withVisuallyHiddenText(messages("individualNationalInsuranceNumber.change.hidden"))
       )
-    ))
+    )
   }
+
 }

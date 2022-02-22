@@ -40,40 +40,46 @@ class IndividualCheckYourAnswersController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
       val answers = request.userAnswers
 
-      val individualDetails = {
-        SummaryListViewModel(Seq(
-          IndividualNameSummary.row(answers, index.position, mode),
-          IndividualDateFormatSummary.row(answers, index.position, mode),
-          IndividualAgeSummary.row(answers, index.position, mode),
-          IndividualDateOfBirthSummary.row(answers, index.position, mode),
-          IndividualAddressSummary.row(answers, index.position, mode),
-          IndividualContactDetailsSummary.row(answers, index.position, mode),
-          IndividualNationalInsuranceNumberSummary.row(answers, index.position, mode),
-          IndividualConnectionSummary.row(answers, index.position, mode),
-          IndividualBusinessDetailsSummary.row(answers, index.position, mode)
-        ).flatten)
-      }
+      val individualDetails =
+        SummaryListViewModel(
+          Seq(
+            IndividualNameSummary.row(answers, index.position, mode),
+            IndividualDateFormatSummary.row(answers, index.position, mode),
+            IndividualAgeSummary.row(answers, index.position, mode),
+            IndividualDateOfBirthSummary.row(answers, index.position, mode),
+            IndividualAddressSummary.row(answers, index.position, mode),
+            IndividualContactDetailsSummary.row(answers, index.position, mode),
+            IndividualNationalInsuranceNumberSummary.row(answers, index.position, mode),
+            IndividualConnectionSummary.row(answers, index.position, mode),
+            IndividualBusinessDetailsSummary.row(answers, index.position, mode)
+          ).flatten
+        )
 
       val individualBusinessDetails = {
-        val rows = if (answers.get(IndividualBusinessDetailsPage(index)).contains(IndividualBusinessDetails.Yes)) {
-          Seq(
-            BusinessNameSummary.row(answers, index.position, mode),
-            TypeBusinessSummary.row(answers, index.position, mode),
-            BusinessAddressSummary.row(answers, index.position, mode),
-            BusinessContactDetailsSummary.row(answers, index.position, mode),
-            ReferenceNumbersSummary.row(answers, index.position, mode),
-            SelectConnectionBusinessSummary.row(answers, index.position, mode)
-          ).flatten
-        } else {
-          List.empty
-        }
+        val rows =
+          if (answers.get(IndividualBusinessDetailsPage(index)).contains(IndividualBusinessDetails.Yes))
+            Seq(
+              BusinessNameSummary.row(answers, index.position, mode),
+              TypeBusinessSummary.row(answers, index.position, mode),
+              BusinessAddressSummary.row(answers, index.position, mode),
+              BusinessContactDetailsSummary.row(answers, index.position, mode),
+              ReferenceNumbersSummary.row(answers, index.position, mode),
+              SelectConnectionBusinessSummary.row(answers, index.position, mode)
+            ).flatten
+          else
+            List.empty
         SummaryListViewModel(rows)
       }
 
-      Ok(view(individualDetails, individualBusinessDetails, navigator.nextPage(IndividualCheckYourAnswersPage(index), mode, answers)))
+      Ok(
+        view(
+          individualDetails,
+          individualBusinessDetails,
+          navigator.nextPage(IndividualCheckYourAnswersPage(index), mode, answers)
+        )
+      )
   }
 
 }

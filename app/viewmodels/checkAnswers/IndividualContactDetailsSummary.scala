@@ -28,28 +28,33 @@ import viewmodels.implicits._
 
 object IndividualContactDetailsSummary {
 
-  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] = {
-    val answer = answers.get(IndividualContactDetailsPage(Index(index))).map {
-      answer =>
-        List(
-          messages("individualContactDetails.cya.landline") -> answer.landlineNumber,
-          messages("individualContactDetails.cya.mobile") -> answer.mobileNumber,
-          messages("individualContactDetails.cya.email") -> answer.email
-        ) flatMap {
-          case (label, valueOpt) =>
-            valueOpt map { value => HtmlFormat.escape(label + ": " + value) }
-        } mkString "<br>"
-    }.getOrElse(messages("site.unknown"))
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
+    messages: Messages
+  ): Option[SummaryListRow] = {
+    val answer = answers.get(IndividualContactDetailsPage(Index(index)))
 
-    Some(SummaryListRowViewModel(
-      key = "individualContactDetails.checkYourAnswersLabel",
-      value = ValueViewModel(HtmlContent(answer)),
-      actions = Seq(
-        ActionItemViewModel(
-          "site.change",
-          routes.IndividualContactDetailsController.onPageLoad(Index(index), mode).url
-        ).withVisuallyHiddenText(messages("individualContactDetails.change.hidden"))
+        val value = List(
+          messages("individualContactDetails.cya.landline") -> answer.flatMap(_.landlineNumber),
+          messages("individualContactDetails.cya.mobile")   -> answer.flatMap(_.mobileNumber),
+          messages("individualContactDetails.cya.email")    -> answer.flatMap(_.email)
+        ) map {
+          case (label, valueOpt) =>
+            HtmlFormat.escape(label + ": " + valueOpt.getOrElse(messages("site.unknown")))
+        } mkString "<br>"
+
+
+    Some(
+      SummaryListRowViewModel(
+        key = "individualContactDetails.checkYourAnswersLabel",
+        value = ValueViewModel(HtmlContent(value)),
+        actions = Seq(
+          ActionItemViewModel(
+            "site.change",
+            routes.IndividualContactDetailsController.onPageLoad(Index(index), mode).url
+          ).withVisuallyHiddenText(messages("individualContactDetails.change.hidden"))
+        )
       )
-    ))
+    )
   }
+
 }

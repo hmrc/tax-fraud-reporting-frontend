@@ -34,7 +34,7 @@ object ProvideContactDetailsSummary {
     answers.get(ProvideContactDetailsPage).map {
       answer =>
         val value =
-          ValueViewModel(HtmlContent(HtmlFormat.escape(messages(s"provideContactDetails.$answer") split "," head)))
+          ValueViewModel(HtmlContent(HtmlFormat.escape(messages(s"provideContactDetails.$answer"))))
 
         SummaryListRowViewModel(
           key = "provideContactDetails.checkYourAnswersLabel",

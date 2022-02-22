@@ -161,11 +161,10 @@ class Navigator @Inject() () {
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def individualConfirmRemoveRoutes(answers: UserAnswers): Call =
-    if (answers.get(NominalsQuery).getOrElse(List.empty).isEmpty) {
+    if (answers.get(NominalsQuery).getOrElse(List.empty).isEmpty)
       routes.IndividualOrBusinessController.onPageLoad(NormalMode)
-    } else {
+    else
       routes.AddAnotherPersonController.onPageLoad(NormalMode)
-    }
 
   private def individualBusinessDetailsRoutes(answers: UserAnswers, index: Index): Call =
     answers.get(IndividualBusinessDetailsPage(index)).map {
