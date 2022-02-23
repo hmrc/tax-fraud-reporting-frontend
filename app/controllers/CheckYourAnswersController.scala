@@ -46,7 +46,6 @@ class CheckYourAnswersController @Inject() (
           ActivityTypeSummary.row(answers),
           ApproximateValueSummary.row(answers),
           WhenActivityHappenSummary.row(answers),
-          ActivityTimePeriodSummary.row(answers),
           HowManyPeopleKnowSummary.row(answers),
           DescriptionActivitySummary.row(answers),
           ActivitySourceOfInformationSummary.row(answers)

@@ -515,3 +515,4 @@ referenceNumbers.cya.cturn = CTUTR
 individualConfirmRemove.title = Are you sure you want to remove this individual?
 individualConfirmRemove.heading = Are you sure you want to remove {0}?
 individualConfirmRemove.error.required = Select yes if you want to remove this individual
+addAnotherPerson.reached.maximum = You cannot add another individual as you have entered a maximum of 5.
