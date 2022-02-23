@@ -29,25 +29,31 @@ import viewmodels.implicits._
 object ReferenceNumbersSummary {
 
   def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
-    messages: Messages
+                                                                    messages: Messages
   ): Option[SummaryListRow] = {
-    val answer = answers.get(ReferenceNumbersPage(Index(index))).map {
-      answer =>
-        val value = List(answer.vatRegistration, answer.employeeRefNo, answer.corporationTax).flatten.map(
-          HtmlFormat.escape
-        ).mkString("<br>")
-        HtmlFormat.escape(s"${messages("referenceNumbers.cya.label")} <br/> $value").toString
-    }.getOrElse(messages("site.unknown"))
+    val answer = answers.get(ReferenceNumbersPage(Index(index)))
+
+    val value = List(
+      messages("referenceNumbers.cya.vat") -> answer.flatMap(_.vatRegistration),
+      messages("referenceNumbers.cya.ern")   -> answer.flatMap(_.employeeRefNo),
+      messages("referenceNumbers.cya.cturn")    -> answer.flatMap(_.corporationTax)
+    ) map {
+      case (label, valueOpt) =>
+        HtmlFormat.escape(label + ": " + valueOpt.getOrElse(messages("site.unknown")))
+    } mkString "<br>"
+
+
     Some(
       SummaryListRowViewModel(
         key = "referenceNumbers.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlContent(answer)),
+        value = ValueViewModel(HtmlContent(value)),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.ReferenceNumbersController.onPageLoad(Index(index), mode).url)
-            .withVisuallyHiddenText(messages("referenceNumbers.change.hidden"))
+          ActionItemViewModel(
+            "site.change",
+            routes.ReferenceNumbersController.onPageLoad(Index(index), mode).url
+          ).withVisuallyHiddenText(messages("referenceNumbers.change.hidden"))
         )
       )
     )
   }
-
 }

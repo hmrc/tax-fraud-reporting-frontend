@@ -45,7 +45,7 @@ class CheckYourAnswersController @Inject() (
         Seq(
           ActivityTypeSummary.row(answers),
           ApproximateValueSummary.row(answers),
-          ActivityTimePeriodSummary.row(answers),
+          WhenActivityHappenSummary.row(answers),
           HowManyPeopleKnowSummary.row(answers),
           DescriptionActivitySummary.row(answers),
           ActivitySourceOfInformationSummary.row(answers)

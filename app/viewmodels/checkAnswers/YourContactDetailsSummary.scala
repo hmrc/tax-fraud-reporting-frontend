@@ -16,10 +16,10 @@
 
 package viewmodels.checkAnswers
 
+import controllers.routes
 import models.{CheckMode, UserAnswers}
 import pages.YourContactDetailsPage
 import play.api.i18n.Messages
-import controllers.routes
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
@@ -32,16 +32,13 @@ object YourContactDetailsSummary {
       answer =>
         def msg(key: String) = messages("yourContactDetails." + key)
 
-        val values = List(
-          "firstName"     -> Some(answer.FirstName),
-          "lastName"      -> Some(answer.LastName),
-          "tel"           -> Some(answer.Tel),
-          "emailLabel"    -> answer.Email,
-          "memorableWord" -> Some(answer.MemorableWord)
-        ) flatMap {
-          case (key, valueOpt) =>
-            valueOpt map { key -> _ }
-        }
+       val values = List(
+          "firstName"     -> answer.FirstName,
+          "lastName"      -> answer.LastName,
+          "tel"           -> answer.Tel,
+          "emailLabel"    -> answer.Email.getOrElse(messages("site.unknown")),
+          "memorableWord" -> answer.MemorableWord
+        )
 
         values map {
           case (key, value) =>

@@ -29,23 +29,30 @@ import viewmodels.implicits._
 object IndividualNameSummary {
 
   def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
-    messages: Messages
+                                                                    messages: Messages
   ): Option[SummaryListRow] = {
-    val answer = answers.get(IndividualNamePage(Index(index))).map {
-      answer =>
-        val name = List(answer.firstName, answer.middleName, answer.lastName)
-          .flatten.map(HtmlFormat.escape).mkString(" ")
-        val nickName = answer.aliases.map(aliases => s"${messages("individualName.nickname")}: $aliases")
-        List(Some(name), nickName).flatten.mkString("<br/>")
-    }.getOrElse(messages("site.unknown"))
+    val answer = answers.get(IndividualNamePage(Index(index)))
+
+    val value = List(
+      messages("individualName.firstName") -> answer.flatMap(_.firstName),
+      messages("individualName.middleName")   -> answer.flatMap(_.middleName),
+      messages("individualName.lastName")   -> answer.flatMap(_.lastName),
+      messages("individualName.nickname")    -> answer.flatMap(_.aliases)
+    ) map {
+      case (label, valueOpt) =>
+        HtmlFormat.escape(label + ": " + valueOpt.getOrElse(messages("site.unknown")))
+    } mkString "<br>"
+
 
     Some(
       SummaryListRowViewModel(
         key = "individualName.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlContent(answer)),
+        value = ValueViewModel(HtmlContent(value)),
         actions = Seq(
-          ActionItemViewModel("site.change", routes.IndividualNameController.onPageLoad(Index(index), mode).url)
-            .withVisuallyHiddenText(messages("individualName.change.hidden"))
+          ActionItemViewModel(
+            "site.change",
+            routes.IndividualNameController.onPageLoad(Index(index), mode).url
+          ).withVisuallyHiddenText(messages("IndividualName.change.hidden"))
         )
       )
     )

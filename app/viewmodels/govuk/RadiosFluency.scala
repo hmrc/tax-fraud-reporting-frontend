@@ -51,7 +51,7 @@ trait RadiosFluency {
         RadioItem(id = Some(s"${field.id}-no"), value = Some("false"), content = Text(messages("site.no")))
       )
 
-      apply(field = field, fieldset = fieldset, items = items).inline()
+      apply(field = field, fieldset = fieldset, items = items)
     }
 
   }

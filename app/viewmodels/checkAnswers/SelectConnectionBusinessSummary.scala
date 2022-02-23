@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, Index, Mode, UserAnswers}
+import models.{CheckMode, Index, Mode, SelectConnectionBusiness, UserAnswers}
 import pages.SelectConnectionBusinessPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -28,25 +28,22 @@ import viewmodels.implicits._
 
 object SelectConnectionBusinessSummary {
 
-  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
-    messages: Messages
-  ): Option[SummaryListRow] = {
-    val answer = answers.get(SelectConnectionBusinessPage(Index(index))).map {
+  def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(SelectConnectionBusinessPage(Index(0))).map {
       answer =>
-        HtmlFormat.escape(messages(s"selectConnectionBusiness.$answer")).toString
-    }.getOrElse(messages("site.unknown"))
-    Some(
-      SummaryListRowViewModel(
-        key = "selectConnectionBusiness.checkYourAnswersLabel",
-        value = ValueViewModel(HtmlContent(answer)),
-        actions = Seq(
-          ActionItemViewModel(
-            "site.change",
-            routes.SelectConnectionBusinessController.onPageLoad(Index(index), mode).url
-          ).withVisuallyHiddenText(messages("selectConnectionBusiness.change.hidden"))
+        val value = answer match {
+          case SelectConnectionBusiness.Other(value) => HtmlFormat.escape(value)
+          case connection                        => HtmlFormat.escape(messages(s"selectConnectionBusiness.$connection"))
+        }
+
+        SummaryListRowViewModel(
+          key = "selectConnectionBusiness.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlContent(value)),
+          actions = Seq(
+            ActionItemViewModel("site.change", routes.SelectConnectionBusinessController.onPageLoad(Index(index), mode).url)
+              .withVisuallyHiddenText(messages("selectConnectionBusiness.change.hidden"))
+          )
         )
-      )
-    )
-  }
+    }
 
 }
