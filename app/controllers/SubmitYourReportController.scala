@@ -17,11 +17,15 @@
 package controllers
 
 import controllers.actions._
+
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import services.SubmissionService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.SubmitYourReportView
+
+import scala.concurrent.ExecutionContext
 
 class SubmitYourReportController @Inject() (
   override val messagesApi: MessagesApi,
@@ -29,12 +33,19 @@ class SubmitYourReportController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: SubmitYourReportView
-) extends FrontendBaseController with I18nSupport {
+  view: SubmitYourReportView,
+  submissionService: SubmissionService
+)(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       Ok(view())
   }
 
+  def onSubmit: Action[AnyContent] = (identify andThen getData andThen requireData).async {
+    implicit request =>
+      submissionService.submit(request.userAnswers).map { _ =>
+        Redirect(routes.ReportSubmittedController.onPageLoad())
+      }
+  }
 }
