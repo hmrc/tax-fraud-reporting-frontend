@@ -47,7 +47,7 @@ class Navigator @Inject() () {
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
     case BusinessAddressConfirmationPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.Address)
-    case SelectConnectionBusinessPage(_)      => _ => routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
+    case SelectConnectionBusinessPage(_)      => selectConnectionBusinessRoutes
     case AddAnotherPersonPage                 => addAnotherPersonRoutes
     case IndividualCheckYourAnswersPage(_)    => _ => routes.AddAnotherPersonController.onPageLoad(NormalMode)
     case IndividualConfirmRemovePage(_)       => individualConfirmRemoveRoutes
@@ -57,9 +57,9 @@ class Navigator @Inject() () {
     case ActivityTimePeriodPage               => _ => routes.DescriptionActivityController.onPageLoad(NormalMode)
     case IndividualConnectionPage(index) =>
       _ => routes.IndividualBusinessDetailsController.onPageLoad(index, NormalMode)
-    case DescriptionActivityPage         => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+    case DescriptionActivityPage         => _ => routes.ProvideContactDetailsController.onPageLoad(NormalMode)
     case SupportingDocumentPage          => supportingDocumentRoutes
-    case HowManyPeopleKnowPage           => _ => routes.ProvideContactDetailsController.onPageLoad(NormalMode)
+    case HowManyPeopleKnowPage           => _ => routes.DescriptionActivityController.onPageLoad(NormalMode)
     case ProvideContactDetailsPage       => provideContactDetailsRoutes
     case YourContactDetailsPage          => _ => routes.SupportingDocumentController.onPageLoad(NormalMode)
     case ActivitySourceOfInformationPage => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
@@ -179,7 +179,7 @@ class Navigator @Inject() () {
       case WhenActivityHappen.NotHappen =>
         routes.ActivityTimePeriodController.onPageLoad(NormalMode)
       case _ =>
-        routes.DescriptionActivityController.onPageLoad(NormalMode)
+        routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def supportingDocumentRoutes(answers: UserAnswers): Call =
@@ -217,6 +217,12 @@ class Navigator @Inject() () {
           routes.DocumentationDescriptionController.onPageLoad(CheckMode)
       case SupportingDocument.No => routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
+
+  private def selectConnectionBusinessRoutes(answers: UserAnswers): Call =
+    if (answers.isBusinessJourney)
+      routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
+    else
+      routes.AddAnotherPersonController.onPageLoad(NormalMode)
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
     case NormalMode =>

@@ -928,12 +928,21 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must go from select connection business page" - {
 
-      "to the add another person page for the first selection" in {
+      "to the add activity source information page for the business journey selection" in {
+        val answers = UserAnswers("id").set(IndividualOrBusinessPage, IndividualOrBusiness.Business).success.value
         navigator.nextPage(
           SelectConnectionBusinessPage(Index(0)),
           NormalMode,
-          emptyUserAnswers
+          answers
         ) mustBe routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
+      }
+      "to the add another person page for the individual journey selection" in {
+        val answers = UserAnswers("id").set(IndividualOrBusinessPage, IndividualOrBusiness.Individual).success.value
+        navigator.nextPage(
+          SelectConnectionBusinessPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
       }
 
     }
@@ -946,7 +955,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           WhenActivityHappenPage,
           NormalMode,
           answers
-        ) mustBe routes.DescriptionActivityController.onPageLoad(NormalMode)
+        ) mustBe routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
       }
 
       "to the When will the activity likely happen page for the it's going to happen in the future selection" in {
@@ -1013,7 +1022,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           DescriptionActivityPage,
           NormalMode,
           answers
-        ) mustBe routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+        ) mustBe routes.ProvideContactDetailsController.onPageLoad(NormalMode)
       }
     }
 
@@ -1024,7 +1033,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           HowManyPeopleKnowPage,
           NormalMode,
           emptyUserAnswers
-        ) mustBe routes.ProvideContactDetailsController.onPageLoad(NormalMode)
+        ) mustBe routes.DescriptionActivityController.onPageLoad(NormalMode)
       }
 
     }
