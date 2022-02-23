@@ -47,7 +47,7 @@ class Navigator @Inject() () {
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
     case BusinessAddressConfirmationPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.Address)
-    case SelectConnectionBusinessPage(_)      => _ => routes.AddAnotherPersonController.onPageLoad(NormalMode)
+    case SelectConnectionBusinessPage(_)      => selectConnectionBusinessRoutes
     case AddAnotherPersonPage                 => addAnotherPersonRoutes
     case IndividualCheckYourAnswersPage(_)    => _ => routes.AddAnotherPersonController.onPageLoad(NormalMode)
     case IndividualConfirmRemovePage(_)       => individualConfirmRemoveRoutes
@@ -217,6 +217,12 @@ class Navigator @Inject() () {
           routes.DocumentationDescriptionController.onPageLoad(CheckMode)
       case SupportingDocument.No => routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
+
+  private def selectConnectionBusinessRoutes(answers: UserAnswers): Call =
+    if (answers.isBusinessJourney)
+      routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
+    else
+      routes.AddAnotherPersonController.onPageLoad(NormalMode)
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
     case NormalMode =>

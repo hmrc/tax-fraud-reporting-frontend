@@ -928,11 +928,20 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must go from select connection business page" - {
 
-      "to the add another person page for the first selection" in {
+      "to the add activity source information page for the business journey selection" in {
+        val answers = UserAnswers("id").set(IndividualOrBusinessPage, IndividualOrBusiness.Business).success.value
         navigator.nextPage(
           SelectConnectionBusinessPage(Index(0)),
           NormalMode,
-          emptyUserAnswers
+          answers
+        ) mustBe routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
+      }
+      "to the add another person page for the individual journey selection" in {
+        val answers = UserAnswers("id").set(IndividualOrBusinessPage, IndividualOrBusiness.Individual).success.value
+        navigator.nextPage(
+          SelectConnectionBusinessPage(Index(0)),
+          NormalMode,
+          answers
         ) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
       }
 

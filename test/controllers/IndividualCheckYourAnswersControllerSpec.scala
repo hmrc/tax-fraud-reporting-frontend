@@ -95,8 +95,8 @@ class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryList
           Seq(
             IndividualNameSummary.row(answers, 0, NormalMode)(messages(application)),
             IndividualDateFormatSummary.row(answers, 0, NormalMode)(messages(application)),
-            IndividualAgeSummary.row(answers, 0, NormalMode)(messages(application)),
             IndividualDateOfBirthSummary.row(answers, 0, NormalMode)(messages(application)),
+            IndividualAgeSummary.row(answers, 0, NormalMode)(messages(application)),
             IndividualAddressSummary.row(answers, 0, NormalMode)(messages(application)),
             IndividualContactDetailsSummary.row(answers, 0, NormalMode)(messages(application)),
             IndividualNationalInsuranceNumberSummary.row(answers, 0, NormalMode)(messages(application)),

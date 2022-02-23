@@ -47,8 +47,8 @@ class IndividualCheckYourAnswersController @Inject() (
           Seq(
             IndividualNameSummary.row(answers, index.position, mode),
             IndividualDateFormatSummary.row(answers, index.position, mode),
-            IndividualAgeSummary.row(answers, index.position, mode),
             IndividualDateOfBirthSummary.row(answers, index.position, mode),
+            IndividualAgeSummary.row(answers, index.position, mode),
             IndividualAddressSummary.row(answers, index.position, mode),
             IndividualContactDetailsSummary.row(answers, index.position, mode),
             IndividualNationalInsuranceNumberSummary.row(answers, index.position, mode),
