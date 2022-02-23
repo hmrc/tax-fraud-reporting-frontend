@@ -19,15 +19,15 @@ package models.backend
 import play.api.libs.json.{Json, OFormat}
 
 final case class Business(
-                           businessName: Option[String],
-                           businessType: Option[String],
-                           address: Option[Address],
-                           contact: Option[Contact],
-                           businessVatNo: Option[String],
-                           ctUtr: Option[String],
-                           employeeRefNo: Option[String],
-                           connectionType: String
-                         )
+  businessName: Option[String],
+  businessType: Option[String],
+  address: Option[Address],
+  contact: Option[Contact],
+  businessVatNo: Option[String],
+  ctUtr: Option[String],
+  employeeRefNo: Option[String],
+  connectionType: String
+)
 
 object Business {
   implicit val format: OFormat[Business] = Json.format

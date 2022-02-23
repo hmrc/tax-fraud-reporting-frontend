@@ -34,11 +34,13 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class SubmissionService @Inject()(httpClient: HttpClient, configuration: Configuration, messagesApi: MessagesApi)(implicit ec: ExecutionContext) {
+class SubmissionService @Inject() (httpClient: HttpClient, configuration: Configuration, messagesApi: MessagesApi)(
+  implicit ec: ExecutionContext
+) {
 
-  private val baseUrl: String = configuration.get[Service]("microservice.services.tax-fraud-reporting").baseUrl
+  private val baseUrl: String                  = configuration.get[Service]("microservice.services.tax-fraud-reporting").baseUrl
   private val dateFormatter: DateTimeFormatter = DateTimeFormatter.ISO_DATE
-  private val messages: Messages = messagesApi.preferred(List(Lang("en")))
+  private val messages: Messages               = messagesApi.preferred(List(Lang("en")))
 
   def submit(answers: UserAnswers)(implicit hc: HeaderCarrier): Future[Unit] = {
 
@@ -62,19 +64,27 @@ class SubmissionService @Inject()(httpClient: HttpClient, configuration: Configu
 
     report match {
       case Right(payload) =>
-        httpClient.POST[FraudReportBody, HttpResponse](s"$baseUrl/tax-fraud-reporting/fraud-report", payload).flatMap { response =>
-          if (response.status == CREATED) {
-            Future.successful(())
-          } else {
-            Future.failed(new Exception(s"Tax fraud reporting service responded to submission with ${response.status} status"))
-          }
+        httpClient.POST[FraudReportBody, HttpResponse](s"$baseUrl/tax-fraud-reporting/fraud-report", payload).flatMap {
+          response =>
+            if (response.status == CREATED)
+              Future.successful(())
+            else
+              Future.failed(
+                new Exception(s"Tax fraud reporting service responded to submission with ${response.status} status")
+              )
         }
       case Left(errors) =>
-        Future.failed(new Exception(s"Failed to create fraud report from user answers, failing pages: ${errors.toList.mkString(", ")}"))
+        Future.failed(
+          new Exception(
+            s"Failed to create fraud report from user answers, failing pages: ${errors.toList.mkString(", ")}"
+          )
+        )
     }
   }
 
-  private def getAnswer[A](answers: UserAnswers, page: QuestionPage[A])(implicit rds: Reads[A]): Either[NonEmptyChain[String], A] =
+  private def getAnswer[A](answers: UserAnswers, page: QuestionPage[A])(implicit
+    rds: Reads[A]
+  ): Either[NonEmptyChain[String], A] =
     answers.get(page).toRight(NonEmptyChain.one(page.toString))
 
   private def getNominals(answers: UserAnswers): Option[Seq[Nominal]] =
@@ -160,4 +170,5 @@ class SubmissionService @Inject()(httpClient: HttpClient, configuration: Configu
         answers.get(ActivityTimePeriodPage).map(period => messages(s"activityTimePeriod.$period"))
       case whenActivityHappen => Some(messages(s"whenActivityHappen.$whenActivityHappen"))
     }
+
 }

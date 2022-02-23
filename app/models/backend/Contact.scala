@@ -18,12 +18,7 @@ package models.backend
 
 import play.api.libs.json.{Json, OFormat}
 
-
-final case class Contact(
-                          landline: Option[String],
-                          mobile: Option[String],
-                          email: Option[String]
-                        )
+final case class Contact(landline: Option[String], mobile: Option[String], email: Option[String])
 
 object Contact {
   implicit val format: OFormat[Contact] = Json.format

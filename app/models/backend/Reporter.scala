@@ -19,12 +19,12 @@ package models.backend
 import play.api.libs.json.{Json, OFormat}
 
 final case class Reporter(
-                           forename: Option[String],
-                           surname: Option[String],
-                           telephoneNumber: Option[String],
-                           emailAddress: Option[String],
-                           memorableWord: Option[String]
-                         )
+  forename: Option[String],
+  surname: Option[String],
+  telephoneNumber: Option[String],
+  emailAddress: Option[String],
+  memorableWord: Option[String]
+)
 
 object Reporter {
   implicit val format: OFormat[Reporter] = Json.format

@@ -19,7 +19,12 @@ package models
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
-final case class AddressResponse(lines: List[String], town: Option[String], postcode: Option[String], country: Option[String])
+final case class AddressResponse(
+  lines: List[String],
+  town: Option[String],
+  postcode: Option[String],
+  country: Option[String]
+)
 
 object AddressResponse {
 

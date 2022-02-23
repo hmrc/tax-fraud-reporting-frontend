@@ -19,13 +19,13 @@ package models.backend
 import play.api.libs.json.{Json, OFormat}
 
 final case class Address(
-                          addressLine1: Option[String],
-                          addressLine2: Option[String],
-                          addressLine3: Option[String],
-                          townCity: Option[String],
-                          postcode: Option[String],
-                          country: Option[String],
-                        )
+  addressLine1: Option[String],
+  addressLine2: Option[String],
+  addressLine3: Option[String],
+  townCity: Option[String],
+  postcode: Option[String],
+  country: Option[String]
+)
 
 object Address {
   implicit val format: OFormat[Address] = Json.format

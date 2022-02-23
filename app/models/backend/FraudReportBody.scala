@@ -19,15 +19,15 @@ package models.backend
 import play.api.libs.json.{Json, OFormat}
 
 final case class FraudReportBody(
-                                  activityType: String,
-                                  nominals: Seq[Nominal],
-                                  valueFraud: Option[Float],
-                                  durationFraud: Option[String],
-                                  howManyKnow: Option[String],
-                                  additionalDetails: Option[String],
-                                  reporter: Option[Reporter],
-                                  hasEvidence: Boolean
-                                )
+  activityType: String,
+  nominals: Seq[Nominal],
+  valueFraud: Option[Float],
+  durationFraud: Option[String],
+  howManyKnow: Option[String],
+  additionalDetails: Option[String],
+  reporter: Option[Reporter],
+  hasEvidence: Boolean
+)
 
 object FraudReportBody {
   implicit val format: OFormat[FraudReportBody] = Json.format

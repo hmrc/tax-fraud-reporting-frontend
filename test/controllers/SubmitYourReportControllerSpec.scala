@@ -37,8 +37,8 @@ class SubmitYourReportControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request = FakeRequest(GET, routes.SubmitYourReportController.onPageLoad().url)
-        val result = route(application, request).value
-        val view = application.injector.instanceOf[SubmitYourReportView]
+        val result  = route(application, request).value
+        val view    = application.injector.instanceOf[SubmitYourReportView]
         status(result) mustEqual OK
         contentAsString(result) mustEqual view()(request, messages(application)).toString
       }
@@ -49,15 +49,13 @@ class SubmitYourReportControllerSpec extends SpecBase with MockitoSugar {
       val mockSubmissionService = mock[SubmissionService]
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
-        .overrides(
-          bind[SubmissionService].toInstance(mockSubmissionService)
-        )
+        .overrides(bind[SubmissionService].toInstance(mockSubmissionService))
         .build()
 
       running(application) {
         when(mockSubmissionService.submit(any())(any())).thenReturn(Future.successful(()))
         val request = FakeRequest(POST, routes.SubmitYourReportController.onSubmit().url)
-        val result = route(application, request).value
+        val result  = route(application, request).value
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual routes.ReportSubmittedController.onPageLoad().url
         verify(mockSubmissionService, times(1)).submit(any())(any())

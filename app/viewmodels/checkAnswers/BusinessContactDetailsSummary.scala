@@ -29,19 +29,18 @@ import viewmodels.implicits._
 object BusinessContactDetailsSummary {
 
   def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
-                                                                    messages: Messages
+    messages: Messages
   ): Option[SummaryListRow] = {
     val answer = answers.get(BusinessContactDetailsPage(Index(index)))
 
     val value = List(
       messages("individualContactDetails.cya.landline") -> answer.flatMap(_.landlineNumber),
-      messages("individualContactDetails.cya.mobile") -> answer.flatMap(_.mobileNumber),
-      messages("individualContactDetails.cya.email") -> answer.flatMap(_.email)
+      messages("individualContactDetails.cya.mobile")   -> answer.flatMap(_.mobileNumber),
+      messages("individualContactDetails.cya.email")    -> answer.flatMap(_.email)
     ) map {
       case (label, valueOpt) =>
         HtmlFormat.escape(label + ": " + valueOpt.getOrElse(messages("site.unknown")))
     } mkString "<br>"
-
 
     Some(
       SummaryListRowViewModel(
@@ -56,4 +55,5 @@ object BusinessContactDetailsSummary {
       )
     )
   }
-  }
+
+}

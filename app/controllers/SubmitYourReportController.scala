@@ -35,7 +35,8 @@ class SubmitYourReportController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   view: SubmitYourReportView,
   submissionService: SubmissionService
-)(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
@@ -48,4 +49,5 @@ class SubmitYourReportController @Inject() (
         Redirect(routes.ReportSubmittedController.onPageLoad())
       }
   }
+
 }

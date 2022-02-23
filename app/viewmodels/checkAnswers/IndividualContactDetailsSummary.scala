@@ -33,15 +33,14 @@ object IndividualContactDetailsSummary {
   ): Option[SummaryListRow] = {
     val answer = answers.get(IndividualContactDetailsPage(Index(index)))
 
-        val value = List(
-          messages("individualContactDetails.cya.landline") -> answer.flatMap(_.landlineNumber),
-          messages("individualContactDetails.cya.mobile")   -> answer.flatMap(_.mobileNumber),
-          messages("individualContactDetails.cya.email")    -> answer.flatMap(_.email)
-        ) map {
-          case (label, valueOpt) =>
-            HtmlFormat.escape(label + ": " + valueOpt.getOrElse(messages("site.unknown")))
-        } mkString "<br>"
-
+    val value = List(
+      messages("individualContactDetails.cya.landline") -> answer.flatMap(_.landlineNumber),
+      messages("individualContactDetails.cya.mobile")   -> answer.flatMap(_.mobileNumber),
+      messages("individualContactDetails.cya.email")    -> answer.flatMap(_.email)
+    ) map {
+      case (label, valueOpt) =>
+        HtmlFormat.escape(label + ": " + valueOpt.getOrElse(messages("site.unknown")))
+    } mkString "<br>"
 
     Some(
       SummaryListRowViewModel(

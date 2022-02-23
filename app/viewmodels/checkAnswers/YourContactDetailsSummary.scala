@@ -32,7 +32,7 @@ object YourContactDetailsSummary {
       answer =>
         def msg(key: String) = messages("yourContactDetails." + key)
 
-       val values = List(
+        val values = List(
           "firstName"     -> answer.FirstName,
           "lastName"      -> answer.LastName,
           "tel"           -> answer.Tel,

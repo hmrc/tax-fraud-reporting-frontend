@@ -19,14 +19,14 @@ package models.backend
 import play.api.libs.json.{Json, OFormat}
 
 final case class Person(
-                         name: Option[Name] = None,
-                         address: Option[Address] = None,
-                         contact: Option[Contact] = None,
-                         dob: Option[String] = None,
-                         age: Option[Int] = None,
-                         NINO: Option[String] = None,
-                         connectionType: String
-                       )
+  name: Option[Name] = None,
+  address: Option[Address] = None,
+  contact: Option[Contact] = None,
+  dob: Option[String] = None,
+  age: Option[Int] = None,
+  NINO: Option[String] = None,
+  connectionType: String
+)
 
 object Person {
   implicit val format: OFormat[Person] = Json.format

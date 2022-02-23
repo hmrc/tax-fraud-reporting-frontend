@@ -29,19 +29,18 @@ import viewmodels.implicits._
 object ReferenceNumbersSummary {
 
   def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
-                                                                    messages: Messages
+    messages: Messages
   ): Option[SummaryListRow] = {
     val answer = answers.get(ReferenceNumbersPage(Index(index)))
 
     val value = List(
-      messages("referenceNumbers.cya.vat") -> answer.flatMap(_.vatRegistration),
+      messages("referenceNumbers.cya.vat")   -> answer.flatMap(_.vatRegistration),
       messages("referenceNumbers.cya.ern")   -> answer.flatMap(_.employeeRefNo),
-      messages("referenceNumbers.cya.cturn")    -> answer.flatMap(_.corporationTax)
+      messages("referenceNumbers.cya.cturn") -> answer.flatMap(_.corporationTax)
     ) map {
       case (label, valueOpt) =>
         HtmlFormat.escape(label + ": " + valueOpt.getOrElse(messages("site.unknown")))
     } mkString "<br>"
-
 
     Some(
       SummaryListRowViewModel(
@@ -56,4 +55,5 @@ object ReferenceNumbersSummary {
       )
     )
   }
+
 }

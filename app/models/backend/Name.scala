@@ -19,11 +19,11 @@ package models.backend
 import play.api.libs.json.{Json, OFormat}
 
 final case class Name(
-                       forename: Option[String],
-                       surname: Option[String],
-                       middleName: Option[String],
-                       alias: Option[String]
-                     )
+  forename: Option[String],
+  surname: Option[String],
+  middleName: Option[String],
+  alias: Option[String]
+)
 
 object Name {
   implicit val format: OFormat[Name] = Json.format
