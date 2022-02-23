@@ -30,6 +30,7 @@ class AddressResponseSpec extends AnyFreeSpec with Matchers {
                    |    "id" : "GB990091234524",
                    |    "address" : {
                    |        "lines" : [ "10 Other Place", "Some District", "Anytown" ],
+                   |        "town" : "town",
                    |        "postcode" : "ZZ1 1ZZ",
                    |        "country" : {
                    |            "code" : "GB",
@@ -40,6 +41,29 @@ class AddressResponseSpec extends AnyFreeSpec with Matchers {
       val result = json.as[AddressResponse]
       result mustEqual AddressResponse(
         lines = List("10 Other Place", "Some District", "Anytown"),
+        town = Some("town"),
+        postcode = Some("ZZ1 1ZZ"),
+        country = Some("GB")
+      )
+    }
+
+    "when town is missing" in {
+      val json   = Json.parse("""{
+                                |    "auditRef" : "bed4bd24-72da-42a7-9338-f43431b7ed72",
+                                |    "id" : "GB990091234524",
+                                |    "address" : {
+                                |        "lines" : [ "10 Other Place", "Some District", "Anytown" ],
+                                |        "postcode" : "ZZ1 1ZZ",
+                                |        "country" : {
+                                |            "code" : "GB",
+                                |            "name" : "United Kingdom"
+                                |        }
+                                |    }
+                                |}""".stripMargin)
+      val result = json.as[AddressResponse]
+      result mustEqual AddressResponse(
+        lines = List("10 Other Place", "Some District", "Anytown"),
+        town = None,
         postcode = Some("ZZ1 1ZZ"),
         country = Some("GB")
       )
@@ -51,6 +75,7 @@ class AddressResponseSpec extends AnyFreeSpec with Matchers {
                               |    "id" : "GB990091234524",
                               |    "address" : {
                               |        "lines" : [ "10 Other Place", "Some District", "Anytown" ],
+                              |        "town" : "town",
                               |        "country" : {
                               |            "code" : "GB",
                               |            "name" : "United Kingdom"
@@ -60,6 +85,7 @@ class AddressResponseSpec extends AnyFreeSpec with Matchers {
       val result = json.as[AddressResponse]
       result mustEqual AddressResponse(
         lines = List("10 Other Place", "Some District", "Anytown"),
+        town = Some("town"),
         postcode = None,
         country = Some("GB")
       )
@@ -71,12 +97,14 @@ class AddressResponseSpec extends AnyFreeSpec with Matchers {
                               |    "id" : "GB990091234524",
                               |    "address" : {
                               |        "lines" : [ "10 Other Place", "Some District", "Anytown" ],
+                              |        "town" : "town",
                               |        "postcode" : "ZZ1 1ZZ"
                               |    }
                               |}""".stripMargin)
       val result = json.as[AddressResponse]
       result mustEqual AddressResponse(
         lines = List("10 Other Place", "Some District", "Anytown"),
+        town = Some("town"),
         postcode = Some("ZZ1 1ZZ"),
         country = None
       )
@@ -93,6 +121,7 @@ class AddressResponseSpec extends AnyFreeSpec with Matchers {
       val result = json.as[AddressResponse]
       result mustEqual AddressResponse(
         lines = List("10 Other Place", "Some District", "Anytown"),
+        town = None,
         postcode = None,
         country = None
       )
@@ -104,6 +133,7 @@ class AddressResponseSpec extends AnyFreeSpec with Matchers {
                             |    "address" : {
                             |        "lines" : [ "10 Other Place", "Some District", "Anytown" ],
                             |        "postcode" : "ZZ1 1ZZ",
+                            |        "town" : "town",
                             |        "country" : {
                             |            "code" : "GB"
                             |        }
@@ -111,6 +141,7 @@ class AddressResponseSpec extends AnyFreeSpec with Matchers {
                             |}""".stripMargin)
     val model = AddressResponse(
       lines = List("10 Other Place", "Some District", "Anytown"),
+      town = Some("town"),
       postcode = Some("ZZ1 1ZZ"),
       country = Some("GB")
     )

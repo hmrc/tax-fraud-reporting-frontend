@@ -20,7 +20,7 @@ import play.api.libs.json.{Json, OFormat}
 
 final case class FraudReportBody(
                                   activityType: String,
-                                  nominals: List[Nominal],
+                                  nominals: Seq[Nominal],
                                   valueFraud: Option[Float],
                                   durationFraud: Option[String],
                                   howManyKnow: Option[String],

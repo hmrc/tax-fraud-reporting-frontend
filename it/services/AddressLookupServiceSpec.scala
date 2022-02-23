@@ -137,6 +137,7 @@ class AddressLookupServiceSpec extends AnyFreeSpec with Matchers with WireMockHe
 
       val expected = AddressResponse(
         lines = List("10 Other Place", "Some District", "Anytown"),
+        town = None,
         postcode = Some("ZZ1 1ZZ"),
         country = Some("GB")
       )

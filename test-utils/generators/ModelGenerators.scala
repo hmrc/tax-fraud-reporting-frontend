@@ -117,9 +117,10 @@ trait ModelGenerators {
     Arbitrary {
       for {
         lines    <- arbitrary[List[String]]
+        town     <- arbitrary[Option[String]]
         postcode <- arbitrary[Option[String]]
         country  <- arbitrary[Option[String]]
-      } yield AddressResponse(lines, postcode, country)
+      } yield AddressResponse(lines, town, postcode, country)
     }
 
   implicit lazy val arbitraryBusinessInformationCheck: Arbitrary[BusinessInformationCheck] =

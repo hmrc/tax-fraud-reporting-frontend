@@ -53,7 +53,7 @@ class IndividualAddressConfirmationControllerSpec extends SpecBase with MockitoS
     "must update user answers and redirect to the next page when a confirmed address is available" in {
 
       val addressResponse =
-        AddressResponse(lines = List("foo", "bar"), postcode = Some("postcode"), country = Some("country"))
+        AddressResponse(lines = List("foo", "bar"), town = None, postcode = Some("postcode"), country = Some("country"))
 
       running(application) {
         when(mockAddressLookupService.retrieveAddress(eqTo("foo"))(any())).thenReturn(
@@ -98,7 +98,7 @@ class IndividualAddressConfirmationControllerSpec extends SpecBase with MockitoS
 
     "must fail if the session repository fails" in {
       val addressResponse =
-        AddressResponse(lines = List("foo", "bar"), postcode = Some("postcode"), country = Some("country"))
+        AddressResponse(lines = List("foo", "bar"), town = None, postcode = Some("postcode"), country = Some("country"))
       when(mockAddressLookupService.retrieveAddress(eqTo("foo"))(any())).thenReturn(
         Future.successful(Some(addressResponse))
       )

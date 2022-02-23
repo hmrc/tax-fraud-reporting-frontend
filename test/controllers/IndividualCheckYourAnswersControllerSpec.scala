@@ -56,7 +56,7 @@ class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryList
         .set(IndividualDateOfBirthPage(Index(0)), LocalDate.now).success.value
         .set(
           IndividualAddressConfirmationPage(Index(0)),
-          AddressResponse(List("line"), Some("postcode"), Some("country"))
+          AddressResponse(List("line"), None, Some("postcode"), Some("country"))
         ).success.value
         .set(
           IndividualContactDetailsPage(Index(0)),
@@ -69,7 +69,7 @@ class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryList
         .set(TypeBusinessPage(Index(0)), "businessType").success.value
         .set(
           BusinessAddressConfirmationPage(Index(0)),
-          AddressResponse(List("line"), Some("postcode"), Some("country"))
+          AddressResponse(List("line"), None, Some("postcode"), Some("country"))
         ).success.value
         .set(
           BusinessContactDetailsPage(Index(0)),

@@ -25,7 +25,6 @@ final case class Address(
                           townCity: Option[String],
                           postcode: Option[String],
                           country: Option[String],
-                          generalLocation: Option[String]
                         )
 
 object Address {
