@@ -16,7 +16,6 @@
 
 package forms.mappings
 
-import com.google.i18n.phonenumbers.PhoneNumberUtil
 import org.apache.commons.validator.routines.EmailValidator
 
 import java.time.LocalDate
