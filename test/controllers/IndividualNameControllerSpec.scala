@@ -112,9 +112,9 @@ class IndividualNameControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, individualNameRoute)
-            .withFormUrlEncodedBody("firstName" -> "a" * 101)
+            .withFormUrlEncodedBody("firstName" -> "a" * 256)
 
-        val boundForm = form.bind(Map("firstName" -> "a" * 101))
+        val boundForm = form.bind(Map("firstName" -> "a" * 256))
 
         val view = application.injector.instanceOf[IndividualNameView]
 

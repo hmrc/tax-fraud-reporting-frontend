@@ -25,15 +25,29 @@ import models.IndividualContactDetails
 
 class IndividualContactDetailsFormProvider @Inject() extends Mappings {
 
+  private val errorPrefix = "individualContactDetails.error"
+
+  private def field(key: String, isOptional: Boolean = false) = {
+    def errorMsg(problem: String) = s"$errorPrefix.$key.$problem"
+
+    val textMapping = if (isOptional) text() else text(errorMsg("required"))
+
+    textMapping verifying maxLength(255, errorMsg("length"))
+  }
+
   def apply(): Form[IndividualContactDetails] = Form(
     mapping(
       "landlineNumber" -> optional(
-        text().verifying(maxLength(100, "individualContactDetails.error.landlineNumber.length"))
+        field("landlineNumber", isOptional = true)
+          .verifying(firstError(telephoneNumberValidation(errorPrefix + ".landlineNumber.invalid")))
       ),
       "mobileNumber" -> optional(
-        text().verifying(maxLength(100, "individualContactDetails.error.mobileNumber.length"))
+        field("mobileNumber", isOptional = true)
+          .verifying(firstError(telephoneNumberValidation(errorPrefix + ".mobileNumber.invalid")))
       ),
-      "email" -> optional(text().verifying(maxLength(100, "individualContactDetails.error.email.length")))
+      "email" -> optional(
+        field("email", isOptional = true).verifying(validEmailAddress(errorPrefix + ".email.invalid"))
+      )
     )(IndividualContactDetails.apply)(IndividualContactDetails.unapply)
   )
 

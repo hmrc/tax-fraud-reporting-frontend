@@ -29,20 +29,19 @@ import viewmodels.implicits._
 object IndividualNameSummary {
 
   def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
-                                                                    messages: Messages
+    messages: Messages
   ): Option[SummaryListRow] = {
     val answer = answers.get(IndividualNamePage(Index(index)))
 
     val value = List(
-      messages("individualName.firstName") -> answer.flatMap(_.firstName),
-      messages("individualName.middleName")   -> answer.flatMap(_.middleName),
+      messages("individualName.firstName")  -> answer.flatMap(_.firstName),
+      messages("individualName.middleName") -> answer.flatMap(_.middleName),
       messages("individualName.lastName")   -> answer.flatMap(_.lastName),
-      messages("individualName.nickname")    -> answer.flatMap(_.aliases)
+      messages("individualName.nickname")   -> answer.flatMap(_.aliases)
     ) map {
       case (label, valueOpt) =>
         HtmlFormat.escape(label + ": " + valueOpt.getOrElse(messages("site.unknown")))
     } mkString "<br>"
-
 
     Some(
       SummaryListRowViewModel(

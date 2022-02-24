@@ -28,7 +28,7 @@ class SelectConnectionBusinessFormProviderSpec extends OptionFieldBehaviours wit
 
     val fieldName   = "value"
     val requiredKey = "selectConnectionBusiness.error.required"
-    val maxLength   = 255
+    val maxLength   = 100
 
     behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
 
@@ -94,7 +94,7 @@ class SelectConnectionBusinessFormProviderSpec extends OptionFieldBehaviours wit
     }
 
     "must fail to bind Other if the other value is longer than 255 characters" in {
-      form.bind(Map(fieldName -> "other", "otherValue" -> "test" * 256)).errors mustEqual Seq(
+      form.bind(Map(fieldName -> "other", "otherValue" -> "test" * 101)).errors mustEqual Seq(
         FormError("otherValue", "selectConnectionBusiness.error.otherValue.maxLength", Seq(maxLength))
       )
     }

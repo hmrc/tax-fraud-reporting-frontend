@@ -27,7 +27,7 @@ class IndividualNameFormProviderSpec extends StringFieldBehaviours {
 
     val fieldName = "firstName"
     val lengthKey = "individualName.error.firstName.length"
-    val maxLength = 100
+    val maxLength = 255
 
     behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
@@ -43,7 +43,7 @@ class IndividualNameFormProviderSpec extends StringFieldBehaviours {
 
     val fieldName = "middleName"
     val lengthKey = "individualName.error.middleName.length"
-    val maxLength = 100
+    val maxLength = 255
 
     behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
@@ -59,7 +59,7 @@ class IndividualNameFormProviderSpec extends StringFieldBehaviours {
 
     val fieldName = "lastName"
     val lengthKey = "individualName.error.lastName.length"
-    val maxLength = 100
+    val maxLength = 255
 
     behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
@@ -75,7 +75,7 @@ class IndividualNameFormProviderSpec extends StringFieldBehaviours {
 
     val fieldName = "aliases"
     val lengthKey = "individualName.error.aliases.length"
-    val maxLength = 100
+    val maxLength = 255
 
     behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 

@@ -33,7 +33,7 @@ object ActivitySourceOfInformationSummary {
       answer =>
         val value = answer match {
           case ActivitySourceOfInformation.Other(value) => HtmlFormat.escape(value)
-          case connection                        => HtmlFormat.escape(messages(s"activitySourceOfInformation.$connection"))
+          case connection                               => HtmlFormat.escape(messages(s"activitySourceOfInformation.$connection"))
         }
 
         SummaryListRowViewModel(

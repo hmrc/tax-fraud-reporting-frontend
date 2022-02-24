@@ -16,17 +16,8 @@
 
 package forms
 
-import javax.inject.Inject
+object Validation {
 
-import forms.mappings.Mappings
-import play.api.data.Form
-
-class TypeBusinessFormProvider @Inject() extends Mappings {
-
-  def apply(): Form[String] =
-    Form(
-      "value" -> text("typeBusiness.error.required")
-        .verifying(maxLength(255, "typeBusiness.error.length"))
-    )
-
+  val vatRegistration = "^(GB)?\\d{9}$"
+  val ctutrValidation = "^\\d{10}$"
 }
