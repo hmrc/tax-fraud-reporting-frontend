@@ -17,11 +17,17 @@
 package controllers
 
 import base.SpecBase
+import org.mockito.ArgumentMatchers.any
+import org.mockito.MockitoSugar
+import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import services.SubmissionService
 import views.html.SubmitYourReportView
 
-class SubmitYourReportControllerSpec extends SpecBase {
+import scala.concurrent.Future
+
+class SubmitYourReportControllerSpec extends SpecBase with MockitoSugar {
 
   "SubmitYourReport Controller" - {
 
@@ -31,13 +37,28 @@ class SubmitYourReportControllerSpec extends SpecBase {
 
       running(application) {
         val request = FakeRequest(GET, routes.SubmitYourReportController.onPageLoad().url)
-
-        val result = route(application, request).value
-
-        val view = application.injector.instanceOf[SubmitYourReportView]
-
+        val result  = route(application, request).value
+        val view    = application.injector.instanceOf[SubmitYourReportView]
         status(result) mustEqual OK
         contentAsString(result) mustEqual view()(request, messages(application)).toString
+      }
+    }
+
+    "must submit to the backend and redirect to the submission successful page" in {
+
+      val mockSubmissionService = mock[SubmissionService]
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        .overrides(bind[SubmissionService].toInstance(mockSubmissionService))
+        .build()
+
+      running(application) {
+        when(mockSubmissionService.submit(any())(any())).thenReturn(Future.successful(()))
+        val request = FakeRequest(POST, routes.SubmitYourReportController.onSubmit().url)
+        val result  = route(application, request).value
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.ReportSubmittedController.onPageLoad().url
+        verify(mockSubmissionService, times(1)).submit(any())(any())
       }
     }
   }

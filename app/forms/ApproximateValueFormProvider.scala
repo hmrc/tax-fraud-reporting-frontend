@@ -36,4 +36,5 @@ class ApproximateValueFormProvider @Inject() extends Mappings {
         )
         .transform(_.replaceAll("""[,£\s]""", "").toFloat, (value: Float) => formatter.format(value))
     )
+
 }

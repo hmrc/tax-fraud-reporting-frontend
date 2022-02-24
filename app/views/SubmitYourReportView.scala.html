@@ -16,6 +16,7 @@
 
 @this(
         layout: templates.Layout,
+        formHelper: FormWithCSRF,
         govukButton: GovukButton
 )
 
@@ -34,8 +35,10 @@
        <li>@messages("submitYourReport.list2")</li>
     </ul>
 
-     <a id="continue-button" href="@routes.ReportSubmittedController.onPageLoad" role="button" class="govuk-button" data-module="govuk-button">
-      @messages("submitYourReport.submit")
-     </a>
-
+    @formHelper(action = routes.SubmitYourReportController.onSubmit()) {
+      @govukButton(
+        ButtonViewModel(messages("submitYourReport.submit"))
+            .withAttribute("id" -> "continue-button")
+      )
+    }
 }

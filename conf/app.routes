@@ -179,6 +179,7 @@ GET        /change-activity-source-of-information                  controllers.A
 POST       /change-activity-source-of-information                  controllers.ActivitySourceOfInformationController.onSubmit(mode: Mode = CheckMode)
 
 GET        /submit-your-report                       controllers.SubmitYourReportController.onPageLoad()
+POST       /submit-your-report                       controllers.SubmitYourReportController.onSubmit()
 
 GET        /:index/are-you-sure-you-want-to-remove-individual                        controllers.IndividualConfirmRemoveController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/are-you-sure-you-want-to-remove-individual                        controllers.IndividualConfirmRemoveController.onSubmit(index: Index, mode: Mode = NormalMode)

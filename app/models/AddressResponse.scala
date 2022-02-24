@@ -19,18 +19,25 @@ package models
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
-final case class AddressResponse(lines: List[String], postcode: Option[String], country: Option[String])
+final case class AddressResponse(
+  lines: List[String],
+  town: Option[String],
+  postcode: Option[String],
+  country: Option[String]
+)
 
 object AddressResponse {
 
   implicit lazy val reads: Reads[AddressResponse] = (
     (__ \ "address" \ "lines").read[List[String]] ~
+      (__ \ "address" \ "town").readNullable[String] ~
       (__ \ "address" \ "postcode").readNullable[String] ~
       (__ \ "address" \ "country" \ "code").readNullable[String]
-  )(AddressResponse(_, _, _))
+  )(AddressResponse(_, _, _, _))
 
   implicit lazy val writes: Writes[AddressResponse] = (
     (__ \ "address" \ "lines").write[List[String]] ~
+      (__ \ "address" \ "town").writeNullable[String] ~
       (__ \ "address" \ "postcode").writeNullable[String] ~
       (__ \ "address" \ "country" \ "code").writeNullable[String]
   )(unlift(AddressResponse.unapply))

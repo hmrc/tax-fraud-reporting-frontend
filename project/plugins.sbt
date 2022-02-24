@@ -21,3 +21,4 @@ addSbtPlugin("org.scalameta"   % "sbt-scalafmt"          % "2.4.2")
 addSbtPlugin("org.irundaia.sbt" % "sbt-sassify" % "1.5.1")
 
 addSbtPlugin("net.ground5hark.sbt" % "sbt-concat" % "0.2.0")
+addSbtPlugin("org.lyranthe.sbt" % "partial-unification" % "1.1.2")
