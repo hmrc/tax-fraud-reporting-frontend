@@ -7,3 +7,11 @@ $hmrc-assets-path: "/report-tax-fraud/assets/lib/hmrc-frontend/hmrc/assets/";
 .autocomplete__wrapper * {
   @include govuk-typography-common();
 }
+
+
+.js-enabled .js-visible {
+    display: block !important;
+ }
+.js-visible {
+    display: none !important;
+}

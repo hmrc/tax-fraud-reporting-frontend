@@ -38,7 +38,7 @@ class SelectConnectionBusinessFormProvider @Inject() extends Mappings {
           "value",
           "other",
           text("selectConnectionBusiness.error.otherValue.required")
-            .verifying(maxLength(255, "selectConnectionBusiness.error.otherValue.maxLength"))
+            .verifying(maxLength(100, "selectConnectionBusiness.error.otherValue.maxLength"))
         )
       )
         .transform[SelectConnectionBusiness](

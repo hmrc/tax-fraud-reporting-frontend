@@ -26,9 +26,13 @@ class ReferenceNumbersFormProvider @Inject() extends Mappings {
 
   def apply(): Form[ReferenceNumbers] = Form(
     mapping(
-      "vatRegistration" -> optional(text().verifying(maxLength(100, "referenceNumbers.error.vatRegistration.length"))),
-      "employeeRefNo"   -> optional(text().verifying(maxLength(100, "referenceNumbers.error.employeeRefNo.length"))),
-      "corporationTax"  -> optional(text().verifying(maxLength(10, "referenceNumbers.error.corporationTax.length")))
+      "vatRegistration" -> optional(
+        text().verifying(regexp(Validation.vatRegistration, "referenceNumbers.error.vatRegistration.length"))
+      ),
+      "employeeRefNo" -> optional(text().verifying(maxLength(100, "referenceNumbers.error.employeeRefNo.length"))),
+      "corporationTax" -> optional(
+        text().verifying(regexp(Validation.ctutrValidation, "referenceNumbers.error.corporationTax.length"))
+      )
     )(ReferenceNumbers.apply)(ReferenceNumbers.unapply)
   )
 

@@ -16,9 +16,13 @@
 
 package forms.mappings
 
+import com.google.i18n.phonenumbers.PhoneNumberUtil
 import org.apache.commons.validator.routines.EmailValidator
+
 import java.time.LocalDate
 import play.api.data.validation.{Constraint, Invalid, Valid}
+
+import scala.util.{Success, Try}
 
 trait Constraints {
 
@@ -108,6 +112,16 @@ trait Constraints {
     Constraint {
       case str: String if EmailValidator.getInstance().isValid(str) => Valid
       case _                                                        => Invalid(errorKey)
+    }
+
+  protected def telephoneNumberValidation(errorMessage: String = "error.invalid"): Constraint[String] =
+    Constraint {
+      str =>
+        val phoneNumberUtil = PhoneNumberUtil.getInstance()
+        Try(phoneNumberUtil.isPossibleNumber(phoneNumberUtil.parse(str, "GB"))) match {
+          case Success(true) => Valid
+          case _             => Invalid(errorMessage)
+        }
     }
 
 }

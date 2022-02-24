@@ -27,16 +27,10 @@ class ReferenceNumbersFormProviderSpec extends StringFieldBehaviours {
 
     val fieldName = "vatRegistration"
     val lengthKey = "referenceNumbers.error.vatRegistration.length"
-    val maxLength = 100
 
-    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
+    val result = form.bind(Map(fieldName -> "ab123456789"))(fieldName)
+    result.errors mustEqual Seq(FormError(fieldName, lengthKey, Seq(Validation.vatRegistration)))
 
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
   }
 
   ".employeeRefNo" - {
@@ -59,16 +53,9 @@ class ReferenceNumbersFormProviderSpec extends StringFieldBehaviours {
 
     val fieldName = "corporationTax"
     val lengthKey = "referenceNumbers.error.corporationTax.length"
-    val maxLength = 10
 
-    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
-
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
+    val result = form.bind(Map(fieldName -> "a123456789"))(fieldName)
+    result.errors mustEqual Seq(FormError(fieldName, lengthKey, Seq(Validation.ctutrValidation)))
   }
 
 }

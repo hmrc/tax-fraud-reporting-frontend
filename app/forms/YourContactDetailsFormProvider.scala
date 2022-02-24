@@ -16,27 +16,14 @@
 
 package forms
 
-import com.google.i18n.phonenumbers.PhoneNumberUtil
-import forms.mappings.Mappings
+import forms.mappings.{Constraints, Mappings}
 import models.YourContactDetails
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.data.validation.{Constraint, Invalid, Valid}
 
 import javax.inject.Inject
-import scala.util.{Success, Try}
 
-class YourContactDetailsFormProvider @Inject() extends Mappings {
-
-  private def telephoneNumberValidation(errorMessage: String = "error.invalid"): Constraint[String] =
-    Constraint {
-      str =>
-        val phoneNumberUtil = PhoneNumberUtil.getInstance()
-        Try(phoneNumberUtil.isPossibleNumber(phoneNumberUtil.parse(str, "GB"))) match {
-          case Success(true) => Valid
-          case _             => Invalid(errorMessage)
-        }
-    }
+class YourContactDetailsFormProvider @Inject() extends Mappings with Constraints {
 
   private val errorPrefix = "yourContactDetails.error"
 
@@ -53,7 +40,7 @@ class YourContactDetailsFormProvider @Inject() extends Mappings {
       "firstName" -> field("firstName"),
       "lastName"  -> field("lastName"),
       "tel" -> (
-        field("tel") verifying telephoneNumberValidation(errorPrefix + ".tel.invalid")
+        field("tel").verifying(firstError(telephoneNumberValidation(errorPrefix + ".tel.invalid")))
       ),
       "email" -> optional(
         field("email", isOptional = true) verifying validEmailAddress(errorPrefix + ".email.invalid")

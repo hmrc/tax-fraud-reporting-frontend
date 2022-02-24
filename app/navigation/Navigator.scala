@@ -54,7 +54,7 @@ class Navigator @Inject() () {
     case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index)
     case ApproximateValuePage                 => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
     case WhenActivityHappenPage               => whenActivityHappenRoutes
-    case ActivityTimePeriodPage               => _ => routes.DescriptionActivityController.onPageLoad(NormalMode)
+    case ActivityTimePeriodPage               => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
     case IndividualConnectionPage(index) =>
       _ => routes.IndividualBusinessDetailsController.onPageLoad(index, NormalMode)
     case DescriptionActivityPage         => _ => routes.ProvideContactDetailsController.onPageLoad(NormalMode)

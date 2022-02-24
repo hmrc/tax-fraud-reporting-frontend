@@ -23,7 +23,7 @@ class TypeBusinessFormProviderSpec extends StringFieldBehaviours {
 
   val requiredKey = "typeBusiness.error.required"
   val lengthKey   = "typeBusiness.error.length"
-  val maxLength   = 100
+  val maxLength   = 255
 
   val form = new TypeBusinessFormProvider()()
 

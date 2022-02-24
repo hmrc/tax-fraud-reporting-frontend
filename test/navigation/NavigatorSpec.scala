@@ -991,13 +991,13 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must go from when activity likely happen page" - {
 
-      "to the description of the activity page for the first selection" in {
+      "to the how many other people know about the activity page for the first selection" in {
         val answers = UserAnswers("id").set(ActivityTimePeriodPage, ActivityTimePeriod.NextWeek).success.value
         navigator.nextPage(
           ActivityTimePeriodPage,
           NormalMode,
           answers
-        ) mustBe routes.DescriptionActivityController.onPageLoad(NormalMode)
+        ) mustBe routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
       }
     }
 

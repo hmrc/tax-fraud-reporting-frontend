@@ -16,19 +16,23 @@
 
 package forms
 
-import javax.inject.Inject
 import forms.mappings.Mappings
 import play.api.data.Form
-import uk.gov.hmrc.domain.Nino
+import uk.gov.hmrc.domain.Nino.isValid
 
-import scala.util.Try
+import javax.inject.Inject
 
 class IndividualNationalInsuranceNumberFormProvider @Inject() extends Mappings {
+
+  def removeWhitespace(string: String): String = string.split("\\s+").mkString
 
   def apply(): Form[String] =
     Form(
       "value" -> text("individualNationalInsuranceNumber.error.required")
-        .verifying("individualNationalInsuranceNumber.error.invalid", value => Try(Nino(value)).isSuccess)
+        .verifying(
+          "individualNationalInsuranceNumber.error.invalid",
+          value => isValid(removeWhitespace(value.toUpperCase))
+        )
     )
 
 }

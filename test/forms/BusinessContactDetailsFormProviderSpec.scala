@@ -25,49 +25,43 @@ class BusinessContactDetailsFormProviderSpec extends StringFieldBehaviours {
 
   ".landlineNumber" - {
 
-    val fieldName = "landlineNumber"
-    val lengthKey = "businessContactDetails.error.landlineNumber.length"
-    val maxLength = 100
+    val fieldName  = "landlineNumber"
+    val invalidKey = "businessContactDetails.error.landlineNumber.invalid"
 
-    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
+    "must not bind an invalid option" in {
+      val result = form.bind(Map(fieldName -> "test"))
+      result.errors must contain(FormError(fieldName, invalidKey))
+    }
 
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
   }
 
   ".mobileNumber" - {
 
-    val fieldName = "mobileNumber"
-    val lengthKey = "businessContactDetails.error.mobileNumber.length"
-    val maxLength = 100
+    val fieldName  = "mobileNumber"
+    val invalidKey = "businessContactDetails.error.mobileNumber.invalid"
 
-    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
+    "must not bind an invalid option" in {
+      val result = form.bind(Map(fieldName -> "test"))
+      result.errors must contain(FormError(fieldName, invalidKey))
+    }
 
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
   }
 
   ".email" - {
 
-    val fieldName = "email"
-    val lengthKey = "businessContactDetails.error.email.length"
-    val maxLength = 100
+    val fieldName  = "email"
+    val lengthKey  = "businessContactDetails.error.email.length"
+    val invalidKey = "businessContactDetails.error.email.invalid"
+    val maxLength  = 255
 
-    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
+    "must not bind an invalid option" in {
+      val result = form.bind(Map(fieldName -> "name?gmail.com"))
+      result.errors must contain(FormError(fieldName, invalidKey))
+    }
 
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
+    "must not bind when email address is longer than 255 characters" in {
+      val result = form.bind(Map(fieldName -> "a" * 256))(fieldName)
+      result.errors must contain(FormError(fieldName, lengthKey, Seq(maxLength)))
+    }
   }
 }

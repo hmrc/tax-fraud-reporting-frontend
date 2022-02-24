@@ -64,7 +64,6 @@ class YourContactDetailsFormProviderSpec extends StringFieldBehaviours with Scal
 
   ".tel" - {
     val fieldName = "tel"
-    val maxLength = 255
 
     "must not bind an invalid option" in {
       val result = form.bind(Map(fieldName -> "test"))
@@ -74,11 +73,6 @@ class YourContactDetailsFormProviderSpec extends StringFieldBehaviours with Scal
     "must not bind an empty map" in {
       val result = form.bind(Map.empty[String, String])
       result.errors must contain(FormError(fieldName, "yourContactDetails.error.tel.required"))
-    }
-
-    "must not bind when phone number is longer than 255 characters" in {
-      val result = form.bind(Map(fieldName -> "a" * 256))(fieldName)
-      result.errors must contain(FormError(fieldName, "yourContactDetails.error.tel.length", Seq(maxLength)))
     }
 
   }
