@@ -82,6 +82,8 @@ class SubmissionServiceSpec extends AnyFreeSpec with Matchers with WireMockHelpe
       .set(YourContactDetailsPage, YourContactDetails(
         FirstName = "forename", LastName = "surname", Tel = "tel", Email = Some("email"), MemorableWord = "memorable word"
       )).success.value
+      .set(ActivitySourceOfInformationPage, ActivitySourceOfInformation.Other("source of information")).success.value
+      .set(DocumentationDescriptionPage, "evidence details").success.value
 
     lazy val businessAnswers: UserAnswers = UserAnswers("id")
       .set(ActivityTypePage, ActivityType.list.head).success.value
@@ -104,11 +106,12 @@ class SubmissionServiceSpec extends AnyFreeSpec with Matchers with WireMockHelpe
       .set(ActivityTimePeriodPage, ActivityTimePeriod.Later).success.value
       .set(HowManyPeopleKnowPage, HowManyPeopleKnow.OneToFiveIndividuals).success.value
       .set(DescriptionActivityPage, "additional details").success.value
-      .set(SupportingDocumentPage, SupportingDocument.Yes).success.value
+      .set(SupportingDocumentPage, SupportingDocument.No).success.value
       .set(ProvideContactDetailsPage, ProvideContactDetails.Yes).success.value
       .set(YourContactDetailsPage, YourContactDetails(
         FirstName = "forename", LastName = "surname", Tel = "tel", Email = Some("email"), MemorableWord = "memorable word"
       )).success.value
+      .set(ActivitySourceOfInformationPage, ActivitySourceOfInformation.ReportedIndividuals).success.value
 
     "must send the correct data and return a successful future when the server responds with CREATED for an individual payload" in {
 
@@ -176,7 +179,9 @@ class SubmissionServiceSpec extends AnyFreeSpec with Matchers with WireMockHelpe
             emailAddress = Some("email"),
             memorableWord = Some("memorable word")
           )),
-          hasEvidence = true
+          hasEvidence = true,
+          informationSource = "source of information",
+          evidenceDetails = Some("evidence details")
         )
       )
 
@@ -235,7 +240,9 @@ class SubmissionServiceSpec extends AnyFreeSpec with Matchers with WireMockHelpe
             emailAddress = Some("email"),
             memorableWord = Some("memorable word")
           )),
-          hasEvidence = true
+          hasEvidence = false,
+          informationSource = messages("activitySourceOfInformation.reportedIndividuals"),
+          evidenceDetails = None
         )
       )
 
@@ -253,7 +260,7 @@ class SubmissionServiceSpec extends AnyFreeSpec with Matchers with WireMockHelpe
     }
 
     "must fail if the answers cannot be turned into a valid fraud report" in {
-      service.submit(UserAnswers("id")).failed.futureValue.getMessage mustEqual "Failed to create fraud report from user answers, failing pages: activityType, approximateValue, howManyPeopleKnow, nominals"
+      service.submit(UserAnswers("id")).failed.futureValue.getMessage mustEqual "Failed to create fraud report from user answers, failing pages: activityType, approximateValue, howManyPeopleKnow, nominals, activitySourceOfInformation"
     }
 
     "must fail if the server responds with a failure" in {
