@@ -122,9 +122,7 @@ trait Formatters {
         baseFormatter
           .bind(key, data)
           .right
-          .map(_.replace(",", ""))
-          .map(_.replace("£", ""))
-          .map(_.replace(" ", ""))
+          .map(_.replaceAll("""[,£\s]""", ""))
           .right
           .flatMap {
             case s =>
