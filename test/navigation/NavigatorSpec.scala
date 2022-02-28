@@ -980,7 +980,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
     "must go from approximate total value page" - {
 
       "to the What is the duration of the reported activity page for the next selection" in {
-        val answers = UserAnswers("id").set(ApproximateValuePage, 45.toFloat).success.value
+        val answers = UserAnswers("id").set(ApproximateValuePage, BigDecimal(45.99)).success.value
         navigator.nextPage(
           ApproximateValuePage,
           NormalMode,

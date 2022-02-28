@@ -31,7 +31,7 @@ object ApproximateValueSummary {
       answer =>
         SummaryListRowViewModel(
           key = "approximateValue.checkYourAnswersLabel",
-          value = ValueViewModel(answer.toString.replaceFirst("\\.0+$", "")),
+          value = ValueViewModel(answer.toString),
           actions = Seq(
             ActionItemViewModel("site.change", routes.ApproximateValueController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText(messages("approximateValue.change.hidden"))

@@ -20,7 +20,7 @@ import base.SpecBase
 import forms.ApproximateValueFormProvider
 import models.{NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
-import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentMatchers.{any, anyDouble}
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.ApproximateValuePage
@@ -32,17 +32,18 @@ import repositories.SessionRepository
 import views.html.ApproximateValueView
 
 import scala.concurrent.Future
+import scala.math.Ordering.BigDecimal
 
 class ApproximateValueControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new ApproximateValueFormProvider()
-  val form         = formProvider()
+  private val formProvider = new ApproximateValueFormProvider()
+  private val form         = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = 5.78
+  val validAnswer: BigDecimal = 100.99
 
-  lazy val approximateValueRoute = routes.ApproximateValueController.onPageLoad(NormalMode).url
+  private lazy val approximateValueRoute = routes.ApproximateValueController.onPageLoad(NormalMode).url
 
   "ApproximateValue Controller" - {
 
@@ -64,7 +65,7 @@ class ApproximateValueControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ApproximateValuePage, validAnswer.floatValue).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(ApproximateValuePage, validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -76,7 +77,7 @@ class ApproximateValueControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer.floatValue), NormalMode)(
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(
           request,
           messages(application)
         ).toString
@@ -100,7 +101,7 @@ class ApproximateValueControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, approximateValueRoute)
-            .withFormUrlEncodedBody(("value", validAnswer.toString))
+            .withFormUrlEncodedBody(("value", "100.99"))
 
         val result = route(application, request).value
 
@@ -210,7 +211,7 @@ class ApproximateValueControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, approximateValueRoute)
-            .withFormUrlEncodedBody(("value", validAnswer.toString))
+            .withFormUrlEncodedBody(("value", "100.99"))
 
         val result = route(application, request).value
 
