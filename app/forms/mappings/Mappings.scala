@@ -58,4 +58,11 @@ trait Mappings extends Formatters with Constraints {
   ): FieldMapping[LocalDate] =
     of(new LocalDateFormatter(invalidKey, allRequiredKey, twoRequiredKey, requiredKey, args))
 
+  protected def currency(
+    requiredKey: String = "error.required",
+    nonNumericKey: String = "error.nonNumeric",
+    args: Seq[String] = Seq.empty
+  ): FieldMapping[BigDecimal] =
+    of(currencyFormatter(requiredKey, nonNumericKey, args))
+
 }

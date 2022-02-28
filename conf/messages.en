@@ -332,6 +332,7 @@ approximateValue.details.p = HMRC does not require an exact figure, an estimatio
 approximateValue.error.nonNumeric = Enter the approximate value as a numerical value
 approximateValue.error.required = Enter the approximate value as a numerical value
 approximateValue.error.length = Approximate value must be 12 characters or fewer
+approximateValue.error.maxTwoDecimals = Approximate value allow maximun two decimals
 approximateValue.error.wholeNumber = Enter your approximate using whole numbers
 approximateValue.change.hidden = Activity value
 

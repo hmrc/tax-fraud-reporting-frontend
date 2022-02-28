@@ -16,9 +16,9 @@
 
 package forms.mappings
 
+import models.Enumerable
 import play.api.data.FormError
 import play.api.data.format.Formatter
-import models.Enumerable
 
 import scala.util.control.Exception.nonFatalCatch
 
@@ -106,6 +106,33 @@ trait Formatters {
         }
 
       override def unbind(key: String, value: A): Map[String, String] =
+        baseFormatter.unbind(key, value.toString)
+
+    }
+
+  private[mappings] def currencyFormatter(
+    requiredKey: String,
+    nonNumericKey: String,
+    args: Seq[String] = Seq.empty
+  ): Formatter[BigDecimal] =
+    new Formatter[BigDecimal] {
+      private val baseFormatter = stringFormatter(requiredKey)
+
+      override def bind(key: String, data: Map[String, String]) =
+        baseFormatter
+          .bind(key, data)
+          .right
+          .map(_.replaceAll("""[,£\s]""", ""))
+          .right
+          .flatMap {
+            case s =>
+              nonFatalCatch
+                .either(BigDecimal(s))
+                .left
+                .map(_ => Seq(FormError(key, nonNumericKey, args)))
+          }
+
+      override def unbind(key: String, value: BigDecimal) =
         baseFormatter.unbind(key, value.toString)
 
     }

@@ -37,6 +37,7 @@ class SubmissionServiceSpec extends AnyFreeSpec with Matchers with WireMockHelpe
   lazy val service: SubmissionService = application.injector.instanceOf[SubmissionService]
 
   "submit" - {
+    val validAnswer: BigDecimal = 100.99
 
     lazy val individualAnswers: UserAnswers = UserAnswers("id")
       .set(ActivityTypePage, ActivityType.list.head).success.value
@@ -71,7 +72,7 @@ class SubmissionServiceSpec extends AnyFreeSpec with Matchers with WireMockHelpe
         vatRegistration = Some("vat number"), employeeRefNo = Some("employee ref no"), corporationTax = Some("ct utr")
       )).success.value
       .set(SelectConnectionBusinessPage(Index(0)), SelectConnectionBusiness.Other("business connection type")).success.value
-      .set(ApproximateValuePage, 1234f).success.value
+      .set(ApproximateValuePage, validAnswer).success.value
       .set(WhenActivityHappenPage, WhenActivityHappen.NotHappen).success.value
       .set(ActivityTimePeriodPage, ActivityTimePeriod.Later).success.value
       .set(HowManyPeopleKnowPage, HowManyPeopleKnow.OneToFiveIndividuals).success.value
@@ -98,7 +99,7 @@ class SubmissionServiceSpec extends AnyFreeSpec with Matchers with WireMockHelpe
         vatRegistration = Some("vat number"), employeeRefNo = Some("employee ref no"), corporationTax = Some("ct utr")
       )).success.value
       .set(SelectConnectionBusinessPage(Index(0)), SelectConnectionBusiness.Other("business connection type")).success.value
-      .set(ApproximateValuePage, 1234f).success.value
+      .set(ApproximateValuePage, validAnswer).success.value
       .set(WhenActivityHappenPage, WhenActivityHappen.NotHappen).success.value
       .set(ActivityTimePeriodPage, ActivityTimePeriod.Later).success.value
       .set(HowManyPeopleKnowPage, HowManyPeopleKnow.OneToFiveIndividuals).success.value
@@ -164,7 +165,7 @@ class SubmissionServiceSpec extends AnyFreeSpec with Matchers with WireMockHelpe
               ))
             )
           ),
-          valueFraud = Some(1234),
+          valueFraud = Some(validAnswer),
           durationFraud = Some(messages("activityTimePeriod.later")),
           howManyKnow = Some(messages("howManyPeopleKnow.oneToFiveIndividuals")),
           additionalDetails = Some("additional details"),
@@ -223,7 +224,7 @@ class SubmissionServiceSpec extends AnyFreeSpec with Matchers with WireMockHelpe
               ))
             )
           ),
-          valueFraud = Some(1234),
+          valueFraud = Some(validAnswer),
           durationFraud = Some(messages("activityTimePeriod.later")),
           howManyKnow = Some(messages("howManyPeopleKnow.oneToFiveIndividuals")),
           additionalDetails = Some("additional details"),
