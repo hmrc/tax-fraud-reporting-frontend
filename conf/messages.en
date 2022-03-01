@@ -12,6 +12,7 @@ site.startAgain = Start again
 site.signIn = Sign in
 site.govuk = GOV.UK
 site.unknown = Unknown
+site.notRequired = Not required
 
 date.day = Day
 date.month = Month
@@ -369,7 +370,7 @@ activityTimePeriod.nextWeek = In the next week
 activityTimePeriod.threeMonths = In the next 3 months
 activityTimePeriod.later = In the next year or later
 activityTimePeriod.doNotKnow = I don''t know
-activityTimePeriod.checkYourAnswersLabel = Activity duration
+activityTimePeriod.checkYourAnswersLabel = Activity start Period
 activityTimePeriod.error.required = Select when the activity you''re reporting will likely happen
 activityTimePeriod.change.hidden = ActivityTimePeriod
 

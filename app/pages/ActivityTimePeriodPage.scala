@@ -24,4 +24,5 @@ case object ActivityTimePeriodPage extends QuestionPage[ActivityTimePeriod] {
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "activityTimePeriod"
+
 }

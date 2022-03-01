@@ -19,7 +19,7 @@ package pages
 import models.ActivitySourceOfInformation
 import pages.behaviours.PageBehaviours
 
-class ActivitySourceOfInformationSpec extends PageBehaviours {
+class ActivitySourceOfInformationPageSpec extends PageBehaviours {
 
   "ActivitySourceOfInformationPage" - {
 

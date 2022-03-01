@@ -16,14 +16,22 @@
 
 package pages
 
-import models.Index
+import models.{Index, UserAnswers}
+import play.api.libs.json.JsPath
 
 import java.time.LocalDate
-import play.api.libs.json.JsPath
+import scala.util.{Success, Try}
 
 final case class IndividualDateOfBirthPage(index: Index) extends QuestionPage[LocalDate] {
 
   override def path: JsPath = JsPath \ "nominals" \ index.position \ toString
 
   override def toString: String = "individualDateOfBirth"
+
+  override def cleanup(value: Option[LocalDate], userAnswers: UserAnswers): Try[UserAnswers] =
+    value match {
+      case Some(_) => userAnswers.remove(IndividualAgePage(index))
+      case _       => Success(userAnswers)
+    }
+
 }

@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{Index, IndividualDateFormat}
+import models.{Index, IndividualDateFormat, UserAnswers}
 import pages.behaviours.PageBehaviours
 
 class DateFormatSpec extends PageBehaviours {
@@ -29,4 +29,17 @@ class DateFormatSpec extends PageBehaviours {
 
     beRemovable[IndividualDateFormat](IndividualDateFormatPage(Index(0)))
   }
+
+  "must remove individual date Of birth page when the user selects approximate age" in {
+    val answers        = UserAnswers("id").set(IndividualDateFormatPage(Index(0)), IndividualDateFormat.Date).success.value
+    val updatedAnswers = answers.set(IndividualDateFormatPage(Index(0)), IndividualDateFormat.Age).success.value
+    updatedAnswers.get(IndividualDateOfBirthPage(Index(0))) mustNot be(defined)
+  }
+
+  "must remove individual approximate age page when the user selects date of birth" in {
+    val answers        = UserAnswers("id").set(IndividualDateFormatPage(Index(0)), IndividualDateFormat.Age).success.value
+    val updatedAnswers = answers.set(IndividualDateFormatPage(Index(0)), IndividualDateFormat.Date).success.value
+    updatedAnswers.get(IndividualAgePage(Index(0))) mustNot be(defined)
+  }
+
 }

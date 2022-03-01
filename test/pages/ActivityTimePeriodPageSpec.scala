@@ -19,7 +19,7 @@ package pages
 import models.ActivityTimePeriod
 import pages.behaviours.PageBehaviours
 
-class ActivityTimePeriodSpec extends PageBehaviours {
+class ActivityTimePeriodPageSpec extends PageBehaviours {
 
   "ActivityTimePeriodPage" - {
 

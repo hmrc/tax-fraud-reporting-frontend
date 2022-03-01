@@ -22,7 +22,7 @@
     listWithAction: HmrcListWithActions
 )
 
-@(isBusinessJourney: Boolean, activityDetails: SummaryList, yourDetails: SummaryList, supportingDocuments: SummaryList, businessDetails: SummaryList, numberOfNominals: Int, supportDoc: SummaryList)(implicit request: Request[_], messages: Messages)
+@(isBusinessJourney: Boolean, isProvideContact: Boolean, activityDetails: SummaryList, yourDetails: SummaryList, businessDetails: SummaryList, numberOfNominals: Int, provideContact: SummaryList)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("checkYourAnswers.title"))) {
 
@@ -48,10 +48,11 @@
         }
 
         <h2 class="govuk-heading-m">@messages("checkYourAnswers.yourDetails")</h2>
-        @govukSummaryList(yourDetails.withCssClass("govuk-!-margin-bottom-0"))
+        @govukSummaryList(yourDetails.withCssClass("govuk-!-margin-bottom-6"))
 
-        @govukSummaryList(supportDoc.withCssClass("govuk-!-margin-bottom-6"))
-
+        @if(!isProvideContact) {
+            @govukSummaryList(provideContact.withCssClass("govuk-!-margin-bottom-6"))
+        }
         <a id="continue-button" href="@routes.SubmitYourReportController.onPageLoad" role="button" class="govuk-button" data-module="govuk-button">
             @messages("site.continue")
         </a>

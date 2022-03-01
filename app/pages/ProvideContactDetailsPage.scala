@@ -19,7 +19,7 @@ package pages
 import models.{ProvideContactDetails, UserAnswers}
 import play.api.libs.json.JsPath
 
-import scala.util.{Success, Try}
+import scala.util.Try
 
 case object ProvideContactDetailsPage extends QuestionPage[ProvideContactDetails] {
 
@@ -30,7 +30,7 @@ case object ProvideContactDetailsPage extends QuestionPage[ProvideContactDetails
   override def cleanup(value: Option[ProvideContactDetails], userAnswers: UserAnswers): Try[UserAnswers] =
     value match {
       case Some(ProvideContactDetails.No) => userAnswers.remove(YourContactDetailsPage)
-      case _                              => Success(userAnswers)
+      case _                              => super.cleanup(value, userAnswers)
     }
 
 }

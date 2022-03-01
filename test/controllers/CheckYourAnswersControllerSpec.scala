@@ -66,8 +66,10 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(IndividualNationalInsuranceNumberPage(Index(0)), "AB123456A").success.value
         .set(IndividualConnectionPage(Index(0)), IndividualConnection.Partner).success.value
         .set(IndividualBusinessDetailsPage(Index(0)), IndividualBusinessDetails.Yes).success.value
+        .set(ProvideContactDetailsPage, ProvideContactDetails.Yes).success.value
 
       val isBusinessJourney = answers.isBusinessJourney
+      val isProvideContact  = answers.isProvideContact
 
       val application = applicationBuilder(userAnswers = Some(answers)).build()
 
@@ -82,6 +84,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           Seq(
             ActivityTypeSummary.row(answers)(messages(application)),
             ApproximateValueSummary.row(answers)(messages(application)),
+            WhenActivityHappenSummary.row(answers)(messages(application)),
             ActivityTimePeriodSummary.row(answers)(messages(application)),
             HowManyPeopleKnowSummary.row(answers)(messages(application)),
             DescriptionActivitySummary.row(answers)(messages(application)),
@@ -96,12 +99,11 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           ).flatten
         )
 
-        val supportingDocuments =
-          SummaryListViewModel(Seq(SupportingDocumentSummary.row(answers)(messages(application))).flatten)
+        val provideContact =
+          SummaryListViewModel(Seq(ProvideContactDetailsSummary.row(answers)(messages(application))).flatten)
 
         val businessDetails = SummaryListViewModel(
           Seq(
-            SelectConnectionBusinessSummary.row(answers, 0)(messages(application)),
             BusinessNameSummary.row(answers, 0)(messages(application)),
             TypeBusinessSummary.row(answers, 0)(messages(application)),
             BusinessAddressSummary.row(answers, 0)(messages(application)),
@@ -111,23 +113,15 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
           ).flatten
         )
 
-        val supportDoc =
-          SummaryListViewModel(
-            Seq(
-              SupportingDocumentSummary.row(answers)(messages(application)),
-              DocumentationDescriptionSummary.row(answers)(messages(application))
-            ).flatten
-          )
-
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
           isBusinessJourney,
+          isProvideContact,
           activityDetails,
           yourDetails,
-          supportingDocuments,
           businessDetails,
           1,
-          supportDoc
+          provideContact
         )(request, messages(application)).toString
       }
     }

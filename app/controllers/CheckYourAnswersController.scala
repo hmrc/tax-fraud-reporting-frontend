@@ -18,7 +18,8 @@ package controllers
 
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import pages.NominalsQuery
+import models.ProvideContactDetails
+import pages.{NominalsQuery, ProvideContactDetailsPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -40,28 +41,33 @@ class CheckYourAnswersController @Inject() (
     implicit request =>
       val answers           = request.userAnswers
       val isBusinessJourney = request.userAnswers.isBusinessJourney
+      val isProvideContact  = request.userAnswers.isProvideContact
 
       val activityDetails = SummaryListViewModel(
         Seq(
           ActivityTypeSummary.row(answers),
           ApproximateValueSummary.row(answers),
           WhenActivityHappenSummary.row(answers),
+          ActivityTimePeriodSummary.row(answers),
           HowManyPeopleKnowSummary.row(answers),
           DescriptionActivitySummary.row(answers),
           ActivitySourceOfInformationSummary.row(answers)
         ).flatten
       )
 
-      val yourDetails = SummaryListViewModel(
-        ProvideContactDetailsSummary.row(answers).toList ++
-          YourContactDetailsSummary.rows(answers)
-      )
+      val yourDetails = {
+        val rows =
+          if (answers.get(ProvideContactDetailsPage).contains(ProvideContactDetails.Yes))
+            ProvideContactDetailsSummary.row(answers).toList ++
+              YourContactDetailsSummary.rows(answers).toList ++
+              SupportingDocumentSummary.row(answers).toList ++
+              DocumentationDescriptionSummary.row(answers).toList
+          else
+            List.empty
+        SummaryListViewModel(rows)
+      }
 
-      val supportDoc = SummaryListViewModel(
-        Seq(SupportingDocumentSummary.row(answers), DocumentationDescriptionSummary.row(answers)).flatten
-      )
-
-      val supportingDocuments = SummaryListViewModel(Seq(SupportingDocumentSummary.row(answers)).flatten)
+      val provideContact = SummaryListViewModel(Seq(ProvideContactDetailsSummary.row(answers)).flatten)
 
       val businessDetails =
         SummaryListViewModel(
@@ -80,12 +86,12 @@ class CheckYourAnswersController @Inject() (
       Ok(
         view(
           isBusinessJourney,
+          isProvideContact,
           activityDetails,
           yourDetails,
-          supportingDocuments,
           businessDetails,
           numberOfNominals,
-          supportDoc
+          provideContact
         )
       )
   }

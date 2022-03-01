@@ -16,10 +16,10 @@
 
 package pages
 
-import models.WhenActivityHappen
+import models.{ActivityTimePeriod, UserAnswers, WhenActivityHappen}
 import pages.behaviours.PageBehaviours
 
-class WhenActivityHappenSpec extends PageBehaviours {
+class WhenActivityHappenPageSpec extends PageBehaviours {
 
   "WhenActivityHappenPage" - {
 
@@ -29,4 +29,11 @@ class WhenActivityHappenSpec extends PageBehaviours {
 
     beRemovable[WhenActivityHappen](WhenActivityHappenPage)
   }
+
+  "must remove activity likely happen when the user selects over 5years" in {
+    val answers        = UserAnswers("id").set(ActivityTimePeriodPage, ActivityTimePeriod.DoNotKnow).success.value
+    val updatedAnswers = answers.set(WhenActivityHappenPage, WhenActivityHappen.NotHappen).success.value
+    updatedAnswers.get(ActivityTimePeriodPage) mustNot be(defined)
+  }
+
 }

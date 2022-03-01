@@ -16,7 +16,7 @@
 
 package pages
 
-import models.Index
+import models.{Index, IndividualDateFormat, UserAnswers}
 import pages.behaviours.PageBehaviours
 
 class IndividualAgePageSpec extends PageBehaviours {
@@ -29,4 +29,11 @@ class IndividualAgePageSpec extends PageBehaviours {
 
     beRemovable[Int](IndividualAgePage(Index(0)))
   }
+
+  "must remove individual date Of birth page when the user selects approximate age" in {
+    val answers        = UserAnswers("id").set(IndividualDateFormatPage(Index(0)), IndividualDateFormat.Date).success.value
+    val updatedAnswers = answers.set(IndividualDateFormatPage(Index(0)), IndividualDateFormat.Age).success.value
+    updatedAnswers.get(IndividualDateOfBirthPage(Index(0))) mustNot be(defined)
+  }
+
 }
