@@ -48,8 +48,9 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
       getAnswer(answers, ActivityTypePage),
       getAnswer(answers, ApproximateValuePage),
       getAnswer(answers, HowManyPeopleKnowPage),
-      getNominals(answers).toRight(NonEmptyChain.one("nominals"))
-    ).parMapN { (activityType, valueFraud, howManyKnow, nominals) =>
+      getNominals(answers).toRight(NonEmptyChain.one("nominals")),
+      getAnswer(answers, ActivitySourceOfInformationPage)
+    ).parMapN { (activityType, valueFraud, howManyKnow, nominals, informationSource) =>
       FraudReportBody(
         activityType = activityType.activityName,
         nominals = nominals,
@@ -58,7 +59,9 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
         howManyKnow = Some(messages(s"howManyPeopleKnow.$howManyKnow")),
         additionalDetails = answers.get(DescriptionActivityPage),
         reporter = getReporter(answers),
-        hasEvidence = answers.get(SupportingDocumentPage).contains(SupportingDocument.Yes)
+        hasEvidence = answers.get(SupportingDocumentPage).contains(SupportingDocument.Yes),
+        informationSource = getInformationSource(informationSource),
+        evidenceDetails = answers.get(DocumentationDescriptionPage)
       )
     }
 
@@ -169,6 +172,12 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
       case WhenActivityHappen.NotHappen =>
         answers.get(ActivityTimePeriodPage).map(period => messages(s"activityTimePeriod.$period"))
       case whenActivityHappen => Some(messages(s"whenActivityHappen.$whenActivityHappen"))
+    }
+
+  private def getInformationSource(answer: ActivitySourceOfInformation): String =
+    answer match {
+      case ActivitySourceOfInformation.Other(value) => value
+      case _                                        => messages(s"activitySourceOfInformation.$answer")
     }
 
 }
