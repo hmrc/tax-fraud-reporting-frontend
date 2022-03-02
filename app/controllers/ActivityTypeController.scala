@@ -18,8 +18,6 @@ package controllers
 
 import controllers.actions._
 import forms.ActivityTypeFormProvider
-
-import javax.inject.Inject
 import models.{Mode, UserAnswers}
 import navigation.Navigator
 import pages.ActivityTypePage
@@ -29,6 +27,7 @@ import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ActivityTypeView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class ActivityTypeController @Inject() (
@@ -43,11 +42,13 @@ class ActivityTypeController @Inject() (
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
-  val form = formProvider()
+  private val form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData) {
     implicit request =>
-      val preparedForm = request.userAnswers.getOrElse(UserAnswers(request.userId)).get(ActivityTypePage) match {
+      val userAnswers = request.userAnswers getOrElse UserAnswers(request.userId)
+
+      val preparedForm = userAnswers get ActivityTypePage match {
         case None        => form
         case Some(value) => form.fill(value)
       }
@@ -60,7 +61,7 @@ class ActivityTypeController @Inject() (
       form.bindFromRequest().fold(
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
         value => {
-          val userAnswers = request.userAnswers.getOrElse(UserAnswers(request.userId))
+          val userAnswers = request.userAnswers getOrElse UserAnswers(request.userId)
           for {
             updatedAnswers <- Future.fromTry(userAnswers.set(ActivityTypePage, value))
             _              <- sessionRepository.set(updatedAnswers)

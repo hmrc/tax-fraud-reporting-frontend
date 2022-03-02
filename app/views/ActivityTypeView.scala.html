@@ -16,41 +16,41 @@
 
 @import play.api.libs.json.Json
 @import views.html.components.Autocomplete
+@import services.ActivityTypeService
 
 @this(
-    layout: templates.Layout,
-    formHelper: FormWithCSRF,
-    govukErrorSummary: GovukErrorSummary,
-    govukInput: GovukInput,
-    govukButton: GovukButton,
-    autocomplete: Autocomplete
+	layout: templates.Layout,
+	formHelper: FormWithCSRF,
+	govukErrorSummary: GovukErrorSummary,
+	govukInput: GovukInput,
+	govukButton: GovukButton,
+	autocomplete: Autocomplete,
+	activityTypeService: ActivityTypeService
 )
 
 @(form: Form[ActivityType], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("activityType.title"))) {
 
-    @formHelper(action = routes.ActivityTypeController.onSubmit(mode)) {
+	@formHelper(action = routes.ActivityTypeController.onSubmit(mode)) {
 
-        @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
-        }
+		@if(form.errors.nonEmpty) {
+			@govukErrorSummary(ErrorSummaryViewModel(form))
+		}
 
-        @autocomplete(
-            form = form,
-            id = "value",
-            name = "value",
-            isPageHint = false,
-            hint = Some("activityType.hint"),
-            isPageHeading = true,
-            label = "activityType.heading",
-            list = ActivityType.list.map(c => (c.code, messages(c.activityName))),
-            jsonData = Json.toJson(ActivityType.list.map(_.toAutoCompleteJson))
-        )
+		@autocomplete(
+			form = form,
+			id = "value",
+			name = "value",
+			isPageHint = false,
+			hint = Some("activityType.hint"),
+			isPageHeading = true,
+			label = "activityType.heading",
+			activityTypes = activityTypeService.allActivities map (_.translated) toSeq
+		)
 
-        @govukButton(
-            ButtonViewModel(messages("site.continue"))
-                .withAttribute("id" -> "continue-button")
-        )
-    }
+		@govukButton(
+			ButtonViewModel(messages("site.continue")).withAttribute("id" -> "continue-button")
+		)
+	}
 }

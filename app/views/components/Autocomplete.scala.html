@@ -16,7 +16,7 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.{components => hmrcComponent}
 @import viewmodels.LabelSize
-@import play.api.libs.json.JsValue
+@import play.api.libs.json.Json
 
 @this(select: GovukSelect)
 
@@ -29,8 +29,7 @@
         isPageHeading: Boolean = true,
         headingMessageArgs: Seq[String] = Seq(),
         hint: Option[String],
-        list: Seq[(String, String)],
-        jsonData: JsValue,
+        activityTypes: Seq[ActivityTypeTranslated],
         labelClass: Boolean = false
 )(implicit messages: Messages)
 
@@ -47,14 +46,13 @@
     describedBy = hint.map(_ => s"$id-hint"),
     errorMessage = form(id).error.map(fe ⇒ ErrorMessage(content = messages(fe.message))),
     hint = hint.map(c => Hint(content = messages(c))),
-    items = Seq(SelectItem(attributes= Map("label" -> " "))) ++ list.map {
-        case (k, v) ⇒ SelectItem(
-            value = Some(k),
-            text = v,
-            selected = k == (form.value map {
-                _.code
-            } getOrElse ""),
-            attributes = Map("id" → (id + s"-$k"))
+    items = Seq(SelectItem(attributes= Map("label" -> " "))) ++ activityTypes.map {
+      case ActivityTypeTranslated(key, name, _) =>
+        SelectItem(
+          value = Some(key),
+          text = name,
+          selected = key == (form.value map (_.nameKey) getOrElse ""),
+          attributes = Map("id" -> s"$id-$key")
         )
     },
     formGroupClasses = "form-field-group"
@@ -80,7 +78,7 @@
             let element = !!confirmed ? confirmed : foundInData
 
             if(!!element) {
-                document.querySelector('select[name="@id"]').value = element.code || element.value;
+                document.querySelector('select[name="@id"]').value = element.key || element.value;
 
             }
             else {
@@ -90,20 +88,22 @@
         },
         templates: {
             inputValue: function (result) {
-                return (!!result && result.activityName ? result.activityName : '');
+                return (!!result && result.name ? result.name : '');
             },
             suggestion: function (result) {
-                return !!result.activityName ? result.activityName : result;
+                return !!result.name ? result.name : result;
             }
         }
     })
 
+    const results = @Html(Json toJson activityTypes toString)
+    console.log(results);
+
     function customSuggest(query, syncResults) {
-        var results = @Html(jsonData.toString)
-        syncResults(query ? results.filter(function (result) {
-            return (result.synonyms.findIndex(function (s) {
-                return s.toLowerCase().indexOf(query.toLowerCase()) !== -1
-            }) !== -1) || (result.activityName.toLowerCase().indexOf(query.toLowerCase()) !== -1)
-        }) : results)
+      syncResults(query ? results.filter(result => {
+        return (result.synonyms.findIndex(s => {
+          return s.toLowerCase().indexOf(query.toLowerCase()) !== -1
+        }) !== -1) || (result.key.toLowerCase().indexOf(query.toLowerCase()) !== -1)
+      }) : results)
     }
 </script>

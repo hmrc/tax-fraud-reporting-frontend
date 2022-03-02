@@ -20,11 +20,12 @@ import controllers.routes
 import models.{WhenActivityHappen, _}
 import pages._
 import play.api.mvc.Call
+import services.ActivityTypeService
 
 import javax.inject.{Inject, Singleton}
 
 @Singleton
-class Navigator @Inject() () {
+class Navigator @Inject() (activityTypeService: ActivityTypeService) {
 
   private val normalRoutes: Page => UserAnswers => Call = {
     case ActivityTypePage                => activityPageRoutes
@@ -94,7 +95,7 @@ class Navigator @Inject() () {
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def individualInformationRoutes(answers: UserAnswers, index: Index, answer: IndividualInformation): Call =
-    answers.get(IndividualInformationPage(index)).flatMap { individualInformation =>
+    answers get IndividualInformationPage(index) flatMap { individualInformation =>
       val remainingSections = individualInformation & IndividualInformation.values.dropWhile(_ != answer).drop(1).toSet
       if (remainingSections.isEmpty)
         Some(routes.IndividualConnectionController.onPageLoad(index, NormalMode))
@@ -102,21 +103,23 @@ class Navigator @Inject() () {
         IndividualInformation.values.find(remainingSections.contains).map(
           individualInformationRoute(_, index, NormalMode)
         )
-    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+    } getOrElse routes.JourneyRecoveryController.onPageLoad()
 
   private def ageFormatPageRoutes(answers: UserAnswers, index: Index): Call =
-    answers.get(IndividualDateFormatPage(index)).map {
+    answers.get(IndividualDateFormatPage(index)) map {
       case IndividualDateFormat.Date => routes.IndividualDateOfBirthController.onPageLoad(index, NormalMode)
       case IndividualDateFormat.Age  => routes.IndividualAgeController.onPageLoad(index, NormalMode)
-    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+    } getOrElse routes.JourneyRecoveryController.onPageLoad()
 
   private def activityPageRoutes(answers: UserAnswers): Call =
-    answers.get(ActivityTypePage).map { activity =>
-      if (ActivityType.otherDepartments.isDefinedAt(activity.activityName))
-        routes.DoNotUseThisServiceController.onPageLoad()
-      else
-        routes.IndividualOrBusinessController.onPageLoad(NormalMode)
-    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+    answers get ActivityTypePage match {
+      case Some(activity) =>
+        activityTypeService getDepartmentFor activity match {
+          case Some(_) => routes.DoNotUseThisServiceController.onPageLoad()
+          case None    => routes.IndividualOrBusinessController.onPageLoad(NormalMode)
+        }
+      case None => routes.JourneyRecoveryController.onPageLoad()
+    }
 
   private def individualOrBusinessRoutes(answers: UserAnswers): Call =
     answers.get(IndividualOrBusinessPage).map {

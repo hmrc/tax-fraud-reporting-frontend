@@ -18,17 +18,27 @@ package forms
 
 import forms.mappings.Mappings
 import models.ActivityType
-import play.api.data.Form
+import play.api.data.format.Formatter
+import play.api.data.{Form, FormError, Forms}
+import services.ActivityTypeService
 
 import javax.inject.Inject
 
-class ActivityTypeFormProvider @Inject() extends Mappings {
+class ActivityTypeFormProvider @Inject() (activityTypeService: ActivityTypeService) extends Mappings {
 
-  def apply(): Form[ActivityType] =
-    Form(
-      "value" -> text("activityType.error.required")
-        .verifying("activityType.error.invalid", code => ActivityType.isValidActivityTypeCode(code))
-        .transform(ActivityType.getActivityTypeByCode(_).get, (_: ActivityType).code)
-    )
+  private val formatter = new Formatter[ActivityType] {
+
+    def bind(key: String, data: Map[String, String]): Either[Seq[FormError], ActivityType] =
+      data get key flatMap { activityStr =>
+        activityTypeService.allActivities find (_.nameKey == activityStr)
+      } toRight
+        Seq(FormError(key, "activityType.error.invalid"))
+
+    def unbind(key: String, value: ActivityType): Map[String, String] =
+      Map(key -> value.nameKey)
+
+  }
+
+  def apply(): Form[ActivityType] = Form("value" -> Forms.of(formatter))
 
 }

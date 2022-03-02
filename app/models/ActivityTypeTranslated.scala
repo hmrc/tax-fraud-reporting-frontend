@@ -16,27 +16,10 @@
 
 package models
 
-import play.api.i18n.Messages
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{Json, Writes}
 
-import scala.language.postfixOps
+final case class ActivityTypeTranslated(key: String, name: String, synonyms: Seq[String])
 
-// TODO tests
-
-final case class ActivityType(nameKey: String, synonymKeys: Array[String]) {
-
-  def translated(implicit messages: Messages): ActivityTypeTranslated = {
-    def msg(key: String) = messages("activity." + key)
-
-    ActivityTypeTranslated(
-      nameKey,
-      msg("name." + nameKey),
-      synonymKeys map { synonymKey => msg("synonym." + synonymKey) }
-    )
-  }
-
-}
-
-object ActivityType {
-  implicit val format: OFormat[ActivityType] = Json.format
+object ActivityTypeTranslated {
+  implicit val writes: Writes[ActivityTypeTranslated] = Json.writes
 }
