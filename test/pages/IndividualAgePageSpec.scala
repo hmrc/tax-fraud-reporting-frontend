@@ -29,4 +29,5 @@ class IndividualAgePageSpec extends PageBehaviours {
 
     beRemovable[Int](IndividualAgePage(Index(0)))
   }
+
 }

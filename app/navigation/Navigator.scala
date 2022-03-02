@@ -64,13 +64,16 @@ class Navigator @Inject() () {
     case YourContactDetailsPage          => _ => routes.SupportingDocumentController.onPageLoad(NormalMode)
     case ActivitySourceOfInformationPage => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
     case DocumentationDescriptionPage    => _ => routes.CheckYourAnswersController.onPageLoad
+    case IndividualDateFormatPage(index) => individualDateFormatPageCheckRoutes(_, index)
     case _                               => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
-    case SupportingDocumentPage    => supportingDocumentCheckRoutes
-    case ProvideContactDetailsPage => provideContactDetailsCheckRoutes
-    case _                         => _ => routes.CheckYourAnswersController.onPageLoad
+    case SupportingDocumentPage          => supportingDocumentCheckRoutes
+    case ProvideContactDetailsPage       => provideContactDetailsRoutes
+    case WhenActivityHappenPage          => whenActivityHappenRoutes
+    case IndividualDateFormatPage(index) => individualDateFormatPageCheckRoutes(_, index)
+    case _                               => _ => routes.CheckYourAnswersController.onPageLoad
   }
 
   private def individualInformationRoute(answer: IndividualInformation, index: Index, mode: Mode): Call =
@@ -190,16 +193,6 @@ class Navigator @Inject() () {
         routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def provideContactDetailsCheckRoutes(answers: UserAnswers): Call =
-    answers.get(ProvideContactDetailsPage).map {
-      case ProvideContactDetails.Yes =>
-        if (answers.get(YourContactDetailsPage).isDefined)
-          routes.CheckYourAnswersController.onPageLoad
-        else
-          routes.YourContactDetailsController.onPageLoad(CheckMode)
-      case ProvideContactDetails.No => routes.CheckYourAnswersController.onPageLoad
-    }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
-
   private def provideContactDetailsRoutes(answers: UserAnswers): Call =
     answers.get(ProvideContactDetailsPage).map {
       case ProvideContactDetails.Yes =>
@@ -223,6 +216,20 @@ class Navigator @Inject() () {
       routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
     else
       routes.AddAnotherPersonController.onPageLoad(NormalMode)
+
+  private def individualDateFormatPageCheckRoutes(answers: UserAnswers, index: Index): Call =
+    answers.get(IndividualDateFormatPage(index)).map {
+      case IndividualDateFormat.Date =>
+        if (answers.get(IndividualDateOfBirthPage(index)).isDefined)
+          routes.CheckYourAnswersController.onPageLoad
+        else
+          routes.IndividualDateOfBirthController.onPageLoad(index, CheckMode)
+      case IndividualDateFormat.Age =>
+        if (answers.get(IndividualAgePage(index)).isDefined)
+          routes.CheckYourAnswersController.onPageLoad
+        else
+          routes.IndividualAgeController.onPageLoad(index, CheckMode)
+    }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
     case NormalMode =>

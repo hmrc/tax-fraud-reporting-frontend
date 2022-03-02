@@ -24,4 +24,5 @@ final case class IndividualAgePage(index: Index) extends QuestionPage[Int] {
   override def path: JsPath = JsPath \ "nominals" \ index.position \ toString
 
   override def toString: String = "individualAge"
+
 }

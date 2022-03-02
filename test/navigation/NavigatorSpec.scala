@@ -1190,10 +1190,10 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         "to the your details page when the user selects yes and there is no answer for the your details" in {
           val answers = emptyUserAnswers.set(ProvideContactDetailsPage, ProvideContactDetails.Yes).success.value
           navigator.nextPage(
-            ProvideContactDetailsPage,
+            YourContactDetailsPage,
             CheckMode,
             answers
-          ) mustBe routes.YourContactDetailsController.onPageLoad(CheckMode)
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
         }
 
         "to the check your answers page when the user selects yes and there is an answer for the your details" in {
@@ -1204,7 +1204,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               YourContactDetails("firstname", "lastname", "tel", Some("email"), "test")
             ).success.value
           navigator.nextPage(
-            ProvideContactDetailsPage,
+            YourContactDetailsPage,
             CheckMode,
             answers
           ) mustBe routes.CheckYourAnswersController.onPageLoad
@@ -1222,12 +1222,73 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
         "to the check your answers page when there is no user selection" in {
           navigator.nextPage(
-            ProvideContactDetailsPage,
+            YourContactDetailsPage,
             CheckMode,
             emptyUserAnswers
           ) mustBe routes.CheckYourAnswersController.onPageLoad
         }
       }
+
+      "must go from when activity start page" - {
+
+        "to the description of activity page for the first selection" in {
+          val answers = emptyUserAnswers.set(WhenActivityHappenPage, WhenActivityHappen.OverFiveYears).success.value
+          navigator.nextPage(
+            HowManyPeopleKnowPage,
+            CheckMode,
+            answers
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the When will the activity likely happen page for the it's going to happen in the future selection" in {
+          val answers = emptyUserAnswers.set(WhenActivityHappenPage, WhenActivityHappen.NotHappen).success.value
+          navigator.nextPage(
+            ActivityTimePeriodPage,
+            CheckMode,
+            answers
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the check your answers page when there is if there is no period time set" in {
+          navigator.nextPage(
+            ActivityTimePeriodPage,
+            CheckMode,
+            emptyUserAnswers
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+      }
+
+      "must go from the individual age format page" - {
+
+        "to the date of birth page when the user selects Date of Birth and there is no answer for the approximate age" in {
+          val answers =
+            emptyUserAnswers.set(IndividualDateFormatPage(Index(0)), IndividualDateFormat.Date).success.value
+          navigator.nextPage(
+            IndividualDateFormatPage(Index(0)),
+            CheckMode,
+            answers
+          ) mustBe routes.IndividualDateOfBirthController.onPageLoad(Index(0), CheckMode)
+        }
+
+        "to the check your answers page when the user selects age" in {
+          val answers = emptyUserAnswers
+            .set(IndividualDateFormatPage(Index(0)), IndividualDateFormat.Age).success.value
+          navigator.nextPage(
+            IndividualDateFormatPage(Index(0)),
+            CheckMode,
+            answers
+          ) mustBe routes.IndividualAgeController.onPageLoad(Index(0), CheckMode)
+        }
+
+        "to the check your answers page when there is no user selection" in {
+          navigator.nextPage(
+            IndividualDateFormatPage(Index(0)),
+            CheckMode,
+            emptyUserAnswers
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+      }
+
     }
   }
 }

@@ -16,12 +16,22 @@
 
 package pages
 
-import models.{Index, IndividualDateFormat}
+import models.{Index, IndividualDateFormat, UserAnswers}
 import play.api.libs.json.JsPath
+
+import scala.util.{Success, Try}
 
 final case class IndividualDateFormatPage(index: Index) extends QuestionPage[IndividualDateFormat] {
 
   override def path: JsPath = JsPath \ "nominals" \ index.position \ toString
 
   override def toString: String = "dateFormat"
+
+  override def cleanup(value: Option[IndividualDateFormat], userAnswers: UserAnswers): Try[UserAnswers] =
+    value match {
+      case Some(IndividualDateFormat.Date) => userAnswers.remove(IndividualAgePage(index))
+      case Some(IndividualDateFormat.Age)  => userAnswers.remove(IndividualDateOfBirthPage(index))
+      case _                               => Success(userAnswers)
+    }
+
 }

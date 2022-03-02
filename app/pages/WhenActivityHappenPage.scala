@@ -16,12 +16,20 @@
 
 package pages
 
-import models.WhenActivityHappen
+import models.WhenActivityHappen.NotHappen
+import models.{UserAnswers, WhenActivityHappen}
 import play.api.libs.json.JsPath
+
+import scala.util.Try
 
 case object WhenActivityHappenPage extends QuestionPage[WhenActivityHappen] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "whenActivityHappen"
+
+  override def cleanup(value: Option[WhenActivityHappen], userAnswers: UserAnswers): Try[UserAnswers] =
+    if (value exists { _ != NotHappen }) userAnswers.remove(ActivityTimePeriodPage)
+    else super.cleanup(value, userAnswers)
+
 }

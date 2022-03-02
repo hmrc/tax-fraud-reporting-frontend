@@ -17,10 +17,10 @@
 package pages
 
 import models.Index
-
-import java.time.LocalDate
 import org.scalacheck.Arbitrary
 import pages.behaviours.PageBehaviours
+
+import java.time.LocalDate
 
 class IndividualDateOfBirthPageSpec extends PageBehaviours {
 
@@ -36,4 +36,5 @@ class IndividualDateOfBirthPageSpec extends PageBehaviours {
 
     beRemovable[LocalDate](IndividualDateOfBirthPage(Index(0)))
   }
+
 }

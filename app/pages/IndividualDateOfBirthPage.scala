@@ -17,13 +17,14 @@
 package pages
 
 import models.Index
+import play.api.libs.json.JsPath
 
 import java.time.LocalDate
-import play.api.libs.json.JsPath
 
 final case class IndividualDateOfBirthPage(index: Index) extends QuestionPage[LocalDate] {
 
   override def path: JsPath = JsPath \ "nominals" \ index.position \ toString
 
   override def toString: String = "individualDateOfBirth"
+
 }

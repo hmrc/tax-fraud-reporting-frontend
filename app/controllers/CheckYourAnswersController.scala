@@ -46,22 +46,22 @@ class CheckYourAnswersController @Inject() (
           ActivityTypeSummary.row(answers),
           ApproximateValueSummary.row(answers),
           WhenActivityHappenSummary.row(answers),
+          ActivityTimePeriodSummary.row(answers),
           HowManyPeopleKnowSummary.row(answers),
           DescriptionActivitySummary.row(answers),
           ActivitySourceOfInformationSummary.row(answers)
         ).flatten
       )
 
-      val yourDetails = SummaryListViewModel(
-        ProvideContactDetailsSummary.row(answers).toList ++
-          YourContactDetailsSummary.rows(answers)
-      )
+      val yourDetails = {
+        val rows =
+          YourContactDetailsSummary.rows(answers).toList ++
+            SupportingDocumentSummary.row(answers).toList ++
+            DocumentationDescriptionSummary.row(answers).toList
+        SummaryListViewModel(rows)
+      }
 
-      val supportDoc = SummaryListViewModel(
-        Seq(SupportingDocumentSummary.row(answers), DocumentationDescriptionSummary.row(answers)).flatten
-      )
-
-      val supportingDocuments = SummaryListViewModel(Seq(SupportingDocumentSummary.row(answers)).flatten)
+      val provideContact = SummaryListViewModel(Seq(ProvideContactDetailsSummary.row(answers)).flatten)
 
       val businessDetails =
         SummaryListViewModel(
@@ -77,17 +77,7 @@ class CheckYourAnswersController @Inject() (
 
       val numberOfNominals = answers.get(NominalsQuery).getOrElse(List.empty).length
 
-      Ok(
-        view(
-          isBusinessJourney,
-          activityDetails,
-          yourDetails,
-          supportingDocuments,
-          businessDetails,
-          numberOfNominals,
-          supportDoc
-        )
-      )
+      Ok(view(isBusinessJourney, activityDetails, yourDetails, businessDetails, numberOfNominals, provideContact))
   }
 
 }
