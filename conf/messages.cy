@@ -508,3 +508,10 @@ activitySourceOfInformation.error.required = (W) Enter how you know the informat
 activitySourceOfInformation.error.otherValue.required = (W) Select or enter how you know the information. (W)
 activitySourceOfInformation.error.otherValue.maxLength = (W) How you know the information must be 100 characters or fewer. (W)
 activitySourceOfInformation.change.hidden = (W) ActivitySourceOfInformation (W)
+
+technicalProblems.title = (W) Get help with technical problems (W)
+technicalProblems.heading = (W) Get help with technical problems (W)
+technicalProblems.uk.phone = (W) Telephone in UK: 0800 788 887 (W)
+technicalProblems.outside.phone = (W) Telephone outside UK:+44 (0)203 080 0871 (W)
+technicalProblems.weekdays.time = (W) Monday to Friday: 9am to 5pm (W)
+technicalProblems.weekend = (W) Closed weekends and bank holidays (W)
