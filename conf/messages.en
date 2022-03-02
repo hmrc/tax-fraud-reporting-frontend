@@ -521,3 +521,12 @@ individualConfirmRemove.title = Are you sure you want to remove this individual?
 individualConfirmRemove.heading = Are you sure you want to remove {0}?
 individualConfirmRemove.error.required = Select yes if you need to remove the individual.
 addAnotherPerson.reached.maximum = You cannot add another individual as you have entered a maximum of 5.
+
+technicalProblems.title = Get help with technical problems
+technicalProblems.heading = Get help with technical problems
+technicalProblems.uk.phone = Telephone in UK: 0800 788 887
+technicalProblems.outside.phone = Telephone outside UK:+44 (0)203 080 0871
+technicalProblems.weekdays.time = Monday to Friday: 9am to 5pm
+technicalProblems.weekend = Closed weekends and bank holidays
+technicalProblems.link.text = Is this page not working properly? (opens in new tab)
+
