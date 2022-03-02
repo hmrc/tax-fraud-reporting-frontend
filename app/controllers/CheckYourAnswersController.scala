@@ -41,7 +41,6 @@ class CheckYourAnswersController @Inject() (
     implicit request =>
       val answers           = request.userAnswers
       val isBusinessJourney = request.userAnswers.isBusinessJourney
-      val isProvideContact  = request.userAnswers.isProvideContact
 
       val activityDetails = SummaryListViewModel(
         Seq(
@@ -58,8 +57,7 @@ class CheckYourAnswersController @Inject() (
       val yourDetails = {
         val rows =
           if (answers.get(ProvideContactDetailsPage).contains(ProvideContactDetails.Yes))
-            ProvideContactDetailsSummary.row(answers).toList ++
-              YourContactDetailsSummary.rows(answers).toList ++
+            YourContactDetailsSummary.rows(answers).toList ++
               SupportingDocumentSummary.row(answers).toList ++
               DocumentationDescriptionSummary.row(answers).toList
           else
@@ -83,17 +81,7 @@ class CheckYourAnswersController @Inject() (
 
       val numberOfNominals = answers.get(NominalsQuery).getOrElse(List.empty).length
 
-      Ok(
-        view(
-          isBusinessJourney,
-          isProvideContact,
-          activityDetails,
-          yourDetails,
-          businessDetails,
-          numberOfNominals,
-          provideContact
-        )
-      )
+      Ok(view(isBusinessJourney, activityDetails, yourDetails, businessDetails, numberOfNominals, provideContact))
   }
 
 }

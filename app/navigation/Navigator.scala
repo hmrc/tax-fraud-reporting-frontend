@@ -193,16 +193,6 @@ class Navigator @Inject() () {
         routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def provideContactDetailsCheckRoutes(answers: UserAnswers): Call =
-    answers.get(ProvideContactDetailsPage).map {
-      case ProvideContactDetails.Yes =>
-        if (answers.get(YourContactDetailsPage).isDefined)
-          routes.CheckYourAnswersController.onPageLoad
-        else
-          routes.YourContactDetailsController.onPageLoad(CheckMode)
-      case ProvideContactDetails.No => routes.CheckYourAnswersController.onPageLoad
-    }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
-
   private def provideContactDetailsRoutes(answers: UserAnswers): Call =
     answers.get(ProvideContactDetailsPage).map {
       case ProvideContactDetails.Yes =>

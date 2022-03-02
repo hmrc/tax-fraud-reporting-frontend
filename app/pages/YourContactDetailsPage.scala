@@ -16,10 +16,8 @@
 
 package pages
 
-import models.{UserAnswers, YourContactDetails}
+import models.YourContactDetails
 import play.api.libs.json.JsPath
-
-import scala.util.Try
 
 case object YourContactDetailsPage extends QuestionPage[YourContactDetails] {
 
@@ -27,10 +25,10 @@ case object YourContactDetailsPage extends QuestionPage[YourContactDetails] {
 
   override def toString: String = "yourContactDetails"
 
-  override def cleanup(value: Option[YourContactDetails], userAnswers: UserAnswers): Try[UserAnswers] =
+  /*override def cleanup(value: Option[YourContactDetails], userAnswers: UserAnswers): Try[UserAnswers] =
     value match {
       case Some(_) => userAnswers.remove(SupportingDocumentPage).flatMap(_.remove(DocumentationDescriptionPage))
       case _       => super.cleanup(value, userAnswers)
-    }
+    }*/
 
 }

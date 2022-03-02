@@ -16,11 +16,11 @@
 
 package pages
 
-import models.{Index, IndividualDateFormat, UserAnswers}
-
-import java.time.LocalDate
+import models.Index
 import org.scalacheck.Arbitrary
 import pages.behaviours.PageBehaviours
+
+import java.time.LocalDate
 
 class IndividualDateOfBirthPageSpec extends PageBehaviours {
 
@@ -35,12 +35,6 @@ class IndividualDateOfBirthPageSpec extends PageBehaviours {
     beSettable[LocalDate](IndividualDateOfBirthPage(Index(0)))
 
     beRemovable[LocalDate](IndividualDateOfBirthPage(Index(0)))
-  }
-
-  "must remove individual approximate age page when the user selects date of birth" in {
-    val answers        = UserAnswers("id").set(IndividualDateFormatPage(Index(0)), IndividualDateFormat.Age).success.value
-    val updatedAnswers = answers.set(IndividualDateFormatPage(Index(0)), IndividualDateFormat.Date).success.value
-    updatedAnswers.get(IndividualAgePage(Index(0))) mustNot be(defined)
   }
 
 }

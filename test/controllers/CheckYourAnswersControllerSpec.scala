@@ -69,7 +69,6 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(ProvideContactDetailsPage, ProvideContactDetails.Yes).success.value
 
       val isBusinessJourney = answers.isBusinessJourney
-      val isProvideContact  = answers.isProvideContact
 
       val application = applicationBuilder(userAnswers = Some(answers)).build()
 
@@ -94,8 +93,9 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
         val yourDetails = SummaryListViewModel(
           Seq(
-            ProvideContactDetailsSummary.row(answers)(messages(application)).toList ++
-              YourContactDetailsSummary.rows(answers)(messages(application))
+            YourContactDetailsSummary.rows(answers)(messages(application)).toList ++
+              SupportingDocumentSummary.row(answers)(messages(application)).toList ++
+              DocumentationDescriptionSummary.row(answers)(messages(application))
           ).flatten
         )
 
@@ -116,7 +116,6 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(
           isBusinessJourney,
-          isProvideContact,
           activityDetails,
           yourDetails,
           businessDetails,
