@@ -16,10 +16,11 @@
 
 package pages
 
+import models.WhenActivityHappen.NotHappen
 import models.{UserAnswers, WhenActivityHappen}
 import play.api.libs.json.JsPath
 
-import scala.util.{Success, Try}
+import scala.util.Try
 
 case object WhenActivityHappenPage extends QuestionPage[WhenActivityHappen] {
 
@@ -28,9 +29,7 @@ case object WhenActivityHappenPage extends QuestionPage[WhenActivityHappen] {
   override def toString: String = "whenActivityHappen"
 
   override def cleanup(value: Option[WhenActivityHappen], userAnswers: UserAnswers): Try[UserAnswers] =
-    value match {
-      case Some(_) => userAnswers.remove(ActivityTimePeriodPage)
-      case _       => Success(userAnswers)
-    }
+    if (value exists { _ != NotHappen }) userAnswers.remove(ActivityTimePeriodPage)
+    else super.cleanup(value, userAnswers)
 
 }

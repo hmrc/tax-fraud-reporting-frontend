@@ -18,8 +18,7 @@ package controllers
 
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
-import models.ProvideContactDetails
-import pages.{NominalsQuery, ProvideContactDetailsPage}
+import pages.NominalsQuery
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -56,12 +55,9 @@ class CheckYourAnswersController @Inject() (
 
       val yourDetails = {
         val rows =
-          if (answers.get(ProvideContactDetailsPage).contains(ProvideContactDetails.Yes))
-            YourContactDetailsSummary.rows(answers).toList ++
-              SupportingDocumentSummary.row(answers).toList ++
-              DocumentationDescriptionSummary.row(answers).toList
-          else
-            List.empty
+          YourContactDetailsSummary.rows(answers).toList ++
+            SupportingDocumentSummary.row(answers).toList ++
+            DocumentationDescriptionSummary.row(answers).toList
         SummaryListViewModel(rows)
       }
 

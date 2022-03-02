@@ -31,9 +31,9 @@ class WhenActivityHappenPageSpec extends PageBehaviours {
   }
 
   "must remove activity likely happen when the user selects over 5years" in {
-    val answers        = UserAnswers("id").set(ActivityTimePeriodPage, ActivityTimePeriod.DoNotKnow).success.value
-    val updatedAnswers = answers.set(WhenActivityHappenPage, WhenActivityHappen.NotHappen).success.value
-    updatedAnswers.get(ActivityTimePeriodPage) mustNot be(defined)
+    val answers        = UserAnswers("id").set(WhenActivityHappenPage, WhenActivityHappen.OverFiveYears).success.value
+    val updatedAnswers = answers.set(ActivityTimePeriodPage, ActivityTimePeriod.NextWeek).success.value
+    updatedAnswers.get(ActivityTimePeriodPage) must be(defined)
   }
 
 }

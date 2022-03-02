@@ -29,8 +29,11 @@ case object ProvideContactDetailsPage extends QuestionPage[ProvideContactDetails
 
   override def cleanup(value: Option[ProvideContactDetails], userAnswers: UserAnswers): Try[UserAnswers] =
     value match {
-      case Some(ProvideContactDetails.No) => userAnswers.remove(YourContactDetailsPage)
-      case _                              => super.cleanup(value, userAnswers)
+      case Some(ProvideContactDetails.No) =>
+        userAnswers.remove(YourContactDetailsPage).flatMap(_.remove(SupportingDocumentPage)).flatMap(
+          _.remove(DocumentationDescriptionPage)
+        )
+      case _ => super.cleanup(value, userAnswers)
     }
 
 }

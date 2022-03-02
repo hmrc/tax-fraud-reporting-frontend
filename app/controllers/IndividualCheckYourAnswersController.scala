@@ -73,14 +73,6 @@ class IndividualCheckYourAnswersController @Inject() (
         SummaryListViewModel(rows)
       }
 
-      /*   val individualDOB = SummaryListViewModel(
-        Seq(
-          IndividualDateOfBirthSummary.row(answers,index.position, mode)
-        ).flatten
-      )*/
-
-      val individualAge = SummaryListViewModel(Seq(IndividualAgeSummary.row(answers, index.position, mode)).flatten)
-
       Ok(
         view(
           individualDetails,
