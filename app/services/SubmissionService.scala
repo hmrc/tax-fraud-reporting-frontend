@@ -163,7 +163,7 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
       surname = Some(details.LastName),
       telephoneNumber = Some(details.Tel),
       emailAddress = details.Email,
-      memorableWord = Some(details.MemorableWord)
+      memorableWord = details.MemorableWord
     )
 
   // TODO more tests for this please

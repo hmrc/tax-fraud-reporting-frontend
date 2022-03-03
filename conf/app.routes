@@ -3,7 +3,7 @@
 ->         /hmrc-frontend                               hmrcfrontend.Routes
 
 GET        /                                            controllers.IndexController.onPageLoad
-GET        /using-this-service                          controllers.IndexController.onPageLoad
+GET        /before-you-start                          controllers.IndexController.onPageLoad
 
 GET        /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
 
@@ -26,62 +26,62 @@ POST       /activity-type                               controllers.ActivityType
 GET        /change-activity-type                        controllers.ActivityTypeController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-activity-type                        controllers.ActivityTypeController.onSubmit(mode: Mode = CheckMode)
 
-GET        /person-or-business                      controllers.IndividualOrBusinessController.onPageLoad(mode: Mode = NormalMode)
-POST       /person-or-business                      controllers.IndividualOrBusinessController.onSubmit(mode: Mode = NormalMode)
-GET        /change-person-or-business               controllers.IndividualOrBusinessController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-person-or-business               controllers.IndividualOrBusinessController.onSubmit(mode: Mode = CheckMode)
+GET        /individual-or-business                      controllers.IndividualOrBusinessController.onPageLoad(mode: Mode = NormalMode)
+POST       /individual-or-business                      controllers.IndividualOrBusinessController.onSubmit(mode: Mode = NormalMode)
+GET        /change-individual-or-business               controllers.IndividualOrBusinessController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-individual-or-business               controllers.IndividualOrBusinessController.onSubmit(mode: Mode = CheckMode)
 
 GET        /do-not-use-this-service                     controllers.DoNotUseThisServiceController.onPageLoad()
 
-GET        /:index/individual-information-check         controllers.IndividualInformationController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/individual-information-check         controllers.IndividualInformationController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-individual-information-check  controllers.IndividualInformationController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-individual-information-check  controllers.IndividualInformationController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/individual-what-information-you-know         controllers.IndividualInformationController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-what-information-you-know         controllers.IndividualInformationController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-what-information-you-know  controllers.IndividualInformationController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-what-information-you-know  controllers.IndividualInformationController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/name                      controllers.IndividualNameController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/name                      controllers.IndividualNameController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-name               controllers.IndividualNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-name               controllers.IndividualNameController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/individual-name                      controllers.IndividualNameController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-name                      controllers.IndividualNameController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-name               controllers.IndividualNameController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-name               controllers.IndividualNameController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/contact-details                        controllers.IndividualContactDetailsController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/contact-details                        controllers.IndividualContactDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-contact-details                 controllers.IndividualContactDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-contact-details                 controllers.IndividualContactDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/individual-contact-details                        controllers.IndividualContactDetailsController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-contact-details                        controllers.IndividualContactDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-contact-details                 controllers.IndividualContactDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-contact-details                 controllers.IndividualContactDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/national-insurance-number                        controllers.IndividualNationalInsuranceNumberController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/national-insurance-number                        controllers.IndividualNationalInsuranceNumberController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-national-insurance-number                 controllers.IndividualNationalInsuranceNumberController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-national-insurance-number                 controllers.IndividualNationalInsuranceNumberController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/individual-national-insurance-number                       controllers.IndividualNationalInsuranceNumberController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-national-insurance-number                        controllers.IndividualNationalInsuranceNumberController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-national-insurance-number                 controllers.IndividualNationalInsuranceNumberController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-national-insurance-number                 controllers.IndividualNationalInsuranceNumberController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /:index/select-connection                                      controllers.IndividualConnectionController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/select-connection                                      controllers.IndividualConnectionController.onSubmit(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-select-connection                               controllers.IndividualConnectionController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-select-connection                               controllers.IndividualConnectionController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/does-person-own-business                        controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/does-person-own-business                        controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-does-person-own-business                 controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-does-person-own-business                 controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/individual-A-has-business-details                        controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-A-has-business-details                       controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-A-has-business-details                 controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-A-has-business-details                 controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/age-format                        controllers.IndividualDateFormatController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/age-format                        controllers.IndividualDateFormatController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-age-format                 controllers.IndividualDateFormatController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-age-format                 controllers.IndividualDateFormatController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/individual-age-select-format                        controllers.IndividualDateFormatController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-age-select-format                        controllers.IndividualDateFormatController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-age-select-format                 controllers.IndividualDateFormatController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-age-select-format                 controllers.IndividualDateFormatController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/age-dob                               controllers.IndividualDateOfBirthController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/age-dob                               controllers.IndividualDateOfBirthController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-age-dob                        controllers.IndividualDateOfBirthController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-age-dob                        controllers.IndividualDateOfBirthController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/individual-age-date-of-birth                               controllers.IndividualDateOfBirthController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-age-date-of-birth                               controllers.IndividualDateOfBirthController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-age-date-of-birth                        controllers.IndividualDateOfBirthController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-age-date-of-birth                        controllers.IndividualDateOfBirthController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/age-approx                               controllers.IndividualAgeController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/age-approx                               controllers.IndividualAgeController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-age-approx                        controllers.IndividualAgeController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-age-approx                        controllers.IndividualAgeController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/individual-age-approximate-age                               controllers.IndividualAgeController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-age-approximate-age                               controllers.IndividualAgeController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-age-approximate-age                        controllers.IndividualAgeController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-age-approximate-age                        controllers.IndividualAgeController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/business-information-check                        controllers.BusinessInformationCheckController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/business-information-check                        controllers.BusinessInformationCheckController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-business-information-check                  controllers.BusinessInformationCheckController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-business-information-check                  controllers.BusinessInformationCheckController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/business-trade                         controllers.BusinessInformationCheckController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/business-trade                         controllers.BusinessInformationCheckController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-business-trade                  controllers.BusinessInformationCheckController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-business-trade                  controllers.BusinessInformationCheckController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /:index/business-name                                      controllers.BusinessNameController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/business-name                                      controllers.BusinessNameController.onSubmit(index: Index, mode: Mode = NormalMode)
@@ -93,10 +93,10 @@ POST       /:index/type-business                        controllers.TypeBusiness
 GET        /:index/change-type-business                  controllers.TypeBusinessController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-type-business                 controllers.TypeBusinessController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /description-activity                        controllers.DescriptionActivityController.onPageLoad(mode: Mode = NormalMode)
-POST       /description-activity                        controllers.DescriptionActivityController.onSubmit(mode: Mode = NormalMode)
-GET        /change-description-activity                  controllers.DescriptionActivityController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-description-activity                  controllers.DescriptionActivityController.onSubmit(mode: Mode = CheckMode)
+GET        /activity-description                        controllers.DescriptionActivityController.onPageLoad(mode: Mode = NormalMode)
+POST       /activity-description                        controllers.DescriptionActivityController.onSubmit(mode: Mode = NormalMode)
+GET        /change-activity-description                  controllers.DescriptionActivityController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-activity-description                  controllers.DescriptionActivityController.onSubmit(mode: Mode = CheckMode)
 
 GET        /:index/select-connection-business                        controllers.SelectConnectionBusinessController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/select-connection-business                        controllers.SelectConnectionBusinessController.onSubmit(index: Index, mode: Mode = NormalMode)
@@ -118,10 +118,10 @@ POST       /:index/business-contact-details                        controllers.B
 GET        /:index/change-business-contact-details                  controllers.BusinessContactDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-business-contact-details                  controllers.BusinessContactDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /add-another-person                        controllers.AddAnotherPersonController.onPageLoad(mode: Mode = NormalMode)
-POST       /add-another-person                        controllers.AddAnotherPersonController.onSubmit(mode: Mode = NormalMode)
-GET        /change-add-another-person                  controllers.AddAnotherPersonController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-add-another-person                  controllers.AddAnotherPersonController.onSubmit(mode: Mode = CheckMode)
+GET        /add-another-individual                        controllers.AddAnotherPersonController.onPageLoad(mode: Mode = NormalMode)
+POST       /add-another-individual                        controllers.AddAnotherPersonController.onSubmit(mode: Mode = NormalMode)
+GET        /change-add-another-individual                  controllers.AddAnotherPersonController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-add-another-individual                  controllers.AddAnotherPersonController.onSubmit(mode: Mode = CheckMode)
 
 GET        /:index/individual-address-start                       controllers.IndividualAddressRedirectController.onPageLoad(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-individual-address-start                controllers.IndividualAddressRedirectController.onPageLoad(index: Index, mode: Mode = CheckMode)
@@ -134,20 +134,20 @@ GET        /:index/business-address-confirmation                controllers.Busi
 GET        /:index/change-business-address-confirmation         controllers.BusinessAddressConfirmationController.onPageLoad(index: Index, mode: Mode = CheckMode, id: Option[String])
 
 
-GET        /when-activity-start                            controllers.WhenActivityHappenController.onPageLoad(mode: Mode = NormalMode)
-POST       /when-activity-start                            controllers.WhenActivityHappenController.onSubmit(mode: Mode = NormalMode)
-GET        /change-when-activity-start                     controllers.WhenActivityHappenController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-when-activity-start                     controllers.WhenActivityHappenController.onSubmit(mode: Mode = CheckMode)
+GET        /activity-duration                            controllers.WhenActivityHappenController.onPageLoad(mode: Mode = NormalMode)
+POST       /activity-duration                            controllers.WhenActivityHappenController.onSubmit(mode: Mode = NormalMode)
+GET        /change-activity-duration                     controllers.WhenActivityHappenController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-activity-duration                     controllers.WhenActivityHappenController.onSubmit(mode: Mode = CheckMode)
 
 GET        /activity-time-period-future                        controllers.ActivityTimePeriodController.onPageLoad(mode: Mode = NormalMode)
 POST       /activity-time-period-future                        controllers.ActivityTimePeriodController.onSubmit(mode: Mode = NormalMode)
 GET        /change-activity-time-period-future                controllers.ActivityTimePeriodController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-activity-time-period-future                  controllers.ActivityTimePeriodController.onSubmit(mode: Mode = CheckMode)
 
-GET        /how-many-people-know                         controllers.HowManyPeopleKnowController.onPageLoad(mode: Mode = NormalMode)
-POST       /how-many-people-know                         controllers.HowManyPeopleKnowController.onSubmit(mode: Mode = NormalMode)
-GET        /change-how-many-people-know                  controllers.HowManyPeopleKnowController.onPageLoad(mode: Mode = CheckMode)
-POST       /change-how-many-people-know                  controllers.HowManyPeopleKnowController.onSubmit(mode: Mode = CheckMode)
+GET        /activity-how-many-people-know                         controllers.HowManyPeopleKnowController.onPageLoad(mode: Mode = NormalMode)
+POST       /activity-how-many-people-know                         controllers.HowManyPeopleKnowController.onSubmit(mode: Mode = NormalMode)
+GET        /change-activity-how-many-people-know                  controllers.HowManyPeopleKnowController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-activity-how-many-people-know                  controllers.HowManyPeopleKnowController.onSubmit(mode: Mode = CheckMode)
 
 GET        /provide-supporting-documentation                         controllers.SupportingDocumentController.onPageLoad(mode: Mode = NormalMode)
 POST       /provide-supporting-documentation                         controllers.SupportingDocumentController.onSubmit(mode: Mode = NormalMode)

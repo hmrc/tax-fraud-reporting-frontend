@@ -53,7 +53,16 @@ object ActivityType {
     ActivityType(
       "22030004",
       "activityType.name.incorrect-emp-status",
-      List("Lying about status", "Not informing about change of status", "Employ", "Payroll")
+      List(
+        "Lying about status",
+        "Not informing about change of status",
+        "Employ",
+        "Payroll",
+        "Status",
+        "Register",
+        "Declare",
+        "Incorrect"
+      )
     ),
     ActivityType(
       "22030005",
@@ -63,7 +72,7 @@ object ActivityType {
     ActivityType(
       "22030006",
       "activityType.name.fraud-related-tax",
-      List("Value Added Tax", "Company", "Invoice", "Bill", "Receipt", "Account")
+      List("Value Added Tax", "Company", "Invoice", "Bill", "Receipt", "Account", "Cash", "VAT Fraud")
     ),
     ActivityType(
       "22030007",
@@ -73,7 +82,7 @@ object ActivityType {
     ActivityType(
       "22030008",
       "activityType.name.fraud-related-private-sec-industry",
-      List("SIA", "Bouncer", "Doorman", "Close Protection", "Guard")
+      List("SIA", "Bouncer", "Doorman", "Close Protection", "Guard", "bodyguard")
     ),
     ActivityType(
       "22030009",
@@ -88,19 +97,46 @@ object ActivityType {
         "Back pocket",
         "Sole",
         "Declare",
-        "Trader"
+        "Trader",
+        "Cash",
+        "Undeclared",
+        "Hide"
       )
     ),
     ActivityType("22030010", "activityType.name.breaking-off-payroll-IR35", List("Contractor", "Employment")),
     ActivityType(
       "22030011",
       "activityType.name.not-registered-self-emp",
-      List("Unregistered trader", "Cash in hand", "Backpocket", "Sole", "Trader", "Business", "Trading")
+      List(
+        "Unregistered trader",
+        "Cash in hand",
+        "Backpocket",
+        "Sole",
+        "Trader",
+        "Business",
+        "Trading",
+        "Cash",
+        "Self",
+        "Hide",
+        "Odd job",
+        "Receipt"
+      )
     ),
     ActivityType(
       "22030012",
       "activityType.name.suspicious-cash-dep",
-      List("Large cash deposits", "Large increase in cash deposits", "Money", "Finance", "Bank")
+      List(
+        "Large cash deposits",
+        "Large increase in cash deposits",
+        "Money",
+        "Finance",
+        "Bank",
+        "Cash",
+        "Account",
+        "Pay",
+        "Band",
+        "Undeclared"
+      )
     ),
     ActivityType(
       "22030013",
@@ -137,13 +173,29 @@ object ActivityType {
         "RGD",
         "Gamble",
         "Lottery",
-        "Raffle"
+        "Raffle",
+        "Licence",
+        "Bet",
+        "casino"
       )
     ),
     ActivityType(
       "22030016",
       "activityType.name.illegal-flow-money",
-      List("Illicit finance", "Laundering", "Transfer", "Dirty", "Move", "Gang", "Criminal", "Stash")
+      List(
+        "Illicit finance",
+        "Laundering",
+        "Transfer",
+        "Dirty",
+        "Move",
+        "Gang",
+        "Criminal",
+        "Stash",
+        "Clean",
+        "Hawala",
+        "Money",
+        "Exchange"
+      )
     ),
     ActivityType(
       "22030017",
@@ -161,7 +213,10 @@ object ActivityType {
         "Clean",
         "Dirty",
         "Proceeds",
-        "POCA"
+        "POCA",
+        "Money",
+        "Launder",
+        "International"
       )
     ),
     ActivityType(
@@ -183,7 +238,9 @@ object ActivityType {
         "Swiss",
         "Transfer",
         "Jersey",
-        "Divert"
+        "Divert",
+        "Account",
+        "International"
       )
     ),
     ActivityType(
@@ -201,7 +258,11 @@ object ActivityType {
         "Sports",
         "Football",
         "TV",
-        "Celebrity"
+        "Celebrity",
+        "Politic",
+        "Presenter",
+        "Act",
+        "Million"
       )
     ),
     ActivityType(
@@ -212,7 +273,7 @@ object ActivityType {
     ActivityType(
       "22030022",
       "activityType.name.fraud-related-charities",
-      List("Charity", "Donation", "Mispresentation", "Goodwill", "Gift Aid", "Relief")
+      List("Charity", "Donation", "Mispresentation", "Goodwill", "Gift Aid", "Relief", "Registered")
     ),
     ActivityType(
       "22030023",
@@ -230,7 +291,9 @@ object ActivityType {
         "Corner Shop",
         "Cider",
         "Vodka",
-        "Under Counter"
+        "Under Counter",
+        "Distil",
+        "Fake"
       )
     ),
     ActivityType(
@@ -248,13 +311,33 @@ object ActivityType {
         "Sleeve",
         "Rolling",
         "Smoke",
-        "Under Counter"
+        "Under Counter",
+        "Fag",
+        "Fake",
+        "Counter",
+        "Loose",
+        "Pouch"
       )
     ),
     ActivityType(
       "22030025",
       "activityType.name.illegal-use-of-red-diesel",
-      List("Commodity fraud", "Fuel", "Petrol", "Farm", "Agriculture", "Green", "Car", "HGV", "Vehicle", "Van", "Road")
+      List(
+        "Commodity fraud",
+        "Fuel",
+        "Petrol",
+        "Farm",
+        "Agriculture",
+        "Green",
+        "Car",
+        "HGV",
+        "Vehicle",
+        "Van",
+        "Road",
+        "Tank",
+        "Gas",
+        "Kerosene"
+      )
     ),
     ActivityType(
       "22030026",
@@ -311,17 +394,17 @@ object ActivityType {
     ActivityType(
       "22030031",
       "activityType.name.false-vat-refund-claims",
-      List("VAT Repayment Fraud", "Loan Repayment")
+      List("VAT Repayment Fraud", "Loan Repayment", "Value Added", "Tax", "VAT Fraud")
     ),
     ActivityType(
       "22030032",
       "activityType.name.not-paying-tax-when-winding-up-company",
-      List("Phoenixism", "Close", "Fold", "Closure", "Shutdown", "Open", "Redundant", "Company")
+      List("Phoenixism", "Close", "Fold", "Closure", "Shutdown", "Open", "Redundant", "Company", "Fraud")
     ),
     ActivityType(
       "22030033",
       "activityType.name.importing-goods",
-      List("Carousel fraud", "MTIC fraud", "Missing trader fraud", "Movement", "Warehouse", "HGV")
+      List("Carousel fraud", "MTIC fraud", "Missing trader fraud", "Movement", "Warehouse", "HGV", "Transit")
     ),
     ActivityType(
       "22030034",
@@ -393,7 +476,49 @@ object ActivityType {
       "illegal-immigration",
       List("Immigrant", "Illegal", "Refugee", "Asylum", "Seeker", "Migrant")
     ),
-    ActivityType("22030042", "border-crime", List("Port", "Ferry", "Plane", "Force"))
+    ActivityType("22030042", "border-crime", List("Port", "Ferry", "Plane", "Force")),
+    ActivityType(
+      "22030043",
+      "activityType.name.fraud-related-plastic-package-tax",
+      List(
+        "Plastic",
+        "packing",
+        "30",
+        "recycle",
+        "wrapping",
+        "manufacture",
+        "import",
+        "register",
+        "supply",
+        "tax",
+        "storage",
+        "product",
+        "green",
+        "bag",
+        "biodegradable",
+        "bio",
+        "compostable"
+      )
+    ),
+    ActivityType(
+      "22030044",
+      "activityType.name.landfill-waste-tax",
+      List(
+        "Landfill",
+        "Waste",
+        "Rubbish",
+        "Dump",
+        "Trash",
+        "Toxic",
+        "Recycle",
+        "Green",
+        "Disposal",
+        "Environment",
+        "Tip",
+        "fly",
+        "tipping"
+      )
+    )
   )
 
   val otherDepartments = Map(

@@ -45,7 +45,7 @@ class YourContactDetailsFormProvider @Inject() extends Mappings with Constraints
       "email" -> optional(
         field("email", isOptional = true) verifying validEmailAddress(errorPrefix + ".email.invalid")
       ),
-      "memorableWord" -> field("memorableWord")
+      "memorableWord" -> optional(field("memorableWord"))
     )(YourContactDetails.apply)(YourContactDetails.unapply)
   )
 

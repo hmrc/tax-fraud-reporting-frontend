@@ -23,7 +23,7 @@ case class YourContactDetails(
   LastName: String,
   Tel: String,
   Email: Option[String],
-  MemorableWord: String
+  MemorableWord: Option[String]
 )
 
 object YourContactDetails {

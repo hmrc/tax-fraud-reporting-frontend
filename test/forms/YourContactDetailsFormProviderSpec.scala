@@ -96,20 +96,13 @@ class YourContactDetailsFormProviderSpec extends StringFieldBehaviours with Scal
   ".memorableWord" - {
 
     val fieldName   = "memorableWord"
-    val requiredKey = "yourContactDetails.error.memorableWord.required"
     val lengthKey   = "yourContactDetails.error.memorableWord.length"
     val maxLength   = 255
 
-    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
-
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
-
-    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
+    "must not bind when memorable word is longer than 255 characters" in {
+      val result = form.bind(Map(fieldName -> "a" * 256))(fieldName)
+      result.errors must contain(FormError(fieldName, lengthKey, Seq(maxLength)))
+    }
   }
 
 }

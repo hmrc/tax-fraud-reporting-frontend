@@ -25,9 +25,7 @@
 ) {
     <h1 class="govuk-heading-l">@messages("index.header")</h1>
 
-    <p id="first-line" class="govuk-body">@messages("index.p1")</p>
-
-    <p id="second-line" class="govuk-body">@messages("index.p2")</p>
+    <h2 class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-6">@messages("index.h2.heading1")</h2>
 
     <ul class="govuk-list govuk-list--bullet">
         <li>@messages("index.list.item1")</li>
@@ -35,11 +33,17 @@
         <li>@messages("index.list.item3")</li>
     </ul>
 
-    <div class="govuk-inset-text">
-        <p class="govuk-body">@messages("index.inset.text")</p>
-    </div>
+    <h2 class="govuk-body govuk-!-font-weight-bold govuk-!-margin-top-6">@messages("index.h2.heading2")</h2>
+
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("index.list2.item1")</li>
+        <li>@messages("index.list2.item2")</li>
+        <li>@messages("index.list2.item3")</li>
+    </ul>
+
+    <p id="second-line" class="govuk-body">@messages("index.p1")</p>
 
     <a id="continue-button" href="@routes.ActivityTypeController.onPageLoad(NormalMode)" role="button" class="govuk-button" data-module="govuk-button">
-        @messages("site.continue")
+        @messages("site.accept")
     </a>
 }

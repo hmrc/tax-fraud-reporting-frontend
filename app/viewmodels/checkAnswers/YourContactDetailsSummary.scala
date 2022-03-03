@@ -37,7 +37,7 @@ object YourContactDetailsSummary {
           "lastName"      -> answer.LastName,
           "tel"           -> answer.Tel,
           "emailLabel"    -> answer.Email.getOrElse(messages("site.unknown")),
-          "memorableWord" -> answer.MemorableWord
+          "memorableWord" -> answer.MemorableWord.getOrElse(messages("site.unknown"))
         )
 
         values map {

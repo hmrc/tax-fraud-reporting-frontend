@@ -10,7 +10,7 @@ $hmrc-assets-path: "/report-tax-fraud/assets/lib/hmrc-frontend/hmrc/assets/";
 
 
 .js-enabled .js-visible {
-    display: block !important;
+    display: inline-block !important;
  }
 .js-visible {
     display: none !important;

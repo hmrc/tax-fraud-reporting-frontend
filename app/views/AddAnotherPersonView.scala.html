@@ -36,7 +36,7 @@
     }
 }
 
-@layout(pageTitle = title(form, messages("addAnotherPerson.title"))) {
+@layout(pageTitle = title(form, messages("addAnotherPerson.title", numberOfNominals))) {
 
     @formHelper(action = routes.AddAnotherPersonController.onSubmit(mode), 'autoComplete -> "off") {
 
