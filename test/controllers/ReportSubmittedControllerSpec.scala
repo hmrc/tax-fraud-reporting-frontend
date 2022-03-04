@@ -22,7 +22,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import views.html.ReportSubmittedView
 
-class ReportSubmittedControllerSpec(appConfig: FrontendAppConfig) extends SpecBase {
+class ReportSubmittedControllerSpec(appConfig: FrontendAppConfig, isProvideContact: Boolean) extends SpecBase {
 
   "ReportSubmitted Controller" - {
 
@@ -38,7 +38,7 @@ class ReportSubmittedControllerSpec(appConfig: FrontendAppConfig) extends SpecBa
         val view = application.injector.instanceOf[ReportSubmittedView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(appConfig)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(appConfig, isProvideContact)(request, messages(application)).toString
       }
     }
   }

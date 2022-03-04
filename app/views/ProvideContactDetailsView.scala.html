@@ -37,9 +37,9 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("provideContactDetails.heading")).asPageHeading(LegendSize.Large),
+                legend = LegendViewModel(messages("provideContactDetails.heading")).asPageHeading(LegendSize.ExtraLarge),
                 items  = ProvideContactDetails.options
-            ).withHint(Hint(content = "provideContactDetails.hint"))
+            ).withHint(HintViewModel(HtmlContent(Html(messages("provideContactDetails.hint")))))
         )
 
         @govukButton(

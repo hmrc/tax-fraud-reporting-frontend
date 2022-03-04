@@ -37,9 +37,9 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("howManyPeopleKnow.heading")).asPageHeading(LegendSize.Large),
+                legend = LegendViewModel(messages("howManyPeopleKnow.heading")).asPageHeading(LegendSize.ExtraLarge),
                 items  = HowManyPeopleKnow.options
-            ).withHint(Hint(content = "howManyPeopleKnow.hint"))
+            ).withHint(HintViewModel(HtmlContent(Html(messages("howManyPeopleKnow.hint")))))
         )
 
         @govukButton(

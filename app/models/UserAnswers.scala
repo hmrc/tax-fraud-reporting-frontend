@@ -16,7 +16,7 @@
 
 package models
 
-import pages.IndividualOrBusinessPage
+import pages.{IndividualOrBusinessPage, ProvideContactDetailsPage}
 import play.api.libs.json._
 import queries.{Gettable, Settable}
 import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
@@ -27,6 +27,7 @@ import scala.util.{Failure, Success, Try}
 final case class UserAnswers(id: String, data: JsObject = Json.obj(), lastUpdated: Instant = Instant.now) {
 
   def isBusinessJourney: Boolean = get(IndividualOrBusinessPage).contains(IndividualOrBusiness.Business)
+  def isProvideContact: Boolean  = get(ProvideContactDetailsPage).contains(ProvideContactDetails.Yes)
 
   def get[A](page: Gettable[A])(implicit rds: Reads[A]): Option[A] =
     Reads.optionNoError(Reads.at(page.path)).reads(data).getOrElse(None)

@@ -38,8 +38,9 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("individualAge.heading")).asPageHeading(LabelSize.Large)
+                label = LabelViewModel(messages("individualAge.heading")).asPageHeading(LabelSize.ExtraLarge)
             )
+            .withHint(HintViewModel(messages("individualAge.hint")))
             .withInputType("text")
             .withInputMode("numeric")
             .withPattern("[0-9]*")

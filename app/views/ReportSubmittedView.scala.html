@@ -21,7 +21,7 @@
         govukButton: GovukButton
 )
 
-@(appConfig: FrontendAppConfig)(implicit request: Request[_], messages: Messages)
+@(appConfig: FrontendAppConfig, isProvideContact: Boolean)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("reportSubmitted.title"))) {
 
@@ -33,10 +33,16 @@
 
         <h2 class="govuk-heading-m">@messages("reportSubmitted.whatHappensNext.header")</h2>
 
+        <p class="govuk-body">@messages("reportSubmitted.p1")</p>
+
         <ul class="govuk-list govuk-list--bullet">
             <li>@messages("reportSubmitted.list.line1")</li>
             <li>@messages("reportSubmitted.list.line2")</li>
             <li>@messages("reportSubmitted.list.line3")</li>
+            @if(isProvideContact) {
+            <li>@messages("reportSubmitted.list.line4")
+            </li>
+            }
         </ul>
 
         <p class="govuk-body govuk-!-font-size-16">@messages("reportSubmitted.feedback.text")

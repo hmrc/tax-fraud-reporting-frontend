@@ -48,7 +48,7 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("selectConnectionBusiness.heading")).asPageHeading(LegendSize.Large),
+                legend = LegendViewModel(messages("selectConnectionBusiness.heading")).asPageHeading(LegendSize.ExtraLarge),
                 items  = SelectConnectionBusiness.enumerableValues.zipWithIndex.map { case (value, i) =>
                     RadioItem(
                             content = messages(s"selectConnectionBusiness.${value.toString}"),
@@ -61,7 +61,7 @@
                             id              = Some("value_other"),
                             conditionalHtml = Some(conditionalHtml)
                     )
-                ).withHint(Hint(content = "selectConnectionBusiness.hint"))
+                ).withHint(HintViewModel(HtmlContent(Html(messages("selectConnectionBusiness.hint")))))
             )
 
         @govukButton(
