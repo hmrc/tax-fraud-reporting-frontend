@@ -98,8 +98,6 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           ) mustBe routes.BusinessInformationCheckController.onPageLoad(Index(0), NormalMode)
         }
 
-        "to the business information check page" ignore {}
-
         "to the journey recovery controller if there is no individual or business set" in {
           navigator.nextPage(
             IndividualOrBusinessPage,
@@ -1287,6 +1285,38 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             emptyUserAnswers
           ) mustBe routes.CheckYourAnswersController.onPageLoad
         }
+      }
+
+      "must go from the when activity start page" - {
+
+        "to the It's going to happen in the future and there is no answer for the activity likely happen" in {
+          val answers =
+            emptyUserAnswers.set(WhenActivityHappenPage, WhenActivityHappen.NotHappen).success.value
+          navigator.nextPage(
+            WhenActivityHappenPage,
+            CheckMode,
+            answers
+          ) mustBe routes.ActivityTimePeriodController.onPageLoad(CheckMode)
+        }
+
+        "to the check your answers page when the user selects over 5 years" in {
+          val answers = emptyUserAnswers
+            .set(WhenActivityHappenPage, WhenActivityHappen.OverFiveYears).success.value
+          navigator.nextPage(
+            WhenActivityHappenPage,
+            CheckMode,
+            answers
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the check your answers page when there is no user selection" in {
+          navigator.nextPage(
+            ActivityTimePeriodPage,
+            CheckMode,
+            emptyUserAnswers
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
       }
 
     }

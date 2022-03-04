@@ -65,13 +65,14 @@ class Navigator @Inject() () {
     case ActivitySourceOfInformationPage => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
     case DocumentationDescriptionPage    => _ => routes.CheckYourAnswersController.onPageLoad
     case IndividualDateFormatPage(index) => individualDateFormatPageCheckRoutes(_, index)
+    case WhenActivityHappenPage          => whenActivityHappenCheckRoutes
     case _                               => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
     case SupportingDocumentPage          => supportingDocumentCheckRoutes
     case ProvideContactDetailsPage       => provideContactDetailsRoutes
-    case WhenActivityHappenPage          => whenActivityHappenRoutes
+    case WhenActivityHappenPage          => whenActivityHappenCheckRoutes
     case IndividualDateFormatPage(index) => individualDateFormatPageCheckRoutes(_, index)
     case _                               => _ => routes.CheckYourAnswersController.onPageLoad
   }
@@ -230,6 +231,17 @@ class Navigator @Inject() () {
         else
           routes.IndividualAgeController.onPageLoad(index, CheckMode)
     }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
+
+  private def whenActivityHappenCheckRoutes(answers: UserAnswers): Call =
+    answers.get(WhenActivityHappenPage).map {
+      case WhenActivityHappen.NotHappen =>
+        if (answers.get(ActivityTimePeriodPage).isDefined)
+          routes.CheckYourAnswersController.onPageLoad
+        else
+          routes.ActivityTimePeriodController.onPageLoad(CheckMode)
+      case _ =>
+        routes.CheckYourAnswersController.onPageLoad
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
     case NormalMode =>
