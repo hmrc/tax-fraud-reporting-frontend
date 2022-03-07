@@ -187,3 +187,5 @@ GET        /:index/change-are-you-sure-you-want-to-remove-individual            
 POST       /:index/change-are-you-sure-you-want-to-remove-individual                  controllers.IndividualConfirmRemoveController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /technical-problems                       controllers.TechnicalProblemsController.onPageLoad()
+
+GET        /service-timeout                       controllers.ServiceTimeoutController.onPageLoad()

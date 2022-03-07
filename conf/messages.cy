@@ -515,3 +515,9 @@ technicalProblems.uk.phone = (W) Telephone in UK: 0800 788 887 (W)
 technicalProblems.outside.phone = (W) Telephone outside UK:+44 (0)203 080 0871 (W)
 technicalProblems.weekdays.time = (W) Monday to Friday: 9am to 5pm (W)
 technicalProblems.weekend = (W) Closed weekends and bank holidays (W)
+technicalProblems.link.text = (W) Is this page not working properly? (opens in new tab) (W)
+
+serviceTimeout.title = (W) For your security, we deleted your answers (W)
+serviceTimeout.heading = (W) For your security, we deleted your answers (W)
+
+

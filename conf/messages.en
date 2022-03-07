@@ -530,3 +530,5 @@ technicalProblems.weekdays.time = Monday to Friday: 9am to 5pm
 technicalProblems.weekend = Closed weekends and bank holidays
 technicalProblems.link.text = Is this page not working properly? (opens in new tab)
 
+serviceTimeout.title = For your security, we deleted your answers
+serviceTimeout.heading = For your security, we deleted your answers
