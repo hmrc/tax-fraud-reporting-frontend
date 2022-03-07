@@ -33,11 +33,11 @@ object YourContactDetailsSummary {
         def msg(key: String) = messages("yourContactDetails." + key)
 
         val values = List(
-          "firstName"     -> answer.FirstName,
-          "lastName"      -> answer.LastName,
-          "tel"           -> answer.Tel,
-          "emailLabel"    -> answer.Email.getOrElse(messages("site.unknown")),
-          "memorableWord" -> answer.MemorableWord
+          "firstName"        -> answer.FirstName,
+          "lastName"         -> answer.LastName,
+          "tel"              -> answer.Tel,
+          "emailLabel"       -> answer.Email.getOrElse(messages("site.unknown")),
+          "uniqueIdentifier" -> answer.MemorableWord.getOrElse(messages("site.unknown"))
         )
 
         values map {

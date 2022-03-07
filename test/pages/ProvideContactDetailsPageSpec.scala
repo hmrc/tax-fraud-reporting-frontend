@@ -33,7 +33,7 @@ class ProvideContactDetailsPageSpec extends PageBehaviours {
   "must remove contact details when the user selects no" in {
     val answers = UserAnswers("id").set(
       YourContactDetailsPage,
-      YourContactDetails("firstname", "lastname", "tel", Some("email"), "test")
+      YourContactDetails("firstname", "lastname", "tel", Some("email"), Some("test"))
     ).success.value
     val updatedAnswers = answers.set(ProvideContactDetailsPage, ProvideContactDetails.No).success.value
     updatedAnswers.get(YourContactDetailsPage) mustNot be(defined)
@@ -42,7 +42,7 @@ class ProvideContactDetailsPageSpec extends PageBehaviours {
   "must not remove contact details when the user selects yes" in {
     val answers = UserAnswers("id").set(
       YourContactDetailsPage,
-      YourContactDetails("firstname", "lastname", "tel", Some("email"), "test")
+      YourContactDetails("firstname", "lastname", "tel", Some("email"), Some("test"))
     ).success.value
     val updatedAnswers = answers.set(ProvideContactDetailsPage, ProvideContactDetails.Yes).success.value
     updatedAnswers.get(YourContactDetailsPage).value mustBe YourContactDetails(
@@ -50,7 +50,7 @@ class ProvideContactDetailsPageSpec extends PageBehaviours {
       "lastname",
       "tel",
       Some("email"),
-      "test"
+      Some("test")
     )
   }
 

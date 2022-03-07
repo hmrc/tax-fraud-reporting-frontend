@@ -37,7 +37,7 @@ object IndividualNameSummary {
       messages("individualName.firstName")  -> answer.flatMap(_.firstName),
       messages("individualName.middleName") -> answer.flatMap(_.middleName),
       messages("individualName.lastName")   -> answer.flatMap(_.lastName),
-      messages("individualName.nickname")   -> answer.flatMap(_.aliases)
+      messages("individualName.aliases")    -> answer.flatMap(_.aliases)
     ) map {
       case (label, valueOpt) =>
         HtmlFormat.escape(label + ": " + valueOpt.getOrElse(messages("site.unknown")))

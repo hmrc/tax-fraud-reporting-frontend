@@ -26,6 +26,10 @@
 )
 
 @(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
+@content = {
+
+<div id="hint-text" class="govuk-hint">@messages("individualContactDetails.hint")</div>
+}
 
 @layout(pageTitle = title(form, messages("businessInformationCheck.title"))) {
 
@@ -39,7 +43,7 @@
             CheckboxesViewModel(
                 form   = form,
                 name   = "value",
-                legend = LegendViewModel(messages("businessInformationCheck.heading")).asPageHeading(LegendSize.Large),
+                legend = LegendViewModel(messages("businessInformationCheck.heading")).asPageHeading(LegendSize.ExtraLarge),
                 items = Seq(
                         CheckboxItem(
                             id   = Some("value_0"),
@@ -52,7 +56,8 @@
                             name = Some("value[]"),
                             value = "type",
                             content = Text(messages("businessInformationCheck.type")),
-                            checked = form.data.values.exists(_ == "type")
+                            checked = form.data.values.exists(_ == "type"),
+                            hint = Some(Hint(content = Text(messages("businessInformationCheck.type.hint"))))
                         ),
                         CheckboxItem(
                             name = Some("value[]"),
@@ -74,7 +79,7 @@
                             hint = Some(Hint(content = Text(messages("businessInformationCheck.businessReference.hint"))))
                         )
                 )
-            ).withHint(HintViewModel(messages("businessInformationCheck.hint")))
+            ).withHint(HintViewModel(HtmlContent(Html(messages("businessInformationCheck.hint")))))
         )
 
         @govukButton(

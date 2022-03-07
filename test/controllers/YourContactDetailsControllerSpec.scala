@@ -48,7 +48,7 @@ class YourContactDetailsControllerSpec extends SpecBase with MockitoSugar {
       LastName = "Dixon",
       Tel = "0742007088",
       Email = Some("david@gmail.com"),
-      MemorableWord = "test"
+      MemorableWord = Some("test")
     )
 
   private val userAnswers = UserAnswers(userAnswersId).set(YourContactDetailsPage, model).success.value

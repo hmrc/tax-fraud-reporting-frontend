@@ -48,7 +48,7 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("activitySourceOfInformation.heading")).asPageHeading(LegendSize.Large),
+                legend = LegendViewModel(messages("activitySourceOfInformation.heading")).asPageHeading(LegendSize.ExtraLarge),
                 items  = ActivitySourceOfInformation.enumerableValues.zipWithIndex.map { case (value, i) =>
                     RadioItem(
                         content = messages(s"activitySourceOfInformation.${value.toString}"),
@@ -61,7 +61,7 @@
                         id              = Some("value_other"),
                         conditionalHtml = Some(conditionalHtml)
                     )
-                ).withHint(Hint(content = "activitySourceOfInformation.hint"))
+                ).withHint(HintViewModel(HtmlContent(Html(messages("activitySourceOfInformation.hint")))))
         )
 
         @govukButton(

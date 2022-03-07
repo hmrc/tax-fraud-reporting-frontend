@@ -40,7 +40,7 @@ object IndividualAddressSummary {
 
     Some(
       SummaryListRowViewModel(
-        key = "businessAddress.checkYourAnswersLabel",
+        key = "individualAddress.checkYourAnswersLabel",
         value = ValueViewModel(HtmlContent(answer)),
         actions = Seq(
           ActionItemViewModel(

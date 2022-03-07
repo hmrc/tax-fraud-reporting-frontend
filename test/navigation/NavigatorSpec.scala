@@ -1199,7 +1199,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             .set(ProvideContactDetailsPage, ProvideContactDetails.Yes).success.value
             .set(
               YourContactDetailsPage,
-              YourContactDetails("firstname", "lastname", "tel", Some("email"), "test")
+              YourContactDetails("firstname", "lastname", "tel", Some("email"), Some("test"))
             ).success.value
           navigator.nextPage(
             YourContactDetailsPage,

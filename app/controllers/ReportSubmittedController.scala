@@ -37,7 +37,8 @@ class ReportSubmittedController @Inject() (
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      Ok(view(appConfig))
+      val isProvideContact = request.userAnswers.isProvideContact
+      Ok(view(appConfig, isProvideContact))
   }
 
 }

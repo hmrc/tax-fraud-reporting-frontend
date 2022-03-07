@@ -80,7 +80,7 @@ class SubmissionServiceSpec extends AnyFreeSpec with Matchers with WireMockHelpe
       .set(SupportingDocumentPage, SupportingDocument.Yes).success.value
       .set(ProvideContactDetailsPage, ProvideContactDetails.Yes).success.value
       .set(YourContactDetailsPage, YourContactDetails(
-        FirstName = "forename", LastName = "surname", Tel = "tel", Email = Some("email"), MemorableWord = "memorable word"
+        FirstName = "forename", LastName = "surname", Tel = "tel", Email = Some("email"), MemorableWord = Some("memorable word")
       )).success.value
       .set(ActivitySourceOfInformationPage, ActivitySourceOfInformation.Other("source of information")).success.value
       .set(DocumentationDescriptionPage, "evidence details").success.value
@@ -109,7 +109,7 @@ class SubmissionServiceSpec extends AnyFreeSpec with Matchers with WireMockHelpe
       .set(SupportingDocumentPage, SupportingDocument.No).success.value
       .set(ProvideContactDetailsPage, ProvideContactDetails.Yes).success.value
       .set(YourContactDetailsPage, YourContactDetails(
-        FirstName = "forename", LastName = "surname", Tel = "tel", Email = Some("email"), MemorableWord = "memorable word"
+        FirstName = "forename", LastName = "surname", Tel = "tel", Email = Some("email"), MemorableWord = Some("memorable word")
       )).success.value
       .set(ActivitySourceOfInformationPage, ActivitySourceOfInformation.ReportedIndividuals).success.value
 

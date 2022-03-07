@@ -35,6 +35,13 @@
        <li>@messages("submitYourReport.list2")</li>
     </ul>
 
+    <p class="govuk-body">@messages("submitYourReport.p3")</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("submitYourReport.list3")</li>
+        <li>@messages("submitYourReport.list4")</li>
+    </ul>
+
     @formHelper(action = routes.SubmitYourReportController.onSubmit()) {
       @govukButton(
         ButtonViewModel(messages("submitYourReport.submit"))

@@ -43,7 +43,7 @@ trait ModelGenerators {
         lastName      <- arbitrary[String]
         tel           <- arbitrary[String]
         email         <- arbitrary[Option[String]]
-        memorableWord <- arbitrary[String]
+        memorableWord <- arbitrary[Option[String]]
 
       } yield YourContactDetails(firstName, lastName, tel, email, memorableWord)
     }
