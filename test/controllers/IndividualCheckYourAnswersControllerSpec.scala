@@ -118,7 +118,7 @@ class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryList
 
         status(result) mustEqual OK
 
-        contentAsString(result) mustEqual view(individualsDetails, individualBusinessDetails, onwardRoute)(
+        contentAsString(result) mustEqual view(Index(0), individualsDetails, individualBusinessDetails, onwardRoute)(
           request,
           messages(application)
         ).toString

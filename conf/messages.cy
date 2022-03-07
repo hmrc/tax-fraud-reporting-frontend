@@ -473,7 +473,7 @@ businessAddress.change.hidden = (W) Business address (W)
 checkYourAnswers.individualDetails = (W) The individual you are reporting (W)
 individualCheckYourAnswers.title = (W) Check your submission (W)
 individualCheckYourAnswers.heading = (W) Check your submission (W)
-individualCheckYourAnswers.individualDetails = (W) Information on Individual A (W)
+individualCheckYourAnswers.individualDetails = (W) Information on {0} (W)
 individualCheckYourAnswers.individualBusinessDetails = (W) Information on this individual''s business (W)
 
 submitYourReport.title = (W) Submit your report (W)

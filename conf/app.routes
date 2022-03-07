@@ -58,10 +58,10 @@ POST       /:index/individual-how-you-know-the-individual                       
 GET        /:index/change-individual-how-you-know-the-individual                               controllers.IndividualConnectionController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-individual-how-you-know-the-individual                               controllers.IndividualConnectionController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/individual-A-has-business-details                        controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/individual-A-has-business-details                       controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-individual-A-has-business-details                 controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-individual-A-has-business-details                 controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/individual-has-business-details                        controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-has-business-details                       controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-has-business-details                 controllers.IndividualBusinessDetailsController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-has-business-details                 controllers.IndividualBusinessDetailsController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /:index/individual-age-select-format                        controllers.IndividualDateFormatController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/individual-age-select-format                        controllers.IndividualDateFormatController.onSubmit(index: Index, mode: Mode = NormalMode)

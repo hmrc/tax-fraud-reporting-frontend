@@ -27,6 +27,11 @@
 
 @(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHeader = {
+        <span class="govuk-caption-xl">@messages(s"individual.${index.display}")</span>
+        <h1 class="govuk-fieldset__legend--xl govuk-!-margin-top-0">@messages("individualContactDetails.heading")</h1>
+}
+
 @content = {
 
     <div id="hint-text" class="govuk-hint">@messages("individualContactDetails.hint")</div>
@@ -59,7 +64,7 @@
     )
 }
 
-@layout(pageTitle = title(form, messages("individualContactDetails.title"))) {
+@layout(pageTitle = title(form, messages("individualContactDetails.title", messages(s"individual.${index.display}")))) {
 
     @formHelper(action = routes.IndividualContactDetailsController.onSubmit(index, mode), 'autoComplete -> "off") {
 
@@ -69,9 +74,7 @@
 
         @fieldset(Fieldset(
             legend = Some(Legend(
-                content = messages("individualContactDetails.heading"),
-                isPageHeading = true,
-                classes = "govuk-fieldset__legend--xl"
+                content = HtmlContent(contentHeader),
             )),
             describedBy = Some("hint-text"),
             role = Some("group"),

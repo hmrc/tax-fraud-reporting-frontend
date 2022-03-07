@@ -27,6 +27,11 @@
 
 @(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHeader = {
+<span class="govuk-caption-xl">@messages(s"individual.${index.display}")</span>
+<h1 class="govuk-fieldset__legend--xl govuk-!-margin-top-0">@messages("individualNationalInsuranceNumber.heading")</h1>
+}
+
 @layout(pageTitle = title(form, messages("individualNationalInsuranceNumber.title"))) {
 
     @formHelper(action = routes.IndividualNationalInsuranceNumberController.onSubmit(index, mode)) {
@@ -38,7 +43,7 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("individualNationalInsuranceNumber.heading")).asPageHeading(LabelSize.ExtraLarge)
+                label = LabelViewModel(HtmlContent(contentHeader))
             )
             .withWidth(Fixed10)
             .withHint(Hint(content = "individualNationalInsuranceNumber.hint"))

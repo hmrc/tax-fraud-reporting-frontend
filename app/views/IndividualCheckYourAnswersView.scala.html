@@ -21,13 +21,13 @@
     govukSummaryList: GovukSummaryList
 )
 
-@(individualDetails: SummaryList, individualBusinessDetails: SummaryList, continue: Call)(implicit request: Request[_], messages: Messages)
+@(index: Index, individualDetails: SummaryList, individualBusinessDetails: SummaryList, continue: Call)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("individualCheckYourAnswers.title"))) {
 
     <h1 class="govuk-heading-xl">@messages("individualCheckYourAnswers.heading")</h1>
 
-     <h2 class="govuk-heading-m">@messages("individualCheckYourAnswers.individualDetails")</h2>
+     <h2 class="govuk-heading-m">@messages("individualCheckYourAnswers.individualDetails", messages(s"individual.${index.display}"))</h2>
      @govukSummaryList(individualDetails.withCssClass("govuk-!-margin-bottom-6"))
 
     @if(individualBusinessDetails.rows.nonEmpty) {

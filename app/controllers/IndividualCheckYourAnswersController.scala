@@ -75,6 +75,7 @@ class IndividualCheckYourAnswersController @Inject() (
 
       Ok(
         view(
+          index,
           individualDetails,
           individualBusinessDetails,
           navigator.nextPage(IndividualCheckYourAnswersPage(index), mode, answers)
