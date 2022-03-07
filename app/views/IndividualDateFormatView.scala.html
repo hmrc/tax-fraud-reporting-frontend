@@ -26,6 +26,11 @@
 
 @(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHeader = {
+        <span class="govuk-caption-xl">@messages(s"individual.${index.display}")</span>
+        <h1 class="govuk-fieldset__legend--xl govuk-!-margin-top-0">@messages("dateFormat.heading")</h1>
+}
+
 @layout(pageTitle = title(form, messages("dateFormat.title"))) {
 
     @formHelper(action = routes.IndividualDateFormatController.onSubmit(index, mode), 'autoComplete -> "off") {
@@ -37,7 +42,7 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("dateFormat.heading")).asPageHeading(LegendSize.ExtraLarge),
+                legend = LegendViewModel(HtmlContent(contentHeader)),
                 items  = IndividualDateFormat.options
             )
         )

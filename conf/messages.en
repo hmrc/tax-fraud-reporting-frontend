@@ -152,7 +152,7 @@ doNotUseThisService.p2.immigration-border-crime = You should <a class="govuk-lin
 
 individualInformation.title = What do you know about the individual?
 individualInformation.heading = What do you know about the individual?
-individualInformation.hint = <p>This individual will be referred to as Individual A. <br> You will be asked to enter details based on your selection.<br> You are not expected to obtain information you do not already have.</p>
+individualInformation.hint = <p>This individual will be referred to as {0}. <br> You will be asked to enter details based on your selection.<br> You are not expected to obtain information you do not already have.</p>
 individualInformation.name = Name
 individualInformation.age = Age (approximate)
 individualInformation.address = Home address
@@ -492,7 +492,7 @@ businessAddress.change.hidden = Busines address
 checkYourAnswers.individualDetails = The individual you are reporting
 individualCheckYourAnswers.title = Check your submission
 individualCheckYourAnswers.heading = Check your submission
-individualCheckYourAnswers.individualDetails = Information on Individual A
+individualCheckYourAnswers.individualDetails = Information on {0}
 individualCheckYourAnswers.individualBusinessDetails = Information on this individual''s business
 
 submitYourReport.title = Submit your report
