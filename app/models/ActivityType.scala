@@ -26,7 +26,7 @@ import scala.language.postfixOps
 final case class ActivityType(nameKey: String, synonymKeys: Array[String]) {
 
   def translated(implicit messages: Messages): ActivityTypeTranslated = {
-    def msg(key: String) = messages("activity." + key)
+    def msg(key: String) = messages("activityType." + key)
 
     ActivityTypeTranslated(
       nameKey,

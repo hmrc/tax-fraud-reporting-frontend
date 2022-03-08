@@ -68,6 +68,8 @@ activityType.checkYourAnswersLabel = (W) Activity type (W)
 activityType.error.required = (W) Enter the type of HMRC activity that you are reporting (W)
 activityType.change.hidden = (W) ActivityType (W)
 
+# Any non-HMRC activities here are associated with their corresponding department
+# in the activityTypes.conf file.
 activity.name.drugs                        = Gweithgaredd sy’n gysylltiedig â chyffuriau
 activity.name.avoidingTax                  = Osgoi treth
 activity.name.benefitsNotChildOrTaxCredits = TTwyll budd-daliadau (heb gynnwys budd-dal plant neu gredydau treth)
@@ -112,6 +114,9 @@ activity.name.cashDeposits                 = Adneuon arian parod amheus
 activity.name.hmrcImpostor                 = Negeseuon e-bost, negeseuon testun a galwadau ffôn amheus gan CThEM
 activity.name.cashTransport                = Cludo arian parod amheus
 activity.name.universalCredit              = Twyll credyd cynhwysol
+
+# Synonyms are associated with their corresponding activity names
+# in the activityTypes.conf file.
 
 individualOrBusiness.title = (W) Are you reporting an individual or a business? (W)
 individualOrBusiness.heading = (W) Are you reporting an individual or a business? (W)
