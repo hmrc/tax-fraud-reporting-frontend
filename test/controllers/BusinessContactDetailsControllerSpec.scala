@@ -42,6 +42,9 @@ class BusinessContactDetailsControllerSpec extends SpecBase with MockitoSugar {
 
   lazy val businessContactDetailsRoute = routes.BusinessContactDetailsController.onPageLoad(Index(0), NormalMode).url
 
+  private val answers           = emptyUserAnswers
+  private val isBusinessJourney = answers.isBusinessJourney
+
   private val model =
     BusinessContactDetails(landlineNumber = Some("landline"), mobileNumber = Some("mobile"), email = Some("email"))
 
@@ -61,7 +64,10 @@ class BusinessContactDetailsControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[BusinessContactDetailsView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode, isBusinessJourney)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -77,7 +83,7 @@ class BusinessContactDetailsControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(model), Index(0), NormalMode)(
+        contentAsString(result) mustEqual view(form.fill(model), Index(0), NormalMode, isBusinessJourney)(
           request,
           messages(application)
         ).toString
@@ -126,7 +132,10 @@ class BusinessContactDetailsControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, isBusinessJourney)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
