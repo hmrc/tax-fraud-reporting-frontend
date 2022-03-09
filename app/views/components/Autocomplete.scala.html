@@ -36,26 +36,26 @@
 <link href='@controllers.routes.Assets.versioned("stylesheets/autocomplete.min.css")' media="all" rel="stylesheet" type="text/css" />
 
 @select(hmrcComponent.Select(
-    id = id,
-    name = name,
-    label = if (isPageHeading) {
-        LabelViewModel(messages(label)).asPageHeading((LabelSize.ExtraLarge))
-    } else {
-        LabelViewModel(messages(label))
-    },
-    describedBy = hint.map(_ => s"$id-hint"),
-    errorMessage = form(id).error.map(fe ⇒ ErrorMessage(content = messages(fe.message))),
-    hint = hint.map(c => Hint(content = messages(c))),
-    items = Seq(SelectItem(attributes= Map("label" -> " "))) ++ activityTypes.map {
-      case ActivityTypeTranslated(key, name, _) =>
-        SelectItem(
-          value = Some(key),
-          text = name,
-          selected = key == (form.value map (_.nameKey) getOrElse ""),
-          attributes = Map("id" -> s"$id-$key")
-        )
-    },
-    formGroupClasses = "form-field-group"
+  id = id,
+  name = name,
+  label = if (isPageHeading) {
+      LabelViewModel(messages(label)).asPageHeading((LabelSize.ExtraLarge))
+  } else {
+      LabelViewModel(messages(label))
+  },
+  describedBy = hint.map(_ => s"$id-hint"),
+  errorMessage = form(id).error.map(fe ⇒ ErrorMessage(content = messages(fe.message))),
+  hint = hint.map(c => Hint(content = messages(c))),
+  items = Seq(SelectItem(attributes= Map("label" -> " "))) ++ activityTypes.map {
+    case ActivityTypeTranslated(key, name, _) =>
+      SelectItem(
+        value = Some(key),
+        text = name,
+        selected = key == (form.value map (_.nameKey) getOrElse ""),
+        attributes = Map("id" -> s"$id-$key")
+      )
+  },
+  formGroupClasses = "form-field-group"
 ))
 
 <script src="@controllers.routes.Assets.versioned("javascripts/autocomplete.min.js")" ></script>
@@ -96,14 +96,21 @@
         }
     })
 
-    const results = @Html(Json toJson activityTypes toString)
+    const unsortedResults = @Html(Json toJson activityTypes toString);
+    const results = unsortedResults.sort( (a, b) => a.name.localeCompare(b.name) );
     console.log(results);
 
+    function includes(string, substring) {
+      return string.toLowerCase().includes(substring.toLowerCase());
+    }
+
     function customSuggest(query, syncResults) {
-      syncResults(query ? results.filter(result => {
-        return (result.synonyms.findIndex(s => {
-          return s.toLowerCase().indexOf(query.toLowerCase()) !== -1
-        }) !== -1) || (result.key.toLowerCase().indexOf(query.toLowerCase()) !== -1)
-      }) : results)
+      syncResults( query?
+        results.filter( result => {
+          const matchesSynonym = result.synonyms.some( synonym => includes(synonym, query) );
+          return matchesSynonym || includes(result.name, query);
+        }):
+        results
+      );
     }
 </script>

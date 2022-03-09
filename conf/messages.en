@@ -368,16 +368,145 @@ activityType.synonym.declare          = Declare
 activityType.synonym.incorrect        = Incorrect
 
 # landfillAndWaste
+activityType.synonym.landfill    = Landfill
+activityType.synonym.waste       = Waste
+activityType.synonym.rubbish     = Rubbish
+activityType.synonym.dump        = Dump
+activityType.synonym.trash       = Trash
+activityType.synonym.toxic       = Toxic
+activityType.synonym.recycle     = Recycle
+activityType.synonym.green       = Green
+activityType.synonym.disposal    = Disposal
+activityType.synonym.environment = Environment
+activityType.synonym.tip         = tip
+activityType.synonym.flyTipping  = fly tipping
+
 # organisedCrime
+activityType.synonym.ocg             = OCGs
+activityType.synonym.criminalFinance = Criminal finance
+activityType.synonym.organisedCrime  = Organised crime
+activityType.synonym.crime           = Crime
+activityType.synonym.offence         = Offence
+activityType.synonym.dirty           = Dirty
+activityType.synonym.dodgy           = Dodgy
+activityType.synonym.poca            = POCA
+activityType.synonym.confiscate      = Confiscate
+activityType.synonym.stash           = Stash
+activityType.synonym.hidden          = Hidden
+
 # laundering
+activityType.synonym.offshore       = Offshore
+activityType.synonym.transfer       = Transfer
+activityType.synonym.accounts       = Accounts
+activityType.synonym.taxHaven       = Tax Haven
+activityType.synonym.hawala         = Hawala
+activityType.synonym.moneyServices  = Money Services
+activityType.synonym.moneyBureau    = Money Bureau
+activityType.synonym.bureau         = Bureau
+activityType.synonym.bureauDeChange = Bureau De Change
+activityType.synonym.clean          = Clean
+activityType.synonym.dirty          = Dirty
+activityType.synonym.proceeds       = Proceeds
+activityType.synonym.poca           = POCA
+activityType.synonym.money          = Money
+activityType.synonym.launder        = Launder
+activityType.synonym.international  = International
+
 # minimumWage
+activityType.synonym.underpayment      = Underpayment        
+activityType.synonym.underpaid         = Underpaid        
+activityType.synonym.workRights        = Work rights        
+activityType.synonym.employmentAgency  = Employment agency
+activityType.synonym.workingTimeLimits = Working time limits        
+activityType.synonym.earnings          = Earnings        
+activityType.synonym.salary            = Salary        
+activityType.synonym.exploitation      = Exploitation        
+activityType.synonym.swindle           = Swindle        
+activityType.synonym.corrupt           = Corrupt        
+activityType.synonym.boss              = boss        
+activityType.synonym.national          = National        
+activityType.synonym.slave             = Slave        
+activityType.synonym.labour            = Labour        
+activityType.synonym.paid              = Paid        
+activityType.synonym.nmw               = NMW
+
 # betting
+activityType.synonym.gambling = Gambling
+activityType.synonym.gbd_long = General Betting Duty
+activityType.synonym.gbd      = GBD
+activityType.synonym.pbd_long = Pool Betting Duty
+activityType.synonym.pbd      = PBD
+activityType.synonym.rgd_long = Remote gaming duty
+activityType.synonym.rgd      = RGD
+activityType.synonym.gamble   = Gamble
+activityType.synonym.lottery  = Lottery
+activityType.synonym.raffle   = Raffle
+activityType.synonym.licence  = Licence
+activityType.synonym.bet      = Bet
+activityType.synonym.casino   = Casino
 
 # capitalGains
+profit    = Profit
+houseSale = House Sale
+property  = Property
+home      = Home
+sold      = Sold
+estate    = Estate
+auction   = Auction
+value     = Value
+
 # alcohol
+exciseDuty     = Excise duty
+commodityFraud = Commodity fraud
+booze          = Booze
+spirit         = Spirit
+liquor         = Liquor
+beer           = Beer
+wine           = Wine
+offie          = Offie
+offLicence     = Off Licence
+cornerShop     = Corner Shop
+cider          = Cider
+vodka          = Vodka
+underCounter   = Under Counter
+distill        = Distill
+fake           = Fake
+
 # tobacco
+Cigarettes = Cigarettes
+Cigars     = Cigars
+Baccy      = Baccy
+Cigs       = Cigs
+Ciggy      = Ciggy
+Tabs       = Tabs
+Sleeve     = Sleeve
+Rolling    = Rolling
+Smoke      = Smoke
+Fag        = Fag
+Fake       = Fake
+Counter    = Counter
+Loose      = Loose
+Pouch      = Pouch
+
 # inheritance
+dead   = Dead
+death  = Death
+will   = Will
+family = Family
+estate = Estate
+
 # sugar
+sdil_long     = Soft Drinks Industry Levy
+SDIL          = SDIL
+SoftDrinks    = Soft drinks
+Fizz          = Fizz
+Carbonated    = Carbonated
+Cola          = Cola
+Sweet         = Sweet
+Drink         = Drink
+Chocolate     = Chocolate
+Confectionery = Confectionery
+
 
 # windingUpACompany
 # selfEmployment
