@@ -40,8 +40,11 @@ class SelectConnectionBusinessControllerSpec extends SpecBase with MockitoSugar 
   lazy val selectConnectionBusinessRoute =
     routes.SelectConnectionBusinessController.onPageLoad(Index(0), NormalMode).url
 
-  val formProvider = new SelectConnectionBusinessFormProvider()
-  val form         = formProvider()
+  private val formProvider = new SelectConnectionBusinessFormProvider()
+  private val form         = formProvider()
+
+  private val answers           = emptyUserAnswers
+  private val isBusinessJourney = answers.isBusinessJourney
 
   "SelectConnectionBusiness Controller" - {
 
@@ -57,7 +60,10 @@ class SelectConnectionBusinessControllerSpec extends SpecBase with MockitoSugar 
         val view = application.injector.instanceOf[SelectConnectionBusinessView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode, isBusinessJourney)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -81,7 +87,8 @@ class SelectConnectionBusinessControllerSpec extends SpecBase with MockitoSugar 
         contentAsString(result) mustEqual view(
           form.fill(SelectConnectionBusiness.CurrentEmployer),
           Index(0),
-          NormalMode
+          NormalMode,
+          isBusinessJourney
         )(request, messages(application)).toString
       }
     }
@@ -128,7 +135,10 @@ class SelectConnectionBusinessControllerSpec extends SpecBase with MockitoSugar 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, isBusinessJourney)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

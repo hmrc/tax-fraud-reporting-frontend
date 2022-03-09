@@ -37,10 +37,13 @@ class TypeBusinessControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new TypeBusinessFormProvider()
-  val form         = formProvider()
+  private val formProvider = new TypeBusinessFormProvider()
+  private val form         = formProvider()
 
   lazy val typeBusinessRoute = routes.TypeBusinessController.onPageLoad(Index(0), NormalMode).url
+
+  private val answers           = emptyUserAnswers
+  private val isBusinessJourney = answers.isBusinessJourney
 
   "TypeBusiness Controller" - {
 
@@ -56,7 +59,10 @@ class TypeBusinessControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[TypeBusinessView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode, isBusinessJourney)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -74,7 +80,7 @@ class TypeBusinessControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill("answer"), Index(0), NormalMode)(
+        contentAsString(result) mustEqual view(form.fill("answer"), Index(0), NormalMode, isBusinessJourney)(
           request,
           messages(application)
         ).toString
@@ -123,7 +129,10 @@ class TypeBusinessControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, isBusinessJourney)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

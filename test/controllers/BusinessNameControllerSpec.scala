@@ -41,6 +41,9 @@ class BusinessNameControllerSpec extends SpecBase with MockitoSugar {
 
   private lazy val businessNameRoute = routes.BusinessNameController.onPageLoad(Index(0), NormalMode).url
 
+  private val answers           = emptyUserAnswers
+  private val isBusinessJourney = answers.isBusinessJourney
+
   "BusinessName Controller" - {
 
     "must return OK and the correct view for a GET" in {
@@ -55,7 +58,10 @@ class BusinessNameControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[BusinessNameView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode, isBusinessJourney)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -73,7 +79,7 @@ class BusinessNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill("answer"), Index(0), NormalMode)(
+        contentAsString(result) mustEqual view(form.fill("answer"), Index(0), NormalMode, isBusinessJourney)(
           request,
           messages(application)
         ).toString
@@ -122,7 +128,10 @@ class BusinessNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, isBusinessJourney)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

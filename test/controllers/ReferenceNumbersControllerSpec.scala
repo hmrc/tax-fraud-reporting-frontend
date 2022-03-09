@@ -37,10 +37,13 @@ class ReferenceNumbersControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new ReferenceNumbersFormProvider()
-  val form         = formProvider()
+  private val formProvider = new ReferenceNumbersFormProvider()
+  private val form         = formProvider()
 
   lazy val referenceNumbersRoute = routes.ReferenceNumbersController.onPageLoad(Index(0), NormalMode).url
+
+  private val answers           = emptyUserAnswers
+  private val isBusinessJourney = answers.isBusinessJourney
 
   private val model =
     ReferenceNumbers(
@@ -65,7 +68,10 @@ class ReferenceNumbersControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[ReferenceNumbersView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode, isBusinessJourney)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -81,7 +87,7 @@ class ReferenceNumbersControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(model), Index(0), NormalMode)(
+        contentAsString(result) mustEqual view(form.fill(model), Index(0), NormalMode, isBusinessJourney)(
           request,
           messages(application)
         ).toString
@@ -130,7 +136,10 @@ class ReferenceNumbersControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, isBusinessJourney)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

@@ -40,8 +40,11 @@ class BusinessInformationCheckControllerSpec extends SpecBase with MockitoSugar 
   lazy val businessInformationCheckRoute =
     routes.BusinessInformationCheckController.onPageLoad(Index(0), NormalMode).url
 
-  val formProvider = new BusinessInformationCheckFormProvider()
-  val form         = formProvider()
+  private val formProvider = new BusinessInformationCheckFormProvider()
+  private val form         = formProvider()
+
+  private val answers           = emptyUserAnswers
+  private val isBusinessJourney = answers.isBusinessJourney
 
   "BusinessInformationCheck Controller" - {
 
@@ -58,7 +61,10 @@ class BusinessInformationCheckControllerSpec extends SpecBase with MockitoSugar 
 
         status(result) mustEqual OK
 
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode, isBusinessJourney)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -79,10 +85,12 @@ class BusinessInformationCheckControllerSpec extends SpecBase with MockitoSugar 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(BusinessInformationCheck.values.toSet), Index(0), NormalMode)(
-          request,
-          messages(application)
-        ).toString
+        contentAsString(result) mustEqual view(
+          form.fill(BusinessInformationCheck.values.toSet),
+          Index(0),
+          NormalMode,
+          isBusinessJourney
+        )(request, messages(application)).toString
       }
     }
 
@@ -128,7 +136,10 @@ class BusinessInformationCheckControllerSpec extends SpecBase with MockitoSugar 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, isBusinessJourney)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
