@@ -22,6 +22,7 @@ import org.apache.commons.validator.routines.EmailValidator
 import java.time.LocalDate
 import play.api.data.validation.{Constraint, Invalid, Valid}
 
+import scala.math.BigDecimal.RoundingMode
 import scala.util.{Success, Try}
 
 trait Constraints {
@@ -124,8 +125,14 @@ trait Constraints {
         }
     }
 
-  protected def maxTwoDecimals(errorKey: Option[String] = None): Constraint[BigDecimal] = Constraint { value =>
-    if (value.scale <= 2) Valid else Invalid(errorKey.getOrElse("amount.error.max.2.decimals"))
+  protected def maxTwoDecimalsWithTwelveChars(): Constraint[BigDecimal] = Constraint { value =>
+    val maxChars = 12
+    value.scale match {
+      case s if s > 2                                                                               => Invalid("approximateValue.error.maxTwoDecimals")
+      case 0 if value.setScale(0, RoundingMode.DOWN) < Math.pow(10, maxChars)                       => Valid
+      case 1 | 2 if value.setScale(0, RoundingMode.DOWN) < Math.pow(10, maxChars - value.scale - 1) => Valid
+      case _                                                                                        => Invalid("approximateValue.error.length")
+    }
   }
 
 }

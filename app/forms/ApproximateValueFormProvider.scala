@@ -28,7 +28,7 @@ class ApproximateValueFormProvider @Inject() extends Mappings {
       "value" -> currency(
         requiredKey = "approximateValue.error.required",
         nonNumericKey = "approximateValue.error.required"
-      ).verifying(maxTwoDecimals(Some("approximateValue.error.maxTwoDecimals")))
+      ).verifying(maxTwoDecimalsWithTwelveChars())
     )
 
 }
