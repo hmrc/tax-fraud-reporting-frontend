@@ -20,6 +20,7 @@ import controllers.routes
 import models.{CheckMode, UserAnswers}
 import pages.YourContactDetailsPage
 import play.api.i18n.Messages
+import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
@@ -44,7 +45,7 @@ object YourContactDetailsSummary {
           case (key, value) =>
             SummaryListRowViewModel(
               key = msg(key),
-              value = ValueViewModel(HtmlContent(value)),
+              value = ValueViewModel(HtmlContent(HtmlFormat.escape(value))),
               actions = Seq(
                 ActionItemViewModel("site.change", routes.YourContactDetailsController.onPageLoad(CheckMode).url)
                   .withVisuallyHiddenText(msg(key))
