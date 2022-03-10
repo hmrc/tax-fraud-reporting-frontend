@@ -1,19 +1,16 @@
 service.name = (W) Report tax fraud or evasion (W)
 
-site.back = (W) Back (W)
-site.remove = (W) Remove (W)
-site.change = (W) Change (W)
-site.no = (W) No (W)
-site.yes = (W) Yes (W)
-site.continue = (W) Continue (W)
+site.back = Yn ôl
+site.remove = Dileu
+site.change = newid
+site.no = Na
+site.yes = Iawn
+site.continue = Yn eich blaen
 site.start = (W) Start now (W)
 site.startAgain = (W) Start again (W)
 site.signIn = (W) Sign in (W)
 site.govuk = GOV.UK (W)
-
-
-
-
+site.unknown = Anhysbys
 
 date.day = (W) Day (W)
 date.month = (W) Month (W)
@@ -23,9 +20,6 @@ timeout.title = (W) You’re about to be signed out (W)
 timeout.message = (W) For security reasons, you will be signed out of this service in (W)
 timeout.keepAlive = (W) Stay signed in (W)
 timeout.signOut = (W) Sign out (W)
-
-
-
 
 error.browser.title.prefix = (W) Error: (W)
 error.boolean = (W) Please give an answer (W)
@@ -41,7 +35,6 @@ error.non_numeric = (W) Give a value using only numbers (W)
 error.number = (W) Please enter a valid number (W)
 error.required = (W) Please enter a value (W)
 error.summary.title = (W) There is a problem (W)
-
 
 index.title = Yr hyn y mae angen i chi ei wybod
 index.header = Yr hyn y mae angen i chi ei wybod
@@ -678,8 +671,8 @@ individualConnection.change.hidden = (W) IndividualConnection (W)
 individualBusinessDetails.title = (W) Does the individual have business details that you can provide? (W)
 individualBusinessDetails.heading = (W) Does the individual have business details that you can provide? (W)
 individualBusinessDetails.hint = (W) For example, the business's name, address or contact details. (W)
-individualBusinessDetails.yes = (W) Yes (W)
-individualBusinessDetails.no = (W) No (W)
+individualBusinessDetails.yes = Iawn
+individualBusinessDetails.no = Na
 individualBusinessDetails.dontKnow = (W) I don''t know (W)
 individualBusinessDetails.checkYourAnswersLabel = (W) Does the individual have business details that you can provide? (W)
 individualBusinessDetails.error.required = (W) Select whether the individual has business details that you can provide (W)
@@ -814,8 +807,8 @@ businessContactDetails.change.hidden = (W) BusinessContactDetails (W)
 
 addAnotherPerson.title = (W) Are there additional people involved in this activity you want to tell us about? (W)
 addAnotherPerson.heading = (W) Are there additional people involved in this activity you want to tell us about? (W)
-addAnotherPerson.yes = (W) Yes (W)
-addAnotherPerson.no = (W) No (W)
+addAnotherPerson.yes = Iawn
+addAnotherPerson.no = Na
 addAnotherPerson.checkYourAnswersLabel = (W) Are there additional people involved in this activity you want to tell us about? (W)
 addAnotherPerson.error.required = (W) Select yes if you need to add another individual. (W)
 addAnotherPerson.change.hidden = (W) AddAnotherPerson (W)
@@ -823,11 +816,11 @@ addAnotherPerson.change.hidden = (W) AddAnotherPerson (W)
 individual.addAnother.header = (W) You have added {0} individual (W)
 individual.addAnother.header.plural = (W) You have added {0} individuals (W)
 individual.moreThan5 = (W) You cannot add another individual as you have entered a maximum of 5. (W)
-individual.1 = (W) Individual A (W)
-individual.2 = (W) Individual B (W)
-individual.3 = (W) Individual C (W)
-individual.4 = (W) Individual D (W)
-individual.5 = (W) Individual E (W)
+individual.1 = Unigolyn  A
+individual.2 = Unigolyn  B
+individual.3 = Unigolyn  C
+individual.4 = Unigolyn  D
+individual.5 = Unigolyn  E
 
 whenActivityHappen.title = (W) What is the duration of the reported activity? (W)
 whenActivityHappen.heading = (W) What is the duration of the reported activity? (W)
@@ -867,8 +860,8 @@ howManyPeopleKnow.change.hidden = (W) HowManyPeopleKnow (W)
 supportingDocument.title = (W) Do you have any supporting information? (W)
 supportingDocument.heading = (W) Do you have any supporting information? (W)
 supportingDocument.hint = (W) Only refer to the information that is currently in your possession. Do not try to obtain supporting information you do not already have. (W)
-supportingDocument.yes = (W) Yes (W)
-supportingDocument.no = (W) No (W)
+supportingDocument.yes = Iawn
+supportingDocument.no = Na
 supportingDocument.checkYourAnswersLabel = (W) Do you have any supporting information? (W)
 supportingDocument.error.required = (W) Select whether you have any supporting information you could provide if requested by HMRC. (W)
 supportingDocument.change.hidden = (W) SupportingDocument (W)
@@ -942,15 +935,8 @@ individualCheckYourAnswers.heading = (W) Check your submission (W)
 individualCheckYourAnswers.individualDetails = (W) Information on {0} (W)
 individualCheckYourAnswers.individualBusinessDetails = (W) Information on this individual''s business (W)
 
-submitYourReport.title = (W) Submit your report (W)
-submitYourReport.heading = (W) Submit your report (W)
-submitYourReport.p1 = (W) HMRC appreciate the time taken to report this activity. (W)
-submitYourReport.p2 = (W) Your security is taken seriously. Once you have submitted your report: (W)
-submitYourReport.list1 = (W) do not find out more about the activity (W)
-submitYourReport.list2 = (W) do not make further reports on the same activity (W)
-
-submitYourReport.title = (W) Submit your report (W)
-submitYourReport.heading = (W) Submit your report (W)
+submitYourReport.title = Cyflwyno’ch adroddiad
+submitYourReport.heading = Cyflwyno’ch adroddiad
 submitYourReport.p1 = (W) HMRC appreciate the time taken to report this activity. (W)
 submitYourReport.p2 = (W) Your security is taken seriously. Once you have submitted your report: (W)
 submitYourReport.list1 = (W) do not find out more about the activity (W)
