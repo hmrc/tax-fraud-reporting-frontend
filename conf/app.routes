@@ -13,7 +13,7 @@ GET        /refresh-session                             controllers.KeepAliveCon
 
 GET        /there-is-a-problem                          controllers.JourneyRecoveryController.onPageLoad(continueUrl: Option[RedirectUrl] ?= None)
 
-GET        /check-your-answers                          controllers.CheckYourAnswersController.onPageLoad
+GET        /check-your-submission                         controllers.CheckYourAnswersController.onPageLoad
 
 GET        /account/sign-out-survey                     controllers.auth.AuthController.signOut
 GET        /account/sign-out                            controllers.auth.AuthController.signOutNoSurvey
@@ -31,7 +31,7 @@ POST       /individual-or-business                      controllers.IndividualOr
 GET        /change-individual-or-business               controllers.IndividualOrBusinessController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-individual-or-business               controllers.IndividualOrBusinessController.onSubmit(mode: Mode = CheckMode)
 
-GET        /do-not-use-this-service                     controllers.DoNotUseThisServiceController.onPageLoad()
+GET        /should-not-use-service                     controllers.DoNotUseThisServiceController.onPageLoad()
 
 GET        /:index/individual-what-information-you-know         controllers.IndividualInformationController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/individual-what-information-you-know         controllers.IndividualInformationController.onSubmit(index: Index, mode: Mode = NormalMode)
@@ -78,10 +78,10 @@ POST       /:index/individual-age-approximate-age                               
 GET        /:index/change-individual-age-approximate-age                        controllers.IndividualAgeController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-individual-age-approximate-age                        controllers.IndividualAgeController.onSubmit(index: Index, mode: Mode = CheckMode)
 
-GET        /:index/business-information-check                         controllers.BusinessInformationCheckController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/business-information-check                        controllers.BusinessInformationCheckController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-business-information-check                  controllers.BusinessInformationCheckController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-business-information-check                  controllers.BusinessInformationCheckController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/business-information-you-know                        controllers.BusinessInformationCheckController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/business-information-you-know                       controllers.BusinessInformationCheckController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-business-information-you-know                  controllers.BusinessInformationCheckController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-business-information-you-know                  controllers.BusinessInformationCheckController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /:index/business-name                                      controllers.BusinessNameController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/business-name                                      controllers.BusinessNameController.onSubmit(index: Index, mode: Mode = NormalMode)
@@ -98,10 +98,10 @@ POST       /activity-description                        controllers.DescriptionA
 GET        /change-activity-description                  controllers.DescriptionActivityController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-activity-description                  controllers.DescriptionActivityController.onSubmit(mode: Mode = CheckMode)
 
-GET        /:index/select-connection-business                        controllers.SelectConnectionBusinessController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/select-connection-business                        controllers.SelectConnectionBusinessController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-select-connection-business                 controllers.SelectConnectionBusinessController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-select-connection-business                 controllers.SelectConnectionBusinessController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/business-how-you-know-business                        controllers.SelectConnectionBusinessController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/business-how-you-know-business                        controllers.SelectConnectionBusinessController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-business-how-you-know-business                 controllers.SelectConnectionBusinessController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-business-how-you-know-business                 controllers.SelectConnectionBusinessController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /:index/business-reference-numbers                          controllers.ReferenceNumbersController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/business-reference-numbers                          controllers.ReferenceNumbersController.onSubmit(index: Index, mode: Mode = NormalMode)
@@ -169,8 +169,8 @@ POST       /your-contact-details                         controllers.YourContact
 GET        /change-your-contact-details                  controllers.YourContactDetailsController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-your-contact-details                  controllers.YourContactDetailsController.onSubmit(mode: Mode = CheckMode)
 
-GET        /:index/check-answers-individual                          controllers.IndividualCheckYourAnswersController.onPageLoad(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-check-answers-individual                          controllers.IndividualCheckYourAnswersController.onPageLoad(index: Index, mode: Mode = CheckMode)
+GET        /:index/individual-submission                          controllers.IndividualCheckYourAnswersController.onPageLoad(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-submission                          controllers.IndividualCheckYourAnswersController.onPageLoad(index: Index, mode: Mode = CheckMode)
 GET        /report-submitted                                     controllers.ReportSubmittedController.onPageLoad()
 
 GET        /activity-source-of-information                        controllers.ActivitySourceOfInformationController.onPageLoad(mode: Mode = NormalMode)
@@ -181,10 +181,10 @@ POST       /change-activity-source-of-information                  controllers.A
 GET        /submit-your-report                       controllers.SubmitYourReportController.onPageLoad()
 POST       /submit-your-report                       controllers.SubmitYourReportController.onSubmit()
 
-GET        /:index/are-you-sure-you-want-to-remove-individual                        controllers.IndividualConfirmRemoveController.onPageLoad(index: Index, mode: Mode = NormalMode)
-POST       /:index/are-you-sure-you-want-to-remove-individual                        controllers.IndividualConfirmRemoveController.onSubmit(index: Index, mode: Mode = NormalMode)
-GET        /:index/change-are-you-sure-you-want-to-remove-individual                  controllers.IndividualConfirmRemoveController.onPageLoad(index: Index, mode: Mode = CheckMode)
-POST       /:index/change-are-you-sure-you-want-to-remove-individual                  controllers.IndividualConfirmRemoveController.onSubmit(index: Index, mode: Mode = CheckMode)
+GET        /:index/remove-individual                        controllers.IndividualConfirmRemoveController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/remove-individual                        controllers.IndividualConfirmRemoveController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-remove-individual                 controllers.IndividualConfirmRemoveController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-remove-individual                  controllers.IndividualConfirmRemoveController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /technical-problems                       controllers.TechnicalProblemsController.onPageLoad()
 
