@@ -87,7 +87,7 @@ activityType.change.hidden = (W) ActivityType (W)
 # in the activityTypes.conf file.
 activityType.name.drugs                        = Gweithgaredd sy’n gysylltiedig â chyffuriau
 activityType.name.avoidingTax                  = Osgoi treth
-activityType.name.benefitsNotChildOrTaxCredits = TTwyll budd-daliadau (heb gynnwys budd-dal plant neu gredydau treth)
+activityType.name.mostBenefits                 = TTwyll budd-daliadau (heb gynnwys budd-dal plant neu gredydau treth)
 activityType.name.borderCrime                  = Troseddau wrth y ffin
 activityType.name.offPayrollWorking            = Torri rheolau gweithio oddi ar y gyflogres (IR35)
 activityType.name.statutorySickPay             = Twyllo Tâl Salwch Statudol (SSP) neu’r Cynllun Ad-dalu Tâl Salwch Statudol
@@ -594,8 +594,8 @@ doNotUseThisService.p1.activity-related-to-drugs = (W) HMRC is unable to investi
 doNotUseThisService.p2.activity-related-to-drugs = (W) You should report activity related to drugs to the police. Call 999 if it’s an emergency, or 101 if it’s not urgent. (W)
 doNotUseThisService.p1.smuggling = (W) HMRC is unable to investigate this activity. (W)
 doNotUseThisService.p2.smuggling = (W) You should <a class="govuk-link" href="https://www.gov.uk/report-smuggling">report smuggling to the Home Office</a>. (W)
-doNotUseThisService.p1.benefit-fraud-and-universal-credit = (W) HMRC is unable to investigate any benefit fraud other than Child Benefit or Tax Credit fraud. (W)
-doNotUseThisService.p2.benefit-fraud-and-universal-credit = (W) You should <a class="govuk-link" href="https://www.gov.uk/report-benefit-fraud">report all other benefit fraud</a> to the Department for Work and Pensions. (W)
+doNotUseThisService.p1.benefit-and-universal-credit = (W) HMRC is unable to investigate any benefit fraud other than Child Benefit or Tax Credit fraud. (W)
+doNotUseThisService.p2.benefit-and-universal-credit = (W) You should <a class="govuk-link" href="https://www.gov.uk/report-benefit-fraud">report all other benefit fraud</a> to the Department for Work and Pensions. (W)
 doNotUseThisService.p1.human-trafficking = (W) HMRC is unable to investigate this activity. (W)
 doNotUseThisService.p2.human-trafficking = (W) You should report human trafficking to the police. Call 999 if it’s an emergency, or 101 if it’s not urgent. (W)
 doNotUseThisService.p1.immigration-border-crime = (W) HMRC is unable to investigate this activity. (W)
