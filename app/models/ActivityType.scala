@@ -268,7 +268,22 @@ object ActivityType {
     ActivityType(
       "22030021",
       "activityType.name.not-paying-inheritance-tax",
-      List("Dead", "Death", "Will", "Family", "Estate","Trusts", "Beneficiary", "Asset", "avoiding", "avoidance", "evading tax", "tax evasion", "evasion", "avoiding tax")
+      List(
+        "Dead",
+        "Death",
+        "Will",
+        "Family",
+        "Estate",
+        "Trusts",
+        "Beneficiary",
+        "Asset",
+        "avoiding",
+        "avoidance",
+        "evading tax",
+        "tax evasion",
+        "evasion",
+        "avoiding tax"
+      )
     ),
     ActivityType(
       "22030022",
@@ -409,7 +424,19 @@ object ActivityType {
     ActivityType(
       "22030034",
       "activityType.name.suspicious-hmrc-emails-text-messages-phone",
-      List("Phishing", "Scam", "Cyber", "WhatsApp", "Unknown", "Telecomms", "Call centre", "Fraud", "Fake", "Con", "hack")
+      List(
+        "Phishing",
+        "Scam",
+        "Cyber",
+        "WhatsApp",
+        "Unknown",
+        "Telecomms",
+        "Call centre",
+        "Fraud",
+        "Fake",
+        "Con",
+        "hack"
+      )
     ),
     ActivityType(
       "22030035",
