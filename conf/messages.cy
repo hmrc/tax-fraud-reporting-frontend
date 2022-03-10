@@ -11,6 +11,10 @@ site.startAgain = (W) Start again (W)
 site.signIn = (W) Sign in (W)
 site.govuk = GOV.UK (W)
 
+
+
+
+
 date.day = (W) Day (W)
 date.month = (W) Month (W)
 date.year = (W) Year (W)
@@ -19,6 +23,9 @@ timeout.title = (W) You’re about to be signed out (W)
 timeout.message = (W) For security reasons, you will be signed out of this service in (W)
 timeout.keepAlive = (W) Stay signed in (W)
 timeout.signOut = (W) Sign out (W)
+
+
+
 
 error.browser.title.prefix = (W) Error: (W)
 error.boolean = (W) Please give an answer (W)
@@ -35,14 +42,22 @@ error.number = (W) Please enter a valid number (W)
 error.required = (W) Please enter a value (W)
 error.summary.title = (W) There is a problem (W)
 
-index.title = (W) Using this service (W)
-index.header = (W) Using this service (W)
-index.p1 = (W) The information you will provide will be valuable to our investigation. (W)
+
+index.title = Yr hyn y mae angen i chi ei wybod
+index.header = Yr hyn y mae angen i chi ei wybod
+
+index.h2.heading1 = Mae CThEM yn cymryd eich diogelwch o ddifrif, peidiwch â gwneud y canlynol.
+index.list.item1 = ceisio dod o hyd i fwy o wybodaeth am y twyll neu’r osgoi treth
+index.list.item2 = rhoi gwybod i unrhyw un eich bod yn rhoi gwybod amdano
+index.list.item3 = l annog unrhyw un i gyflawni trosedd fel y gallwch gael rhagor o wybodaeth
+
+index.h2.heading2 = Mae CThEM yn gwerthfawrogi’r wybodaeth rydych yn ei rhoi:
+index.list2.item1 = bydd unrhyw wybodaeth yr ydych yn ei rhoi yn breifat ac yn gyfrinachol
+index.list2.item2 = gallwch roi’ch manylion cyswllt pan ofynnir i chi neu gallwch roi’r wybodaeth i ni yn ddienw
+index.list2.item3 = ni ddylech geisio cael unrhyw wybodaeth nad oes gennych eisoes
+
+index.p1 = Nid yw CThEM yn gallu ymchwilio i faterion yr heddlu na Llu’r Ffiniau.
 index.p2 = (W) By continuing, you understand that: (W)
-index.list.item1 = (W) any information you provide will be private and confidential (W)
-index.list.item2 = (W) you can provide your contact details when asked or report anonymously (W)
-index.list.item3 = (W) you should not try to obtain or access any evidence you do not already have (W)
-index.inset.text = (W) HMRC is unable to investigate police or Border Force issues. (W)
 
 checkYourAnswers.title = (W) Check Your Answers (W)
 checkYourAnswers.heading = (W) Check Your Answers (W)
@@ -61,9 +76,9 @@ signedOut.guidance = (W) We did not save your answers. (W)
 unauthorised.title = (W) You can’t access this service with this account (W)
 unauthorised.heading = (W) You can’t access this service with this account (W)
 
-activityType.title = (W) What type of HMRC activity are you reporting? (W)
-activityType.heading = (W) What type of HMRC activity are you reporting? (W)
-activityType.hint = (W) Enter keywords related to the activity to suggest relevant categories. (W)
+activityType.title = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
+activityType.heading = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
+activityType.hint = Nodwch eiriau allweddol sy’n gysylltiedig â’r gweithgaredd i awgrymu categorïau perthnasol
 activityType.checkYourAnswersLabel = (W) Activity type (W)
 activityType.error.required = (W) Enter the type of HMRC activity that you are reporting (W)
 activityType.change.hidden = (W) ActivityType (W)
@@ -970,5 +985,3 @@ technicalProblems.link.text = (W) Is this page not working properly? (opens in n
 
 serviceTimeout.title = (W) For your security, we deleted your answers (W)
 serviceTimeout.heading = (W) For your security, we deleted your answers (W)
-
-

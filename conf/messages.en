@@ -42,18 +42,22 @@ error.number = Please enter a valid number
 error.required = Please enter a value
 error.summary.title = There is a problem
 
+
 index.title = What you need to know
 index.header = What you need to know
+
 index.h2.heading1 = HMRC takes your security seriously, do not:
-index.h2.heading2 = HMRC values the information you will provide:
-index.p1 = HMRC is unable to investigate issues related to police, Border Force or other government departments.
-index.p2 = By continuing, you understand that:
 index.list.item1 = try to find out more about the fraud or activity
 index.list.item2 = let anyone know you are making a report
 index.list.item3 = encourage anyone to commit a crime to get more information
+
+index.h2.heading2 = HMRC values the information you will provide:
 index.list2.item1 = any information you provide will be private and confidential
 index.list2.item2 = you can report anonymously or provide your contact details
 index.list2.item3 = you should not try to get any information you do not already have
+
+index.p1 = HMRC is unable to investigate issues related to police, Border Force or other government departments.
+index.p2 = By continuing, you understand that:
 
 checkYourAnswers.title = Check your submission
 checkYourAnswers.heading = Check your submission
