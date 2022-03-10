@@ -158,8 +158,6 @@ activityType.synonym.umbrellaCompanies = Umbrella Companies
 activityType.synonym.offshore          = Offshore
 activityType.synonym.evasion           = Evasion
 activityType.synonym.offshore          = Offshore
-activityType.synonym.evasion           = Evasion
-activityType.synonym.taxHaven          = Tax Haven
 activityType.synonym.account           = Account
 activityType.synonym.payroll           = Payroll
 activityType.synonym.outsource         = Outsource
@@ -179,14 +177,14 @@ activityType.synonym.working     = Working
 activityType.synonym.port  = Port
 activityType.synonym.ferry = Ferry
 activityType.synonym.plane = Plane
-activityType.synonym.Force = Force
+activityType.synonym.force = Force
 
 # offPayrollWorking
 activityType.synonym.contractor = Contractor
 activityType.synonym.employment = Employment
 
 # statutorySickPay
-#activityType.synonym.illness = Illness
+activityType.synonym.illness = Illness
 
 # constructionIndustryScheme
 activityType.synonym.cis      = CIS
@@ -395,7 +393,6 @@ activityType.synonym.stash           = Stash
 activityType.synonym.hidden          = Hidden
 
 # laundering
-activityType.synonym.offshore       = Offshore
 activityType.synonym.transfer       = Transfer
 activityType.synonym.accounts       = Accounts
 activityType.synonym.taxHaven       = Tax Haven
@@ -446,78 +443,140 @@ activityType.synonym.bet      = Bet
 activityType.synonym.casino   = Casino
 
 # capitalGains
-profit    = Profit
-houseSale = House Sale
-property  = Property
-home      = Home
-sold      = Sold
-estate    = Estate
-auction   = Auction
-value     = Value
+activityType.synonym.profit    = Profit
+activityType.synonym.houseSale = House Sale
+activityType.synonym.property  = Property
+activityType.synonym.home      = Home
+activityType.synonym.sold      = Sold
+activityType.synonym.estate    = Estate
+activityType.synonym.auction   = Auction
+activityType.synonym.value     = Value
 
 # alcohol
-exciseDuty     = Excise duty
-commodityFraud = Commodity fraud
-booze          = Booze
-spirit         = Spirit
-liquor         = Liquor
-beer           = Beer
-wine           = Wine
-offie          = Offie
-offLicence     = Off Licence
-cornerShop     = Corner Shop
-cider          = Cider
-vodka          = Vodka
-underCounter   = Under Counter
-distill        = Distill
-fake           = Fake
+activityType.synonym.exciseDuty     = Excise duty
+activityType.synonym.commodityFraud = Commodity fraud
+activityType.synonym.booze          = Booze
+activityType.synonym.spirit         = Spirit
+activityType.synonym.liquor         = Liquor
+activityType.synonym.beer           = Beer
+activityType.synonym.wine           = Wine
+activityType.synonym.offie          = Offie
+activityType.synonym.offLicence     = Off Licence
+activityType.synonym.cornerShop     = Corner Shop
+activityType.synonym.cider          = Cider
+activityType.synonym.vodka          = Vodka
+activityType.synonym.underCounter   = Under Counter
+activityType.synonym.distill        = Distill
+activityType.synonym.fake           = Fake
 
 # tobacco
-Cigarettes = Cigarettes
-Cigars     = Cigars
-Baccy      = Baccy
-Cigs       = Cigs
-Ciggy      = Ciggy
-Tabs       = Tabs
-Sleeve     = Sleeve
-Rolling    = Rolling
-Smoke      = Smoke
-Fag        = Fag
-Fake       = Fake
-Counter    = Counter
-Loose      = Loose
-Pouch      = Pouch
+activityType.synonym.cigarettes = Cigarettes
+activityType.synonym.cigars     = Cigars
+activityType.synonym.baccy      = Baccy
+activityType.synonym.cigs       = Cigs
+activityType.synonym.ciggy      = Ciggy
+activityType.synonym.tabs       = Tabs
+activityType.synonym.sleeve     = Sleeve
+activityType.synonym.rolling    = Rolling
+activityType.synonym.smoke      = Smoke
+activityType.synonym.fag        = Fag
+activityType.synonym.fake       = Fake
+activityType.synonym.counter    = Counter
+activityType.synonym.loose      = Loose
+activityType.synonym.pouch      = Pouch
 
 # inheritance
-dead   = Dead
-death  = Death
-will   = Will
-family = Family
-estate = Estate
+activityType.synonym.dead   = Dead
+activityType.synonym.death  = Death
+activityType.synonym.will   = Will
+activityType.synonym.family = Family
 
 # sugar
-sdil_long     = Soft Drinks Industry Levy
-SDIL          = SDIL
-SoftDrinks    = Soft drinks
-Fizz          = Fizz
-Carbonated    = Carbonated
-Cola          = Cola
-Sweet         = Sweet
-Drink         = Drink
-Chocolate     = Chocolate
-Confectionery = Confectionery
+activityType.synonym.sdil_long     = Soft Drinks Industry Levy
+activityType.synonym.sdil          = SDIL
+activityType.synonym.softDrinks    = Soft drinks
+activityType.synonym.fizz          = Fizz
+activityType.synonym.carbonated    = Carbonated
+activityType.synonym.cola          = Cola
+activityType.synonym.sweet         = Sweet
+activityType.synonym.drink         = Drink
+activityType.synonym.chocolate     = Chocolate
+activityType.synonym.confectionery = Confectionery
 
 
 # windingUpACompany
+activityType.synonym.phoenixism = Phoenixism
+activityType.synonym.close      = Close
+activityType.synonym.fold       = Fold
+activityType.synonym.closure    = Closure
+activityType.synonym.shutdown   = Shutdown
+activityType.synonym.open       = Open
+activityType.synonym.redundant  = Redundant
+
 # selfEmployment
+activityType.synonym.unregisteredTrader = Unregistered trader
+activityType.synonym.cashInHand         = Cash in hand
+activityType.synonym.business           = Business
+activityType.synonym.trading            = Trading
+activityType.synonym.self               = Self
+activityType.synonym.oddJob             = Odd job
+
 # offShoreAccounts
+activityType.synonym.undeclaredOffshoreIncome = Not declaring offshore income
+activityType.synonym.dubai                    = Dubai
+activityType.synonym.bvi                      = BVI
+activityType.synonym.panama                   = Panama
+activityType.synonym.britishVirginIslands     = British Virgin Islands
+activityType.synonym.swiss                    = Swiss
+activityType.synonym.jersey                   = Jersey
+activityType.synonym.divert                   = Divert
+
 # assets
+activityType.synonym.wealthyIndividuals = Wealthy individuals
+activityType.synonym.famous             = Famous
+activityType.synonym.wellKnown          = Well Known
+activityType.synonym.rich               = Rich
+activityType.synonym.professional       = Professional
+activityType.synonym.media              = Media
+activityType.synonym.wellOff            = Well off
+activityType.synonym.minted             = Minted
+activityType.synonym.sports             = Sports
+activityType.synonym.football           = Football
+activityType.synonym.tv                 = TV
+activityType.synonym.celebrity          = Celebrity
+activityType.synonym.politic            = Politic
+activityType.synonym.presenter          = Presenter
+activityType.synonym.act                = Act
+activityType.synonym.million            = Million
+
 # smuggling
+activityType.synonym.smuggle = Smuggle
 
 # cashDeposits
+activityType.synonym.largeCashDeposits   = Large cash deposits
+activityType.synonym.cashDepositIncrease = Large increase in cash deposits
+activityType.synonym.finance             = Finance
+activityType.synonym.account             = Account
+activityType.synonym.pay                 = Pay
+activityType.synonym.band                = Band
+
 # hmrcImpostor
+activityType.synonym.phishing   = Phishing
+activityType.synonym.scam       = Scam
+activityType.synonym.cyber      = Cyber
+activityType.synonym.whatsApp   = WhatsApp
+activityType.synonym.unknown    = Unknown
+activityType.synonym.telecomms  = Telecomms
+activityType.synonym.callCentre = Call centre
+activityType.synonym.con        = Con
+
 # cashTransport
+activityType.synonym.bank     = Bank
+activityType.synonym.deposit  = Deposit
+
 # universalCredit
+# All synonyms covered earlier.
+
 
 individualOrBusiness.title = Are you reporting an individual or a business?
 individualOrBusiness.heading = Are you reporting an individual or a business?
