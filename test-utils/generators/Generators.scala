@@ -61,6 +61,20 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
       .suchThat(!_.isValidInt)
       .map(_.formatted("%f"))
 
+  def decimals(minIntegralDigits: Int = 0, maxIntegralDigits: Int, fractions: Int): Gen[String] = {
+    val minIntValue = Math.pow(10, minIntegralDigits.abs) - 1
+    val maxIntValue = Math.pow(10, maxIntegralDigits.abs) - 1
+    arbitrary[BigDecimal]
+      .suchThat(d => d >= minIntValue && d <= maxIntValue)
+      .map(_.formatted(s"%.${fractions.abs}f"))
+  }
+
+  def decimalsWithCommas(minIntegralDigits: Int = 0, maxIntegralDigits: Int, fractions: Int): Gen[String] =
+    genIntersperseString(decimals(minIntegralDigits, maxIntegralDigits, fractions), ",")
+
+  def decimalsWithCommasAndSpaces(minIntegralDigits: Int = 0, maxIntegralDigits: Int, fractions: Int): Gen[String] =
+    genIntersperseString(decimalsWithCommas(minIntegralDigits, maxIntegralDigits, fractions), " ")
+
   def intsBelowValue(value: Int): Gen[Int] =
     arbitrary[Int] suchThat (_ < value)
 

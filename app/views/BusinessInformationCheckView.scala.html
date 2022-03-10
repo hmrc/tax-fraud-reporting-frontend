@@ -25,7 +25,15 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], index: Index, mode: Mode, isBusinessJourney: Boolean)(implicit request: Request[_], messages: Messages)
+
+@contentHeader = {
+    @if(!isBusinessJourney) {
+        <span class="govuk-caption-xl">@messages(s"individual.${index.display}")</span>
+    }
+        <h1 class="govuk-fieldset__legend--xl govuk-!-margin-top-0">@messages("businessInformationCheck.heading")</h1>
+}
+
 @content = {
 
 <div id="hint-text" class="govuk-hint">@messages("individualContactDetails.hint")</div>
@@ -43,7 +51,7 @@
             CheckboxesViewModel(
                 form   = form,
                 name   = "value",
-                legend = LegendViewModel(messages("businessInformationCheck.heading")).asPageHeading(LegendSize.ExtraLarge),
+                legend = LegendViewModel(HtmlContent(contentHeader)),
                 items = Seq(
                         CheckboxItem(
                             id   = Some("value_0"),

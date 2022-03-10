@@ -21,9 +21,15 @@ import play.api.Configuration
 import play.api.i18n.Lang
 import play.api.mvc.RequestHeader
 import uk.gov.hmrc.play.bootstrap.binders.SafeRedirectUrl
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+
+import scala.util.Try
 
 @Singleton
-class FrontendAppConfig @Inject() (configuration: Configuration) {
+class FrontendAppConfig @Inject() (servicesConfig: ServicesConfig, configuration: Configuration) {
+
+  private def loadConfig(key: String): String =
+    Try(servicesConfig.getString(key)).getOrElse(throw new Exception(s"Missing configuration key: $key"))
 
   val host: String    = configuration.get[String]("host")
   val appName: String = configuration.get[String]("appName")

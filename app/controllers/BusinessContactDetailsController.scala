@@ -48,18 +48,20 @@ class BusinessContactDetailsController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      val isBusinessJourney = request.userAnswers.isBusinessJourney
       val preparedForm = request.userAnswers.get(BusinessContactDetailsPage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, index, mode))
+      Ok(view(preparedForm, index, mode, isBusinessJourney))
   }
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+      val isBusinessJourney = request.userAnswers.isBusinessJourney
       form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode))),
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, isBusinessJourney))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessContactDetailsPage(index), value))

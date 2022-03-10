@@ -26,7 +26,14 @@
     fieldset: GovukFieldset
 )
 
-@(form: Form[_], index:Index, mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], index:Index, mode: Mode, isBusinessJourney: Boolean)(implicit request: Request[_], messages: Messages)
+
+@contentHeader = {
+    @if(!isBusinessJourney) {
+    <span class="govuk-caption-xl">@messages(s"individual.${index.display}")</span>
+    }
+    <h1 class="govuk-fieldset__legend--xl govuk-!-margin-top-0">@messages("referenceNumbers.heading")</h1>
+    }
 
 @content = {
 
@@ -73,7 +80,7 @@
 
         @fieldset(Fieldset(
             legend = Some(Legend(
-                content = messages("referenceNumbers.heading"),
+                content = HtmlContent(contentHeader),
                 isPageHeading = true,
                 classes = "govuk-fieldset__legend--xl"
             )),

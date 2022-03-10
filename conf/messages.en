@@ -799,7 +799,7 @@ approximateValue.details.p = HMRC does not require an exact figure, an estimatio
 approximateValue.error.nonNumeric = Enter the approximate value as a numerical value
 approximateValue.error.required = Enter the approximate value as a numerical value
 approximateValue.error.length = Approximate value must be 12 characters or fewer
-approximateValue.error.maxTwoDecimals = Approximate value allow maximun two decimals
+approximateValue.error.maxTwoDecimals = Approximate value must have maximum of two decimals
 approximateValue.error.wholeNumber = Enter your approximate using whole numbers
 approximateValue.change.hidden = Activity value
 
@@ -846,7 +846,7 @@ individualAddress.checkYourAnswersLabel = Home address
 
 howManyPeopleKnow.title = How many other people know about the activity?
 howManyPeopleKnow.heading = How many other people know about the activity?
-howManyPeopleKnow.hint = <p>Select the number of individuals that know about the activity in addition to yourself and individuals involved.</p>
+howManyPeopleKnow.hint = Select the number of individuals that know about the activity in addition to yourself and the individuals involved.
 howManyPeopleKnow.myselfAndIndividual = Only myself and the individual(s) involved know
 howManyPeopleKnow.oneToFiveIndividuals = 1 to 5 individuals
 howManyPeopleKnow.sixToTenIndividuals = 6 to 10 individuals
@@ -858,6 +858,7 @@ howManyPeopleKnow.change.hidden = How many other people know
 
 addAnotherPerson.title = You have added {0} individual
 addAnotherPerson.heading = Are there other people involved in this activity you want to tell us about?
+addAnotherPerson.hint = You can add a maximum of 5 individuals.
 addAnotherPerson.yes = Yes
 addAnotherPerson.no = No
 addAnotherPerson.checkYourAnswersLabel = Are there other people involved in this activity you want to tell us about?
@@ -902,7 +903,7 @@ yourContactDetails.tel = Telephone number
 yourContactDetails.email = Email address (optional)
 yourContactDetails.emailLabel = Email address
 yourContactDetails.memorableWord = Create a memorable HMRC identifier (optional)
-yourContactDetails.uniqueIdentifier = HMRC Unique Identifier
+yourContactDetails.uniqueIdentifier = Memorable HMRC identifier
 yourContactDetails.memorableWord.hint = You can ask a HMRC caller to quote your HMRC identifier to confirm the contact is not a scam caller. Do not include personal information in your HMRC identifier.
 yourContactDetails.checkYourAnswersLabel = What are your details?
 yourContactDetails.error.firstName.required = Enter your first name.
