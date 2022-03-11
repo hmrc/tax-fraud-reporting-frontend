@@ -18,6 +18,7 @@ date.year = Blwyddyn
 timeout.title = Bydd eich sesiwn yn dod i ben
 timeout.message.notSignedIn =  Rydych wedi bod yn segur ers peth amser, bydd eich sesiwn yn dod i ben
 timeout.keepAlive.notSignedIn = Yn ôl i'r adroddiad
+timeout.deleteAnswers = Gadael adroddiad a dileu data arbed
 
 date.day = Diwrnod
 date.month = Mis
