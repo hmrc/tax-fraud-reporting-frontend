@@ -39,8 +39,8 @@ class YourContactDetailsFormProvider @Inject() extends Mappings with Constraints
     mapping(
       "firstName" -> field("firstName"),
       "lastName"  -> field("lastName"),
-      "tel" -> (
-        field("tel").verifying(firstError(telephoneNumberValidation(errorPrefix + ".tel.invalid")))
+      "tel" -> text("yourContactDetails.error.tel.required").verifying(
+        firstError(telephoneNumberValidation(errorPrefix + ".tel.invalid"))
       ),
       "email" -> optional(
         field("email", isOptional = true) verifying validEmailAddress(errorPrefix + ".email.invalid")

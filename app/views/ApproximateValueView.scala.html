@@ -28,6 +28,11 @@
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
+@contentHint = {
+<p>@messages("approximateValue.p")</p>
+<div id="value-hint" class="govuk-hint">@messages("approximateValue.hint")</div>
+}
+
 @layout(pageTitle = title(form, messages("approximateValue.title"))) {
 
     @formHelper(action = routes.ApproximateValueController.onSubmit(mode), 'autoComplete -> "off") {
@@ -41,7 +46,7 @@
                 field = form("value"),
                 label = LabelViewModel(messages("approximateValue.heading")).asPageHeading(LabelSize.ExtraLarge)
             )
-            .withHint(HintViewModel(messages("approximateValue.hint")))
+            .withHint(HintViewModel(HtmlContent(contentHint)))
             .withInputType("text")
             .withInputMode("numeric")
             .withPattern("[0-9]*")
@@ -49,10 +54,6 @@
             .withWidth(Fixed10)
             .withPrefix(PrefixOrSuffix(content = "approximateValue.suffix"))
         )
-
-            @details(messages("approximateValue.details.header")) {
-                <p>@Html(messages("approximateValue.details.p"))</p>
-            }
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))

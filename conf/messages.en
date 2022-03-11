@@ -81,7 +81,8 @@ activityType.heading = What type of activity are you reporting to HMRC?
 activityType.hint = Enter keywords related to the activity to suggest relevant categories or select an activity from the list.
 activityType.checkYourAnswersLabel = Activity type
 activityType.error.required = Enter the type of activity.
-activityType.change.hidden = ActivityType
+activityType.error.invalid = Enter the type of activity.
+activityType.change.hidden = Activity type
 
 # Any non-HMRC activities here are associated with their corresponding department
 # in the activityTypes.conf file.
@@ -735,6 +736,7 @@ businessName.heading = What is the business''s name?
 businessName.checkYourAnswersLabel = Business name
 businessName.error.required = Enter the business''s name
 businessName.error.length = Business names must be {0} characters or fewer.
+businessName.change.hidden = Business name
 
 descriptionActivity.title = Briefly describe the activity you are reporting
 descriptionActivity.heading = Briefly describe the activity you are reporting
@@ -792,10 +794,9 @@ referenceNumbers.change.hidden = Reference numbers
 approximateValue.title = What is the total value of the activity you are reporting?
 approximateValue.heading = What is the total value of the activity you are reporting?
 approximateValue.suffix = £
+approximateValue.p = HMRC does not require an exact figure, an estimation will still be useful.
 approximateValue.hint = Enter an estimated total value in pounds.
 approximateValue.checkYourAnswersLabel = Activity value (£)
-approximateValue.details.header = I don''t know the total value.
-approximateValue.details.p = HMRC does not require an exact figure, an estimation will still be useful. If you have no estimate then you can <a href="/report-tax-fraud/activity-duration">go to the next question.</a>
 approximateValue.error.nonNumeric = Enter the approximate value as a numerical value
 approximateValue.error.required = Enter the approximate value as a numerical value
 approximateValue.error.length = Approximate value must be 12 characters or fewer
@@ -828,7 +829,7 @@ whenActivityHappen.notHappen = Activity hasn''t happened yet
 whenActivityHappen.doNotKnow = I don''t know
 whenActivityHappen.checkYourAnswersLabel = Activity duration
 whenActivityHappen.error.required = Select when the activity you''re reporting started
-whenActivityHappen.change.hidden = WhenActivityHappen
+whenActivityHappen.change.hidden = Activity duration
 
 activityTimePeriod.title = When will the activity you are reporting likely happen?
 activityTimePeriod.heading = When will the activity you are reporting likely happen?
@@ -838,11 +839,12 @@ activityTimePeriod.later = In the next year or later
 activityTimePeriod.doNotKnow = I don''t know
 activityTimePeriod.checkYourAnswersLabel = Activity start period
 activityTimePeriod.error.required = Select when the activity you''re reporting will likely happen
-activityTimePeriod.change.hidden = ActivityTimePeriod
+activityTimePeriod.change.hidden = Activity start period
 
 individualAddress.lookup.title = What is the individual''s address?
 individualAddress.lookup.heading = What is the individual''s address?
 individualAddress.checkYourAnswersLabel = Home address
+individualAddress.change.hidden = Home address
 
 howManyPeopleKnow.title = How many other people know about the activity?
 howManyPeopleKnow.heading = How many other people know about the activity?
@@ -884,7 +886,7 @@ supportingDocument.yes = Yes
 supportingDocument.no = No
 supportingDocument.checkYourAnswersLabel = Supporting information provided
 supportingDocument.error.required = Select whether you have any supporting information you could provide if requested by HMRC.
-supportingDocument.change.hidden = SupportingDocument
+supportingDocument.change.hidden = Supporting information provided
 
 provideContactDetails.title = Do you wish to provide your contact details?
 provideContactDetails.heading = Do you wish to provide your contact details?
@@ -893,7 +895,7 @@ provideContactDetails.yes = Yes, I will provide my contact details
 provideContactDetails.no = No, I want to report anonymously
 provideContactDetails.checkYourAnswersLabel = Details provided
 provideContactDetails.error.required = Select yes if you will provide your contact details.
-provideContactDetails.change.hidden = Whether you are providing your details or reporting anonymously
+provideContactDetails.change.hidden = Details provided
 
 yourContactDetails.title = Enter your contact details
 yourContactDetails.heading = Enter your contact details
@@ -938,7 +940,7 @@ documentationDescription.hint = HMRC will not ask you to attach any files to thi
 documentationDescription.checkYourAnswersLabel = Supporting information description
 documentationDescription.error.required = Enter a description of the supporting information you hold.
 documentationDescription.error.length = The description of the supporting information you hold must be 500 characters or fewer.
-documentationDescription.change.hidden = DocumentationDescription
+documentationDescription.change.hidden = Supporting information description
 
 checkYourAnswers.activityDetails = The activity you are reporting
 checkYourAnswers.yourDetails = Your details
@@ -979,7 +981,7 @@ activitySourceOfInformation.error.required = Select or enter how you know the in
 activitySourceOfInformation.error.otherValue.required = Select or enter how you know the information.
 activitySourceOfInformation.error.otherValue.maxLength = How you know the information must be 100 characters or fewer.
 activitySourceOfInformation.change.hidden = How you know about the activity
-activitySourceOfInformation.change.hidden = ActivitySourceOfInformation
+activitySourceOfInformation.change.hidden = How you know about the activity
 
 individualContactDetails.cya.landline = Landline
 individualContactDetails.cya.mobile = Mobile
@@ -988,7 +990,7 @@ referenceNumbers.cya.vat = VAT Registration number
 referenceNumbers.cya.ern = ERN
 referenceNumbers.cya.cturn = CTUTR
 
-individualConfirmRemove.title = Are you sure you want to remove this individual?
+individualConfirmRemove.title = Are you sure you want to remove {0}?
 individualConfirmRemove.heading = Are you sure you want to remove {0}?
 individualConfirmRemove.error.required = Select yes if you need to remove the individual.
 addAnotherPerson.reached.maximum = You cannot add another individual as you have entered a maximum of 5.
