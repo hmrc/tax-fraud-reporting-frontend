@@ -130,6 +130,7 @@ activityType.name.cashDeposits                 = Suspicious cash deposits
 activityType.name.hmrcImpostor                 = Suspicious HMRC emails, text messages, and phone calls
 activityType.name.cashTransport                = Suspicious transport of cash
 activityType.name.universalCredit              = Universal credit fraud
+activityType.name.plasticPackaging             = Fraud relating to Plastic Packaging Tax
 
 # Synonyms are associated with their corresponding activity names
 # in the activityTypes.conf file.
@@ -508,7 +509,6 @@ activityType.synonym.drink         = Drink
 activityType.synonym.chocolate     = Chocolate
 activityType.synonym.confectionery = Confectionery
 
-
 # windingUpACompany
 activityType.synonym.phoenixism = Phoenixism
 activityType.synonym.close      = Close
@@ -581,6 +581,22 @@ activityType.synonym.deposit  = Deposit
 
 # universalCredit
 # All synonyms covered earlier.
+
+# plasticPackaging
+activityType.synonym.plastic       = Plastic
+activityType.synonym.packing       = packing
+activityType.synonym.packaging     = packaging
+activityType.synonym.wrapping      = wrapping
+activityType.synonym.manufacture   = manufacture
+activityType.synonym.import        = import
+activityType.synonym.supply        = supply
+activityType.synonym.tax           = tax
+activityType.synonym.storage       = storage
+activityType.synonym.product       = product
+activityType.synonym.bag           = bag
+activityType.synonym.biodegradable = biodegradable
+activityType.synonym.bio           = bio
+activityType.synonym.compostable   = compostable
 
 
 individualOrBusiness.title = Are you reporting an individual or a business?

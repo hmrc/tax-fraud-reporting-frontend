@@ -115,6 +115,7 @@ activityType.name.cashDeposits                 = Adneuon arian parod amheus
 activityType.name.hmrcImpostor                 = Negeseuon e-bost, negeseuon testun a galwadau ffôn amheus gan CThEM
 activityType.name.cashTransport                = Cludo arian parod amheus
 activityType.name.universalCredit              = Twyll credyd cynhwysol
+activityType.name.plasticPackaging             = Twyll yn ymwneud â Threth Pecynnu Plastig
 
 # Synonyms are associated with their corresponding activity names
 # in the activityTypes.conf file.
@@ -565,6 +566,23 @@ activityType.synonym.deposit  = Adnau
 
 # universalCredit
 # All synonyms covered earlier.
+
+# plasticPackaging
+activityType.synonym.plastic       = plastig
+activityType.synonym.packing       = pacio
+activityType.synonym.packaging     = pecynnu
+activityType.synonym.wrapping      = lapio
+activityType.synonym.manufacture   = gweithgynhyrchu
+activityType.synonym.import        = mewnforio
+activityType.synonym.supply        = cyflenwad
+activityType.synonym.tax           = treth
+activityType.synonym.storage       = storio
+activityType.synonym.product       = cynnyrch
+activityType.synonym.bag           = bag
+activityType.synonym.biodegradable = bioddiraddadwy
+activityType.synonym.bio           = bio
+activityType.synonym.compostable   = compostadwy
+
 
 individualOrBusiness.title = A ydych yn rhoi gwybod am unigolyn neu fusnes
 individualOrBusiness.heading = A ydych yn rhoi gwybod am unigolyn neu fusnes
