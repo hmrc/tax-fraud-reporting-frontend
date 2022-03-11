@@ -1,4 +1,4 @@
-service.name = (W) Report tax fraud or evasion (W)
+service.name = Rhoi gwybod am dwyll treth neu osgoi treth
 
 site.back = Yn ôl
 site.remove = Dileu
@@ -6,10 +6,8 @@ site.change = newid
 site.no = Na
 site.yes = Iawn
 site.continue = Yn eich blaen
-site.start = (W) Start now (W)
-site.startAgain = (W) Start again (W)
-site.signIn = (W) Sign in (W)
-site.govuk = GOV.UK (W)
+site.startAgain = Dechrau eto
+site.govuk = GOV.UK
 site.unknown = Anhysbys
 site.accept = Derbyn a yn eich blaen
 
@@ -17,24 +15,25 @@ date.day = Diwrnod
 date.month = Mis
 date.year = Blwyddyn
 
-timeout.title = (W) You’re about to be signed out (W)
-timeout.message = (W) For security reasons, you will be signed out of this service in (W)
-timeout.keepAlive = (W) Stay signed in (W)
-timeout.signOut = (W) Sign out (W)
+timeout.title = Bydd eich sesiwn yn dod i ben
+timeout.message.notSignedIn =  Rydych wedi bod yn segur ers peth amser, bydd eich sesiwn yn dod i ben
+timeout.keepAlive.notSignedIn = Yn ôl i'r adroddiad
 
-error.browser.title.prefix = (W) Error: (W)
-error.boolean = (W) Please give an answer (W)
-error.invalid_date = (W) Give a correct date (W)
-error.date.day_blank = (W) Enter a day (W)
-error.date.day_invalid = (W) Give a correct day using numbers 1 to 31 (W)
-error.date.month_blank = (W) Enter a month (W)
-error.date.month_invalid = (W) Give a correct month using numbers 1 to 12 (W)
-error.date.year_blank = (W) Enter a year (W)
-error.date.year_invalid = (W) Give a correct year (W)
-error.integer = (W) Give an answer in whole numbers (W)
-error.non_numeric = (W) Give a value using only numbers (W)
-error.number = (W) Please enter a valid number (W)
-error.required = (W) Please enter a value (W)
+date.day = Diwrnod
+date.month = Mis
+date.year = Blwyddyn
+
+error.browser.title.prefix = Gwall:
+error.boolean = Rhowch ateb
+error.invalid_date = Rhowch ddyddiad cywir
+error.date.day_blank = Nodwch ddiwrnod
+error.date.day_invalid = Rhowch ddiwrnod cywir gan ddefnyddio’r rhifau 1 i 31
+error.date.month_blank = Nodwch fis
+error.date.month_invalid = Rhowch fis cywir gan ddefnyddio’r rhifau 1 i 12
+error.date.year_blank = Nodwch flwyddyn
+error.date.year_invalid = Rhowch flwyddyn gywir
+error.number = Nodwch rif dilys
+error.required = Rhowch ateb
 error.summary.title = Mae problem wedi codi
 
 index.title = Yr hyn y mae angen i chi ei wybod
@@ -56,19 +55,10 @@ index.p2 = (W) By continuing, you understand that: (W)
 checkYourAnswers.title = Gwiriwch eich cyflwyniad
 checkYourAnswers.heading = Gwiriwch eich cyflwyniad
 
-journeyRecovery.continue.title = (W) Sorry, there is a problem with the service (W)
-journeyRecovery.continue.heading = (W) Sorry, there is a problem with the service (W)
-journeyRecovery.continue.guidance = (W) [Add content to explain how to proceed.] (W)
-journeyRecovery.startAgain.title = (W) Sorry, there is a problem with the service (W)
-journeyRecovery.startAgain.heading = (W) Sorry, there is a problem with the service (W)
-journeyRecovery.startAgain.guidance = (W) [Add content to explain why the user needs to start again.] (W)
-
-signedOut.title = (W) For your security, we signed you out (W)
-signedOut.heading = (W) For your security, we signed you out (W)
-signedOut.guidance = (W) We did not save your answers. (W)
-
-unauthorised.title = (W) You can’t access this service with this account (W)
-unauthorised.heading = (W) You can’t access this service with this account (W)
+journeyRecovery.continue.title = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
+journeyRecovery.continue.heading = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
+journeyRecovery.startAgain.title = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
+journeyRecovery.startAgain.heading = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
 
 activityType.title = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
 activityType.heading = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
@@ -681,7 +671,7 @@ individualBusinessDetails.yes = Iawn
 individualBusinessDetails.no = Na
 individualBusinessDetails.dontKnow = Nid wyf yn gwybod
 individualBusinessDetails.checkYourAnswersLabel = Mae gan yr unigolyn fanylion busnes
-individualBusinessDetails.error.required = (W) Select whether the individual has business details that you can provide (W)
+individualBusinessDetails.error.required = (W) Select yes if the individual has business details that you can provide. (W)
 individualBusinessDetails.change.hidden = Mae gan yr unigolyn fanylion busnes
 
 dateFormat.title = Dewiswch fformat i nodi oedran yr unigolyn.
@@ -713,8 +703,8 @@ individualAge.suffix = mlwydd oed
 individualAge.checkYourAnswersLabel = Oedran Bras
 individualAge.error.nonNumeric = Nodwch ei oedran bras
 individualAge.error.required = Nodwch ei oedran bras.
-individualAge.error.wholeNumber = (W) Enter the individual''s approximate age with numerical values (W)
-individualAge.error.outOfRange = (W) The individual''s approximate age must be between {0} and {1} (W)
+individualAge.error.wholeNumber = Nodwch ei oedran bras
+individualAge.error.outOfRange = Rhaid i''r oedran bras fod rhwng {0} a {1}
 individualAge.change.hidden = Oedran Bras
 
 businessInformationCheck.title = Beth ydych yn ei wybod am y busnes?
@@ -786,7 +776,7 @@ referenceNumbers.ct-utr.label = Cyfeirnod Unigryw y Trethdalwr ar gyfer Treth Go
 referenceNumbers.ct-utr.hint = Mae’n rhaid iddo fod yn 10 digid, er enghraifft 1234567890.
 referenceNumbers.checkYourAnswersLabel = Cyfeirnodau Busnes
 referenceNumbers.error.vatRegistration.length = Rhif cofrestru TAW rhaid iddo fod yn 9 digid, neu’n 11 digid.
-referenceNumbers.error.employeeRefNo.length =  (W) Employee Reference Number must be {0} digits long (W)
+referenceNumbers.error.employeeRefNo.length =  Gyfeirnod y Cyflogwr fod yn {0} digid.
 referenceNumbers.error.corporationTax.length = Cyfeirnod Unigryw y Trethdalwr ar gyfer Treth Gorfforaeth (CT UTR) rhaid iddo fod yn 10 digid, er enghraifft 1234567890.
 referenceNumbers.change.hidden = Cyfeirnodau Busnes
 referenceNumbers.cya.vat = Rhif cofrestru TAW
@@ -825,7 +815,7 @@ addAnotherPerson.yes = Iawn
 addAnotherPerson.no = Na
 addAnotherPerson.checkYourAnswersLabel = A oes pobl ychwanegol yn cymryd rhan yn y gweithgaredd hwn yr hoffech roi gwybod i ni amdanynt?
 addAnotherPerson.error.required = (W) Select yes if you need to add another individual. (W)
-addAnotherPerson.change.hidden = (W) AddAnotherPerson (W)
+addAnotherPerson.change.hidden = (W) Add another individual (W)
 
 individualConfirmRemove.title = A ydych yn siŵr eich bod am dynnu {0}?
 individualConfirmRemove.heading = A ydych yn siŵr eich bod am dynnu {0}?
@@ -833,7 +823,6 @@ individualConfirmRemove.heading = A ydych yn siŵr eich bod am dynnu {0}?
 individual.addAnother.header = Rydych wedi ychwanegu {0} unigolyn
 individual.addAnother.header.plural = Rydych wedi ychwanegu {0} unigolyn
 addAnotherPerson.reached.maximum = Ni allwch ychwanegu unigolyn arall gan eich bod wedi nodi uchafswm o 5.
-individual.moreThan5 = (W) You cannot add another individual as you have entered a maximum of 5. (W)
 individual.1 = Unigolyn  A
 individual.2 = Unigolyn  B
 individual.3 = Unigolyn  C
@@ -884,8 +873,8 @@ supportingDocument.checkYourAnswersLabel = Gwybodaeth ategol a roddwyd
 supportingDocument.error.required = (W) Select whether you have any supporting information you could provide if requested by HMRC. (W)
 supportingDocument.change.hidden = Gwybodaeth ategol a roddwyd
 
-individualAddress.lookup.title = (W) What is the individual''''s address? (W)
-individualAddress.lookup.heading = (W) What is the individual''''s address? (W)
+individualAddress.lookup.title = Beth yw enw’r unigolyn?
+individualAddress.lookup.heading = Beth yw enw’r unigolyn?
 
 provideContactDetails.title = A ydych am roi’ch manylion cyswllt?
 provideContactDetails.heading = A ydych am roi’ch manylion cyswllt?
@@ -919,11 +908,11 @@ yourContactDetails.error.memorableWord.length = Dynodwr CThEM cofiadwy fod yn 25
 yourContactDetails.FirstName.change.hidden = Enw cynta
 yourContactDetails.LastName.change.hidden = Enw olaf
 
-businessAddress.lookup.title = (W) What is the business''''s address? (W)
-businessAddress.lookup.heading = (W) What is the business''''s address? (W)
+businessAddress.lookup.title = Beth yw cyfeiriad y busnes?
+businessAddress.lookup.heading = Beth yw cyfeiriad y busnes?
 
-reportSubmitted.title = (W) Your report has been submitted (W)
-reportSubmitted.heading = (W) Your report has been submitted (W)
+reportSubmitted.title = Mae''ch adroddiad wedi''i gyflwyno
+reportSubmitted.heading = Mae''ch adroddiad wedi''i gyflwyno
 reportSubmitted.whatHappensNext.header = Mae’ch adroddiad wedi’i gyflwyno
 reportSubmitted.p1 = Bydd CThEM:
 reportSubmitted.list.line1 = byddwn yn adolygu’r adroddiad a gyflwynwyd gennych
@@ -982,13 +971,13 @@ activitySourceOfInformation.error.otherValue.required = Nodwch sut rydych yn gwy
 activitySourceOfInformation.error.otherValue.maxLength = Nodwch sut rydych chi''n gwybod bod yn rhaid i''r wybodaeth fod yn 100 nod neu lai.
 activitySourceOfInformation.change.hidden = Sut cawsoch yr wybodaeth hon
 
-technicalProblems.title = (W) Get help with technical problems (W)
-technicalProblems.heading = (W) Get help with technical problems (W)
-technicalProblems.uk.phone = (W) Telephone in UK: 0800 788 887 (W)
-technicalProblems.outside.phone = (W) Telephone outside UK:+44 (0)203 080 0871 (W)
-technicalProblems.weekdays.time = (W) Monday to Friday: 9am to 5pm (W)
-technicalProblems.weekend = (W) Closed weekends and bank holidays (W)
-technicalProblems.link.text = (W) Is this page not working properly? (opens in new tab) (W)
+technicalProblems.title = Cael help gyda phroblem dechnegol
+technicalProblems.heading = Cael help gyda phroblem dechnegol
+technicalProblems.uk.phone = ffôn yn u DU: 0800 788 887
+technicalProblems.outside.phone = ffôn y tu allan i’r DU:+44 (0)203 080 0871
+technicalProblems.weekdays.time = Dydd Llun i Ddydd Gwener: 9am i 5pm
+technicalProblems.weekend = Ffôn ar gau ar benwythnosau a gwyliau banc
+technicalProblems.link.text = Onid yw''r dudalen hon yn gweithio''n iawn? (yn agor mewn tab newydd)
 
-serviceTimeout.title = (W) For your security, we deleted your answers (W)
-serviceTimeout.heading = (W) For your security, we deleted your answers (W)
+serviceTimeout.title =  Er eich diogelwch, rydym wedi dileu eich atebion
+serviceTimeout.heading =  Er eich diogelwch, rydym wedi dileu eich atebion
