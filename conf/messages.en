@@ -593,8 +593,8 @@ individualOrBusiness.checkYourAnswersLabel = Are you reporting an individual or 
 individualOrBusiness.error.required = Select if you are reporting an individual or a business.
 individualOrBusiness.change.hidden = Reporting an individual or a business
 
-doNotUseThisService.title = You should not use this service to report this activity
-doNotUseThisService.heading = You should not use this service to report this activity
+doNotUseThisService.title = You should not use this service to report this activity.
+doNotUseThisService.heading = You should not use this service to report this activity.
 doNotUseThisService.p1.activity-related-to-drugs = HMRC is unable to investigate this activity.
 doNotUseThisService.p2.activity-related-to-drugs = You should report activity related to drugs to the police. Call 999 if it’s an emergency, or 101 if it’s not urgent.
 doNotUseThisService.p1.smuggling = HMRC is unable to investigate this activity.
