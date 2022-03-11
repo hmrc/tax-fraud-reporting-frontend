@@ -40,19 +40,19 @@ import views.html.IndividualCheckYourAnswersView
 import java.time.LocalDate
 
 class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
-
   "Individual Check Your Answers Controller" - {
 
     "must return OK and the correct view for a GET" in {
-
       val onwardRoute = routes.CheckYourAnswersController.onPageLoad
+
+      val testAge = 45
 
       val answers = emptyUserAnswers
         .set(
           IndividualNamePage(Index(0)),
           IndividualName(Some("firstname"), Some("middlename"), Some("lastname"), Some("aliases"))
         ).success.value
-        .set(IndividualAgePage(Index(0)), 45).success.value
+        .set(IndividualAgePage(Index(0)), testAge).success.value
         .set(IndividualDateOfBirthPage(Index(0)), LocalDate.now).success.value
         .set(
           IndividualAddressConfirmationPage(Index(0)),
@@ -82,7 +82,7 @@ class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryList
         .set(SelectConnectionBusinessPage(Index(0)), SelectConnectionBusiness.Accountant).success.value
 
       val application = applicationBuilder(userAnswers = Some(answers))
-        .overrides(inject.bind[Navigator].toInstance(new FakeNavigator(onwardRoute))).build()
+        .overrides(inject.bind[Navigator].toInstance(getFakeNavigator(onwardRoute))).build()
 
       running(application) {
         val request = FakeRequest(GET, routes.IndividualCheckYourAnswersController.onPageLoad(Index(0), NormalMode).url)

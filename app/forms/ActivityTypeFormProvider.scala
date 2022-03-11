@@ -22,10 +22,10 @@ import play.api.data.format.Formatter
 import play.api.data.{Form, FormError, Forms}
 import services.ActivityTypeService
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 
+@Singleton
 class ActivityTypeFormProvider @Inject() (activityTypeService: ActivityTypeService) extends Mappings {
-
   private val formatter = new Formatter[ActivityType] {
 
     def bind(key: String, data: Map[String, String]): Either[Seq[FormError], ActivityType] =

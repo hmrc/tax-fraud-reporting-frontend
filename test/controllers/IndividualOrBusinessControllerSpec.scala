@@ -19,10 +19,8 @@ package controllers
 import base.SpecBase
 import forms.IndividualOrBusinessFormProvider
 import models.{IndividualOrBusiness, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import pages.IndividualOrBusinessPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -33,16 +31,14 @@ import views.html.IndividualOrBusinessView
 
 import scala.concurrent.Future
 
-class IndividualOrBusinessControllerSpec extends SpecBase with MockitoSugar {
-
-  def onwardRoute = Call("GET", "/foo")
-
-  lazy val individualOrBusinessRoute = routes.IndividualOrBusinessController.onPageLoad(NormalMode).url
-
-  val formProvider = new IndividualOrBusinessFormProvider()
-  val form         = formProvider()
+class IndividualOrBusinessControllerSpec extends SpecBase {
 
   "IndividualOrBusiness Controller" - {
+    def onwardRoute = Call("GET", "/foo")
+
+    lazy val individualOrBusinessRoute = routes.IndividualOrBusinessController.onPageLoad(NormalMode).url
+
+    val form = (new IndividualOrBusinessFormProvider)()
 
     "must return OK and the correct view for a GET" in {
 
@@ -91,7 +87,7 @@ class IndividualOrBusinessControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()

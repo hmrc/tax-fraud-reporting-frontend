@@ -19,10 +19,8 @@ package controllers
 import base.SpecBase
 import forms.ReferenceNumbersFormProvider
 import models.{Index, NormalMode, ReferenceNumbers, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import pages.ReferenceNumbersPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -33,14 +31,8 @@ import views.html.ReferenceNumbersView
 
 import scala.concurrent.Future
 
-class ReferenceNumbersControllerSpec extends SpecBase with MockitoSugar {
-
-  def onwardRoute = Call("GET", "/foo")
-
-  private val formProvider = new ReferenceNumbersFormProvider()
-  private val form         = formProvider()
-
-  lazy val referenceNumbersRoute = routes.ReferenceNumbersController.onPageLoad(Index(0), NormalMode).url
+class ReferenceNumbersControllerSpec extends SpecBase {
+  private val form = (new ReferenceNumbersFormProvider)()
 
   private val answers           = emptyUserAnswers
   private val isBusinessJourney = answers.isBusinessJourney
@@ -55,6 +47,9 @@ class ReferenceNumbersControllerSpec extends SpecBase with MockitoSugar {
   private val userAnswers = UserAnswers(userAnswersId).set(ReferenceNumbersPage(Index(0)), model).success.value
 
   "ReferenceNumbers Controller" - {
+    def onwardRoute = Call("GET", "/foo")
+
+    lazy val referenceNumbersRoute = routes.ReferenceNumbersController.onPageLoad(Index(0), NormalMode).url
 
     "must return OK and the correct view for a GET" in {
 
@@ -103,7 +98,7 @@ class ReferenceNumbersControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
@@ -127,7 +122,7 @@ class ReferenceNumbersControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, referenceNumbersRoute)
-            .withFormUrlEncodedBody(("corporationTax" -> "a" * 11))
+            .withFormUrlEncodedBody("corporationTax" -> "a" * 11)
 
         val boundForm = form.bind(Map("corporationTax" -> "a" * 11))
 

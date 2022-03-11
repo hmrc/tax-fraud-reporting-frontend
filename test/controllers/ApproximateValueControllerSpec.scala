@@ -19,10 +19,8 @@ package controllers
 import base.SpecBase
 import forms.ApproximateValueFormProvider
 import models.{NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
-import org.mockito.ArgumentMatchers.{any, anyDouble}
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
+import navigation.Navigator
+import org.mockito.ArgumentMatchers.any
 import pages.ApproximateValuePage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -32,20 +30,16 @@ import repositories.SessionRepository
 import views.html.ApproximateValueView
 
 import scala.concurrent.Future
-import scala.math.Ordering.BigDecimal
 
-class ApproximateValueControllerSpec extends SpecBase with MockitoSugar {
-
-  private val formProvider = new ApproximateValueFormProvider()
-  private val form         = formProvider()
-
-  def onwardRoute = Call("GET", "/foo")
-
-  val validAnswer: BigDecimal = 100.99
+class ApproximateValueControllerSpec extends SpecBase {
+  private val form = (new ApproximateValueFormProvider)()
 
   private lazy val approximateValueRoute = routes.ApproximateValueController.onPageLoad(NormalMode).url
 
   "ApproximateValue Controller" - {
+    def onwardRoute = Call("GET", "/foo")
+
+    val validAnswer: BigDecimal = 100.99
 
     "must return OK and the correct view for a GET" in {
 
@@ -88,12 +82,14 @@ class ApproximateValueControllerSpec extends SpecBase with MockitoSugar {
 
       val mockSessionRepository = mock[SessionRepository]
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when {
+        mockSessionRepository.set(any())
+      } thenReturn Future.successful(true)
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()

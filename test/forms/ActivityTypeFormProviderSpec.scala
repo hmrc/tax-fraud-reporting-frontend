@@ -16,17 +16,18 @@
 
 package forms
 
+import base.MockActivityTypes
 import forms.behaviours.StringFieldBehaviours
 import play.api.data.FormError
 
 // TODO tests
-class ActivityTypeFormProviderSpec extends StringFieldBehaviours {
-
-  val requiredKey = "activityType.error.required"
-
-  val form = new ActivityTypeFormProvider()()
+class ActivityTypeFormProviderSpec extends StringFieldBehaviours with MockActivityTypes {
 
   ".value" ignore {
+
+    val requiredKey = "activityType.error.required"
+
+    val form = new ActivityTypeFormProvider(mockActivityTypeService)()
 
     val fieldName = "value"
 

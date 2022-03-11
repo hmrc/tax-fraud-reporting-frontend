@@ -19,10 +19,8 @@ package controllers
 import base.SpecBase
 import forms.IndividualBusinessDetailsFormProvider
 import models.{Index, IndividualBusinessDetails, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import pages.IndividualBusinessDetailsPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -33,17 +31,14 @@ import views.html.IndividualBusinessDetailsView
 
 import scala.concurrent.Future
 
-class IndividualBusinessDetailsControllerSpec extends SpecBase with MockitoSugar {
-
-  def onwardRoute = Call("GET", "/foo")
-
-  lazy val individualBusinessDetailsRoute =
-    routes.IndividualBusinessDetailsController.onPageLoad(Index(0), NormalMode).url
-
-  val formProvider = new IndividualBusinessDetailsFormProvider()
-  val form         = formProvider()
-
+class IndividualBusinessDetailsControllerSpec extends SpecBase {
   "IndividualBusinessDetails Controller" - {
+    def onwardRoute = Call("GET", "/foo")
+
+    lazy val individualBusinessDetailsRoute =
+      routes.IndividualBusinessDetailsController.onPageLoad(Index(0), NormalMode).url
+
+    val form = (new IndividualBusinessDetailsFormProvider)()
 
     "must return OK and the correct view for a GET" in {
 
@@ -94,7 +89,7 @@ class IndividualBusinessDetailsControllerSpec extends SpecBase with MockitoSugar
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()

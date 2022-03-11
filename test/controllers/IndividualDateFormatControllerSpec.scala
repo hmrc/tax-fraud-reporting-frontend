@@ -19,10 +19,8 @@ package controllers
 import base.SpecBase
 import forms.DateFormatFormProvider
 import models.{Index, IndividualDateFormat, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import pages.IndividualDateFormatPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -33,16 +31,13 @@ import views.html.IndividualDateFormatView
 
 import scala.concurrent.Future
 
-class IndividualDateFormatControllerSpec extends SpecBase with MockitoSugar {
-
-  def onwardRoute = Call("GET", "/foo")
-
-  lazy val dateFormatRoute = routes.IndividualDateFormatController.onPageLoad(Index(0), NormalMode).url
-
-  val formProvider = new DateFormatFormProvider()
-  val form         = formProvider()
-
+class IndividualDateFormatControllerSpec extends SpecBase {
   "DateFormat Controller" - {
+    def onwardRoute = Call("GET", "/foo")
+
+    lazy val dateFormatRoute = routes.IndividualDateFormatController.onPageLoad(Index(0), NormalMode).url
+
+    val form = (new DateFormatFormProvider)()
 
     "must return OK and the correct view for a GET" in {
 
@@ -93,7 +88,7 @@ class IndividualDateFormatControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()

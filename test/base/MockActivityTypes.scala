@@ -14,17 +14,23 @@
  * limitations under the License.
  */
 
-package navigation
+package base
 
-import play.api.mvc.Call
-import pages._
-import models.{Mode, UserAnswers}
+import org.mockito.ArgumentMatchers.{any, eq => equal}
+import org.mockito.MockitoSugar
+import play.api.{ConfigLoader, Configuration}
 import services.ActivityTypeService
 
-class FakeNavigator(desiredRoute: Call, activityTypeService: ActivityTypeService)
-    extends Navigator(activityTypeService) {
+trait MockActivityTypes extends MockitoSugar {
+  type MapLoader = ConfigLoader[Map[String, String]]
 
-  override def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call =
-    desiredRoute
+  val mockConfiguration: Configuration = mock[Configuration]
+  when {
+    mockConfiguration.get(equal("activityTypes"))(any[MapLoader])
+  } thenReturn Map("foo" -> "bar,baz,qux")
+  when {
+    mockConfiguration.get(equal("nonHmrcActivities"))(any[MapLoader])
+  } thenReturn Map.empty
 
+  implicit val mockActivityTypeService: ActivityTypeService = new ActivityTypeService(mockConfiguration)
 }

@@ -19,11 +19,9 @@ package controllers
 import base.SpecBase
 import forms.BusinessContactDetailsFormProvider
 import models.{BusinessContactDetails, Index, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
-import pages.{BusinessContactDetailsPage}
+import pages.BusinessContactDetailsPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -33,24 +31,22 @@ import views.html.BusinessContactDetailsView
 
 import scala.concurrent.Future
 
-class BusinessContactDetailsControllerSpec extends SpecBase with MockitoSugar {
-
-  def onwardRoute = Call("GET", "/foo")
-
-  val formProvider = new BusinessContactDetailsFormProvider()
-  val form         = formProvider()
-
-  lazy val businessContactDetailsRoute = routes.BusinessContactDetailsController.onPageLoad(Index(0), NormalMode).url
-
-  private val answers           = emptyUserAnswers
-  private val isBusinessJourney = answers.isBusinessJourney
-
-  private val model =
-    BusinessContactDetails(landlineNumber = Some("landline"), mobileNumber = Some("mobile"), email = Some("email"))
-
-  private val userAnswers = UserAnswers(userAnswersId).set(BusinessContactDetailsPage(Index(0)), model).success.value
-
+class BusinessContactDetailsControllerSpec extends SpecBase {
   "BusinessContactDetails Controller" - {
+    def onwardRoute = Call("GET", "/foo")
+
+    val formProvider = new BusinessContactDetailsFormProvider()
+    val form         = formProvider()
+
+    lazy val businessContactDetailsRoute = routes.BusinessContactDetailsController.onPageLoad(Index(0), NormalMode).url
+
+    val answers           = emptyUserAnswers
+    val isBusinessJourney = answers.isBusinessJourney
+
+    val model =
+      BusinessContactDetails(landlineNumber = Some("landline"), mobileNumber = Some("mobile"), email = Some("email"))
+
+    val userAnswers = UserAnswers(userAnswersId).set(BusinessContactDetailsPage(Index(0)), model).success.value
 
     "must return OK and the correct view for a GET" in {
 
@@ -99,7 +95,7 @@ class BusinessContactDetailsControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
@@ -123,7 +119,7 @@ class BusinessContactDetailsControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, businessContactDetailsRoute)
-            .withFormUrlEncodedBody(("landlineNumber" -> "a" * 101))
+            .withFormUrlEncodedBody("landlineNumber" -> "a" * 101)
 
         val boundForm = form.bind(Map("landlineNumber" -> "a" * 101))
 

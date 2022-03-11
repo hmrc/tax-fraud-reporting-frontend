@@ -17,7 +17,6 @@
 package controllers
 
 import base.SpecBase
-import models.ActivityType
 import org.scalatest.TryValues
 import pages.ActivityTypePage
 import play.api.test.FakeRequest
@@ -31,7 +30,7 @@ class DoNotUseThisServiceControllerSpec extends SpecBase with TryValues {
     "must return OK and the correct view for a GET when the user has an activity which is the responsibility of another department" in {
 
       val userAnswers =
-        emptyUserAnswers.set(ActivityTypePage, ActivityType.list.find(_.code == "22030036").value).success.value
+        emptyUserAnswers.set(ActivityTypePage, mockActivityTypeService.allActivities.head).success.value
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
@@ -76,7 +75,7 @@ class DoNotUseThisServiceControllerSpec extends SpecBase with TryValues {
 
     "must redirect to the journey recovery page for a GET when the user has an activity which belongs to HMRC" in {
 
-      val userAnswers = emptyUserAnswers.set(ActivityTypePage, ActivityType.list.head).success.value
+      val userAnswers = emptyUserAnswers.set(ActivityTypePage, mockActivityTypeService.allActivities.head).success.value
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {

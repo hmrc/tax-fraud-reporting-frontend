@@ -31,7 +31,7 @@ class ActivityTypeService @Inject() (configuration: Configuration) {
     }
 
   val allActivities: Iterable[ActivityType] =
-    getMap("activityTypes") map (ActivityType.apply _).tupled
+    getMap("activityTypes") map { case (name, synonyms) => ActivityType(name, synonyms) }
 
   private val nonHmrcActivities = getMap("nonHmrcActivities")
 

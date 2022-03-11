@@ -16,10 +16,11 @@
 
 package pages
 
+import base.MockActivityTypes
 import models.ActivityType
 import pages.behaviours.PageBehaviours
 
-class ActivityTypePageSpec extends PageBehaviours {
+class ActivityTypePageSpec extends PageBehaviours with MockActivityTypes {
 
   "ActivityTypePage" - {
 

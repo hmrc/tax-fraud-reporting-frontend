@@ -19,10 +19,8 @@ package controllers
 import base.SpecBase
 import forms.IndividualAgeFormProvider
 import models.{Index, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import pages.IndividualAgePage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -33,18 +31,15 @@ import views.html.IndividualAgeView
 
 import scala.concurrent.Future
 
-class IndividualAgeControllerSpec extends SpecBase with MockitoSugar {
-
-  val formProvider = new IndividualAgeFormProvider()
-  val form         = formProvider()
-
-  def onwardRoute = Call("GET", "/foo")
-
-  val validAnswer = 0
-
-  lazy val individualAgeRoute = routes.IndividualAgeController.onPageLoad(Index(0), NormalMode).url
-
+class IndividualAgeControllerSpec extends SpecBase {
   "IndividualAge Controller" - {
+    val form = (new IndividualAgeFormProvider)()
+
+    def onwardRoute = Call("GET", "/foo")
+
+    val validAnswer = 0
+
+    lazy val individualAgeRoute = routes.IndividualAgeController.onPageLoad(Index(0), NormalMode).url
 
     "must return OK and the correct view for a GET" in {
 
@@ -92,7 +87,7 @@ class IndividualAgeControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()

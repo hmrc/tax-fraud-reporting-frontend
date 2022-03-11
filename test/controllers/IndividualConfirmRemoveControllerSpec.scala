@@ -18,12 +18,9 @@ package controllers
 
 import base.SpecBase
 import forms.IndividualConfirmRemoveFormProvider
-import models.{Index, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import models.{Index, NormalMode}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.{never, times, verify, when}
-import org.scalatestplus.mockito.MockitoSugar
-import pages.IndividualConfirmRemovePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -33,16 +30,14 @@ import views.html.IndividualConfirmRemoveView
 
 import scala.concurrent.Future
 
-class IndividualConfirmRemoveControllerSpec extends SpecBase with MockitoSugar {
-
-  def onwardRoute = Call("GET", "/foo")
-
-  val formProvider = new IndividualConfirmRemoveFormProvider()
-  val form         = formProvider()
-
-  lazy val individualConfirmRemoveRoute = routes.IndividualConfirmRemoveController.onPageLoad(Index(0), NormalMode).url
-
+class IndividualConfirmRemoveControllerSpec extends SpecBase {
   "IndividualConfirmRemove Controller" - {
+    def onwardRoute = Call("GET", "/foo")
+
+    val form = (new IndividualConfirmRemoveFormProvider)()
+
+    lazy val individualConfirmRemoveRoute =
+      routes.IndividualConfirmRemoveController.onPageLoad(Index(0), NormalMode).url
 
     "must return OK and the correct view for a GET" in {
 
@@ -69,7 +64,7 @@ class IndividualConfirmRemoveControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
@@ -95,7 +90,7 @@ class IndividualConfirmRemoveControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
@@ -118,7 +113,7 @@ class IndividualConfirmRemoveControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
@@ -130,7 +125,7 @@ class IndividualConfirmRemoveControllerSpec extends SpecBase with MockitoSugar {
 
         route(application, request).value.futureValue
 
-        verify(mockSessionRepository, never()).set(any())
+        verify(mockSessionRepository, never).set(any())
       }
     }
 

@@ -19,8 +19,7 @@ package controllers
 import base.SpecBase
 import forms.AddAnotherPersonFormProvider
 import models.{AddAnotherPerson, NormalMode}
-import navigation.{FakeNavigator, Navigator}
-import org.scalatestplus.mockito.MockitoSugar
+import navigation.Navigator
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -28,16 +27,14 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.AddAnotherPersonView
 
-class AddAnotherPersonControllerSpec extends SpecBase with MockitoSugar {
-
-  def onwardRoute = Call("GET", "/foo")
-
-  lazy val addAnotherPersonRoute = routes.AddAnotherPersonController.onPageLoad(NormalMode).url
-
-  val formProvider = new AddAnotherPersonFormProvider()
-  val form         = formProvider()
-
+class AddAnotherPersonControllerSpec extends SpecBase {
   "AddAnotherPerson Controller" - {
+    def onwardRoute = Call("GET", "/foo")
+
+    lazy val addAnotherPersonRoute = routes.AddAnotherPersonController.onPageLoad(NormalMode).url
+
+    val formProvider = new AddAnotherPersonFormProvider()
+    val form         = formProvider()
 
     "must return OK and the correct view for a GET" in {
 
@@ -62,7 +59,7 @@ class AddAnotherPersonControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()

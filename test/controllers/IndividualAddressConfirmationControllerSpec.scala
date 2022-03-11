@@ -18,11 +18,9 @@ package controllers
 
 import base.SpecBase
 import models.{AddressResponse, Index, NormalMode}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.{eq => eqTo, _}
-import org.mockito.Mockito._
 import org.scalatest.{OptionValues, TryValues}
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -32,23 +30,21 @@ import services.AddressLookupService
 
 import scala.concurrent.Future
 
-class IndividualAddressConfirmationControllerSpec extends SpecBase with MockitoSugar with TryValues with OptionValues {
-
-  val mockSessionRepository    = mock[SessionRepository]
-  val mockAddressLookupService = mock[AddressLookupService]
-  val onwardRoute              = Call(GET, "")
-
-  val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
-    .overrides(
-      bind[AddressLookupService].toInstance(mockAddressLookupService),
-      bind[SessionRepository].toInstance(mockSessionRepository),
-      bind[Navigator].toInstance(new FakeNavigator(onwardRoute))
-    )
-    .build()
-
-  val controller = application.injector.instanceOf[IndividualAddressConfirmationController]
-
+class IndividualAddressConfirmationControllerSpec extends SpecBase with TryValues with OptionValues {
   "IndividualAddressConfirmation Controller" - {
+    val mockSessionRepository    = mock[SessionRepository]
+    val mockAddressLookupService = mock[AddressLookupService]
+    val onwardRoute              = Call(GET, "")
+
+    val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
+      .overrides(
+        bind[AddressLookupService].toInstance(mockAddressLookupService),
+        bind[SessionRepository].toInstance(mockSessionRepository),
+        bind[Navigator].toInstance(getFakeNavigator(onwardRoute))
+      )
+      .build()
+
+    val controller = application.injector.instanceOf[IndividualAddressConfirmationController]
 
     "must update user answers and redirect to the next page when a confirmed address is available" in {
 

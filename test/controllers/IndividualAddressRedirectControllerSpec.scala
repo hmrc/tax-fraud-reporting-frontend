@@ -19,8 +19,6 @@ package controllers
 import base.SpecBase
 import models.{AddressLookupLabels, CheckMode, Index, LookupPageLabels, NormalMode}
 import org.mockito.ArgumentMatchers.{eq => eqTo, _}
-import org.mockito.Mockito._
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -28,19 +26,17 @@ import services.AddressLookupService
 
 import scala.concurrent.Future
 
-class IndividualAddressRedirectControllerSpec extends SpecBase with MockitoSugar {
-
-  val mockAddressLookupService = mock[AddressLookupService]
-
-  val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
-    .overrides(inject.bind[AddressLookupService].toInstance(mockAddressLookupService))
-    .build()
-
-  val labels: AddressLookupLabels = AddressLookupLabels(lookupPageLabels =
-    LookupPageLabels(title = "individualAddress.lookup.title", heading = "individualAddress.lookup.heading")
-  )
-
+class IndividualAddressRedirectControllerSpec extends SpecBase {
   "IndividualAddressRedirect Controller" - {
+    val mockAddressLookupService = mock[AddressLookupService]
+
+    val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
+      .overrides(inject.bind[AddressLookupService].toInstance(mockAddressLookupService))
+      .build()
+
+    val labels: AddressLookupLabels = AddressLookupLabels(lookupPageLabels =
+      LookupPageLabels(title = "individualAddress.lookup.title", heading = "individualAddress.lookup.heading")
+    )
 
     "must redirect to address lookup frontend with a new journey in normal mode" in {
       when(

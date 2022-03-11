@@ -19,10 +19,8 @@ package controllers
 import base.SpecBase
 import forms.IndividualConnectionFormProvider
 import models.{Index, IndividualConnection, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import pages.IndividualConnectionPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -33,16 +31,13 @@ import views.html.IndividualConnectionView
 
 import scala.concurrent.Future
 
-class IndividualConnectionControllerSpec extends SpecBase with MockitoSugar {
-
-  def onwardRoute = Call("GET", "/foo")
-
-  lazy val individualConnectionRoute = routes.IndividualConnectionController.onPageLoad(Index(0), NormalMode).url
-
-  val formProvider = new IndividualConnectionFormProvider()
-  val form         = formProvider()
-
+class IndividualConnectionControllerSpec extends SpecBase {
   "IndividualConnection Controller" - {
+    def onwardRoute = Call("GET", "/foo")
+
+    lazy val individualConnectionRoute = routes.IndividualConnectionController.onPageLoad(Index(0), NormalMode).url
+
+    val form = (new IndividualConnectionFormProvider)()
 
     "must return OK and the correct view for a GET" in {
 
@@ -91,7 +86,7 @@ class IndividualConnectionControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
@@ -149,7 +144,7 @@ class IndividualConnectionControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, individualConnectionRoute)
-            .withFormUrlEncodedBody(("value" -> "partner"))
+            .withFormUrlEncodedBody("value" -> "partner")
 
         val result = route(application, request).value
 

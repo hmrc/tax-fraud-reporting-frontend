@@ -19,6 +19,9 @@ package generators
 import models._
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
+import services.ActivityTypeService
+
+import scala.language.implicitConversions
 
 trait ModelGenerators {
 
@@ -49,34 +52,22 @@ trait ModelGenerators {
     }
 
   implicit lazy val arbitraryProvideContactDetails: Arbitrary[ProvideContactDetails] =
-    Arbitrary {
-      Gen.oneOf(ProvideContactDetails.values.toSeq)
-    }
+    Arbitrary(Gen oneOf ProvideContactDetails.values)
 
   implicit lazy val arbitrarySupportingDocument: Arbitrary[SupportingDocument] =
-    Arbitrary {
-      Gen.oneOf(SupportingDocument.values.toSeq)
-    }
+    Arbitrary(Gen oneOf SupportingDocument.values)
 
   implicit lazy val arbitraryAddAnotherPerson: Arbitrary[AddAnotherPerson] =
-    Arbitrary {
-      Gen.oneOf(AddAnotherPerson.values.toSeq)
-    }
+    Arbitrary(Gen oneOf AddAnotherPerson.values)
 
   implicit lazy val arbitraryHowManyPeopleKnow: Arbitrary[HowManyPeopleKnow] =
-    Arbitrary {
-      Gen.oneOf(HowManyPeopleKnow.values.toSeq)
-    }
+    Arbitrary(Gen oneOf HowManyPeopleKnow.values)
 
   implicit lazy val arbitraryActivityTimePeriod: Arbitrary[ActivityTimePeriod] =
-    Arbitrary {
-      Gen.oneOf(ActivityTimePeriod.values.toSeq)
-    }
+    Arbitrary(Gen.oneOf(ActivityTimePeriod.values))
 
   implicit lazy val arbitraryWhenActivityHappen: Arbitrary[WhenActivityHappen] =
-    Arbitrary {
-      Gen.oneOf(WhenActivityHappen.values.toSeq)
-    }
+    Arbitrary(Gen.oneOf(WhenActivityHappen.values))
 
   implicit lazy val arbitraryBusinessContactDetails: Arbitrary[BusinessContactDetails] =
     Arbitrary {
@@ -124,14 +115,10 @@ trait ModelGenerators {
     }
 
   implicit lazy val arbitraryBusinessInformationCheck: Arbitrary[BusinessInformationCheck] =
-    Arbitrary {
-      Gen.oneOf(BusinessInformationCheck.values)
-    }
+    Arbitrary(Gen oneOf BusinessInformationCheck.values)
 
   implicit lazy val arbitraryDateFormat: Arbitrary[IndividualDateFormat] =
-    Arbitrary {
-      Gen.oneOf(IndividualDateFormat.values.toSeq)
-    }
+    Arbitrary(Gen oneOf IndividualDateFormat.values)
 
   implicit lazy val arbitraryIndividualBusinessDetails: Arbitrary[IndividualBusinessDetails] =
     Arbitrary {
@@ -177,14 +164,12 @@ trait ModelGenerators {
     }
 
   implicit lazy val arbitraryIndividualInformation: Arbitrary[IndividualInformation] =
-    Arbitrary {
-      Gen.oneOf(IndividualInformation.values)
-    }
+    Arbitrary(Gen.oneOf(IndividualInformation.values))
 
   implicit lazy val arbitraryIndividualOrBusiness: Arbitrary[IndividualOrBusiness] =
-    Arbitrary {
-      Gen.oneOf(IndividualOrBusiness.values)
-    }
+    Arbitrary(Gen.oneOf(IndividualOrBusiness.values))
 
-  implicit val arbitraryActivityType: Arbitrary[ActivityType] = Arbitrary(Gen.oneOf(ActivityType.list))
+  implicit def arbitraryActivityType(implicit activityTypeService: ActivityTypeService): Arbitrary[ActivityType] =
+    Arbitrary(Gen oneOf activityTypeService.allActivities)
+
 }

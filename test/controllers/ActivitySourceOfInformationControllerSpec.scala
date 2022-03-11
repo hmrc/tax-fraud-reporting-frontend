@@ -19,10 +19,8 @@ package controllers
 import base.SpecBase
 import forms.ActivitySourceOfInformationFormProvider
 import models.{ActivitySourceOfInformation, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import pages.ActivitySourceOfInformationPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -33,16 +31,14 @@ import views.html.ActivitySourceOfInformationView
 
 import scala.concurrent.Future
 
-class ActivitySourceOfInformationControllerSpec extends SpecBase with MockitoSugar {
-
-  def onwardRoute = Call("GET", "/foo")
-
-  lazy val activitySourceOfInformationRoute = routes.ActivitySourceOfInformationController.onPageLoad(NormalMode).url
-
-  val formProvider = new ActivitySourceOfInformationFormProvider()
-  val form         = formProvider()
-
+class ActivitySourceOfInformationControllerSpec extends SpecBase {
   "ActivitySourceOfInformation Controller" - {
+    def onwardRoute = Call("GET", "/foo")
+
+    lazy val activitySourceOfInformationRoute = routes.ActivitySourceOfInformationController.onPageLoad(NormalMode).url
+
+    val formProvider = new ActivitySourceOfInformationFormProvider()
+    val form         = formProvider()
 
     "must return OK and the correct view for a GET" in {
 
@@ -93,7 +89,7 @@ class ActivitySourceOfInformationControllerSpec extends SpecBase with MockitoSug
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
@@ -101,7 +97,7 @@ class ActivitySourceOfInformationControllerSpec extends SpecBase with MockitoSug
       running(application) {
         val request =
           FakeRequest(POST, activitySourceOfInformationRoute)
-            .withFormUrlEncodedBody(("value" -> "reportedIndividuals"))
+            .withFormUrlEncodedBody("value" -> "reportedIndividuals")
 
         val result = route(application, request).value
 
@@ -151,7 +147,7 @@ class ActivitySourceOfInformationControllerSpec extends SpecBase with MockitoSug
       running(application) {
         val request =
           FakeRequest(POST, activitySourceOfInformationRoute)
-            .withFormUrlEncodedBody(("value" -> "reportedIndividuals"))
+            .withFormUrlEncodedBody("value" -> "reportedIndividuals")
 
         val result = route(application, request).value
 

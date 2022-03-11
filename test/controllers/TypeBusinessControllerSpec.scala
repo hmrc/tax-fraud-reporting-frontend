@@ -19,10 +19,8 @@ package controllers
 import base.SpecBase
 import forms.TypeBusinessFormProvider
 import models.{Index, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import pages.TypeBusinessPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -33,19 +31,16 @@ import views.html.TypeBusinessView
 
 import scala.concurrent.Future
 
-class TypeBusinessControllerSpec extends SpecBase with MockitoSugar {
-
-  def onwardRoute = Call("GET", "/foo")
-
-  private val formProvider = new TypeBusinessFormProvider()
-  private val form         = formProvider()
-
-  lazy val typeBusinessRoute = routes.TypeBusinessController.onPageLoad(Index(0), NormalMode).url
+class TypeBusinessControllerSpec extends SpecBase {
+  private val form = (new TypeBusinessFormProvider)()
 
   private val answers           = emptyUserAnswers
   private val isBusinessJourney = answers.isBusinessJourney
 
   "TypeBusiness Controller" - {
+    def onwardRoute = Call("GET", "/foo")
+
+    lazy val typeBusinessRoute = routes.TypeBusinessController.onPageLoad(Index(0), NormalMode).url
 
     "must return OK and the correct view for a GET" in {
 
@@ -96,7 +91,7 @@ class TypeBusinessControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()

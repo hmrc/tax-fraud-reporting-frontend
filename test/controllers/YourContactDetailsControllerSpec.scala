@@ -19,10 +19,8 @@ package controllers
 import base.SpecBase
 import forms.YourContactDetailsFormProvider
 import models.{NormalMode, UserAnswers, YourContactDetails}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import pages.YourContactDetailsPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -33,13 +31,7 @@ import views.html.YourContactDetailsView
 
 import scala.concurrent.Future
 
-class YourContactDetailsControllerSpec extends SpecBase with MockitoSugar {
-
-  def onwardRoute = Call("GET", "/foo")
-
-  val formProvider = new YourContactDetailsFormProvider()
-  val form         = formProvider()
-
+class YourContactDetailsControllerSpec extends SpecBase {
   private lazy val yourContactDetailsRoute = routes.YourContactDetailsController.onPageLoad(NormalMode).url
 
   private val model =
@@ -54,6 +46,9 @@ class YourContactDetailsControllerSpec extends SpecBase with MockitoSugar {
   private val userAnswers = UserAnswers(userAnswersId).set(YourContactDetailsPage, model).success.value
 
   "YourContactDetails Controller" - {
+    def onwardRoute = Call("GET", "/foo")
+
+    val form = (new YourContactDetailsFormProvider)()
 
     "must return OK and the correct view for a GET" in {
 
@@ -96,7 +91,7 @@ class YourContactDetailsControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()

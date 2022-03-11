@@ -19,10 +19,8 @@ package controllers
 import base.SpecBase
 import forms.ActivityTimePeriodFormProvider
 import models.{ActivityTimePeriod, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import pages.ActivityTimePeriodPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -33,16 +31,14 @@ import views.html.ActivityTimePeriodView
 
 import scala.concurrent.Future
 
-class ActivityTimePeriodControllerSpec extends SpecBase with MockitoSugar {
-
-  def onwardRoute = Call("GET", "/foo")
-
-  lazy val activityTimePeriodRoute = routes.ActivityTimePeriodController.onPageLoad(NormalMode).url
-
-  val formProvider = new ActivityTimePeriodFormProvider()
-  val form         = formProvider()
-
+class ActivityTimePeriodControllerSpec extends SpecBase {
   "ActivityTimePeriod Controller" - {
+    def onwardRoute = Call("GET", "/foo")
+
+    lazy val activityTimePeriodRoute = routes.ActivityTimePeriodController.onPageLoad(NormalMode).url
+
+    val formProvider = new ActivityTimePeriodFormProvider()
+    val form         = formProvider()
 
     "must return OK and the correct view for a GET" in {
 
@@ -91,7 +87,7 @@ class ActivityTimePeriodControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()

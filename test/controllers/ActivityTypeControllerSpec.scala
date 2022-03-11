@@ -19,36 +19,41 @@ package controllers
 import base.SpecBase
 import forms.ActivityTypeFormProvider
 import models.{ActivityType, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
+import org.scalatest.Assertion
 import pages.ActivityTypePage
+import play.api.Application
+import play.api.data.Form
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
+import services.ActivityTypeService
 import views.html.ActivityTypeView
 
 import scala.concurrent.Future
 
-class ActivityTypeControllerSpec extends SpecBase with MockitoSugar {
-
-  def onwardRoute = Call("GET", "/foo")
-
-  val formProvider = new ActivityTypeFormProvider()
-  val form         = formProvider()
-
-  lazy val activityTypeRoute = routes.ActivityTypeController.onPageLoad(NormalMode).url
-
+class ActivityTypeControllerSpec extends SpecBase {
   "ActivityType Controller" - {
+    def onwardRoute = Call("GET", "/foo")
+
+    def withForm(application: Application)(test: Form[ActivityType] => Assertion) = {
+      val formProvider = new ActivityTypeFormProvider(mockActivityTypeService)
+
+      running(application) {
+        test(formProvider())
+      }
+    }
+
+    lazy val activityTypeRoute = routes.ActivityTypeController.onPageLoad(NormalMode).url
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
-      running(application) {
+      withForm(application) { form =>
         val request = FakeRequest(GET, activityTypeRoute)
 
         val result = route(application, request).value
@@ -64,7 +69,7 @@ class ActivityTypeControllerSpec extends SpecBase with MockitoSugar {
 
       val application = applicationBuilder(userAnswers = None).build()
 
-      running(application) {
+      withForm(application) { form =>
         val request = FakeRequest(GET, activityTypeRoute)
 
         val result = route(application, request).value
@@ -78,11 +83,12 @@ class ActivityTypeControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ActivityTypePage, ActivityType.list.head).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(ActivityTypePage, mockActivityTypeService.allActivities.head).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
-      running(application) {
+      withForm(application) { form =>
         val request = FakeRequest(GET, activityTypeRoute)
 
         val view = application.injector.instanceOf[ActivityTypeView]
@@ -90,7 +96,7 @@ class ActivityTypeControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ActivityType.list.head), NormalMode)(
+        contentAsString(result) mustEqual view(form fill mockActivityTypeService.allActivities.head, NormalMode)(
           request,
           messages(application)
         ).toString
@@ -98,7 +104,6 @@ class ActivityTypeControllerSpec extends SpecBase with MockitoSugar {
     }
 
     "must redirect to the next page when valid data is submitted" in {
-
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
@@ -106,15 +111,16 @@ class ActivityTypeControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
+            bind[SessionRepository].toInstance(mockSessionRepository),
+            bind[ActivityTypeService].toInstance(mockActivityTypeService)
           )
           .build()
 
       running(application) {
         val request =
           FakeRequest(POST, activityTypeRoute)
-            .withFormUrlEncodedBody(("value", ActivityType.list.head.code))
+            .withFormUrlEncodedBody(("value", mockActivityTypeService.allActivities.head.nameKey))
 
         val result = route(application, request).value
 
@@ -132,15 +138,16 @@ class ActivityTypeControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = None)
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
-            bind[SessionRepository].toInstance(mockSessionRepository)
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
+            bind[SessionRepository].toInstance(mockSessionRepository),
+            bind[ActivityTypeService].toInstance(mockActivityTypeService)
           )
           .build()
 
       running(application) {
         val request =
           FakeRequest(POST, activityTypeRoute)
-            .withFormUrlEncodedBody(("value", ActivityType.list.head.code))
+            .withFormUrlEncodedBody(("value", mockActivityTypeService.allActivities.head.nameKey))
 
         val result = route(application, request).value
 
@@ -153,7 +160,7 @@ class ActivityTypeControllerSpec extends SpecBase with MockitoSugar {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
-      running(application) {
+      withForm(application) { form =>
         val request =
           FakeRequest(POST, activityTypeRoute)
             .withFormUrlEncodedBody(("value", ""))

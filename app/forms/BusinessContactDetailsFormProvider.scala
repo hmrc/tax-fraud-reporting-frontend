@@ -24,30 +24,24 @@ import play.api.data.Forms.{mapping, optional}
 import javax.inject.Inject
 
 class BusinessContactDetailsFormProvider @Inject() extends Mappings {
-
+  private val textLength  = 255
   private val errorPrefix = "businessContactDetails.error"
 
-  private def field(key: String, isOptional: Boolean = false) = {
+  private def field(key: String) = {
     def errorMsg(problem: String) = s"$errorPrefix.$key.$problem"
 
-    val textMapping = if (isOptional) text() else text(errorMsg("required"))
-
-    textMapping verifying maxLength(255, errorMsg("length"))
+    text() verifying maxLength(textLength, errorMsg("length"))
   }
 
   def apply(): Form[BusinessContactDetails] = Form(
     mapping(
       "landlineNumber" -> optional(
-        field("landlineNumber", isOptional = true)
-          .verifying(firstError(telephoneNumberValidation(errorPrefix + ".landlineNumber.invalid")))
+        field("landlineNumber") verifying firstError(telephoneNumberValidation(errorPrefix + ".landlineNumber.invalid"))
       ),
       "mobileNumber" -> optional(
-        field("mobileNumber", isOptional = true)
-          .verifying(firstError(telephoneNumberValidation(errorPrefix + ".mobileNumber.invalid")))
+        field("mobileNumber") verifying firstError(telephoneNumberValidation(errorPrefix + ".mobileNumber.invalid"))
       ),
-      "email" -> optional(
-        field("email", isOptional = true).verifying(validEmailAddress(errorPrefix + ".email.invalid"))
-      )
+      "email" -> optional(field("email") verifying validEmailAddress(errorPrefix + ".email.invalid"))
     )(BusinessContactDetails.apply)(BusinessContactDetails.unapply)
   )
 

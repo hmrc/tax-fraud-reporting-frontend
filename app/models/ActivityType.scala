@@ -19,8 +19,6 @@ package models
 import play.api.i18n.Messages
 import play.api.libs.json.{Json, OFormat}
 
-import scala.language.postfixOps
-
 // TODO tests
 
 final case class ActivityType(nameKey: String, synonymKeys: Array[String]) {
