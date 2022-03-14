@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import models._
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import pages._
 import play.api.http.Status.{OK, SEE_OTHER}
 import play.api.inject

@@ -16,11 +16,9 @@
 
 package services
 
-import models.ActivityType
 import play.api.Configuration
 
 import javax.inject.{Inject, Singleton}
-import scala.collection.immutable.Iterable
 
 @Singleton
 class ActivityTypeService @Inject() (configuration: Configuration) {
@@ -30,15 +28,13 @@ class ActivityTypeService @Inject() (configuration: Configuration) {
       case (key, values) => key -> (values split ",")
     }
 
-  val allActivities: Iterable[ActivityType] =
-    getMap("activityTypes") map { case (name, synonyms) => ActivityType(name, synonyms) }
+  val allActivities: Map[String, Array[String]] = getMap("activityTypes")
 
   private val nonHmrcActivities = getMap("nonHmrcActivities")
 
-  def getDepartmentFor(activity: ActivityType): Option[String] =
+  def getDepartmentFor(activityType: String): Option[String] =
     nonHmrcActivities collectFirst {
-      case (department, activities) if activities contains activity.nameKey => department
+      case (department, activities) if activities contains activityType => department
     }
 
-  def getActivityByName(name: String): Option[ActivityType] = allActivities find (_.nameKey == name)
 }

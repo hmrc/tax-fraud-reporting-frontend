@@ -50,11 +50,11 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
         "to the individual or business page when the user chooses an activity which HMRC is responsible for investigating" in {
           activityTypeService.allActivities collect {
-            case activity if activityTypeService getDepartmentFor activity isEmpty =>
+            case activity if activityTypeService getDepartmentFor activity._1 isEmpty =>
               val result = navigator.nextPage(
                 ActivityTypePage,
                 NormalMode,
-                UserAnswers("id").set(ActivityTypePage, activity).success.value
+                UserAnswers("id").set(ActivityTypePage, activity._1).success.value
               )
               result mustBe routes.IndividualOrBusinessController.onPageLoad(NormalMode)
           }
@@ -62,11 +62,11 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
         "to the do not use this service page when the user chooses an activity which HMRC is not responsible for investigating" in {
           activityTypeService.allActivities collect {
-            case activity if activityTypeService getDepartmentFor activity nonEmpty =>
+            case activity if activityTypeService getDepartmentFor activity._1 nonEmpty =>
               val result = navigator.nextPage(
                 ActivityTypePage,
                 NormalMode,
-                UserAnswers("id").set(ActivityTypePage, activity).success.value
+                UserAnswers("id").set(ActivityTypePage, activity._1).success.value
               )
               result mustBe routes.DoNotUseThisServiceController.onPageLoad()
           }

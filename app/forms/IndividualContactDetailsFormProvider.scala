@@ -27,11 +27,7 @@ class IndividualContactDetailsFormProvider @Inject() extends Mappings {
   private val textLength  = 255
   private val errorPrefix = "individualContactDetails.error"
 
-  private def field(key: String) = {
-    def errorMsg(problem: String) = s"$errorPrefix.$key.$problem"
-
-    text() verifying maxLength(textLength, errorMsg("length"))
-  }
+  private def field(key: String) = text() verifying maxLength(textLength, s"$errorPrefix.$key.length")
 
   def apply(): Form[IndividualContactDetails] = Form(
     mapping(

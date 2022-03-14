@@ -21,7 +21,7 @@
 @this(select: GovukSelect)
 
 @(
-        form: Form[ActivityType],
+        form: Form[String],
         id: String,
         name: String,
         label: String,
@@ -29,7 +29,7 @@
         isPageHeading: Boolean = true,
         headingMessageArgs: Seq[String] = Seq(),
         hint: Option[String],
-        activityTypes: Seq[ActivityTypeTranslated],
+        activityTypes: Iterable[ActivityType],
         labelClass: Boolean = false
 )(implicit messages: Messages)
 
@@ -43,18 +43,18 @@
   } else {
       LabelViewModel(messages(label))
   },
-  describedBy = hint.map(_ => s"$id-hint"),
-  errorMessage = form(id).error.map(fe ⇒ ErrorMessage(content = messages(fe.message),visuallyHiddenText = Some(messages("govukErrorMessage.visuallyHiddenText")))),
-  hint = hint.map(c => Hint(content = messages(c))),
-  items = Seq(SelectItem(attributes= Map("label" -> " "))) ++ activityTypes.map {
-    case ActivityTypeTranslated(key, name, _) =>
+  describedBy = hint map { _ => s"$id-hint" },
+  errorMessage = form(id).error map { fe => ErrorMessage(content = messages(fe.message)) },
+  hint = hint map { c => Hint(content = messages(c)) },
+  items = SelectItem(attributes = Map("label" -> " ")) +: activityTypes.map {
+    case ActivityType(key, name, _) =>
       SelectItem(
         value = Some(key),
         text = name,
-        selected = key == (form.value map (_.nameKey) getOrElse ""),
+        selected = form.value contains key,
         attributes = Map("id" -> s"$id-$key")
       )
-  },
+  }.toSeq,
   formGroupClasses = "form-field-group"
 ))
 

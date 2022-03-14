@@ -17,24 +17,18 @@
 package models
 
 import play.api.i18n.Messages
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{Json, Writes}
 
-// TODO tests
-
-final case class ActivityType(nameKey: String, synonymKeys: Array[String]) {
-
-  def translated(implicit messages: Messages): ActivityTypeTranslated = {
-    def msg(key: String) = messages("activityType." + key)
-
-    ActivityTypeTranslated(
-      nameKey,
-      msg("name." + nameKey),
-      synonymKeys map { synonymKey => msg("synonym." + synonymKey) }
-    )
-  }
-
-}
+final case class ActivityType(key: String, name: String, synonyms: Seq[String])
 
 object ActivityType {
-  implicit val format: OFormat[ActivityType] = Json.format
+  implicit val writes: Writes[ActivityType] = Json.writes
+
+  def apply(nameKey: String, synonymKeys: Array[String])(implicit messages: Messages): ActivityType =
+    ActivityType(nameKey, translate(nameKey), synonymKeys map { synonymKey => translate(synonymKey, "synonym") })
+
+  def translate(subKey: String, key: String = "name")(implicit messages: Messages): String = messages(
+    "activityType." + key + "." + subKey
+  )
+
 }

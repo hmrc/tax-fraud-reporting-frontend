@@ -19,9 +19,6 @@ package generators
 import models._
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
-import services.ActivityTypeService
-
-import scala.language.implicitConversions
 
 trait ModelGenerators {
 
@@ -168,8 +165,5 @@ trait ModelGenerators {
 
   implicit lazy val arbitraryIndividualOrBusiness: Arbitrary[IndividualOrBusiness] =
     Arbitrary(Gen.oneOf(IndividualOrBusiness.values))
-
-  implicit def arbitraryActivityType(implicit activityTypeService: ActivityTypeService): Arbitrary[ActivityType] =
-    Arbitrary(Gen oneOf activityTypeService.allActivities)
 
 }

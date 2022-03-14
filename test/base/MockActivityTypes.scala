@@ -24,13 +24,22 @@ import services.ActivityTypeService
 trait MockActivityTypes extends MockitoSugar {
   type MapLoader = ConfigLoader[Map[String, String]]
 
+  private val fooActivity     = "foo"              -> "bar,baz,qux"
+  private val otherActivity1  = "nonHmrcActivity1" -> ""
+  private val otherActivity2  = "nonHmrcActivity2" -> ""
+  private val otherActivities = Seq(otherActivity1, otherActivity2) map { _._1 } mkString ","
+
+  val mockOtherDept: (String, String) = "nonHmrcDept" -> otherActivities
+
   val mockConfiguration: Configuration = mock[Configuration]
   when {
     mockConfiguration.get(equal("activityTypes"))(any[MapLoader])
-  } thenReturn Map("foo" -> "bar,baz,qux")
+  } thenReturn Map(fooActivity, otherActivity1, otherActivity2)
   when {
     mockConfiguration.get(equal("nonHmrcActivities"))(any[MapLoader])
-  } thenReturn Map.empty
+  } thenReturn Map(mockOtherDept)
 
   implicit val mockActivityTypeService: ActivityTypeService = new ActivityTypeService(mockConfiguration)
+
+  val firstMockActivityType: String = mockActivityTypeService.allActivities.head._1
 }

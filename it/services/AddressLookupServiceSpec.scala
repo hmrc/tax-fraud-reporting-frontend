@@ -2,7 +2,7 @@ package services
 
 import com.github.tomakehurst.wiremock.client.WireMock._
 import controllers.routes
-import models.{AddressLookupLabels, AddressResponse, Index, LookupPageLabels, NormalMode}
+import models.{AddressLookupLabels, AddressResponse, LookupPageLabels, NormalMode}
 import org.scalatest.OptionValues
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec

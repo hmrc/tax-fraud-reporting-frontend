@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{ActivityType, CheckMode, UserAnswers}
 import pages.ActivityTypePage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -28,11 +28,11 @@ import viewmodels.implicits._
 object ActivityTypeSummary {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ActivityTypePage).map {
+    answers get ActivityTypePage map {
       answer =>
         SummaryListRowViewModel(
           key = "activityType.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlFormat.escape(answer.nameKey).toString),
+          value = ValueViewModel(HtmlFormat.escape(ActivityType translate answer).toString),
           actions = Seq(
             ActionItemViewModel("site.change", routes.ActivityTypeController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText(messages("activityType.change.hidden"))

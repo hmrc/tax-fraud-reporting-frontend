@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.ActivityTypeFormProvider
-import models.{ActivityType, NormalMode, UserAnswers}
+import models.{NormalMode, UserAnswers}
 import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
 import org.scalatest.Assertion
@@ -39,7 +39,7 @@ class ActivityTypeControllerSpec extends SpecBase {
   "ActivityType Controller" - {
     def onwardRoute = Call("GET", "/foo")
 
-    def withForm(application: Application)(test: Form[ActivityType] => Assertion) = {
+    def withForm(application: Application)(test: Form[String] => Assertion) = {
       val formProvider = new ActivityTypeFormProvider(mockActivityTypeService)
 
       running(application) {
@@ -84,7 +84,7 @@ class ActivityTypeControllerSpec extends SpecBase {
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers =
-        UserAnswers(userAnswersId).set(ActivityTypePage, mockActivityTypeService.allActivities.head).success.value
+        UserAnswers(userAnswersId).set(ActivityTypePage, firstMockActivityType).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -96,7 +96,7 @@ class ActivityTypeControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form fill mockActivityTypeService.allActivities.head, NormalMode)(
+        contentAsString(result) mustEqual view(form fill firstMockActivityType, NormalMode)(
           request,
           messages(application)
         ).toString
@@ -120,7 +120,7 @@ class ActivityTypeControllerSpec extends SpecBase {
       running(application) {
         val request =
           FakeRequest(POST, activityTypeRoute)
-            .withFormUrlEncodedBody(("value", mockActivityTypeService.allActivities.head.nameKey))
+            .withFormUrlEncodedBody(("value", firstMockActivityType))
 
         val result = route(application, request).value
 
@@ -147,7 +147,7 @@ class ActivityTypeControllerSpec extends SpecBase {
       running(application) {
         val request =
           FakeRequest(POST, activityTypeRoute)
-            .withFormUrlEncodedBody(("value", mockActivityTypeService.allActivities.head.nameKey))
+            .withFormUrlEncodedBody(("value", firstMockActivityType))
 
         val result = route(application, request).value
 

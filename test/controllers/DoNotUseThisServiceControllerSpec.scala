@@ -29,8 +29,10 @@ class DoNotUseThisServiceControllerSpec extends SpecBase with TryValues {
 
     "must return OK and the correct view for a GET when the user has an activity which is the responsibility of another department" in {
 
+      val (otherDeptName, otherActivities) = "activity-related-to-drugs" -> "drugs"
+
       val userAnswers =
-        emptyUserAnswers.set(ActivityTypePage, mockActivityTypeService.allActivities.head).success.value
+        emptyUserAnswers.set(ActivityTypePage, otherActivities).success.value
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
@@ -41,7 +43,7 @@ class DoNotUseThisServiceControllerSpec extends SpecBase with TryValues {
         val view = application.injector.instanceOf[DoNotUseThisServiceView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view("activity-related-to-drugs")(request, messages(application)).toString
+        contentAsString(result) mustEqual view(otherDeptName)(request, messages(application)).toString
       }
     }
 
@@ -75,7 +77,7 @@ class DoNotUseThisServiceControllerSpec extends SpecBase with TryValues {
 
     "must redirect to the journey recovery page for a GET when the user has an activity which belongs to HMRC" in {
 
-      val userAnswers = emptyUserAnswers.set(ActivityTypePage, mockActivityTypeService.allActivities.head).success.value
+      val userAnswers = emptyUserAnswers.set(ActivityTypePage, firstMockActivityType).success.value
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
