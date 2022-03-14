@@ -23,6 +23,7 @@ import play.api.mvc.RequestHeader
 import uk.gov.hmrc.play.bootstrap.binders.SafeRedirectUrl
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
+import java.net.URLEncoder
 import scala.util.Try
 
 @Singleton
@@ -60,4 +61,12 @@ class FrontendAppConfig @Inject() (servicesConfig: ServicesConfig, configuration
   val countdown: Int = configuration.get[Int]("timeout-dialog.countdown")
 
   val cacheTtl: Int = configuration.get[Int]("mongodb.timeToLiveInSeconds")
+
+  lazy val accessibilityStatementPath: String = loadConfig("accessibility-statement.service-path")
+
+  lazy val accessibilityStatementFrontendBaseUrl: String = configuration.getOptional[String]("accessibility-statement.host").getOrElse("")
+  def accessibilityFooterUrl(referrerUrl: Option[String] = None): String = {
+    val referrerString = referrerUrl.map (url => s"""?referrerUrl=${URLEncoder.encode(url, "UTF-8")}""").getOrElse("")
+    s"$accessibilityStatementFrontendBaseUrl/accessibility-statement$accessibilityStatementPath$referrerString"
+  }
 }
