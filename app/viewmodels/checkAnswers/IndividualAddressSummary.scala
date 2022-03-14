@@ -47,7 +47,7 @@ object IndividualAddressSummary {
             "site.change",
             routes.IndividualAddressRedirectController.onPageLoad(Index(index), mode).url
           )
-            .withVisuallyHiddenText(messages("businessAddress.change.hidden"))
+            .withVisuallyHiddenText(messages("individualAddress.change.hidden"))
         )
       )
     )

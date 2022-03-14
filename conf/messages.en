@@ -77,7 +77,7 @@ activityType.heading = What type of activity are you reporting to HMRC?
 activityType.hint = Enter keywords related to the activity to suggest relevant categories or select an activity from the list.
 activityType.checkYourAnswersLabel = Activity type
 activityType.error.required = Enter the type of activity.
-activityType.change.hidden = ActivityType
+activityType.change.hidden = Activity Type
 
 activityType.name.furlough = Fraud related to furlough
 activityType.name.defrauding-self-employment = Defrauding the Self-Employment Income Support Scheme
@@ -187,7 +187,7 @@ individualContactDetails.error.email.length = Email address''s must be 255 chara
 individualContactDetails.error.landlineNumber.invalid = Enter a landline number, like 01632 960 001.
 individualContactDetails.error.mobileNumber.invalid = Enter a mobile number, like 07700 900 982 or +44 808 157 0192.
 individualContactDetails.error.email.invalid = Enter an email address in the correct format, like name@example.com
-individualContactDetails.change.hidden = Individual''s contact details
+individualContactDetails.change.hidden = Personal contact details
 
 individualNationalInsuranceNumber.title = What is the individual''s National Insurance number?
 individualNationalInsuranceNumber.heading = What is the individual''s National Insurance number?
@@ -196,7 +196,7 @@ individualNationalInsuranceNumber.checkYourAnswersLabel = National Insurance num
 individualNationalInsuranceNumber.error.required = Enter the individual''s National Insurance Number
 individualNationalInsuranceNumber.error.invalid = Enter the individual''s National Insurance Number in the correct format
 individualNationalInsuranceNumber.error.length = National Insurance numbers must be 9 characters or fewer.
-individualNationalInsuranceNumber.change.hidden = National Insurance Number
+individualNationalInsuranceNumber.change.hidden = National Insurance number
 
 individualConnection.title = How do you know the individual?
 individualConnection.heading = How do you know the individual?
@@ -237,7 +237,7 @@ dateFormat.date = Date of birth
 dateFormat.age = Approximate age
 dateFormat.checkYourAnswersLabel = Age format
 dateFormat.error.required = Select what you know about the individual''s age
-dateFormat.change.hidden = DateFormat
+dateFormat.change.hidden = Age format
 
 individualDateOfBirth.title = What is the individual''s date of birth?
 individualDateOfBirth.heading = What is the individual''s date of birth?
@@ -259,7 +259,7 @@ individualAge.error.nonNumeric = Enter the individual''s approximate age with nu
 individualAge.error.required = Enter the individual''s approximate age.
 individualAge.error.wholeNumber = Enter the individual''s approximate age with numerical values
 individualAge.error.outOfRange = The individual''s approximate age must be between {0} and {1}
-individualAge.change.hidden = IndividualAge
+individualAge.change.hidden = Approximate age
 
 businessInformationCheck.title = What do you know about the business?
 businessInformationCheck.heading = What do you know about the business?
@@ -280,6 +280,7 @@ businessName.heading = What is the business''s name?
 businessName.checkYourAnswersLabel = Business name
 businessName.error.required = Enter the business''s name
 businessName.error.length = Business names must be {0} characters or fewer.
+businessName.change.hidden = Business name
 
 descriptionActivity.title = Briefly describe the activity you are reporting
 descriptionActivity.heading = Briefly describe the activity you are reporting
@@ -287,7 +288,7 @@ descriptionActivity.hint = A brief description allows HMRC to process your infor
 descriptionActivity.checkYourAnswersLabel = Activity description
 descriptionActivity.error.required = Enter a description on the activity you''re reporting.
 descriptionActivity.error.length = The activity description must be 1200 characters or fewer.
-descriptionActivity.change.hidden = The Activity description
+descriptionActivity.change.hidden = Activity description
 
 typeBusiness.title = What type of business is it?
 typeBusiness.heading = What type of business is it?
@@ -332,15 +333,14 @@ referenceNumbers.error.required = Enter referenceNumbers
 referenceNumbers.error.vatRegistration.length = VAT registration number must be 9 or 11 digits long
 referenceNumbers.error.employeeRefNo.length =  Employee Reference Number must be {0} digits long
 referenceNumbers.error.corporationTax.length = Corporation Tax Unique Taxpayer Reference must be 10 digits long
-referenceNumbers.change.hidden = Reference numbers
+referenceNumbers.change.hidden = Business reference numbers
 
 approximateValue.title = What is the total value of the activity you are reporting?
 approximateValue.heading = What is the total value of the activity you are reporting?
+approximateValue.p1 = HMRC does not require an exact figure, an estimation will still be useful.
 approximateValue.suffix = £
 approximateValue.hint = Enter an estimated total value in pounds.
 approximateValue.checkYourAnswersLabel = Activity value (£)
-approximateValue.details.header = I don''t know the total value.
-approximateValue.details.p = HMRC does not require an exact figure, an estimation will still be useful. If you have no estimate then you can <a href="/report-tax-fraud/activity-duration">go to the next question.</a>
 approximateValue.error.nonNumeric = Enter the approximate value as a numerical value
 approximateValue.error.required = Enter the approximate value as a numerical value
 approximateValue.error.length = Approximate value must be 12 characters or fewer
@@ -373,7 +373,7 @@ whenActivityHappen.notHappen = Activity hasn''t happened yet
 whenActivityHappen.doNotKnow = I don''t know
 whenActivityHappen.checkYourAnswersLabel = Activity duration
 whenActivityHappen.error.required = Select when the activity you''re reporting started
-whenActivityHappen.change.hidden = WhenActivityHappen
+whenActivityHappen.change.hidden = Activity duration
 
 activityTimePeriod.title = When will the activity you are reporting likely happen?
 activityTimePeriod.heading = When will the activity you are reporting likely happen?
@@ -383,7 +383,7 @@ activityTimePeriod.later = In the next year or later
 activityTimePeriod.doNotKnow = I don''t know
 activityTimePeriod.checkYourAnswersLabel = Activity start period
 activityTimePeriod.error.required = Select when the activity you''re reporting will likely happen
-activityTimePeriod.change.hidden = ActivityTimePeriod
+activityTimePeriod.change.hidden = Activity start period
 
 individualAddress.lookup.title = What is the individual''s address?
 individualAddress.lookup.heading = What is the individual''s address?
@@ -419,8 +419,12 @@ individual.3 = Individual C
 individual.4 = Individual D
 individual.5 = Individual E
 
+individual.change = Change<span class="govuk-visually-hidden"> {0} </span>
+individual.remove = Remove<span class="govuk-visually-hidden"> {0} </span>
+
 individualAddress.lookup.title = What is the individual''''s address?
 individualAddress.lookup.heading = What is the individual''''s address?
+individualAddress.change.hidden = Home address
 
 supportingDocument.title = Do you have any supporting information?
 supportingDocument.heading = Do you have any supporting information?
@@ -429,7 +433,7 @@ supportingDocument.yes = Yes
 supportingDocument.no = No
 supportingDocument.checkYourAnswersLabel = Supporting information provided
 supportingDocument.error.required = Select whether you have any supporting information you could provide if requested by HMRC.
-supportingDocument.change.hidden = SupportingDocument
+supportingDocument.change.hidden = Supporting information provided
 
 provideContactDetails.title = Do you wish to provide your contact details?
 provideContactDetails.heading = Do you wish to provide your contact details?
@@ -438,7 +442,7 @@ provideContactDetails.yes = Yes, I will provide my contact details
 provideContactDetails.no = No, I want to report anonymously
 provideContactDetails.checkYourAnswersLabel = Details provided
 provideContactDetails.error.required = Select yes if you will provide your contact details.
-provideContactDetails.change.hidden = Whether you are providing your details or reporting anonymously
+provideContactDetails.change.hidden = Details provided
 
 yourContactDetails.title = Enter your contact details
 yourContactDetails.heading = Enter your contact details
@@ -483,7 +487,7 @@ documentationDescription.hint = HMRC will not ask you to attach any files to thi
 documentationDescription.checkYourAnswersLabel = Supporting information description
 documentationDescription.error.required = Enter a description of the supporting information you hold.
 documentationDescription.error.length = The description of the supporting information you hold must be 500 characters or fewer.
-documentationDescription.change.hidden = DocumentationDescription
+documentationDescription.change.hidden = Supporting information description
 
 checkYourAnswers.activityDetails = The activity you are reporting
 checkYourAnswers.yourDetails = Your details
@@ -524,7 +528,6 @@ activitySourceOfInformation.error.required = Select or enter how you know the in
 activitySourceOfInformation.error.otherValue.required = Select or enter how you know the information.
 activitySourceOfInformation.error.otherValue.maxLength = How you know the information must be 100 characters or fewer.
 activitySourceOfInformation.change.hidden = How you know about the activity
-activitySourceOfInformation.change.hidden = ActivitySourceOfInformation
 
 individualContactDetails.cya.landline = Landline
 individualContactDetails.cya.mobile = Mobile

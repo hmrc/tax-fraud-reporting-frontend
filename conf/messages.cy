@@ -1,8 +1,8 @@
 service.name = (W) Report tax fraud or evasion (W)
 
 site.back = (W) Back (W)
-site.remove = (W) Remove (W)
-site.change = (W) Change (W)
+site.remove = Dileu
+site.change = Newid
 site.no = (W) No (W)
 site.yes = (W) Yes (W)
 site.continue = (W) Continue (W)
@@ -66,7 +66,7 @@ activityType.heading = (W) What type of HMRC activity are you reporting? (W)
 activityType.hint = (W) Enter keywords related to the activity to suggest relevant categories. (W)
 activityType.checkYourAnswersLabel = (W) Activity type (W)
 activityType.error.required = (W) Enter the type of HMRC activity that you are reporting (W)
-activityType.change.hidden = (W) ActivityType (W)
+activityType.change.hidden = Math o weithgaredd
 
 activityType.name.furlough = (W) Fraud related to furlough (W)
 activityType.name.defrauding-self-employment = (W) Defrauding the Self-Employment Income Support Scheme (W)
@@ -159,10 +159,7 @@ individualName.error.firstName.length = (W) First name must be 100 characters or
 individualName.error.middleName.length = (W) Middle name must be 100 characters or less (W)
 individualName.error.lastName.length = (W) Last name must be 100 characters or less (W)
 individualName.error.aliases.length = (W) Alises or nicknames name must be 100 characters or less (W)
-individualName.firstName.change.hidden = (W) firstName (W)
-individualName.middleName.change.hidden = (W) middleName (W)
-individualName.lastName.change.hidden = (W) middleName (W)
-individualName.aliases.change.hidden = (W) middleName (W)
+individualName.change.hidden = enw’r unigolyn
 
 individualContactDetails.title = (W) What are the individual''s contact details? (W)
 individualContactDetails.heading = (W) What are the individual''s contact details? (W)
@@ -174,9 +171,7 @@ individualContactDetails.checkYourAnswersLabel = (W) What are the individual''s 
 individualContactDetails.error.landlineNumber.length = (W) Landline number must be 100 characters or less (W)
 individualContactDetails.error.mobileNumber.length = (W) Mobile number must be 100 characters or less (W)
 individualContactDetails.error.email.length = (W) Email address must be 100 characters or less (W)
-individualContactDetails.landlineNumber.change.hidden = (W) landlineNumber (W)
-individualContactDetails.mobileNumber.change.hidden = (W) mobileNumber (W)
-individualContactDetails.mobileNumber.change.hidden = (W) email (W)
+individualContactDetails.change.hidden = Manylion cyswllt personol
 
 individualNationalInsuranceNumber.title = (W) What is the individual''s National Insurance Number? (W)
 individualNationalInsuranceNumber.heading = (W) What is the individual''s National Insurance Number? (W)
@@ -184,7 +179,7 @@ individualNationalInsuranceNumber.hint = (W) For example, ‘QQ 12 34 56 C’ (W
 individualNationalInsuranceNumber.checkYourAnswersLabel = (W) What is the individual''s National Insurance Number? (W)
 individualNationalInsuranceNumber.error.required = (W) Enter the individual''s National Insurance Number (W)
 individualNationalInsuranceNumber.error.invalid = (W) Enter the individual''s National Insurance Number in the correct format (W)
-individualNationalInsuranceNumber.change.hidden = (W) IndividualNationalInsuranceNumber (W)
+individualNationalInsuranceNumber.change.hidden = rhif yswiriant gwladol
 
 individualConnection.title = (W) How do you know the individual? (W)
 individualConnection.heading = (W) How do you know the individual? (W)
@@ -207,7 +202,7 @@ individualConnection.error.required = (W) Select how you know the individual (W)
 individualConnection.otherValue.hint = (W) Enter how you know the individual (W)
 individualConnection.error.otherValue.required = (W) Select or enter how you know the individual (W)
 individualConnection.error.otherValue.maxLength = (W) Enter how you know the individual in less than {0} characters (W)
-individualConnection.change.hidden = (W) IndividualConnection (W)
+individualConnection.change.hidden = Sut rydych yn adnabod yr unigolyn
 
 individualBusinessDetails.title = (W) Does the individual have business details that you can provide? (W)
 individualBusinessDetails.heading = (W) Does the individual have business details that you can provide? (W)
@@ -217,7 +212,7 @@ individualBusinessDetails.no = (W) No (W)
 individualBusinessDetails.dontKnow = (W) I don''t know (W)
 individualBusinessDetails.checkYourAnswersLabel = (W) Does the individual have business details that you can provide? (W)
 individualBusinessDetails.error.required = (W) Select whether the individual has business details that you can provide (W)
-individualBusinessDetails.change.hidden = (W) IndividualBusinessDetails (W)
+individualBusinessDetails.change.hidden = Mae gan yr unigolyn fanylion busnes
 
 dateFormat.title = (W) Select a format to enter this individual''s age (W)
 dateFormat.heading = (W) Select a format to enter this individual''s age (W)
@@ -225,7 +220,7 @@ dateFormat.date = (W) Date of birth (W)
 dateFormat.age = (W) Approximate age (W)
 dateFormat.checkYourAnswersLabel = (W) Select a format to enter this individual''s age (W)
 dateFormat.error.required = (W) Select what you know about the individual''s age (W)
-dateFormat.change.hidden = (W) DateFormat (W)
+dateFormat.change.hidden = Fformat oedran
 
 individualDateOfBirth.title = (W) What is this individual''s date of birth? (W)
 individualDateOfBirth.heading = (W) What is this individual''s date of birth? (W)
@@ -235,7 +230,7 @@ individualDateOfBirth.error.required.all = (W) Enter the individual''s date of b
 individualDateOfBirth.error.required.two = (W) Date of birth must include {0} and {1} (W)
 individualDateOfBirth.error.required = (W) Date of birth must include {0} (W)
 individualDateOfBirth.error.invalid = (W) Enter a real date of birth (W)
-individualDateOfBirth.change.hidden = (W) IndividualDateOfBirth (W)
+individualDateOfBirth.change.hidden = Dyddiad geni
 individualDateOfBirth.error.futureDate = (W) Date of birth must be in the past (W)
 
 individualAge.title = (W) What is the individual''s approximate age? (W)
@@ -246,7 +241,7 @@ individualAge.error.nonNumeric = (W) Enter the individual''s approximate age wit
 individualAge.error.required = (W) Enter the individual''s approximate age (W)
 individualAge.error.wholeNumber = (W) Enter the individual''s approximate age with numerical values (W)
 individualAge.error.outOfRange = (W) The individual''s approximate age must be between {0} and {1} (W)
-individualAge.change.hidden = (W) IndividualAge (W)
+individualAge.change.hidden = Oedran Bras
 
 businessInformationCheck.title = (W) What do you know about the business? (W)
 businessInformationCheck.heading = (W) What do you know about the business? (W)
@@ -266,6 +261,7 @@ businessName.heading = (W) What is the business''s name? (W)
 businessName.checkYourAnswersLabel = (W) Business name (W)
 businessName.error.required = (W) Enter the business''s name (W)
 businessName.error.length = (W) The name of the business must be less than {0} characters (W)
+businessName.change.hidden = EN’r busnes
 
 descriptionActivity.title = (W) Provide a concise description of the activity you are reporting (W)
 descriptionActivity.heading = (W) Provide a concise description of the activity you are reporting (W)
@@ -274,7 +270,7 @@ descriptionActivity.checkYourAnswersLabel = (W) Activity description (W)
 descriptionActivity.error.required = (W) Enter a description on the activity you''re reporting. (W)
 descriptionActivity.error.length = (W) The description of the activity must be 1200 characters or fewer. (W)
 descriptionActivity.error.invalid = (W) Enter a description on the activity you're reporting with letters a to z, numbers, hyphens, spaces and apostrophes’. (W)
-descriptionActivity.change.hidden = (W) Activity description (W)
+descriptionActivity.change.hidden = Disgrifiad o’r gweithgaredd
 
 typeBusiness.title = (W) What type of business is it? (W)
 typeBusiness.heading = (W) What type of business is it? (W)
@@ -303,7 +299,7 @@ selectConnectionBusiness.checkYourAnswersLabel = (W) How do you know the busines
 selectConnectionBusiness.error.required = (W) Select or enter how you know the business. (W)
 selectConnectionBusiness.error.otherValue.required = (W) Select or enter how you know the business. (W)
 selectConnectionBusiness.error.otherValue.maxLength = (W) How you know the business must be 255 characters or fewer (W)
-selectConnectionBusiness.change.hidden = (W) How you know the business (W)
+selectConnectionBusiness.change.hidden = Sut rydych yn gwybod am y busnes
 
 referenceNumbers.title = (W) What are the business''s reference numbers? (W)
 referenceNumbers.heading = (W) What are the business''s reference numbers? (W)
@@ -319,19 +315,17 @@ referenceNumbers.error.required = (W) Enter referenceNumbers (W)
 referenceNumbers.error.vatRegistration.length = (W) VAT registration number must be {0} digits long (W)
 referenceNumbers.error.employeeRefNo.length =  (W) Employee Reference Number must be {0} digits long (W)
 referenceNumbers.error.corporationTax.length = (W) Corporation Tax Unique Taxpayer Reference must be {0} digits long (W)
-referenceNumbers.change.hidden = (W) Reference numbers (W)
+referenceNumbers.change.hidden = Cyfeirnodau Busnes
 
 approximateValue.title = (W) What is the approximate total value of the activity? (W)
 approximateValue.heading = (W) What is the approximate total value of the activity? (W)
 approximateValue.suffix = (W) £ (W)
 approximateValue.hint = (W) Enter the value in pounds. (W)
 approximateValue.checkYourAnswersLabel = (W) Activity value (£) (W)
-approximateValue.details.header = (W) I don''t know the approximate value. (W)
-approximateValue.details.p = (W) HMRC does not require an exact figure, an estimation will still be useful. If you have no estimate then you can <a href="/report-tax-fraud/when-activity-happen">skip to the next question.</a> (W)
 approximateValue.error.nonNumeric = (W) Enter the approximate value as a numerical value (W)
 approximateValue.error.required = (W) Enter the approximate value as a numerical value (W)
 approximateValue.error.wholeNumber = (W) Enter the approximate value as a numerical value (W)
-approximateValue.change.hidden = (W) Activity value (W)
+approximateValue.change.hidden = Swm y gweithgaredd (£)
 
 businessContactDetails.title = (W) What are the business''s contact details? (W)
 businessContactDetails.heading = (W) What are the business''s contact details? (W)
@@ -357,11 +351,14 @@ addAnotherPerson.change.hidden = (W) AddAnotherPerson (W)
 individual.addAnother.header = (W) You have added {0} individual (W)
 individual.addAnother.header.plural = (W) You have added {0} individuals (W)
 individual.moreThan5 = (W) You cannot add another individual as you have entered a maximum of 5. (W)
-individual.1 = (W) Individual A (W)
-individual.2 = (W) Individual B (W)
-individual.3 = (W) Individual C (W)
-individual.4 = (W) Individual D (W)
-individual.5 = (W) Individual E (W)
+individual.1 = Unigolyn A
+individual.2 = Unigolyn B
+individual.3 = Unigolyn C
+individual.4 = Unigolyn D
+individual.5 = Unigolyn E
+
+individual.change = Newid<span class="govuk-visually-hidden"> {0} </span>
+individual.remove = Dileu<span class="govuk-visually-hidden"> {0} </span>
 
 whenActivityHappen.title = (W) What is the duration of the reported activity? (W)
 whenActivityHappen.heading = (W) What is the duration of the reported activity? (W)
@@ -374,7 +371,7 @@ whenActivityHappen.notHappen = (W) It''s going to happen in the future (W)
 whenActivityHappen.doNotKnow = (W) I don''t know (W)
 whenActivityHappen.checkYourAnswersLabel = (W) Activity duration (W)
 whenActivityHappen.error.required = (W) Select when the activity you''re reporting started (W)
-whenActivityHappen.change.hidden = (W) WhenActivityHappen (W)
+whenActivityHappen.change.hidden = Hyd y gweithgaredd
 
 activityTimePeriod.title = (W) When will the activity likely happen? (W)
 activityTimePeriod.heading = (W) When will the activity likely happen? (W)
@@ -384,7 +381,7 @@ activityTimePeriod.later = (W) In the next year or later (W)
 activityTimePeriod.doNotKnow = (W) I don''t know (W)
 activityTimePeriod.checkYourAnswersLabel = (W) Activity duration (W)
 activityTimePeriod.error.required = (W) Select when the activity you''re reporting will likely happen (W)
-activityTimePeriod.change.hidden = (W) ActivityTimePeriod (W)
+activityTimePeriod.change.hidden = Cyfnod dechrau’r gweithgaredd
 
 howManyPeopleKnow.title = (W) How many other people know about the activity? (W)
 howManyPeopleKnow.heading = (W) How many other people know about the activity? (W)
@@ -396,7 +393,7 @@ howManyPeopleKnow.moreThanTenIndividuals = (W) More than 10 individuals (W)
 howManyPeopleKnow.doNotKnow = (W) I don''t know (W)
 howManyPeopleKnow.checkYourAnswersLabel = (W) How many other people know (W)
 howManyPeopleKnow.error.required = (W) Enter how many people know about the activity or select "I don''t know" (W)
-howManyPeopleKnow.change.hidden = (W) HowManyPeopleKnow (W)
+howManyPeopleKnow.change.hidden = Faint o bobl sy’n gwybod
 
 supportingDocument.title = (W) Do you have any supporting information? (W)
 supportingDocument.heading = (W) Do you have any supporting information? (W)
@@ -405,10 +402,11 @@ supportingDocument.yes = (W) Yes (W)
 supportingDocument.no = (W) No (W)
 supportingDocument.checkYourAnswersLabel = (W) Do you have any supporting information? (W)
 supportingDocument.error.required = (W) Select whether you have any supporting information you could provide if requested by HMRC. (W)
-supportingDocument.change.hidden = (W) SupportingDocument (W)
+supportingDocument.change.hidden = Gwybodaeth ategol a roddwyd
 
 individualAddress.lookup.title = (W) What is the individual''''s address? (W)
 individualAddress.lookup.heading = (W) What is the individual''''s address? (W)
+individualAddress.change.hidden = Cyfeiriad cartref
 
 provideContactDetails.title = (W) Do you wish to provide your contact details? (W)
 provideContactDetails.heading = (W) Do you wish to provide your contact details? (W)
@@ -417,15 +415,15 @@ provideContactDetails.yes = (W) Yes, I will provide my contact details (W)
 provideContactDetails.no = (W) No, I want to report anonymously (W)
 provideContactDetails.checkYourAnswersLabel = (W) Do you wish to provide your contact details? (W)
 provideContactDetails.error.required = (W) Select yes if you will provide your contact details. (W)
-provideContactDetails.change.hidden = (W) ProvideContactDetails (W)
+provideContactDetails.change.hidden = Manylion a roddwyd
 
 yourContactDetails.title = (W) What are your details? (W)
 yourContactDetails.heading = (W) What are your details? (W)
 yourContactDetails.hint = (W) Enter your contact details. (W)
-yourContactDetails.firstName = (W) First name (W)
-yourContactDetails.lastName = (W) Last name (W)
-yourContactDetails.tel = (W) Telephone number (W)
-yourContactDetails.email = (W) Email address (optional) (W)
+yourContactDetails.firstName = Enw cyntaf
+yourContactDetails.lastName = Enw olaf
+yourContactDetails.tel = Rhif ffôn
+yourContactDetails.email = Cyfeiriad e-bost
 yourContactDetails.memorableWord = (W) Memorable word or phrase (W)
 yourContactDetails.memorableWord.hint = (W) If HMRC contact you, we will quote your memorable word or phrase so that you can confirm the HMRC contact is genuine. <br>Enter a memorable word or phrase that is not related to personal information. (W)
 yourContactDetails.checkYourAnswersLabel = (W) What are your details? (W)
@@ -441,8 +439,10 @@ yourContactDetails.error.lastName.length = (W) Last names must be 255 characters
 yourContactDetails.error.tel.length = (W) Telephone numbers must be 255 characters or fewer. (W)
 yourContactDetails.error.email.length = (W) Email address's must be 255 characters or fewer. (W)
 yourContactDetails.error.memorableWord.length = (W) Memorable word or phrase must be 255 characters or fewer. (W)
-yourContactDetails.FirstName.change.hidden = (W) FirstName (W)
-yourContactDetails.LastName.change.hidden = (W) LastName (W)
+yourContactDetails.FirstName.change.hidden = Enw cyntaf
+yourContactDetails.LastName.change.hidden = Enw olaf
+yourContactDetails.uniqueIdentifier = Dynodwr CThEM cofiadwy
+yourContactDetails.emailLabel = Cyfeiriad e-bost
 
 businessAddress.lookup.title = (W) What is the business''''s address? (W)
 businessAddress.lookup.heading = (W) What is the business''''s address? (W)
@@ -463,13 +463,13 @@ documentationDescription.hint = (W) HMRC will not ask you to attach any document
 documentationDescription.checkYourAnswersLabel = (W) Describe any supporting information you currently have (W)
 documentationDescription.error.required = (W) Enter a description of the supporting information you hold. (W)
 documentationDescription.error.length = (W) The description of the supporting information you hold must be 500 characters or fewer. (W)
-documentationDescription.change.hidden = (W) DocumentationDescription (W)
+documentationDescription.change.hidden = Gwybodaeth ategol disgrifiad
 
 checkYourAnswers.activityDetails = (W) The activity you are reporting  (W)
 checkYourAnswers.yourDetails = (W) Your details (W)
 checkYourAnswers.businessDetails = (W) The business you are reporting (W)
 businessAddress.checkYourAnswersLabel = (W) Business address (W)
-businessAddress.change.hidden = (W) Business address (W)
+businessAddress.change.hidden = Cyfeiriad y busnes
 checkYourAnswers.individualDetails = (W) The individual you are reporting (W)
 individualCheckYourAnswers.title = (W) Check your submission (W)
 individualCheckYourAnswers.heading = (W) Check your submission (W)
@@ -507,7 +507,7 @@ activitySourceOfInformation.checkYourAnswersLabel = (W) How do you know this inf
 activitySourceOfInformation.error.required = (W) Enter how you know the information (W)
 activitySourceOfInformation.error.otherValue.required = (W) Select or enter how you know the information. (W)
 activitySourceOfInformation.error.otherValue.maxLength = (W) How you know the information must be 100 characters or fewer. (W)
-activitySourceOfInformation.change.hidden = (W) ActivitySourceOfInformation (W)
+activitySourceOfInformation.change.hidden = Sut cawsoch yr wybodaeth hon
 
 technicalProblems.title = (W) Get help with technical problems (W)
 technicalProblems.heading = (W) Get help with technical problems (W)

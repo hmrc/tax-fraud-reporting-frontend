@@ -18,6 +18,6 @@ package forms
 
 object Validation {
 
-  val vatRegistration = "^(GB)?\\d{9}$"
+  val vatRegistration = "^(GB|gb)?\\d{9}$"
   val ctutrValidation = "^\\d{10}$"
 }

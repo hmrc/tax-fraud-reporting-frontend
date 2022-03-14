@@ -23,7 +23,7 @@
 
 @(appConfig: FrontendAppConfig, isProvideContact: Boolean)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("reportSubmitted.title"))) {
+@layout(pageTitle = titleNoForm(messages("reportSubmitted.title")), showBackLink = false) {
 
         <div class="govuk-panel govuk-panel--confirmation">
              <h1 class="govuk-panel__title">
