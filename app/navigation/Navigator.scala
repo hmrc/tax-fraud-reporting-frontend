@@ -70,19 +70,21 @@ class Navigator @Inject() () {
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
-    case SupportingDocumentPage          => supportingDocumentCheckRoutes
-    case ProvideContactDetailsPage       => provideContactDetailsRoutes
-    case WhenActivityHappenPage          => whenActivityHappenCheckRoutes
-    case IndividualDateFormatPage(index) => individualDateFormatPageCheckRoutes(_, index)
+    case SupportingDocumentPage               => supportingDocumentCheckRoutes
+    case ProvideContactDetailsPage            => provideContactDetailsRoutes
+    case WhenActivityHappenPage               => whenActivityHappenCheckRoutes
+    case IndividualDateFormatPage(index)      => individualDateFormatPageCheckRoutes(_, index)
     case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index, CheckMode)
-    case BusinessNamePage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Name, CheckMode)
-    case TypeBusinessPage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Type, CheckMode)
-    case ReferenceNumbersPage(index)         => businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference, CheckMode)
-    case BusinessContactDetailsPage(index)   => businessInformationRoutes(_, index, BusinessInformationCheck.Contact, CheckMode)
-    case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index, CheckMode )
+    case BusinessNamePage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Name, CheckMode)
+    case TypeBusinessPage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Type, CheckMode)
+    case ReferenceNumbersPage(index) =>
+      businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference, CheckMode)
+    case BusinessContactDetailsPage(index) =>
+      businessInformationRoutes(_, index, BusinessInformationCheck.Contact, CheckMode)
+    case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index, CheckMode)
     case BusinessAddressConfirmationPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.Address, CheckMode)
-    case _                               => _ => routes.CheckYourAnswersController.onPageLoad
+    case _ => _ => routes.CheckYourAnswersController.onPageLoad
   }
 
   private def individualInformationRoute(answer: IndividualInformation, index: Index, mode: Mode): Call =
@@ -145,20 +147,21 @@ class Navigator @Inject() () {
 
   private def businessInformationRoutes(answers: UserAnswers, index: Index, mode: Mode): Call =
     answers.get(BusinessInformationCheckPage(index)).flatMap { businessInformation =>
-      BusinessInformationCheck.values.find(businessInformation.contains).map(
-        businessInformationRoute(_, index, mode)
-      )
+      BusinessInformationCheck.values.find(businessInformation.contains).map(businessInformationRoute(_, index, mode))
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def businessInformationRoutes(answers: UserAnswers, index: Index, answer: BusinessInformationCheck, mode: Mode = NormalMode): Call =
+  private def businessInformationRoutes(
+    answers: UserAnswers,
+    index: Index,
+    answer: BusinessInformationCheck,
+    mode: Mode = NormalMode
+  ): Call =
     answers.get(BusinessInformationCheckPage(index)).flatMap { businessInformation =>
       val remainingSections = businessInformation & BusinessInformationCheck.values.dropWhile(_ != answer).drop(1).toSet
       if (remainingSections.isEmpty)
         Some(routes.SelectConnectionBusinessController.onPageLoad(index, mode))
       else
-        BusinessInformationCheck.values.find(remainingSections.contains).map(
-          businessInformationRoute(_, index, mode)
-        )
+        BusinessInformationCheck.values.find(remainingSections.contains).map(businessInformationRoute(_, index, mode))
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def addAnotherPersonRoutes(answers: UserAnswers): Call =
@@ -182,10 +185,11 @@ class Navigator @Inject() () {
     answers.get(IndividualBusinessDetailsPage(index)).map {
       case IndividualBusinessDetails.Yes =>
         routes.BusinessInformationCheckController.onPageLoad(index, mode)
-      case _ => mode match {
-        case CheckMode => routes.CheckYourAnswersController.onPageLoad
-        case NormalMode => routes.AddAnotherPersonController.onPageLoad(mode)
-      }
+      case _ =>
+        mode match {
+          case CheckMode  => routes.CheckYourAnswersController.onPageLoad
+          case NormalMode => routes.AddAnotherPersonController.onPageLoad(mode)
+        }
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def whenActivityHappenRoutes(answers: UserAnswers): Call =

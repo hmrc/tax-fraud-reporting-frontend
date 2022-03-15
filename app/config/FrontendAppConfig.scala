@@ -64,9 +64,12 @@ class FrontendAppConfig @Inject() (servicesConfig: ServicesConfig, configuration
 
   lazy val accessibilityStatementPath: String = loadConfig("accessibility-statement.service-path")
 
-  lazy val accessibilityStatementFrontendBaseUrl: String = configuration.getOptional[String]("accessibility-statement.host").getOrElse("")
+  lazy val accessibilityStatementFrontendBaseUrl: String =
+    configuration.getOptional[String]("accessibility-statement.host").getOrElse("")
+
   def accessibilityFooterUrl(referrerUrl: Option[String] = None): String = {
-    val referrerString = referrerUrl.map (url => s"""?referrerUrl=${URLEncoder.encode(url, "UTF-8")}""").getOrElse("")
+    val referrerString = referrerUrl.map(url => s"""?referrerUrl=${URLEncoder.encode(url, "UTF-8")}""").getOrElse("")
     s"$accessibilityStatementFrontendBaseUrl/accessibility-statement$accessibilityStatementPath$referrerString"
   }
+
 }
