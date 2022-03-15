@@ -16,8 +16,11 @@
 
 package forms
 
+import scala.util.matching.Regex
+
 object Validation {
 
-  val vatRegistration = "^(GB|gb)?\\d{9}$"
-  val ctutrValidation = "^\\d{10}$"
+  val vatRegistrationPattern: Regex = "(?:[Gg][Bb])?\\d{9}".r.anchored
+  val utrPattern: Regex             = "\\d{10}".r.anchored
+  val payeReferencePattern: Regex   = """\d{3}/[A-Za-z0-9]{1,10}""".r.anchored
 }

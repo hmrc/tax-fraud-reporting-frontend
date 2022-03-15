@@ -331,7 +331,7 @@ referenceNumbers.ct-utr.hint = This is 10 digits long, for example 1234567890.
 referenceNumbers.checkYourAnswersLabel = Business reference numbers
 referenceNumbers.error.required = Enter referenceNumbers
 referenceNumbers.error.vatRegistration.length = VAT registration number must be 9 or 11 digits long
-referenceNumbers.error.employeeRefNo.length =  Employee Reference Number must be {0} digits long
+referenceNumbers.error.employeeRefNo.invalid =  Employee Reference Number must be in the correct format
 referenceNumbers.error.corporationTax.length = Corporation Tax Unique Taxpayer Reference must be 10 digits long
 referenceNumbers.change.hidden = Business reference numbers
 

@@ -16,22 +16,33 @@
 
 package forms
 
-import javax.inject.Inject
 import forms.mappings.Mappings
 import models.ReferenceNumbers
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional}
 
+import javax.inject.Inject
+
 class ReferenceNumbersFormProvider @Inject() extends Mappings {
+
+  def trimWhitespace(string: String): String = string.split("\\s+").mkString
 
   def apply(): Form[ReferenceNumbers] = Form(
     mapping(
       "vatRegistration" -> optional(
-        text().verifying(regexp(Validation.vatRegistration, "referenceNumbers.error.vatRegistration.length"))
+        text().transform[String](trimWhitespace, value => value)
+          .transform[String](_.toUpperCase, value => value)
+          .verifying(
+            regexp(Validation.vatRegistrationPattern.toString, "referenceNumbers.error.vatRegistration.length")
+          )
       ),
-      "employeeRefNo" -> optional(text().verifying(maxLength(100, "referenceNumbers.error.employeeRefNo.length"))),
+      "employeeRefNo" -> optional(
+        text().transform[String](trimWhitespace, value => value)
+          .verifying(regexp(Validation.payeReferencePattern.toString, "referenceNumbers.error.employeeRefNo.invalid"))
+      ),
       "corporationTax" -> optional(
-        text().verifying(regexp(Validation.ctutrValidation, "referenceNumbers.error.corporationTax.length"))
+        text().transform[String](trimWhitespace, value => value)
+          .verifying(regexp(Validation.utrPattern.toString, "referenceNumbers.error.corporationTax.length"))
       )
     )(ReferenceNumbers.apply)(ReferenceNumbers.unapply)
   )

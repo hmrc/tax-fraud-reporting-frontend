@@ -313,7 +313,7 @@ referenceNumbers.ct-utr.hint = (W) Must be 10 digits long, for example 123456789
 referenceNumbers.checkYourAnswersLabel = (W) Reference numbers (W)
 referenceNumbers.error.required = (W) Enter referenceNumbers (W)
 referenceNumbers.error.vatRegistration.length = (W) VAT registration number must be {0} digits long (W)
-referenceNumbers.error.employeeRefNo.length =  (W) Employee Reference Number must be {0} digits long (W)
+referenceNumbers.error.employeeRefNo.invalid =  Rhaid i Gyfeirnod y Cyflogwr (ERN) fod yn y fformat cywir
 referenceNumbers.error.corporationTax.length = (W) Corporation Tax Unique Taxpayer Reference must be {0} digits long (W)
 referenceNumbers.change.hidden = Cyfeirnodau Busnes
 
