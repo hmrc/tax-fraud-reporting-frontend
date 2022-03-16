@@ -117,7 +117,7 @@ class SubmissionServiceSpec extends AnyFreeSpec with Matchers with WireMockHelpe
 
       lazy val expectedJson: JsValue = Json.toJson(
         FraudReportBody(
-          activityType = ActivityType.list.head.activityName,
+          activityType = "Fraud related to furlough",
           nominals = List(
             Nominal(
               person = Some(Person(
@@ -202,7 +202,7 @@ class SubmissionServiceSpec extends AnyFreeSpec with Matchers with WireMockHelpe
 
       lazy val expectedJson: JsValue = Json.toJson(
         FraudReportBody(
-          activityType = ActivityType.list.head.activityName,
+          activityType = "Fraud related to furlough",
           nominals = List(
             Nominal(
               person = None,
