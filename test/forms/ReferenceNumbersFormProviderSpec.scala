@@ -17,7 +17,7 @@
 package forms
 
 import forms.behaviours.StringFieldBehaviours
-import play.api.data.FormError
+import org.scalacheck.Gen
 
 class ReferenceNumbersFormProviderSpec extends StringFieldBehaviours {
 
@@ -26,36 +26,65 @@ class ReferenceNumbersFormProviderSpec extends StringFieldBehaviours {
   ".vatRegistration" - {
 
     val fieldName = "vatRegistration"
-    val lengthKey = "referenceNumbers.error.vatRegistration.length"
 
-    val result = form.bind(Map(fieldName -> "ab123456789"))(fieldName)
-    result.errors mustEqual Seq(FormError(fieldName, lengthKey, Seq(Validation.vatRegistration)))
+    val validData = for {
+      prefix <- Gen.oneOf("GB", "gb", "")
+      digits <- Gen.listOfN(9, Gen.numChar).map(_.mkString)
+    } yield prefix + digits
 
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      validData
+    )
+
+    "bind values with spaces" in {
+
+      val result = form.bind(Map(fieldName -> "GB 123 456 789")).apply(fieldName)
+      result.value.get mustBe "GB 123 456 789"
+      result.errors mustBe empty
+    }
   }
 
   ".employeeRefNo" - {
 
     val fieldName = "employeeRefNo"
-    val lengthKey = "referenceNumbers.error.employeeRefNo.length"
-    val maxLength = 100
 
-    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
+    val validData = for {
+      firstDigits <- Gen.listOfN(3, Gen.alphaChar).map(_.mkString)
+      numDigits   <- Gen.choose(1, 10)
+      lastChars   <- Gen.listOfN(numDigits, Gen.alphaNumChar)
+    } yield s"$firstDigits/$lastChars"
 
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
+    "bind values with spaces" in {
+
+      val result = form.bind(Map(fieldName -> "123 / ABC 123 45")).apply(fieldName)
+      result.value.get mustBe "123 / ABC 123 45"
+      result.errors mustBe empty
+    }
   }
 
   ".corporationTax" - {
 
     val fieldName = "corporationTax"
-    val lengthKey = "referenceNumbers.error.corporationTax.length"
 
-    val result = form.bind(Map(fieldName -> "a123456789"))(fieldName)
-    result.errors mustEqual Seq(FormError(fieldName, lengthKey, Seq(Validation.ctutrValidation)))
+    val validData = for {
+      digits <- Gen.listOfN(10, Gen.numChar)
+    } yield digits.mkString
+
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      validData
+    )
+
+    "bind values with spaces" in {
+
+      val result = form.bind(Map(fieldName -> "12 34 56 78 90")).apply(fieldName)
+      result.value.get mustBe "12 34 56 78 90"
+      result.errors mustBe empty
+    }
+
   }
 
 }
