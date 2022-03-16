@@ -17,7 +17,6 @@
 package controllers
 
 import base.SpecBase
-import models.ActivityType
 import org.scalatest.TryValues
 import pages.ActivityTypePage
 import play.api.test.FakeRequest

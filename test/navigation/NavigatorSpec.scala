@@ -18,25 +18,27 @@ package navigation
 
 import base.SpecBase
 import controllers.routes
+import pages._
 import models._
 import org.scalacheck.Gen
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
-import pages._
 import services.ActivityTypeService
 
 import scala.language.postfixOps
 
 class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
+  private val app       = applicationBuilder().build()
+  private val navigator = app.injector.instanceOf[Navigator]
+
+  private val individualInformationGen =
+    Gen.containerOf[Set, IndividualInformation](Gen.oneOf(IndividualInformation.values))
+
+  private val businessInformationCheckGen: Gen[Set[BusinessInformationCheck]] =
+    Gen.containerOf[Set, BusinessInformationCheck](Gen.oneOf(BusinessInformationCheck.values))
+
   "Navigator" - {
-    val app = applicationBuilder().build()
 
     val activityTypeService = app.injector.instanceOf[ActivityTypeService]
-    val navigator           = new Navigator(activityTypeService)
-
-    val individualInformationGen = Gen.containerOf[Set, IndividualInformation](Gen.oneOf(IndividualInformation.values))
-
-    val businessInformationCheckGen: Gen[Set[BusinessInformationCheck]] =
-      Gen.containerOf[Set, BusinessInformationCheck](Gen.oneOf(BusinessInformationCheck.values))
 
     "in Normal mode" - {
 
@@ -146,7 +148,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualInformationPage(Index(0)),
               NormalMode,
               userAnswers
-            ) mustBe routes.IndividualAddressRedirectController.onPageLoad(Index(0), NormalMode)
+            ) mustBe routes.IndividualAddressController.onPageLoad(Index(0), NormalMode)
           }
         }
 
@@ -215,7 +217,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualNamePage(Index(0)),
               NormalMode,
               userAnswers
-            ) mustBe routes.IndividualAddressRedirectController.onPageLoad(Index(0), NormalMode)
+            ) mustBe routes.IndividualAddressController.onPageLoad(Index(0), NormalMode)
           }
         }
 
@@ -321,7 +323,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualAgePage(Index(0)),
               NormalMode,
               userAnswers
-            ) mustBe routes.IndividualAddressRedirectController.onPageLoad(Index(0), NormalMode)
+            ) mustBe routes.IndividualAddressController.onPageLoad(Index(0), NormalMode)
           }
         }
 
@@ -392,7 +394,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualDateOfBirthPage(Index(0)),
               NormalMode,
               userAnswers
-            ) mustBe routes.IndividualAddressRedirectController.onPageLoad(Index(0), NormalMode)
+            ) mustBe routes.IndividualAddressController.onPageLoad(Index(0), NormalMode)
           }
         }
 
@@ -460,7 +462,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             val answer      = individualInformationAnswer -- previousAnswers + IndividualInformation.ContactDetails
             val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
-              IndividualAddressConfirmationPage(Index(0)),
+              IndividualAddressPage(Index(0)),
               NormalMode,
               userAnswers
             ) mustBe routes.IndividualContactDetailsController.onPageLoad(Index(0), NormalMode)
@@ -478,7 +480,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             val answer      = individualInformationAnswer -- previousAnswers + IndividualInformation.NiNumber
             val userAnswers = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
-              IndividualAddressConfirmationPage(Index(0)),
+              IndividualAddressPage(Index(0)),
               NormalMode,
               userAnswers
             ) mustBe routes.IndividualNationalInsuranceNumberController.onPageLoad(Index(0), NormalMode)
@@ -491,7 +493,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             val answer           = individualInformationAnswer -- followingAnswers
             val userAnswers      = UserAnswers("id").set(IndividualInformationPage(Index(0)), answer).success.value
             navigator.nextPage(
-              IndividualAddressConfirmationPage(Index(0)),
+              IndividualAddressPage(Index(0)),
               NormalMode,
               userAnswers
             ) mustBe routes.IndividualConnectionController.onPageLoad(Index(0), NormalMode)
@@ -500,7 +502,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
         "to the journey recovery controller if there is no individual information set" in {
           navigator.nextPage(
-            IndividualAddressConfirmationPage(Index(0)),
+            IndividualAddressPage(Index(0)),
             NormalMode,
             UserAnswers("id")
           ) mustBe routes.JourneyRecoveryController.onPageLoad()
@@ -608,7 +610,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             BusinessInformationCheckPage(Index(0)),
             NormalMode,
             userAnswers
-          ) mustBe routes.BusinessAddressRedirectController.onPageLoad(Index(0), NormalMode)
+          ) mustBe routes.BusinessAddressController.onPageLoad(Index(0), NormalMode)
         }
       }
 
@@ -677,7 +679,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             BusinessInformationCheckPage(Index(0)),
             NormalMode,
             userAnswers
-          ) mustBe routes.BusinessAddressRedirectController.onPageLoad(Index(0), NormalMode)
+          ) mustBe routes.BusinessAddressController.onPageLoad(Index(0), NormalMode)
         }
       }
 
@@ -752,7 +754,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             BusinessInformationCheckPage(Index(0)),
             NormalMode,
             userAnswers
-          ) mustBe routes.BusinessAddressRedirectController.onPageLoad(Index(0), NormalMode)
+          ) mustBe routes.BusinessAddressController.onPageLoad(Index(0), NormalMode)
         }
       }
 
@@ -1354,7 +1356,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         }
 
         "Address Confirmation page" in {
-          assertNavigationToIndividualCheckAnswersPage(IndividualAddressConfirmationPage(Index(0)))
+          assertNavigationToIndividualCheckAnswersPage(IndividualAddressPage(Index(0)))
         }
 
         "National insurance number page" in {

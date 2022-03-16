@@ -16,6 +16,7 @@
 
 @import play.api.libs.json.Json
 @import views.html.components.Autocomplete
+@import viewmodels.govuk.AutocompleteOption
 @import services.ActivityTypeService
 
 @this(
@@ -39,14 +40,21 @@
         }
 
         @autocomplete(
-            form = form,
+            field = form("value"),
             id = "value",
             name = "value",
             isPageHint = false,
             hint = Some("activityType.hint"),
             isPageHeading = true,
             label = "activityType.heading",
-            activityTypes = activityTypeService.allActivities map { case (name, synonyms) => ActivityType(name, synonyms) }
+            options = activityTypeService.allActivities map {
+              case (name, synonyms) =>
+                AutocompleteOption(
+                  name,
+                  messages(s"activityType.name.$name"),
+                  synonyms map { synonym => messages(s"activityType.synonym.$synonym") } mkString ","
+                )
+            } toSeq
         )
 
         @govukButton(

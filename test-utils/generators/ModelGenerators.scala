@@ -101,16 +101,6 @@ trait ModelGenerators {
       )
     }
 
-  implicit lazy val arbitraryAddressResponse: Arbitrary[AddressResponse] =
-    Arbitrary {
-      for {
-        lines    <- arbitrary[List[String]]
-        town     <- arbitrary[Option[String]]
-        postcode <- arbitrary[Option[String]]
-        country  <- arbitrary[Option[String]]
-      } yield AddressResponse(lines, town, postcode, country)
-    }
-
   implicit lazy val arbitraryBusinessInformationCheck: Arbitrary[BusinessInformationCheck] =
     Arbitrary(Gen oneOf BusinessInformationCheck.values)
 

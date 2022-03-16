@@ -32,12 +32,11 @@ import scala.concurrent.Future
 
 class IndividualConfirmRemoveControllerSpec extends SpecBase {
 
-  def onwardRoute = Call("GET", "/foo")
+  private def onwardRoute = Call("GET", "/foo")
+  private val form        = (new IndividualConfirmRemoveFormProvider)()
 
-  val formProvider = new IndividualConfirmRemoveFormProvider()
-  val form         = formProvider()
-
-  lazy val individualConfirmRemoveRoute = routes.IndividualConfirmRemoveController.onPageLoad(Index(0), NormalMode).url
+  private lazy val individualConfirmRemoveRoute =
+    routes.IndividualConfirmRemoveController.onPageLoad(Index(0), NormalMode).url
 
   "IndividualConfirmRemove Controller" - {
 

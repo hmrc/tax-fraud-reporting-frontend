@@ -52,9 +52,6 @@ trait PageGenerators {
   implicit lazy val arbitraryWhenActivityHappenPage: Arbitrary[WhenActivityHappenPage.type] =
     Arbitrary(WhenActivityHappenPage)
 
-  implicit lazy val arbitraryIndividualAddressConfirmationPage: Arbitrary[IndividualAddressConfirmationPage] =
-    Arbitrary(IndividualAddressConfirmationPage(Index(0)))
-
   implicit lazy val arbitraryReferenceNumbersPage: Arbitrary[ReferenceNumbersPage] =
     Arbitrary(ReferenceNumbersPage(Index(0)))
 
@@ -111,8 +108,5 @@ trait PageGenerators {
 
   implicit lazy val arbitraryActivityTypePage: Arbitrary[ActivityTypePage.type] =
     Arbitrary(ActivityTypePage)
-
-  implicit lazy val arbitraryBusinessAddressConfirmationPage: Arbitrary[BusinessAddressConfirmationPage] =
-    Arbitrary(BusinessAddressConfirmationPage(Index(0)))
 
 }

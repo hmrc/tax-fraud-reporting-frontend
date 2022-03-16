@@ -16,31 +16,30 @@
 
 package controllers
 
-import controllers.actions._
-import forms.IndividualNameFormProvider
-
-import javax.inject.Inject
+import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
+import forms.AddressFormProvider
 import models.{Index, Mode}
 import navigation.Navigator
-import pages.IndividualNamePage
+import pages.IndividualAddressPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.IndividualNameView
+import views.html.AddressView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class IndividualNameController @Inject() (
+class IndividualAddressController @Inject() (
   override val messagesApi: MessagesApi,
   sessionRepository: SessionRepository,
   navigator: Navigator,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
-  formProvider: IndividualNameFormProvider,
+  formProvider: AddressFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: IndividualNameView
+  view: AddressView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -48,23 +47,23 @@ class IndividualNameController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      val preparedForm = request.userAnswers.get(IndividualNamePage(index)) match {
+      val preparedForm = request.userAnswers get IndividualAddressPage(index) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, index, mode))
+      Ok(view(preparedForm, index, mode, forBusiness = false))
   }
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode))),
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, forBusiness = true))),
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualNamePage(index), value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualAddressPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(IndividualNamePage(index), mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(IndividualAddressPage(index), mode, updatedAnswers))
       )
   }
 

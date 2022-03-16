@@ -14,21 +14,19 @@
  * limitations under the License.
  */
 
-package models
+package viewmodels.govuk
 
 import play.api.i18n.Messages
 import play.api.libs.json.{Json, Writes}
 
-final case class ActivityType(key: String, name: String, synonyms: Seq[String])
+case class AutocompleteOption(value: String, text: String, searchTerms: String)
 
-object ActivityType {
-  implicit val writes: Writes[ActivityType] = Json.writes
+object AutocompleteOption {
+  implicit val writes: Writes[AutocompleteOption] = Json.writes
 
-  def apply(nameKey: String, synonymKeys: Array[String])(implicit messages: Messages): ActivityType =
-    ActivityType(nameKey, translate(nameKey), synonymKeys map { synonymKey => translate(synonymKey, "synonym") })
-
-  def translate(subKey: String, key: String = "name")(implicit messages: Messages): String = messages(
-    "activityType." + key + "." + subKey
-  )
+  def get(messages: Messages, superKey: String)(key: String): AutocompleteOption = {
+    def translate(subKey: String) = messages(s"$superKey.$key.$subKey")
+    apply(key, translate("text"), translate("searchTerms"))
+  }
 
 }
