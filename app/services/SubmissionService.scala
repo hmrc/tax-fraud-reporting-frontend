@@ -52,7 +52,7 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
       getAnswer(answers, ActivitySourceOfInformationPage)
     ).parMapN { (activityType, valueFraud, howManyKnow, nominals, informationSource) =>
       FraudReportBody(
-        activityType = activityType.activityName,
+        activityType = messages(activityType.activityName),
         nominals = nominals,
         valueFraud = Some(valueFraud),
         durationFraud = getFraudDuration(answers),
