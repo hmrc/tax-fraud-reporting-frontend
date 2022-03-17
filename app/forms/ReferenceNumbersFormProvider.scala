@@ -30,7 +30,7 @@ class ReferenceNumbersFormProvider @Inject() extends Mappings {
   def apply(): Form[ReferenceNumbers] = Form(
     mapping(
       "vatRegistration" -> optional(
-        text().transform[String]( trimWhitespace(_).toUpperCase, identity )
+        text().transform[String](trimWhitespace(_).toUpperCase, identity)
           .verifying(
             regexp(Validation.vatRegistrationPattern.toString, "referenceNumbers.error.vatRegistration.length")
           )

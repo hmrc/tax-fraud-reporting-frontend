@@ -520,4 +520,4 @@ technicalProblems.link.text = (W) Is this page not working properly? (opens in n
 serviceTimeout.title = (W) For your security, we deleted your answers (W)
 serviceTimeout.heading = (W) For your security, we deleted your answers (W)
 
-
+betaBanner.service.text = Gwasanaeth newydd yw hwn

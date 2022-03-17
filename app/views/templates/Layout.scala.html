@@ -32,7 +32,8 @@
     hmrcReportTechnicalIssueHelper: HmrcReportTechnicalIssueHelper,
     hmrcScripts: HmrcScripts,
     betaBanner: StandardBetaBanner,
-    head: Head
+    head: Head,
+    phaseBanner: views.html.BetaBannerView
 )
 
 @(pageTitle: String, showBackLink: Boolean = true, timeout: Boolean = true, showSignOut: Boolean = false)(contentBlock: Html)(implicit request: Request[_], messages: Messages)
@@ -48,7 +49,7 @@
 }
 
 @beforeContent = {
-
+    @phaseBanner("beta")
     @if(appConfig.languageTranslationEnabled) {
         @hmrcLanguageSelect(LanguageSelect(
             if (messages.lang.code == "cy") Cy else En,
@@ -77,8 +78,7 @@
     headBlock = Some(head(headContent, timeout)),
     headerBlock = Some(hmrcStandardHeader(
         serviceUrl  = Some(routes.IndexController.onPageLoad.url),
-        signOutUrl  = if(showSignOut) Some(controllers.auth.routes.AuthController.signOut.url) else None,
-        phaseBanner = Some(betaBanner(appConfig.contactFeedbackUrl))
+        signOutUrl  = if(showSignOut) Some(controllers.auth.routes.AuthController.signOut.url) else None
     )),
     beforeContentBlock = Some(beforeContent),
     footerBlock        = Some(hmrcStandardFooter()),

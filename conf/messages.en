@@ -551,3 +551,5 @@ technicalProblems.link.text = Is this page not working properly? (opens in new t
 
 serviceTimeout.title = For your security, we deleted your answers
 serviceTimeout.heading = For your security, we deleted your answers
+
+betaBanner.service.text = This is a new service
