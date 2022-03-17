@@ -32,11 +32,7 @@ class ReferenceNumbersFormProviderSpec extends StringFieldBehaviours {
       digits <- Gen.listOfN(9, Gen.numChar).map(_.mkString)
     } yield prefix + digits
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      validData
-    )
+    behave like fieldThatBindsValidData(form, fieldName, validData)
 
     "bind values with spaces" in {
 
@@ -72,11 +68,7 @@ class ReferenceNumbersFormProviderSpec extends StringFieldBehaviours {
       digits <- Gen.listOfN(10, Gen.numChar)
     } yield digits.mkString
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      validData
-    )
+    behave like fieldThatBindsValidData(form, fieldName, validData)
 
     "bind values with spaces" in {
 
