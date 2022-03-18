@@ -45,7 +45,7 @@
         LabelViewModel(messages(label))
     },
     describedBy = hint.map(_ => s"$id-hint"),
-    errorMessage = form(id).error.map(fe ⇒ ErrorMessage(content = messages(fe.message))),
+    errorMessage = form(id).error.map(fe ⇒ ErrorMessage(content = messages(fe.message),visuallyHiddenText = Some(messages("govukErrorMessage.visuallyHiddenText")))),
     hint = hint.map(c => Hint(content = messages(c))),
     items = Seq(SelectItem(attributes= Map("label" -> " "))) ++ list.map {
         case (k, v) ⇒ SelectItem(
