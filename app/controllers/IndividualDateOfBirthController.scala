@@ -18,8 +18,6 @@ package controllers
 
 import controllers.actions._
 import forms.IndividualDateOfBirthFormProvider
-
-import javax.inject.Inject
 import models.{Index, Mode}
 import navigation.Navigator
 import pages.IndividualDateOfBirthPage
@@ -29,6 +27,7 @@ import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.IndividualDateOfBirthView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class IndividualDateOfBirthController @Inject() (
