@@ -21,7 +21,7 @@ import play.api.libs.json.JsPath
 
 import java.time.LocalDate
 
-final case class IndividualDateOfBirthPage(index: Index) extends QuestionPage[LocalDate] {
+final case class IndividualDateOfBirthPage(index: Index) extends QuestionPage[LocalDate] with IndexedConfirmationPage {
 
   override def path: JsPath = JsPath \ "nominals" \ index.position \ toString
 

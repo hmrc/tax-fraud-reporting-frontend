@@ -1319,6 +1319,62 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
       }
 
+      "must go to individual information check page of the individual after successful update from" - {
+
+        def assertNavigationToIndividualCheckAnswersPage(currentPage: IndexedConfirmationPage) = {
+          val index = currentPage.index
+          forAll(individualInformationGen) { individualInformationAnswer =>
+            val userAnswers = UserAnswers("id").set(IndividualInformationPage(index), individualInformationAnswer).success.value
+            navigator.nextPage(
+              currentPage,
+              CheckMode,
+              userAnswers
+            ) mustBe routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
+          }
+        }
+
+        "Name page" in {
+          assertNavigationToIndividualCheckAnswersPage(IndividualNamePage(Index(0)))
+        }
+
+        "Date of Birth page" in {
+          assertNavigationToIndividualCheckAnswersPage(IndividualDateOfBirthPage(Index(0)))
+        }
+
+        "Age page" in {
+          assertNavigationToIndividualCheckAnswersPage(IndividualAgePage(Index(0)))
+        }
+
+        "Contact details page" in {
+          assertNavigationToIndividualCheckAnswersPage(IndividualContactDetailsPage(Index(0)))
+        }
+
+        "Address Confirmation page" in {
+          assertNavigationToIndividualCheckAnswersPage(IndividualAddressConfirmationPage(Index(0)))
+        }
+
+        "National insurance number page" in {
+          assertNavigationToIndividualCheckAnswersPage(IndividualNationalInsuranceNumberPage(Index(0)))
+        }
+
+        "Individual connection page" in {
+          assertNavigationToIndividualCheckAnswersPage(IndividualConnectionPage(Index(0)))
+        }
+
+        "Business details - changed to No/Don't know" in {
+          import IndividualBusinessDetails._
+          forAll(Gen.oneOf(No, DontKnow)) { answer =>
+            val answers =
+              UserAnswers("id").set(IndividualBusinessDetailsPage(Index(0)), answer).success.value
+            navigator.nextPage(
+              IndividualBusinessDetailsPage(Index(0)),
+              CheckMode,
+              answers
+            ) mustBe routes.IndividualCheckYourAnswersController.onPageLoad(Index(0), CheckMode)
+          }
+        }
+      }
+
     }
   }
 }
