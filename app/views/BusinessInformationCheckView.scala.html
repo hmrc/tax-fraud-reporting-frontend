@@ -29,9 +29,12 @@
 
 @contentHeader = {
     @if(!isBusinessJourney) {
-        <span class="govuk-caption-xl">@messages(s"individual.${index.display}")</span>
+        <span class="govuk-caption-xl">
+            <span class="govuk-visually-hidden">@messages("individual.caption.text.screen.reader")</span>
+            @messages(s"individual.${index.display}")
+        </span>
     }
-        <h1 class="govuk-fieldset__legend--xl govuk-!-margin-top-0">@messages("businessInformationCheck.heading")</h1>
+        @messages("businessInformationCheck.heading")
 }
 
 @content = {
@@ -51,7 +54,7 @@
             CheckboxesViewModel(
                 form   = form,
                 name   = "value",
-                legend = LegendViewModel(HtmlContent(contentHeader)),
+                legend = LegendViewModel(HtmlContent(contentHeader)).asPageHeading(LegendSize.ExtraLarge),
                 items = Seq(
                         CheckboxItem(
                             id   = Some("value_0"),
