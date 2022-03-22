@@ -27,8 +27,11 @@
 @(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @contentHeader = {
-        <span class="govuk-caption-xl">@messages(s"individual.${index.display}")</span>
-        <h1 class="govuk-fieldset__legend--xl govuk-!-margin-top-0">@messages("dateFormat.heading")</h1>
+        <span class="govuk-caption-xl">
+            <span class="govuk-visually-hidden">@messages("individual.caption.text.screen.reader")</span>
+            @messages(s"individual.${index.display}")
+        </span>
+        @messages("dateFormat.heading")
 }
 
 @layout(pageTitle = title(form, messages("dateFormat.title"))) {
@@ -42,7 +45,7 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(HtmlContent(contentHeader)),
+                legend = LegendViewModel(HtmlContent(contentHeader)).asPageHeading(LegendSize.ExtraLarge),
                 items  = IndividualDateFormat.options
             )
         )

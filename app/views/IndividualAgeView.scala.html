@@ -28,8 +28,11 @@
 @(form: Form[_], index: Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @contentHeader = {
-    <span class="govuk-caption-xl">@messages(s"individual.${index.display}")</span>
-    <h1 class="govuk-fieldset__legend--xl govuk-!-margin-top-0">@messages("individualAge.heading")</h1>
+    <span class="govuk-caption-xl">
+        <span class="govuk-visually-hidden">@messages("individual.caption.text.screen.reader")</span>
+        @messages(s"individual.${index.display}")
+    </span>
+    @messages("individualAge.heading")
 }
 
 @layout(pageTitle = title(form, messages("individualAge.title"))) {
@@ -43,7 +46,7 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(HtmlContent(contentHeader))
+                label = LabelViewModel(HtmlContent(contentHeader)).asPageHeading(LabelSize.ExtraLarge)
             )
             .withHint(HintViewModel(messages("individualAge.hint")))
             .withInputType("text")

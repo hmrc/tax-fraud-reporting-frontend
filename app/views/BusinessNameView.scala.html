@@ -15,7 +15,7 @@
  *@
 
 @import viewmodels.InputWidth._
-@import viewmodels.LabelSize._
+@import viewmodels.LabelSize
 
 @this(
     layout: templates.Layout,
@@ -29,9 +29,12 @@
 
 @contentHeader = {
         @if(!isBusinessJourney) {
-            <span class="govuk-caption-xl">@messages(s"individual.${index.display}")</span>
+            <span class="govuk-caption-xl">
+                <span class="govuk-visually-hidden">@messages("individual.caption.text.screen.reader")</span>
+                @messages(s"individual.${index.display}")
+            </span>
         }
-            <h1 class="govuk-fieldset__legend--xl govuk-!-margin-top-0">@messages("businessName.heading")</h1>
+            @messages("businessName.heading")
 }
 
 @layout(pageTitle = title(form, messages("businessName.title"))) {
@@ -45,7 +48,7 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(HtmlContent(contentHeader))
+                label = LabelViewModel(HtmlContent(contentHeader)).asPageHeading(LabelSize.ExtraLarge)
             )
             .withWidth(Full)
         )
