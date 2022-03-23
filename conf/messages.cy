@@ -713,3 +713,5 @@ serviceTimeout.title =  Er eich diogelwch, rydym wedi dileu eich atebion
 serviceTimeout.heading =  Er eich diogelwch, rydym wedi dileu eich atebion
 
 betaBanner.service.text = Gwasanaeth newydd yw hwn
+
+individual.caption.text.screen.reader = Mae hyn yn ymwneud
