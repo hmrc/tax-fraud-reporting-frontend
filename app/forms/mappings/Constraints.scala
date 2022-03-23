@@ -135,4 +135,12 @@ trait Constraints {
     }
   }
 
+  protected def regexpRestrict(regex: String, errorKey: String): Constraint[String] =
+    Constraint {
+      case str if str.matches(regex) =>
+        Invalid(errorKey, regex)
+      case _ =>
+        Valid
+    }
+
 }

@@ -21,9 +21,10 @@ import play.api.data.FormError
 
 class DocumentationDescriptionFormProviderSpec extends StringFieldBehaviours {
 
-  val requiredKey = "documentationDescription.error.required"
-  val lengthKey   = "documentationDescription.error.length"
-  val maxLength   = 500
+  val requiredKey  = "documentationDescription.error.required"
+  val lengthKey    = "documentationDescription.error.length"
+  val maxLength    = 500
+  val regexPattern = "\\?|\\*"
 
   val form = new DocumentationDescriptionFormProvider()()
 
@@ -38,6 +39,12 @@ class DocumentationDescriptionFormProviderSpec extends StringFieldBehaviours {
       fieldName,
       maxLength = maxLength,
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+
+    behave like fieldWithUnacceptableCharacter(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey, Seq(regexPattern))
     )
 
     behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))

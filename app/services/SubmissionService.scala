@@ -61,7 +61,7 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
         reporter = getReporter(answers),
         hasEvidence = answers.get(SupportingDocumentPage).contains(SupportingDocument.Yes),
         informationSource = getInformationSource(informationSource),
-        evidenceDetails = answers.get(DocumentationDescriptionPage)
+        evidenceDetails = sanitizeOptionalString(answers.get(DocumentationDescriptionPage))
       )
     }
 
@@ -110,7 +110,12 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
     connection <- answers.get(IndividualConnectionPage(Index(index)))
   } yield Person(
     name = answers.get(IndividualNamePage(Index(index))).map { name =>
-      Name(forename = name.firstName, surname = name.lastName, middleName = name.middleName, alias = name.aliases)
+      Name(
+        forename = sanitizeOptionalString(name.firstName),
+        surname = sanitizeOptionalString(name.lastName),
+        middleName = sanitizeOptionalString(name.middleName),
+        alias = sanitizeOptionalString(name.aliases)
+      )
     },
     address = answers.get(IndividualAddressPage(Index(index))),
     contact = answers.get(IndividualContactDetailsPage(Index(index))).map { details =>
@@ -128,8 +133,8 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
   private def getBusiness(answers: UserAnswers, index: Int): Option[Business] = for {
     connection <- answers.get(SelectConnectionBusinessPage(Index(index)))
   } yield Business(
-    businessName = answers.get(BusinessNamePage(Index(index))),
-    businessType = answers.get(TypeBusinessPage(Index(index))),
+    businessName = sanitizeOptionalString(answers.get(answers.get(BusinessNamePage(Index(index)))),
+    businessType = sanitizeOptionalString(answers.get(answers.get(TypeBusinessPage(Index(index)))),
     address = answers.get(BusinessAddressPage(Index(index))),
     contact = answers.get(BusinessContactDetailsPage(Index(index))).map { details =>
       Contact(landline = details.landlineNumber, mobile = details.mobileNumber, email = details.email)
@@ -149,11 +154,11 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
       if provideContactDetails == ProvideContactDetails.Yes
       details <- answers.get(YourContactDetailsPage)
     } yield Reporter(
-      forename = Some(details.FirstName), // TODO Should these be optional? They're guaranteed to exist
-      surname = Some(details.LastName),
+      forename = sanitizeString(details.FirstName), // TODO Should these be optional? They're guaranteed to exist
+      surname = sanitizeString(details.LastName),
       telephoneNumber = Some(details.Tel),
       emailAddress = details.Email,
-      memorableWord = details.MemorableWord
+      memorableWord = sanitizeOptionalString(details.MemorableWord)
     )
 
   // TODO more tests for this please
@@ -169,6 +174,14 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
       case ActivitySourceOfInformation.Other(value) => value
       case _                                        => messages(s"activitySourceOfInformation.$answer")
     }
+
+  private def sanitizeString(optionalStringVal: String): Option[String] = optionalStringVal match {
+    case string if string != null => Some(string.replaceAll("\\?|\\*", ""))
+    case _                        => Option.empty
+  }
+
+  private def sanitizeOptionalString(string: Option[String]): Option[String] =
+    string.filter(_.nonEmpty).map(_ replaceAll ("\\?|\\*", ""))
 
 }
 

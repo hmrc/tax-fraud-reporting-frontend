@@ -27,6 +27,7 @@ class BusinessNameFormProvider @Inject() extends Mappings {
     Form(
       "value" -> text("businessName.error.required")
         .verifying(maxLength(255, "businessName.error.length"))
+        .verifying(regexpRestrict(Validation.validString.toString, "businessName.error.required"))
     )
 
 }

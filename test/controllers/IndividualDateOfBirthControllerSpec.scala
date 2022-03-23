@@ -35,6 +35,7 @@ import java.time.{LocalDate, ZoneOffset}
 import scala.concurrent.Future
 
 class IndividualDateOfBirthControllerSpec(implicit messages: Messages) extends SpecBase {
+class IndividualDateOfBirthControllerSpec(implicit messages: Messages) extends SpecBase with MockitoSugar {
 
   val formProvider = new IndividualDateOfBirthFormProvider()
 
