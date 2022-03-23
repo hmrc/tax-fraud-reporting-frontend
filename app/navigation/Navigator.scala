@@ -18,7 +18,7 @@ package navigation
 
 import controllers.routes
 import models.{WhenActivityHappen, _}
-import pages._
+import pages.{IndividualNamePage, _}
 import play.api.mvc.Call
 
 import javax.inject.{Inject, Singleton}
@@ -84,6 +84,7 @@ class Navigator @Inject() () {
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index, CheckMode)
     case BusinessAddressConfirmationPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.Address, CheckMode)
+    case p: IndexedConfirmationPage    => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
     case _ => _ => routes.CheckYourAnswersController.onPageLoad
   }
 
@@ -187,7 +188,7 @@ class Navigator @Inject() () {
         routes.BusinessInformationCheckController.onPageLoad(index, mode)
       case _ =>
         mode match {
-          case CheckMode  => routes.CheckYourAnswersController.onPageLoad
+          case CheckMode  => routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
           case NormalMode => routes.AddAnotherPersonController.onPageLoad(mode)
         }
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())

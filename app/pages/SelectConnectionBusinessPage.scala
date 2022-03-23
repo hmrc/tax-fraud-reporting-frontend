@@ -19,7 +19,7 @@ package pages
 import models.{Index, SelectConnectionBusiness}
 import play.api.libs.json.JsPath
 
-final case class SelectConnectionBusinessPage(index: Index) extends QuestionPage[SelectConnectionBusiness] {
+final case class SelectConnectionBusinessPage(index: Index) extends QuestionPage[SelectConnectionBusiness] with IndexedConfirmationPage {
 
   override def path: JsPath = JsPath \ "nominals" \ index.position \ toString
 

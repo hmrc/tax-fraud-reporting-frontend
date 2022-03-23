@@ -19,7 +19,7 @@ package pages
 import models.Index
 import play.api.libs.json.JsPath
 
-final case class IndividualAgePage(index: Index) extends QuestionPage[Int] {
+final case class IndividualAgePage(index: Index) extends QuestionPage[Int]  with IndexedConfirmationPage {
 
   override def path: JsPath = JsPath \ "nominals" \ index.position \ toString
 

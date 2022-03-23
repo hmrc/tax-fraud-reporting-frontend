@@ -64,8 +64,7 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
   def decimals(minIntegralDigits: Int = 0, maxIntegralDigits: Int, fractions: Int): Gen[String] = {
     val minIntValue = Math.pow(10, minIntegralDigits.abs) - 1
     val maxIntValue = Math.pow(10, maxIntegralDigits.abs) - 1
-    arbitrary[BigDecimal]
-      .suchThat(d => d >= minIntValue && d <= maxIntValue)
+    Gen.chooseNum(minIntValue, maxIntValue)
       .map(_.formatted(s"%.${fractions.abs}f"))
   }
 

@@ -16,6 +16,8 @@
 
 package pages
 
+import models.Index
+
 import scala.language.implicitConversions
 
 trait Page
@@ -25,4 +27,8 @@ object Page {
   implicit def toString(page: Page): String =
     page.toString
 
+}
+
+trait IndexedConfirmationPage extends Page {
+  def index: Index
 }
