@@ -51,7 +51,7 @@ object IndividualNameSummary {
           ActionItemViewModel(
             "site.change",
             routes.IndividualNameController.onPageLoad(Index(index), mode).url
-          ).withVisuallyHiddenText(messages("IndividualName.change.hidden"))
+          ).withVisuallyHiddenText(messages("individualName.change.hidden"))
         )
       )
     )

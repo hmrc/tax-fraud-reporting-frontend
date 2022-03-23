@@ -51,6 +51,6 @@
     )),
     value = form(name).value,
     errorMessage = form(name).error.map(err => ErrorMessage(content = Text(messages(err.message, err.args: _*)),
-    visuallyHiddenText = Some(messages("govukErrorMessage.visuallyHiddenText"))
+        visuallyHiddenText = Some(messages("govukErrorMessage.visuallyHiddenText"))
     ))
 ))

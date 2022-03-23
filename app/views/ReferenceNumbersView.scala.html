@@ -15,7 +15,7 @@
  *@
 
 @import viewmodels.InputWidth._
-@import viewmodels.LabelSize
+@import viewmodels.LegendSize
 
 @this(
     layout: templates.Layout,
@@ -30,9 +30,12 @@
 
 @contentHeader = {
     @if(!isBusinessJourney) {
-    <span class="govuk-caption-xl">@messages(s"individual.${index.display}")</span>
+    <span class="govuk-caption-xl">
+        <span class="govuk-visually-hidden">@messages("individual.caption.text.screen.reader")</span>
+        @messages(s"individual.${index.display}")
+    </span>
     }
-    <h1 class="govuk-fieldset__legend--xl govuk-!-margin-top-0">@messages("referenceNumbers.heading")</h1>
+    @messages("referenceNumbers.heading")
     }
 
 @content = {
@@ -79,11 +82,7 @@
         }
 
         @fieldset(Fieldset(
-            legend = Some(Legend(
-                content = HtmlContent(contentHeader),
-                isPageHeading = true,
-                classes = "govuk-fieldset__legend--xl"
-            )),
+            legend = Some(LegendViewModel(HtmlContent(contentHeader)).asPageHeading(LegendSize.ExtraLarge)),
             describedBy = Some("hint-text"),
             role = Some("group"),
             html = content

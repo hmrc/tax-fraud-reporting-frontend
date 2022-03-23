@@ -45,14 +45,14 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case TypeBusinessPage(index)             => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
     case ReferenceNumbersPage(index)         => businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference)
     case BusinessContactDetailsPage(index)   => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
-    case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index)
+    case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index, NormalMode)
     case BusinessAddressConfirmationPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.Address)
     case SelectConnectionBusinessPage(_)      => selectConnectionBusinessRoutes
     case AddAnotherPersonPage                 => addAnotherPersonRoutes
     case IndividualCheckYourAnswersPage(_)    => _ => routes.AddAnotherPersonController.onPageLoad(NormalMode)
     case IndividualConfirmRemovePage(_)       => individualConfirmRemoveRoutes
-    case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index)
+    case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index, NormalMode)
     case ApproximateValuePage                 => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
     case WhenActivityHappenPage               => whenActivityHappenRoutes
     case ActivityTimePeriodPage               => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
@@ -71,11 +71,21 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
-    case SupportingDocumentPage          => supportingDocumentCheckRoutes
-    case ProvideContactDetailsPage       => provideContactDetailsRoutes
-    case WhenActivityHappenPage          => whenActivityHappenCheckRoutes
-    case IndividualDateFormatPage(index) => individualDateFormatPageCheckRoutes(_, index)
-    case _                               => _ => routes.CheckYourAnswersController.onPageLoad
+    case SupportingDocumentPage               => supportingDocumentCheckRoutes
+    case ProvideContactDetailsPage            => provideContactDetailsRoutes
+    case WhenActivityHappenPage               => whenActivityHappenCheckRoutes
+    case IndividualDateFormatPage(index)      => individualDateFormatPageCheckRoutes(_, index)
+    case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index, CheckMode)
+    case BusinessNamePage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Name, CheckMode)
+    case TypeBusinessPage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Type, CheckMode)
+    case ReferenceNumbersPage(index) =>
+      businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference, CheckMode)
+    case BusinessContactDetailsPage(index) =>
+      businessInformationRoutes(_, index, BusinessInformationCheck.Contact, CheckMode)
+    case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index, CheckMode)
+    case BusinessAddressConfirmationPage(index) =>
+      businessInformationRoutes(_, index, BusinessInformationCheck.Address, CheckMode)
+    case _ => _ => routes.CheckYourAnswersController.onPageLoad
   }
 
   private def individualInformationRoute(answer: IndividualInformation, index: Index, mode: Mode): Call =
@@ -138,22 +148,23 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       case BusinessInformationCheck.Address           => routes.BusinessAddressRedirectController.onPageLoad(index, mode)
     }
 
-  private def businessInformationRoutes(answers: UserAnswers, index: Index): Call =
+  private def businessInformationRoutes(answers: UserAnswers, index: Index, mode: Mode): Call =
     answers.get(BusinessInformationCheckPage(index)).flatMap { businessInformation =>
-      BusinessInformationCheck.values.find(businessInformation.contains).map(
-        businessInformationRoute(_, index, NormalMode)
-      )
+      BusinessInformationCheck.values.find(businessInformation.contains).map(businessInformationRoute(_, index, mode))
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def businessInformationRoutes(answers: UserAnswers, index: Index, answer: BusinessInformationCheck): Call =
+  private def businessInformationRoutes(
+    answers: UserAnswers,
+    index: Index,
+    answer: BusinessInformationCheck,
+    mode: Mode = NormalMode
+  ): Call =
     answers.get(BusinessInformationCheckPage(index)).flatMap { businessInformation =>
       val remainingSections = businessInformation & BusinessInformationCheck.values.dropWhile(_ != answer).drop(1).toSet
       if (remainingSections.isEmpty)
-        Some(routes.SelectConnectionBusinessController.onPageLoad(index, NormalMode))
+        Some(routes.SelectConnectionBusinessController.onPageLoad(index, mode))
       else
-        BusinessInformationCheck.values.find(remainingSections.contains).map(
-          businessInformationRoute(_, index, NormalMode)
-        )
+        BusinessInformationCheck.values.find(remainingSections.contains).map(businessInformationRoute(_, index, mode))
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def addAnotherPersonRoutes(answers: UserAnswers): Call =
@@ -173,12 +184,15 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     else
       routes.AddAnotherPersonController.onPageLoad(NormalMode)
 
-  private def individualBusinessDetailsRoutes(answers: UserAnswers, index: Index): Call =
+  private def individualBusinessDetailsRoutes(answers: UserAnswers, index: Index, mode: Mode): Call =
     answers.get(IndividualBusinessDetailsPage(index)).map {
       case IndividualBusinessDetails.Yes =>
-        routes.BusinessInformationCheckController.onPageLoad(index, NormalMode)
+        routes.BusinessInformationCheckController.onPageLoad(index, mode)
       case _ =>
-        routes.AddAnotherPersonController.onPageLoad(NormalMode)
+        mode match {
+          case CheckMode  => routes.CheckYourAnswersController.onPageLoad
+          case NormalMode => routes.AddAnotherPersonController.onPageLoad(mode)
+        }
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def whenActivityHappenRoutes(answers: UserAnswers): Call =

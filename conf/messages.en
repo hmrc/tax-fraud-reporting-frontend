@@ -18,6 +18,9 @@ site.accept = Accept and continue
 date.day = Day
 date.month = Month
 date.year = Year
+day = day
+month = month
+year = year
 
 timeout.title = Your session is about to expire
 timeout.message = For security reasons, you will be signed out of this service in
@@ -42,22 +45,18 @@ error.number = Please enter a valid number
 error.required = Please enter a value
 error.summary.title = There is a problem
 
-
 index.title = What you need to know
 index.header = What you need to know
-
 index.h2.heading1 = HMRC takes your security seriously, do not:
+index.h2.heading2 = HMRC values the information you will provide:
+index.p1 = HMRC is unable to investigate issues related to police, Border Force or other government departments.
+index.p2 = By continuing, you understand that:
 index.list.item1 = try to find out more about the fraud or activity
 index.list.item2 = let anyone know you are making a report
 index.list.item3 = encourage anyone to commit a crime to get more information
-
-index.h2.heading2 = HMRC values the information you will provide:
 index.list2.item1 = any information you provide will be private and confidential
 index.list2.item2 = you can report anonymously or provide your contact details
 index.list2.item3 = you should not try to get any information you do not already have
-
-index.p1 = HMRC is unable to investigate issues related to police, Border Force or other government departments.
-index.p2 = By continuing, you understand that:
 
 checkYourAnswers.title = Check your submission
 checkYourAnswers.heading = Check your submission
@@ -81,8 +80,7 @@ activityType.heading = What type of activity are you reporting to HMRC?
 activityType.hint = Enter keywords related to the activity to suggest relevant categories or select an activity from the list.
 activityType.checkYourAnswersLabel = Activity type
 activityType.error.required = Enter the type of activity.
-activityType.error.invalid = Enter the type of activity.
-activityType.change.hidden = Activity type
+activityType.change.hidden = Activity Type
 
 # Any non-HMRC activities here are associated with their corresponding department
 # in the activityTypes.conf file.
@@ -280,15 +278,15 @@ activityType.synonym.shipping         = Shipping
 activityType.synonym.van              = Van
 
 # selfAssessment
-activityType.synonym.itsa              = ITSA        
-activityType.synonym.workingCashInHand = Working Cash in Hand        
-activityType.synonym.selfEmployed      = Self Employed        
-activityType.synonym.offRecord         = Off record        
-activityType.synonym.offBook           = Off book        
-activityType.synonym.money             = Money        
-activityType.synonym.backPocket        = Back pocket        
-activityType.synonym.sole              = Sole        
-activityType.synonym.declare           = Declare        
+activityType.synonym.itsa              = ITSA
+activityType.synonym.workingCashInHand = Working Cash in Hand
+activityType.synonym.selfEmployed      = Self Employed
+activityType.synonym.offRecord         = Off record
+activityType.synonym.offBook           = Off book
+activityType.synonym.money             = Money
+activityType.synonym.backPocket        = Back pocket
+activityType.synonym.sole              = Sole
+activityType.synonym.declare           = Declare
 activityType.synonym.trader            = Trader
 activityType.synonym.cash              = Cash
 activityType.synonym.undeclared        = Undeclared
@@ -416,21 +414,21 @@ activityType.synonym.launder        = Launder
 activityType.synonym.international  = International
 
 # minimumWage
-activityType.synonym.underpayment      = Underpayment        
-activityType.synonym.underpaid         = Underpaid        
-activityType.synonym.workRights        = Work rights        
+activityType.synonym.underpayment      = Underpayment
+activityType.synonym.underpaid         = Underpaid
+activityType.synonym.workRights        = Work rights
 activityType.synonym.employmentAgency  = Employment agency
-activityType.synonym.workingTimeLimits = Working time limits        
-activityType.synonym.earnings          = Earnings        
-activityType.synonym.salary            = Salary        
-activityType.synonym.exploitation      = Exploitation        
-activityType.synonym.swindle           = Swindle        
-activityType.synonym.corrupt           = Corrupt        
-activityType.synonym.boss              = boss        
-activityType.synonym.national          = National        
-activityType.synonym.slave             = Slave        
-activityType.synonym.labour            = Labour        
-activityType.synonym.paid              = Paid        
+activityType.synonym.workingTimeLimits = Working time limits
+activityType.synonym.earnings          = Earnings
+activityType.synonym.salary            = Salary
+activityType.synonym.exploitation      = Exploitation
+activityType.synonym.swindle           = Swindle
+activityType.synonym.corrupt           = Corrupt
+activityType.synonym.boss              = boss
+activityType.synonym.national          = National
+activityType.synonym.slave             = Slave
+activityType.synonym.labour            = Labour
+activityType.synonym.paid              = Paid
 activityType.synonym.nmw               = NMW
 
 # betting
@@ -475,129 +473,14 @@ activityType.synonym.underCounter   = Under Counter
 activityType.synonym.distill        = Distill
 activityType.synonym.fake           = Fake
 
-# tobacco
-activityType.synonym.cigarettes = Cigarettes
-activityType.synonym.cigars     = Cigars
-activityType.synonym.baccy      = Baccy
-activityType.synonym.cigs       = Cigs
-activityType.synonym.ciggy      = Ciggy
-activityType.synonym.tabs       = Tabs
-activityType.synonym.sleeve     = Sleeve
-activityType.synonym.rolling    = Rolling
-activityType.synonym.smoke      = Smoke
-activityType.synonym.fag        = Fag
-activityType.synonym.fake       = Fake
-activityType.synonym.counter    = Counter
-activityType.synonym.loose      = Loose
-activityType.synonym.pouch      = Pouch
-
-# inheritance
-activityType.synonym.dead   = Dead
-activityType.synonym.death  = Death
-activityType.synonym.will   = Will
-activityType.synonym.family = Family
-
-# sugar
-activityType.synonym.sdil_long     = Soft Drinks Industry Levy
-activityType.synonym.sdil          = SDIL
-activityType.synonym.softDrinks    = Soft drinks
-activityType.synonym.fizz          = Fizz
-activityType.synonym.carbonated    = Carbonated
-activityType.synonym.cola          = Cola
-activityType.synonym.sweet         = Sweet
-activityType.synonym.drink         = Drink
-activityType.synonym.chocolate     = Chocolate
-activityType.synonym.confectionery = Confectionery
-
-# windingUpACompany
-activityType.synonym.phoenixism = Phoenixism
-activityType.synonym.close      = Close
-activityType.synonym.fold       = Fold
-activityType.synonym.closure    = Closure
-activityType.synonym.shutdown   = Shutdown
-activityType.synonym.open       = Open
-activityType.synonym.redundant  = Redundant
-
-# selfEmployment
-activityType.synonym.unregisteredTrader = Unregistered trader
-activityType.synonym.cashInHand         = Cash in hand
-activityType.synonym.business           = Business
-activityType.synonym.trading            = Trading
-activityType.synonym.self               = Self
-activityType.synonym.oddJob             = Odd job
-
-# offShoreAccounts
-activityType.synonym.undeclaredOffshoreIncome = Not declaring offshore income
-activityType.synonym.dubai                    = Dubai
-activityType.synonym.bvi                      = BVI
-activityType.synonym.panama                   = Panama
-activityType.synonym.britishVirginIslands     = British Virgin Islands
-activityType.synonym.swiss                    = Swiss
-activityType.synonym.jersey                   = Jersey
-activityType.synonym.divert                   = Divert
-
-# assets
-activityType.synonym.wealthyIndividuals = Wealthy individuals
-activityType.synonym.famous             = Famous
-activityType.synonym.wellKnown          = Well Known
-activityType.synonym.rich               = Rich
-activityType.synonym.professional       = Professional
-activityType.synonym.media              = Media
-activityType.synonym.wellOff            = Well off
-activityType.synonym.minted             = Minted
-activityType.synonym.sports             = Sports
-activityType.synonym.football           = Football
-activityType.synonym.tv                 = TV
-activityType.synonym.celebrity          = Celebrity
-activityType.synonym.politic            = Politic
-activityType.synonym.presenter          = Presenter
-activityType.synonym.act                = Act
-activityType.synonym.million            = Million
-
-# smuggling
-activityType.synonym.smuggle = Smuggle
-
-# cashDeposits
-activityType.synonym.largeCashDeposits   = Large cash deposits
-activityType.synonym.cashDepositIncrease = Large increase in cash deposits
-activityType.synonym.finance             = Finance
-activityType.synonym.account             = Account
-activityType.synonym.pay                 = Pay
-activityType.synonym.band                = Band
-
-# hmrcImpostor
-activityType.synonym.phishing   = Phishing
-activityType.synonym.scam       = Scam
-activityType.synonym.cyber      = Cyber
-activityType.synonym.whatsApp   = WhatsApp
-activityType.synonym.unknown    = Unknown
-activityType.synonym.telecomms  = Telecomms
-activityType.synonym.callCentre = Call centre
-activityType.synonym.con        = Con
-
-# cashTransport
-activityType.synonym.bank     = Bank
-activityType.synonym.deposit  = Deposit
-
-# universalCredit
-# All synonyms covered earlier.
-
-# plasticPackaging
-activityType.synonym.plastic       = Plastic
-activityType.synonym.packing       = packing
-activityType.synonym.packaging     = packaging
-activityType.synonym.wrapping      = wrapping
-activityType.synonym.manufacture   = manufacture
-activityType.synonym.import        = import
-activityType.synonym.supply        = supply
-activityType.synonym.tax           = tax
-activityType.synonym.storage       = storage
-activityType.synonym.product       = product
-activityType.synonym.bag           = bag
-activityType.synonym.biodegradable = biodegradable
-activityType.synonym.bio           = bio
-activityType.synonym.compostable   = compostable
-
+# TODO why aren't these prefixed with activityType.name?
+activity-related-drugs = Activity related to drugs
+smuggling = Smuggling
+benefit-fraud = Benefit fraud (not including child benefit or tax credits)
+universal-credit-fraud = Universal credit fraud
+human-trafficking = Human trafficking
+illegal-immigration = Illegal immigration
+border-crime = Border crime
 
 individualOrBusiness.title = Are you reporting an individual or a business?
 individualOrBusiness.heading = Are you reporting an individual or a business?
@@ -609,14 +492,14 @@ individualOrBusiness.checkYourAnswersLabel = Are you reporting an individual or 
 individualOrBusiness.error.required = Select if you are reporting an individual or a business.
 individualOrBusiness.change.hidden = Reporting an individual or a business
 
-doNotUseThisService.title = You should not use this service to report this activity.
-doNotUseThisService.heading = You should not use this service to report this activity.
+doNotUseThisService.title = You should not use this service to report this activity
+doNotUseThisService.heading = You should not use this service to report this activity
 doNotUseThisService.p1.activity-related-to-drugs = HMRC is unable to investigate this activity.
 doNotUseThisService.p2.activity-related-to-drugs = You should report activity related to drugs to the police. Call 999 if it’s an emergency, or 101 if it’s not urgent.
 doNotUseThisService.p1.smuggling = HMRC is unable to investigate this activity.
 doNotUseThisService.p2.smuggling = You should <a class="govuk-link" href="https://www.gov.uk/report-smuggling">report smuggling to the Home Office</a>.
-doNotUseThisService.p1.benefit-and-universal-credit = HMRC is unable to investigate any benefit fraud other than Child Benefit or Tax Credit fraud.
-doNotUseThisService.p2.benefit-and-universal-credit = You should <a class="govuk-link" href="https://www.gov.uk/report-benefit-fraud">report all other benefit fraud</a> to the Department for Work and Pensions.
+doNotUseThisService.p1.benefit-fraud-and-universal-credit = HMRC is unable to investigate any benefit fraud other than Child Benefit or Tax Credit fraud.
+doNotUseThisService.p2.benefit-fraud-and-universal-credit = You should <a class="govuk-link" href="https://www.gov.uk/report-benefit-fraud">report all other benefit fraud</a> to the Department for Work and Pensions.
 doNotUseThisService.p1.human-trafficking = HMRC is unable to investigate this activity.
 doNotUseThisService.p2.human-trafficking = You should report human trafficking to the police. Call 999 if it’s an emergency, or 101 if it’s not urgent.
 doNotUseThisService.p1.immigration-border-crime = HMRC is unable to investigate this activity.
@@ -659,7 +542,7 @@ individualContactDetails.error.email.length = Email address''s must be 255 chara
 individualContactDetails.error.landlineNumber.invalid = Enter a landline number, like 01632 960 001.
 individualContactDetails.error.mobileNumber.invalid = Enter a mobile number, like 07700 900 982 or +44 808 157 0192.
 individualContactDetails.error.email.invalid = Enter an email address in the correct format, like name@example.com
-individualContactDetails.change.hidden = Individual''s contact details
+individualContactDetails.change.hidden = Personal contact details
 
 individualNationalInsuranceNumber.title = What is the individual''s National Insurance number?
 individualNationalInsuranceNumber.heading = What is the individual''s National Insurance number?
@@ -668,7 +551,7 @@ individualNationalInsuranceNumber.checkYourAnswersLabel = National Insurance num
 individualNationalInsuranceNumber.error.required = Enter the individual''s National Insurance Number
 individualNationalInsuranceNumber.error.invalid = Enter the individual''s National Insurance Number in the correct format
 individualNationalInsuranceNumber.error.length = National Insurance numbers must be 9 characters or fewer.
-individualNationalInsuranceNumber.change.hidden = National Insurance Number
+individualNationalInsuranceNumber.change.hidden = National Insurance number
 
 individualConnection.title = How do you know the individual?
 individualConnection.heading = How do you know the individual?
@@ -709,7 +592,7 @@ dateFormat.date = Date of birth
 dateFormat.age = Approximate age
 dateFormat.checkYourAnswersLabel = Age format
 dateFormat.error.required = Select what you know about the individual''s age
-dateFormat.change.hidden = DateFormat
+dateFormat.change.hidden = Age format
 
 individualDateOfBirth.title = What is the individual''s date of birth?
 individualDateOfBirth.heading = What is the individual''s date of birth?
@@ -731,7 +614,7 @@ individualAge.error.nonNumeric = Enter the individual''s approximate age with nu
 individualAge.error.required = Enter the individual''s approximate age.
 individualAge.error.wholeNumber = Enter the individual''s approximate age with numerical values
 individualAge.error.outOfRange = The individual''s approximate age must be between {0} and {1}
-individualAge.change.hidden = IndividualAge
+individualAge.change.hidden = Approximate age
 
 businessInformationCheck.title = What do you know about the business?
 businessInformationCheck.heading = What do you know about the business?
@@ -760,7 +643,7 @@ descriptionActivity.hint = A brief description allows HMRC to process your infor
 descriptionActivity.checkYourAnswersLabel = Activity description
 descriptionActivity.error.required = Enter a description on the activity you''re reporting.
 descriptionActivity.error.length = The activity description must be 1200 characters or fewer.
-descriptionActivity.change.hidden = The Activity description
+descriptionActivity.change.hidden = Activity description
 
 typeBusiness.title = What type of business is it?
 typeBusiness.heading = What type of business is it?
@@ -803,17 +686,17 @@ referenceNumbers.ct-utr.hint = This is 10 digits long, for example 1234567890.
 referenceNumbers.checkYourAnswersLabel = Business reference numbers
 referenceNumbers.error.required = Enter referenceNumbers
 referenceNumbers.error.vatRegistration.length = VAT registration number must be 9 or 11 digits long
-referenceNumbers.error.employeeRefNo.length  = Employee Reference Number must be {0} digits long
+referenceNumbers.error.employeeRefNo.invalid =  Employee Reference Number must be in the correct format
 referenceNumbers.error.corporationTax.length = Corporation Tax Unique Taxpayer Reference must be 10 digits long
-referenceNumbers.change.hidden = Reference numbers
+referenceNumbers.change.hidden = Business reference numbers
 
 approximateValue.title = What is the total value of the activity you are reporting?
 approximateValue.heading = What is the total value of the activity you are reporting?
+approximateValue.p1 = HMRC does not require an exact figure, an estimation will still be useful.
 approximateValue.suffix = £
-approximateValue.p = HMRC does not require an exact figure, an estimation will still be useful.
 approximateValue.hint = Enter an estimated total value in pounds.
 approximateValue.checkYourAnswersLabel = Activity value (£)
-approximateValue.error.nonNumeric = Enter the approximate value as a numerical value
+approximateValue.error.nonNumeric = Enter the approximate total value as a numerical value.
 approximateValue.error.required = Enter the approximate value as a numerical value
 approximateValue.error.length = Approximate value must be 12 characters or fewer
 approximateValue.error.maxTwoDecimals = Approximate value must have maximum of two decimals
@@ -860,7 +743,6 @@ activityTimePeriod.change.hidden = Activity start period
 individualAddress.lookup.title = What is the individual''s address?
 individualAddress.lookup.heading = What is the individual''s address?
 individualAddress.checkYourAnswersLabel = Home address
-individualAddress.change.hidden = Home address
 
 howManyPeopleKnow.title = How many other people know about the activity?
 howManyPeopleKnow.heading = How many other people know about the activity?
@@ -892,8 +774,12 @@ individual.3 = Individual C
 individual.4 = Individual D
 individual.5 = Individual E
 
+individual.change = Change<span class="govuk-visually-hidden"> {0} </span>
+individual.remove = Remove<span class="govuk-visually-hidden"> {0} </span>
+
 individualAddress.lookup.title = What is the individual''''s address?
 individualAddress.lookup.heading = What is the individual''''s address?
+individualAddress.change.hidden = Home address
 
 supportingDocument.title = Do you have any supporting information?
 supportingDocument.heading = Do you have any supporting information?
@@ -902,7 +788,7 @@ supportingDocument.yes = Yes
 supportingDocument.no = No
 supportingDocument.checkYourAnswersLabel = Supporting information provided
 supportingDocument.error.required = Select whether you have any supporting information you could provide if requested by HMRC.
-supportingDocument.change.hidden = Supporting information provided
+supportingDocument.change.hidden = SupportingDocument
 
 provideContactDetails.title = Do you wish to provide your contact details?
 provideContactDetails.heading = Do you wish to provide your contact details?
@@ -997,7 +883,6 @@ activitySourceOfInformation.error.required = Select or enter how you know the in
 activitySourceOfInformation.error.otherValue.required = Select or enter how you know the information.
 activitySourceOfInformation.error.otherValue.maxLength = How you know the information must be 100 characters or fewer.
 activitySourceOfInformation.change.hidden = How you know about the activity
-activitySourceOfInformation.change.hidden = How you know about the activity
 
 individualContactDetails.cya.landline = Landline
 individualContactDetails.cya.mobile = Mobile
@@ -1006,7 +891,7 @@ referenceNumbers.cya.vat = VAT Registration number
 referenceNumbers.cya.ern = ERN
 referenceNumbers.cya.cturn = CTUTR
 
-individualConfirmRemove.title = Are you sure you want to remove {0}?
+individualConfirmRemove.title = Are you sure you want to remove this individual?
 individualConfirmRemove.heading = Are you sure you want to remove {0}?
 individualConfirmRemove.error.required = Select yes if you need to remove the individual.
 addAnotherPerson.reached.maximum = You cannot add another individual as you have entered a maximum of 5.
@@ -1021,3 +906,7 @@ technicalProblems.link.text = Is this page not working properly? (opens in new t
 
 serviceTimeout.title = For your security, we deleted your answers
 serviceTimeout.heading = For your security, we deleted your answers
+
+betaBanner.service.text = This is a new service
+
+individual.caption.text.screen.reader = This is about

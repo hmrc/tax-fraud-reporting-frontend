@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,15 +12,17 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package forms
+@this(govukPhaseBanner: GovukPhaseBanner)
 
-import scala.util.matching.Regex
+@(phase: String)(implicit request: Request[_], messages: Messages)
 
-object Validation {
-
-  val vatRegistrationPattern: Regex = "(?:[Gg][Bb])?\\d{9}".r.anchored
-  val utrPattern: Regex             = "\\d{10}".r.anchored
-  val payeReferencePattern: Regex   = """\d{3}/[A-Za-z0-9]{1,10}""".r.anchored
+@newServiceContent = {
+  <span class="govuk-phase-banner__text">@messages("betaBanner.service.text")</span>
 }
+
+@govukPhaseBanner(PhaseBanner(
+  tag = Some(Tag(content = Text(phase))),
+  content = HtmlContent(newServiceContent)
+))

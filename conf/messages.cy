@@ -2,7 +2,7 @@ service.name = Rhoi gwybod am dwyll treth neu osgoi treth
 
 site.back = Yn ôl
 site.remove = Dileu
-site.change = newid
+site.change = Newid
 site.no = Na
 site.yes = Iawn
 site.continue = Yn eich blaen
@@ -14,15 +14,14 @@ site.accept = Derbyn a yn eich blaen
 date.day = Diwrnod
 date.month = Mis
 date.year = Blwyddyn
+day = diwrnod
+month = mis
+year = blwyddyn
 
 timeout.title = Bydd eich sesiwn yn dod i ben
 timeout.message.notSignedIn =  Rydych wedi bod yn segur ers peth amser, bydd eich sesiwn yn dod i ben
-timeout.keepAlive.notSignedIn = Yn ôl i'r adroddiad
+timeout.keepAlive.notSignedIn = Yn ôl i''r adroddiad
 timeout.deleteAnswers = Gadael adroddiad a dileu data arbed
-
-date.day = Diwrnod
-date.month = Mis
-date.year = Blwyddyn
 
 error.browser.title.prefix = Gwall:
 error.boolean = Rhowch ateb
@@ -39,8 +38,7 @@ error.summary.title = Mae problem wedi codi
 
 index.title = Yr hyn y mae angen i chi ei wybod
 index.header = Yr hyn y mae angen i chi ei wybod
-
-index.h2.heading1 = Mae CThEM yn cymryd eich diogelwch o ddifrif, peidiwch â gwneud y canlynol.
+index.h2.heading1 = Mae CThEM yn cymryd eich diogelwch o ddifrif, peidiwch â gwneud y canlynol:
 index.list.item1 = ceisio dod o hyd i fwy o wybodaeth am y twyll neu’r osgoi treth
 index.list.item2 = rhoi gwybod i unrhyw un eich bod yn rhoi gwybod amdano
 index.list.item3 = l annog unrhyw un i gyflawni trosedd fel y gallwch gael rhagor o wybodaeth
@@ -49,356 +47,7 @@ index.h2.heading2 = Mae CThEM yn gwerthfawrogi’r wybodaeth rydych yn ei rhoi:
 index.list2.item1 = bydd unrhyw wybodaeth yr ydych yn ei rhoi yn breifat ac yn gyfrinachol
 index.list2.item2 = gallwch roi’ch manylion cyswllt pan ofynnir i chi neu gallwch roi’r wybodaeth i ni yn ddienw
 index.list2.item3 = ni ddylech geisio cael unrhyw wybodaeth nad oes gennych eisoes
-
 index.p1 = Nid yw CThEM yn gallu ymchwilio i faterion yr heddlu na Llu’r Ffiniau.
-index.p2 = (W) By continuing, you understand that: (W)
-
-checkYourAnswers.title = Gwiriwch eich cyflwyniad
-checkYourAnswers.heading = Gwiriwch eich cyflwyniad
-
-journeyRecovery.continue.title = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
-journeyRecovery.continue.heading = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
-journeyRecovery.startAgain.title = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
-journeyRecovery.startAgain.heading = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
-
-activityType.title = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
-activityType.heading = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
-activityType.hint = Nodwch eiriau allweddol sy’n gysylltiedig â’r gweithgaredd i awgrymu categorïau perthnasol neu dewiswch weithgaredd o''r rhestr.
-activityType.checkYourAnswersLabel = Math o weithgaredd
-activityType.error.required = Nodwch fath o weithgaredd
-activityType.error.invalid = Nodwch fath o weithgaredd
-activityType.change.hidden = Math o weithgaredd
-
-# Any non-HMRC activities here are associated with their corresponding department
-# in the activityTypes.conf file.
-activityType.name.drugs                        = Gweithgaredd sy’n gysylltiedig â chyffuriau
-activityType.name.avoidingTax                  = Osgoi treth
-activityType.name.mostBenefits                 = TTwyll budd-daliadau (heb gynnwys budd-dal plant neu gredydau treth)
-activityType.name.borderCrime                  = Troseddau wrth y ffin
-activityType.name.offPayrollWorking            = Torri rheolau gweithio oddi ar y gyflogres (IR35)
-activityType.name.statutorySickPay             = Twyllo Tâl Salwch Statudol (SSP) neu’r Cynllun Ad-dalu Tâl Salwch Statudol
-activityType.name.constructionIndustryScheme   = Twyllo’r Cynllun Diwydiant Adeiladu
-activityType.name.eatOutToHelpOut              = Twyllo’r Cynllun Bwyta Allan i Helpu Allan.
-activityType.name.incomeSupport                = Twyllo’r Cynllun Cymhorthdal Incwm Hunangyflogaeth
-activityType.name.childBenefits                = Hawliadau Budd-dal Plant ffug
-activityType.name.taxCredit                    = Hawliadau Credyd Treth ffug
-activityType.name.vatRefund                    = Hawliadau Ad-daliadau TAW ffug
-activityType.name.brexit                       = Twyll yn ymwneud â Brexit
-activityType.name.charities                    = Twyll yn ymwneud ag elusennau
-activityType.name.furlough                     = Twyll yn ymwneud â ffyrlo
-activityType.name.importExport                 = Twyll yn ymwneud â mewnforio ac allforio
-activityType.name.selfAssessment               = Twyll yn ymwneud â Threth Incwm Hunanasesiad
-activityType.name.privateSecurity              = Twyll yn ymwneud â’r diwydiant diogelwch preifat
-activityType.name.vatRelated                   = Twyll yn ymwneud â TAW
-activityType.name.humanTrafficking             = Masnachu pobl
-activityType.name.illegalFlowOfMoney           = Llif arian anghyfreithlon
-activityType.name.immigration                  = Mewnfudiad anghyfreithlon
-activityType.name.redDiesel                    = Defnydd anghyfreithlon o ddiesel coch
-activityType.name.vatFreeImports               = Mewnforio nwyddau sy’n rhydd o TAW ac yna codi TAW ar gwsmeriaid
-activityType.name.employmentStatus             = Statws cyflogaeth anghywir
-activityType.name.landfillAndWaste             = Twyll Treth Tirlenwi/Gwastraff
-activityType.name.organisedCrime               = Ariannu sefydliadau troseddol
-activityType.name.laundering                   = Gwyngalchu arian
-activityType.name.minimumWage                  = Peidio â chael isafswm cyflog
-activityType.name.betting                      = Peidio â thalu toll betio
-activityType.name.capitalGains                 = Peidio â thalu Treth Enillion Cyfalaf
-activityType.name.alcohol                      = Peidio â thalu toll ar alcohol
-activityType.name.tobacco                      = Peidio â thalu toll ar dybaco
-activityType.name.inheritance                  = Peidio â thalu Treth Etifeddiant
-activityType.name.sugar                        = Peidio â thalu treth siwgr
-activityType.name.windingUpACompany            = Peidio â thalu treth wrth ddirwyn cwmni i ben
-activityType.name.selfEmployment               = Heb gofrestru fel person hunangyflogedig
-activityType.name.offShoreAccounts             = Cyfrifon banc alltraeth
-activityType.name.assets                       = Pobl â mwy na £2 filiwn o asedau sydd ddim yn talu treth
-activityType.name.smuggling                    = Smyglo
-activityType.name.cashDeposits                 = Adneuon arian parod amheus
-activityType.name.hmrcImpostor                 = Negeseuon e-bost, negeseuon testun a galwadau ffôn amheus gan CThEM
-activityType.name.cashTransport                = Cludo arian parod amheus
-activityType.name.universalCredit              = Twyll credyd cynhwysol
-activityType.name.plasticPackaging             = Twyll yn ymwneud â Threth Pecynnu Plastig
-
-# Synonyms are associated with their corresponding activity names
-# in the activityTypes.conf file.
-
-# drugs
-activityType.synonym.heroin       = Heroin
-activityType.synonym.cocaine      = Cocên
-activityType.synonym.weed         = Weed
-activityType.synonym.marijuana    = Mariwana
-activityType.synonym.opioids      = Opioids
-activityType.synonym.cannabis     = Canabis
-activityType.synonym.meth         = Meth
-activityType.synonym.amphetamines = Amffetaminau
-activityType.synonym.ecstasy      = Ecstasi
-activityType.synonym.mdma         = MDMA
-activityType.synonym.pills        = Tabledi
-activityType.synonym.lsd          = LSD
-activityType.synonym.speed        = Speed
-activityType.synonym.narcotics    = Cyffuriau
-activityType.synonym.dope         = Mariwana
-activityType.synonym.crack        = Crac
-activityType.synonym.ketamine     = Cetamin
-activityType.synonym.mushrooms    = Madarch
-activityType.synonym.joint        = Mariwana
-activityType.synonym.blunt        = Blunt
-activityType.synonym.coke         = cocên
-
-# avoidingTax
-activityType.synonym.avoidance         = Arbed treth
-activityType.synonym.umbrellaCompanies = Cwmnïau ambarél
-activityType.synonym.offshore          = Alltraeth
-activityType.synonym.evasion           = Osgoi treth
-activityType.synonym.taxHaven          = Lloches Treth
-activityType.synonym.account           = Cyfrif
-activityType.synonym.payroll           = Y gyflogres
-activityType.synonym.outsource         = Allanoli
-activityType.synonym.taxEvasion        = osgoi treth
-
-# benefitsNotChildOrTaxCredits
-activityType.synonym.benefit     = Credyd Cynhwysol
-activityType.synonym.claiming    = Hawlio
-activityType.synonym.disability  = Anabledd
-activityType.synonym.carer       = Gofalwr
-activityType.synonym.savings     = Cynilion
-activityType.synonym.abroad      = Tramor
-activityType.synonym.livingAlone = Byw ar eich pen eich hun
-activityType.synonym.working     = Gweithio
-
-# borderCrime
-activityType.synonym.port  = Porthladd
-activityType.synonym.ferry = Fferi
-activityType.synonym.plane = Awyren
-activityType.synonym.force = Llu
-
-# offPayrollWorking
-activityType.synonym.contractor = Contractwr
-activityType.synonym.employment = Cyflogaeth
-
-# statutorySickPay
-activityType.synonym.illness = Salwch
-
-# constructionIndustryScheme
-activityType.synonym.cis      = CIS
-activityType.synonym.building = Adeilad
-activityType.synonym.foreman  = Fforman
-activityType.synonym.site     = Safle
-activityType.synonym.trade    = Masnach
-
-# eatOutToHelpOut
-activityType.synonym.eotho      = Bwyta Allan i Helpu Allan (EOTHO)
-activityType.synonym.restaurant = Bwytai
-activityType.synonym.takeaway   = Tecawê
-
-# incomeSupport
-activityType.synonym.seiss        = SEISS
-activityType.synonym.covid        = COVID
-activityType.synonym.grant        = Grant
-activityType.synonym.corona       = Corona
-activityType.synonym.selfEmployed = Hunangyflogedig
-
-# childBenefits
-activityType.synonym.csa          = Asiantaeth Cynnal Plant (CSA)
-activityType.synonym.cms          = Gwasanaeth Cynhaliaeth Plant (CMS)
-activityType.synonym.maintenance  = Gwaith cynnal a chadw
-activityType.synonym.kid          = Plentyn
-activityType.synonym.education    = Addysg
-activityType.synonym.school       = Ysgol
-activityType.synonym.benefitFraud = Twyll Budd-daliadau
-
-# taxCredit
-activityType.synonym.childTaxCredit   = Credyd Treth Plant
-activityType.synonym.workingTaxCredit = Credyd Treth Gwaith
-activityType.synonym.taxCredit        = Credyd Treth
-activityType.synonym.benefitFraud     = Twyll Budd-daliadau
-activityType.synonym.work             = Gwaith
-activityType.synonym.partner          = Partner
-activityType.synonym.fraud            = Twyll
-
-# vatRefund
-activityType.synonym.vatRepaymentFraud = Twyll Ad-dalu TAW
-activityType.synonym.loanRepayment     = Benthyciad Myfyriwr
-activityType.synonym.valueAddedTax     = Treth Ar Werth
-activityType.synonym.vatFraud          = Twyll TAW
-
-# brexit
-activityType.synonym.eu        = Yr UE
-activityType.synonym.rules     = Rheolau
-activityType.synonym.document  = Dogfen
-activityType.synonym.europe    = Ewrop
-activityType.synonym.border    = Ffin
-activityType.synonym.movement  = Symudiad
-activityType.synonym.ireland   = Iwerddon
-activityType.synonym.irish     = Gwyddelig
-activityType.synonym.port      = Porthladd
-activityType.synonym.transport = Cludiant
-activityType.synonym.hgv       = HGV
-activityType.synonym.transit   = Cludo
-
-# charities
-activityType.synonym.charity           = Elusen
-activityType.synonym.donation          = Cyfraniad
-activityType.synonym.misrepresentation = Camgyflwyno
-activityType.synonym.goodwill          = Ewyllys da
-activityType.synonym.giftAid           = Rhodd Cymorth
-activityType.synonym.relief            = Rhyddhad
-activityType.synonym.registered        = Wedi cofrestru
-
-# furlough
-activityType.synonym.cjrs      = Cynllun Cadw Swyddi yn sgil Coronafeirws (CJRS)
-activityType.synonym.furlough  = Corona
-activityType.synonym.cjrs_long = Cynllun Cadw Swyddi yn sgil Coronafeirws
-
-# importExport
-activityType.synonym.citex            = CITEX
-activityType.synonym.customs          = Tollau
-activityType.synonym.tradeAndExcise   = Masnach ac Ecséis Rhyngwladol
-activityType.synonym.livestock        = Da byw
-activityType.synonym.transport        = Cludiant
-activityType.synonym.carnet           = Carnet
-activityType.synonym.tir              = TIR
-activityType.synonym.communityTransit = Tramwy’r Gymuned
-activityType.synonym.customs          = Tollau
-activityType.synonym.courier          = Ffin
-activityType.synonym.goods            = Cludwr
-activityType.synonym.agent            = Nwyddau
-activityType.synonym.shipping         = Asiant
-activityType.synonym.van              = Cludiant
-
-# selfAssessment
-activityType.synonym.itsa              = Hunanasesiad Treth Incwm (ITSA)
-activityType.synonym.workingCashInHand = Gweithio ar gyfer arian mewn llaw
-activityType.synonym.selfEmployed      = Hunangyflogedig
-activityType.synonym.offRecord         = Oddi ar y cofnod
-activityType.synonym.offBook           = Oddi ar y llyfr
-activityType.synonym.money             = Arian
-activityType.synonym.backPocket        = Poced ôl
-activityType.synonym.sole              = Unig
-activityType.synonym.declare           = Datgan
-activityType.synonym.trader            = Masnachwr
-activityType.synonym.cash              = Arian parod
-activityType.synonym.undeclared        = Heb ei ddatgan
-activityType.synonym.hide              = Cuddio
-
-# privateSecurity
-activityType.synonym.sia             = SIA
-activityType.synonym.bouncer         = Dryswr
-activityType.synonym.doorman         = Porthor
-activityType.synonym.closeProtection = Amddiffyn Agos
-activityType.synonym.guard           = Gwarchodwr
-activityType.synonym.bodyguard       = gwarchodwr
-
-# vatRelated
-activityType.synonym.company = Cwmni
-activityType.synonym.invoice = Anfoneb
-activityType.synonym.bill    = Bil
-activityType.synonym.receipt = Derbynneb
-activityType.synonym.account = Cyfrif
-activityType.synonym.cash    = Arian parod
-
-# humanTrafficking
-activityType.synonym.human      = Dynol
-activityType.synonym.people     = Pobl
-activityType.synonym.harbouring = Llochesu
-activityType.synonym.exploit    = Cymryd mantais
-
-# illegalFlowOfMoney
-activityType.synonym.illicitFinance = Cyllid anghyfreithlon
-activityType.synonym.laundering     = Gwyngalchu
-activityType.synonym.transfer       = Trosglwyddo
-activityType.synonym.dirty          = Brwnt
-activityType.synonym.move           = Symud
-activityType.synonym.gang           = Gang
-activityType.synonym.criminal       = Troseddwr
-activityType.synonym.stash          = Celu
-activityType.synonym.clean          = Glân
-activityType.synonym.hawala         = Hawala
-activityType.synonym.money          = Arian
-activityType.synonym.exchange       = Cyfnewid
-
-# immigration
-activityType.synonym.immigrant = Mewnfudwr
-activityType.synonym.illegal   = Anghyfreithlon
-activityType.synonym.refugee   = Ffoadur
-activityType.synonym.asylum    = Ceisiwr
-activityType.synonym.seeker    = Lloches
-activityType.synonym.migrant   = Mewnfudwr
-
-# redDiesel
-activityType.synonym.commodityFraud = Twyll nwyddau
-activityType.synonym.fuel           = Tanwydd
-activityType.synonym.petrol         = Petrol
-activityType.synonym.farm           = Fferm
-activityType.synonym.agriculture    = Amaethyddiaeth
-activityType.synonym.green          = Gwyrdd
-activityType.synonym.car            = Car
-activityType.synonym.hgv            = HGV
-activityType.synonym.vehicle        = Cerbyd
-activityType.synonym.van            = Fan
-activityType.synonym.road           = Ffyrdd
-activityType.synonym.tank           = Tanc
-activityType.synonym.gas            = Nwy
-activityType.synonym.kerosene       = Cerosîn
-
-# vatFreeImports
-activityType.synonym.carouselFraud      = Twyll carwsél
-activityType.synonym.mticFraud          = Twyll masnachwr coll o fewn y gymuned (MTIC)
-activityType.synonym.missingTraderFraud = Twyll gan fasnachwyr coll
-activityType.synonym.movement           = Symudiad
-activityType.synonym.warehouse          = Warws
-
-# employmentStatus
-activityType.synonym.lyingAboutStatus = Dweud celwydd am statws
-activityType.synonym.changeOfStatus   = Peidio â rhoi gwybod am newid statws
-activityType.synonym.employ           = Cyflogi
-activityType.synonym.payroll          = Y gyflogres
-activityType.synonym.status           = Statws
-activityType.synonym.register         = Cofrestru
-activityType.synonym.declare          = Datgan
-activityType.synonym.incorrect        = Anghywir
-
-# landfillAndWaste
-activityType.synonym.landfill    = Tirlenwi
-activityType.synonym.waste       = Gwastraff
-activityType.synonym.rubbish     = Sbwriel
-activityType.synonym.dump        = Dymp
-activityType.synonym.trash       = Sbwriel
-activityType.synonym.toxic       = Tocsig
-activityType.synonym.recycle     = Ailgylchu
-activityType.synonym.green       = Gwyrdd
-activityType.synonym.disposal    = Gwarediad
-activityType.synonym.environment = Yr amgylchedd
-activityType.synonym.tip         = tip
-activityType.synonym.flyTipping  = tipio anghyfreithlon
-
-# organisedCrime
-activityType.synonym.ocg             = OCGau
-activityType.synonym.criminalFinance = Cyllid troseddol
-activityType.synonym.organisedCrime  = Troseddau Cyfundrefnol
-activityType.synonym.crime           = Troseddau
-activityType.synonym.offence         = Trosedd
-activityType.synonym.dirty           = Brwnt
-activityType.synonym.dodgy           = Amheus
-activityType.synonym.poca            = Deddf Enillion Troseddau (POCA)
-activityType.synonym.confiscate      = Atafaelu
-activityType.synonym.stash           = Celu
-activityType.synonym.hidden          = Wedi’i guddio
-
-# laundering
-activityType.synonym.transfer       = Trosglwyddo
-activityType.synonym.accounts       = Cyfrifon
-activityType.synonym.taxHaven       = Lloches Treth
-activityType.synonym.hawala         = Hawala
-activityType.synonym.moneyServices  = Gwasanaethau arian
-activityType.synonym.moneyBureau    = Canolfan Arian
-activityType.synonym.bureau         = Canolfan
-activityType.synonym.bureauDeChange = Canolfan Newid Arian
-activityType.synonym.clean          = Glân
-activityType.synonym.dirty          = Brwnt
-activityType.synonym.proceeds       = Enillion
-activityType.synonym.money          = Arian
-activityType.synonym.launder        = Gwyngalchu
-activityType.synonym.international  = Rhyngwlado
-
 # minimumWage
 activityType.synonym.underpayment      = Tandaliad
 activityType.synonym.underpaid         = Tandalu
@@ -417,21 +66,13 @@ activityType.synonym.labour            = Llafur
 activityType.synonym.paid              = Talwyd
 activityType.synonym.nmw               = Isafswm Cyflog Cenedlaethol (NMW)
 
-# betting
-activityType.synonym.gambling = Hapchwarae
-activityType.synonym.gbd_long = Toll Fetio Gyffredinol
-activityType.synonym.gbd      = GBD
-activityType.synonym.pbd_long = Toll Cronfa Fetio
-activityType.synonym.pbd      = PBD
-activityType.synonym.rgd_long = Toll hapchwarae o bell
-activityType.synonym.rgd      = RGD
-activityType.synonym.gamble   = Hapchwarae
-activityType.synonym.lottery  = Loteri
-activityType.synonym.raffle   = Raffl
-activityType.synonym.licence  = Trwydded
-activityType.synonym.bet      = Betio
-activityType.synonym.casino   = casino
+checkYourAnswers.title = Gwiriwch eich cyflwyniad
+checkYourAnswers.heading = Gwiriwch eich cyflwyniad
 
+journeyRecovery.continue.title =  Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
+journeyRecovery.continue.heading =  Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
+journeyRecovery.startAgain.title = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
+journeyRecovery.startAgain.heading = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
 # capitalGains
 activityType.synonym.profit    = Elw
 activityType.synonym.houseSale = Gwerthu Tŷ
@@ -458,6 +99,12 @@ activityType.synonym.vodka          = Fodca
 activityType.synonym.underCounter   = Dan y Cownter
 activityType.synonym.distill        = Distyllu
 activityType.synonym.fake           = Ffug
+activityType.title = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
+activityType.heading = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
+activityType.hint = Nodwch eiriau allweddol sy’n gysylltiedig â’r gweithgaredd i awgrymu categorïau perthnasol neu dewiswch weithgaredd o'r rhestr.
+activityType.checkYourAnswersLabel = Math o weithgaredd
+activityType.error.required = Nodwch y math o weithgaredd.
+activityType.change.hidden = Math o weithgaredd
 
 # tobacco
 activityType.synonym.cigarettes = Sigaréts
@@ -493,6 +140,15 @@ activityType.synonym.drink         = Diod
 activityType.synonym.chocolate     = Siocled
 activityType.synonym.confectionery = Melysion
 
+individualOrBusiness.title = A ydych yn rhoi gwybod am unigolyn neu fusnes?
+individualOrBusiness.heading = A ydych yn rhoi gwybod am unigolyn neu fusnes?
+individualOrBusiness.individual = Unigolyn
+individualOrBusiness.individual.hint = Gallwch roi gwybod am hyd at 5 o unigolion sy'n ymwneud â'r gweithgaredd ac ychwanegu manylion busnes ar gyfer pob person os yw'n briodol
+individualOrBusiness.business = Busnes
+individualOrBusiness.business.hint = Gallwch roi gwybod am gwmni
+individualOrBusiness.checkYourAnswersLabel = A ydych yn rhoi gwybod am unigolyn neu fusnes
+individualOrBusiness.error.required = Dewiswch a ydych yn rhoi gwybod am unigolyn neu fusnes.
+individualOrBusiness.change.hidden = A ydych yn rhoi gwybod am unigolyn neu fusnes
 
 # windingUpACompany
 activityType.synonym.phoenixism = Adfywio
@@ -502,6 +158,18 @@ activityType.synonym.closure    = Cau
 activityType.synonym.shutdown   = Cau lawr
 activityType.synonym.open       = Agored
 activityType.synonym.redundant  = Diswyddo
+doNotUseThisService.title = Ni ddylech ddefnyddio’r gwasanaeth hwn i roi gwybod am y gweithgaredd hwn
+doNotUseThisService.heading = Ni ddylech ddefnyddio’r gwasanaeth hwn i roi gwybod am y gweithgaredd hwn
+doNotUseThisService.p1.activity-related-to-drugs = Nid yw CThEM yn gallu ymchwilio i’r gweithgaredd hwn.
+doNotUseThisService.p2.activity-related-to-drugs = Dylech roi gwybod i’r heddlu am weithgaredd sy’n ymwneud â chyffuriau. Ffoniwch 999 os yw’n argyfwng, neu 101 os nad yw’n fater brys.
+doNotUseThisService.p1.smuggling = Nid yw CThEM yn gallu ymchwilio i’r gweithgaredd hwn.
+doNotUseThisService.p2.smuggling = Dylech <a class="govuk-link" href="https://www.gov.uk/report-smuggling">roi gwybod i’r Swyddfa Gartref</a>.
+doNotUseThisService.p1.benefit-and-universal-credit = Ni all CThEM ymchwilio i unrhyw dwyll budd-daliadau ar wahân i dwyll Budd-dal Plant neu Gredyd Treth.
+doNotUseThisService.p2.benefit-and-universal-credit = Dylech roi gwybod i''r Adran Gwaith a Phensiynau <a class="govuk-link" href="https://www.gov.uk/report-benefit-fraud">am bob twyll budd-dal arall.</a>
+doNotUseThisService.p1.human-trafficking = Nid yw CThEM yn gallu ymchwilio i’r gweithgaredd hwn.
+doNotUseThisService.p2.human-trafficking = Dylech roi gwybod i’r heddlu am fasnachu pobl. Ffoniwch 999 os yw’n argyfwng, neu 101 os nad yw’n fater brys.
+doNotUseThisService.p1.immigration-border-crime = Nid yw CThEM yn gallu ymchwilio i’r gweithgaredd hwn.
+doNotUseThisService.p2.immigration-border-crime = Dylech <a class="govuk-link" href="https://www.gov.uk/report-immigration-crime"> roi gwybod i’r Swyddfa Gartref am fewnfudo neu droseddau wrth y ffin.</a>
 
 # selfEmployment
 activityType.synonym.unregisteredTrader = Masnachwr heb ei gofrestru
@@ -510,6 +178,17 @@ activityType.synonym.business           = Busnes
 activityType.synonym.trading            = Masnachu
 activityType.synonym.self               = Hunan
 activityType.synonym.oddJob             = Mân swyddi
+individualInformation.title = Beth ydych yn ei wybod am yr unigolyn?
+individualInformation.heading = Beth ydych yn ei wybod am yr unigolyn?
+individualInformation.hint = <p>Cyfeirir at yr unigolyn hwn fel {0}. <br> Gofynnir i chi roi manylion yn seiliedig ar eich dewis.<br> Nid oes disgwyl i chi gael gwybodaeth nad oes gennych eisoes.</p>
+individualInformation.name = Enw
+individualInformation.age = Oedran (yn fras)
+individualInformation.address = Cyfeiriad cartref
+individualInformation.contact-details = Manylion cyswllt personol
+individualInformation.ni-number = Rhif Yswiriant Gwladol
+individualInformation.checkYourAnswersLabel = Beth ydych yn ei wybod am yr unigolyn
+individualInformation.error.required = Dewiswch yr wybodaeth sydd gennych am yr unigolyn.
+individualInformation.change.hidden = Beth ydych yn ei wybod am yr unigolyn
 
 # offShoreAccounts
 activityType.synonym.undeclaredOffshoreIncome = Peidio â datgan incwm alltraeth
@@ -520,6 +199,23 @@ activityType.synonym.britishVirginIslands     = Ynysoedd y Wyryf (Prydeinig)
 activityType.synonym.swiss                    = Y Swistir
 activityType.synonym.jersey                   = Jersey
 activityType.synonym.divert                   = Dargyfeirio
+individualName.title = Beth yw enw’r unigolyn?
+individualName.heading = Beth yw enw’r unigolyn?
+individualName.hint = Nodwch gymaint ag y gallwch.
+individualName.firstName = Enw cyntaf
+individualName.middleName = Enwau canol
+individualName.lastName = Enw olaf
+individualName.aliases = Ffugenwau neu lysenwau
+individualName.checkYourAnswersLabel = Enw
+individualName.error.firstName.length = Mae’n rhaid i enwau cyntaf fod yn 255 o gymeriadau neu lai.
+individualName.error.middleName.length = Mae’n rhaid i enwau canol fod yn 255 o gymeriadau neu lai.
+individualName.error.lastName.length = Mae’n rhaid i enwau olaf fod yn 255 o gymeriadau neu lai.
+individualName.error.aliases.length = Mae’n rhaid i ffugenwau neu lysenwau fod yn 255 o gymeriadau neu lai.
+individualName.firstName.change.hidden = Enw cyntaf
+individualName.middleName.change.hidden = Enwau canol
+individualName.lastName.change.hidden = Enw olaf
+individualName.aliases.change.hidden = Ffugenwau neu lysenwau
+IndividualName.change.hidden = Enw
 
 # assets
 activityType.synonym.wealthyIndividuals = Unigolion cyfoethog
@@ -538,9 +234,31 @@ activityType.synonym.politic            = Gwleidyddiaeth
 activityType.synonym.presenter          = Cyflwynydd
 activityType.synonym.act                = Actio
 activityType.synonym.million            = Miliwn
+individualContactDetails.title = Beth yw manylion cyswllt yr unigolyn?
+individualContactDetails.heading = Beth yw manylion cyswllt yr unigolyn?
+individualContactDetails.hint = Nodwch gymaint ag y gallwch.
+individualContactDetails.landlineNumber = Rhif ffôn llinell dir
+individualContactDetails.mobileNumber = Rhif ffôn symudol
+individualContactDetails.email = Cyfeiriad e-bost
+individualContactDetails.error.email.length = Mae’n rhaid i gyfeiriadau e-bost fod yn 255 o gymeriadau neu lai.
+individualContactDetails.checkYourAnswersLabel = Manylion cyswllt personol
+individualContactDetails.error.landlineNumber.invalid = Nodwch rif ffôn llinell dir, megis 01632 960 001.
+individualContactDetails.error.mobileNumber.invalid = Nodwch rif ffôn symudol, megis 07700 900 982 neu +44 7700 900 982.
+individualContactDetails.error.email.invalid = Nodwch gyfeiriad e-bost yn y fformat cywir, megis enw@enghraifft.com
+individualContactDetails.cya.landline = Rhif ffôn llinell dir
+individualContactDetails.cya.mobile = Rhif ffôn symudol
+individualContactDetails.cya.email = Cyfeiriad e-bost
+individualContactDetails.change.hidden = Manylion cyswllt personol
 
 # smuggling
 activityType.synonym.smuggle = Smyglo
+individualNationalInsuranceNumber.title = Beth yw rhif Yswiriant Gwladol yr unigolyn?
+individualNationalInsuranceNumber.heading = Beth yw rhif Yswiriant Gwladol yr unigolyn?
+individualNationalInsuranceNumber.hint = Er enghraifft, ‘QQ 12 34 56 C’.
+individualNationalInsuranceNumber.checkYourAnswersLabel = Rhif Yswiriant Gwladol
+individualNationalInsuranceNumber.error.required = Nodwch rif Yswiriant Gwladol yr unigolyn
+individualNationalInsuranceNumber.error.invalid = Nodwch rif Yswiriant Gwladol yr unigolyn yn y fformat cywir
+individualNationalInsuranceNumber.change.hidden = Rhif Yswiriant Gwladol
 
 # cashDeposits
 activityType.synonym.largeCashDeposits   = Adneuon arian parod mawr
@@ -549,117 +267,6 @@ activityType.synonym.finance             = Cyllid
 activityType.synonym.account             = Cyfrif
 activityType.synonym.pay                 = Talu
 activityType.synonym.band                = Band
-
-# hmrcImpostor
-activityType.synonym.phishing   = Gwe-rwydo
-activityType.synonym.scam       = Sgam
-activityType.synonym.cyber      = Seiber
-activityType.synonym.whatsApp   = WhatsApp
-activityType.synonym.unknown    = Anhysbys
-activityType.synonym.telecomms  = Telathrebu
-activityType.synonym.callCentre = Canolfan alwadau
-activityType.synonym.con        = Twyl
-
-# cashTransport
-activityType.synonym.bank     = Banc
-activityType.synonym.deposit  = Adnau
-
-# universalCredit
-# All synonyms covered earlier.
-
-# plasticPackaging
-activityType.synonym.plastic       = plastig
-activityType.synonym.packing       = pacio
-activityType.synonym.packaging     = pecynnu
-activityType.synonym.wrapping      = lapio
-activityType.synonym.manufacture   = gweithgynhyrchu
-activityType.synonym.import        = mewnforio
-activityType.synonym.supply        = cyflenwad
-activityType.synonym.tax           = treth
-activityType.synonym.storage       = storio
-activityType.synonym.product       = cynnyrch
-activityType.synonym.bag           = bag
-activityType.synonym.biodegradable = bioddiraddadwy
-activityType.synonym.bio           = bio
-activityType.synonym.compostable   = compostadwy
-
-
-individualOrBusiness.title = A ydych yn rhoi gwybod am unigolyn neu fusnes
-individualOrBusiness.heading = A ydych yn rhoi gwybod am unigolyn neu fusnes
-individualOrBusiness.individual = Unigolyn
-individualOrBusiness.individual.hint = Gallwch roi gwybod am hyd at 5 o unigolion sy'n ymwneud â'r gweithgaredd ac ychwanegu manylion busnes ar gyfer pob person os yw'n briodol
-individualOrBusiness.business = Busnes
-individualOrBusiness.business.hint = Gallwch roi gwybod am gwmni
-individualOrBusiness.checkYourAnswersLabel = A ydych yn rhoi gwybod am unigolyn neu fusnes
-individualOrBusiness.error.required = Nodwch a ydych yn riportio unigolyn neu fusnes.
-individualOrBusiness.change.hidden = A ydych yn rhoi gwybod am unigolyn neu fusnes
-
-doNotUseThisService.title = Ni ddylech ddefnyddio’r gwasanaeth hwn i roi gwybod am y gweithgaredd hwn.
-doNotUseThisService.heading = Ni ddylech ddefnyddio’r gwasanaeth hwn i roi gwybod am y gweithgaredd hwn.
-doNotUseThisService.p1.activity-related-to-drugs = Nid yw CThEM yn gallu ymchwilio i’r gweithgaredd hwn.
-doNotUseThisService.p2.activity-related-to-drugs = Dylech roi gwybod i’r heddlu am weithgaredd sy’n ymwneud â chyffuriau. Ffoniwch 999 os yw’n argyfwng, neu 101 os nad yw’n fater brys.
-doNotUseThisService.p1.smuggling = Nid yw CThEM yn gallu ymchwilio i’r gweithgaredd hwn.
-doNotUseThisService.p2.smuggling = Dylech <a class="govuk-link" href="https://www.gov.uk/report-smuggling">roi gwybod i’r Swyddfa Gartref</a>.
-doNotUseThisService.p1.benefit-and-universal-credit = Ni all CThEM ymchwilio i unrhyw dwyll budd-daliadau ar wahân i dwyll Budd-dal Plant neu Gredyd Treth.
-doNotUseThisService.p2.benefit-and-universal-credit = Dylech roi gwybod i''r Adran Gwaith a Phensiynau <a class="govuk-link" href="https://www.gov.uk/report-benefit-fraud">am bob twyll budd-dal arall.</a>
-doNotUseThisService.p1.human-trafficking = Nid yw CThEM yn gallu ymchwilio i’r gweithgaredd hwn.
-doNotUseThisService.p2.human-trafficking = Dylech roi gwybod i’r heddlu am fasnachu pobl. Ffoniwch 999 os yw’n argyfwng, neu 101 os nad yw’n fater brys.
-doNotUseThisService.p1.immigration-border-crime = Nid yw CThEM yn gallu ymchwilio i’r gweithgaredd hwn.
-doNotUseThisService.p2.immigration-border-crime = Dylech <a class="govuk-link" href="https://www.gov.uk/report-immigration-crime"> roi gwybod i’r Swyddfa Gartref am fewnfudo neu droseddau wrth y ffin.</a>
-
-individualInformation.title = Beth ydych yn ei wybod am yr unigolyn?
-individualInformation.heading = Beth ydych yn ei wybod am yr unigolyn?
-individualInformation.hint = <p>Cyfeirir at yr unigolyn hwn fel {0}. <br> Gofynnir i chi roi manylion yn seiliedig ar eich dewis.<br> Nid oes disgwyl i chi gael gwybodaeth nad oes gennych eisoes.</p>
-individualInformation.name = Enw
-individualInformation.age = Oedran (yn fras)
-individualInformation.address = Cyfeiriad cartref
-individualInformation.contact-details = Manylion cyswllt personol
-individualInformation.ni-number = Rhif Yswiriant Gwladol
-individualInformation.checkYourAnswersLabel = Beth ydych yn ei wybod am yr unigolyn
-individualInformation.error.required = Nodwch y wybodaeth rydych chi''n ei wybod am yr unigolyn.
-individualInformation.change.hidden = Beth ydych yn ei wybod am yr unigolyn
-
-individualName.title = Beth yw enw’r unigolyn?
-individualName.heading = Beth yw enw’r unigolyn?
-individualName.hint = Nodwch gymaint ag y gallwch
-individualName.firstName = Enw cyntaf
-individualName.middleName = Enwau canol
-individualName.lastName = Enw olaf
-individualName.aliases = Ffugenwau neu lysenwau
-individualName.checkYourAnswersLabel = Enw
-individualName.error.firstName.length = Enw cynta fod yn 255 o gymeriadau neu lai.
-individualName.error.middleName.length = Enwau canol fod yn 255 o gymeriadau neu lai.
-individualName.error.lastName.length = Enw olaf fod yn 255 o gymeriadau neu lai.
-individualName.error.aliases.length = Ffugenwau neu lysenwau fod yn 255 o gymeriadau neu lai.
-individualName.firstName.change.hidden = Enw cyntaf
-individualName.middleName.change.hidden = Enwau canol
-individualName.lastName.change.hidden = Enw olaf
-individualName.aliases.change.hidden = Ffugenwau neu lysenwau
-IndividualName.change.hidden = Enw
-
-individualContactDetails.title = Beth yw manylion cyswllt yr unigolyn?
-individualContactDetails.heading = Beth yw manylion cyswllt yr unigolyn?
-individualContactDetails.hint = Nodwch gymaint ag y gallwch.
-individualContactDetails.landlineNumber = Rhif ffôn llinell dir
-individualContactDetails.mobileNumber = Rhif ffôn symudol
-individualContactDetails.email = Cyfeiriad e-bost
-individualContactDetails.checkYourAnswersLabel = Manylion cyswllt personol
-individualContactDetails.error.landlineNumber.invalid = Nodwch rif llinell dir, fel 01632 960 001.
-individualContactDetails.error.mobileNumber.invalid = Nodwch rif ffôn symudol, fel 07700 900 982 neu +44 808 157 0192.
-individualContactDetails.error.email.invalid = Nodwch gyfeiriad e-bost yn y fformat cywir, fel name@example.com
-individualContactDetails.cya.landline = Rhif ffôn llinell dir
-individualContactDetails.cya.mobile = Rhif ffôn symudol
-individualContactDetails.cya.email = Cyfeiriad e-bost
-individualContactDetails.change.hidden = Manylion cyswllt personol
-
-individualNationalInsuranceNumber.title = Beth yw rhif Yswiriant Gwladol yr unigolyn?
-individualNationalInsuranceNumber.heading = Beth yw rhif Yswiriant Gwladol yr unigolyn?
-individualNationalInsuranceNumber.hint = Er enghraifft, ‘QQ 12 34 56 C’.
-individualNationalInsuranceNumber.checkYourAnswersLabel = Rhif Yswiriant Gwladol
-individualNationalInsuranceNumber.error.required = Nodwch rRhif Yswiriant Gwladol.
-individualNationalInsuranceNumber.error.invalid = Nodwch rRhif Yswiriant Gwladol
-individualNationalInsuranceNumber.change.hidden = Rhif Yswiriant Gwladol
-
 individualConnection.title = Sut ydych yn adnabod yr unigolyn?
 individualConnection.heading = Sut ydych yn adnabod yr unigolyn?
 individualConnection.hint = Dewiswch y disgrifiad gorau.
@@ -677,12 +284,21 @@ individualConnection.customer = cwsmer
 individualConnection.businessCompetitor = cystadleuydd busnes
 individualConnection.other = Arall
 individualConnection.checkYourAnswersLabel = Sut rydych yn adnabod yr unigolyn
-individualConnection.error.required = Nodwch sut rydych yn adnabod yr unigolyn.
+individualConnection.error.required = Dewiswch sut rydych yn adnabod yr unigolyn.
 individualConnection.otherValue.hint = Nodwch sut rydych yn adnabod y unigolyn
-individualConnection.error.otherValue.required = Nodwch sut rydych yn adnabod yr unigolyn.
-individualConnection.error.otherValue.maxLength = Sut rydych chi'n gwybod bod yn rhaid i'r unigolyn fod yn {0} nod neu lai.
+individualConnection.error.otherValue.required = Dewiswch sut rydych yn adnabod yr unigolyn.
+individualConnection.error.otherValue.maxLength = Mae’n rhaid i’ch esboniad ynghylch sut rydych yn adnabod yr unigolyn fod yn {0} o gymeriadau neu lai.
 individualConnection.change.hidden = Sut rydych yn adnabod yr unigolyn
 
+# hmrcImpostor
+activityType.synonym.phishing   = Gwe-rwydo
+activityType.synonym.scam       = Sgam
+activityType.synonym.cyber      = Seiber
+activityType.synonym.whatsApp   = WhatsApp
+activityType.synonym.unknown    = Anhysbys
+activityType.synonym.telecomms  = Telathrebu
+activityType.synonym.callCentre = Canolfan alwadau
+activityType.synonym.con        = Twyl
 individualBusinessDetails.title = A allwch roi manylion busnes ar gyfer yr unigolyn hwn?
 individualBusinessDetails.heading = A allwch roi manylion busnes ar gyfer yr unigolyn hwn?
 individualBusinessDetails.hint = Er enghraifft, enw, cyfeiriad neu fanylion cyswllt y busnes
@@ -690,45 +306,65 @@ individualBusinessDetails.yes = Iawn
 individualBusinessDetails.no = Na
 individualBusinessDetails.dontKnow = Nid wyf yn gwybod
 individualBusinessDetails.checkYourAnswersLabel = Mae gan yr unigolyn fanylion busnes
-individualBusinessDetails.error.required = (W) Select yes if the individual has business details that you can provide. (W)
+individualBusinessDetails.error.required = Dewiswch ‘Iawn’ os oes gan yr unigolyn fanylion busnes y gallwch eu darparu.
 individualBusinessDetails.change.hidden = Mae gan yr unigolyn fanylion busnes
 
-dateFormat.title = Dewiswch fformat i nodi oedran yr unigolyn.
-dateFormat.heading = Dewiswch fformat i nodi oedran yr unigolyn.
+# cashTransport
+activityType.synonym.bank     = Banc
+activityType.synonym.deposit  = Adnau
+dateFormat.title = Dewiswch fformat i nodi oedran yr unigolyn
+dateFormat.heading = Dewiswch fformat i nodi oedran yr unigolyn
 dateFormat.date = Dyddiad geni
 dateFormat.age = Oedran Bras
 dateFormat.checkYourAnswersLabel = Fformat oedran
 dateFormat.error.required = Dewiswch fformat i nodi oedran yr unigolyn.
 dateFormat.change.hidden = Fformat oedran
 
+# universalCredit
+# All synonyms covered earlier.
 individualAddress.checkYourAnswersLabel = Cyfeiriad cartref
 individualAddress.change.hidden = Cyfeiriad cartref
 
+# plasticPackaging
+activityType.synonym.plastic       = plastig
+activityType.synonym.packing       = pacio
+activityType.synonym.packaging     = pecynnu
+activityType.synonym.wrapping      = lapio
+activityType.synonym.manufacture   = gweithgynhyrchu
+activityType.synonym.import        = mewnforio
+activityType.synonym.supply        = cyflenwad
+activityType.synonym.tax           = treth
+activityType.synonym.storage       = storio
+activityType.synonym.product       = cynnyrch
+activityType.synonym.bag           = bag
+activityType.synonym.biodegradable = bioddiraddadwy
+activityType.synonym.bio           = bio
+activityType.synonym.compostable   = compostadwy
 individualDateOfBirth.title = Beth yw dyddiad geni’r unigolyn?
 individualDateOfBirth.heading = Beth yw dyddiad geni’r unigolyn?
 individualDateOfBirth.hint = Er enghraifft, 31 3 1980.
 individualDateOfBirth.checkYourAnswersLabel = Dyddiad geni
-individualDateOfBirth.error.required.all = Nodwch ddyddiad geni''r unigolyn.
-individualDateOfBirth.error.required.two = Rhaid i ddyddiad geni gynnwys {0} a {1}
-individualDateOfBirth.error.required = Rhaid i ddyddiad geni gynnwys {0}.
+individualDateOfBirth.error.required.all = Nodwch ddyddiad geni’r unigolyn.
+individualDateOfBirth.error.required.two = Mae’n rhaid i’r dyddiad geni gynnwys {0} a {1}
+individualDateOfBirth.error.required = Mae’n rhaid i’r dyddiad geni gynnwys {0}.
 individualDateOfBirth.error.invalid = Nodwch ddyddiad geni go iawn
 individualDateOfBirth.change.hidden = Dyddiad geni
-individualDateOfBirth.error.futureDate = Mae'n rhaid bod y dyddiad geni wedi mynd heibio
+individualDateOfBirth.error.futureDate = Mae’n rhaid i’r dyddiad geni fod yn y gorffennol
 
 individualAge.title = Beth yw oedran bras yr unigolyn?
 individualAge.heading = Beth yw oedran bras yr unigolyn?
 individualAge.hint = Nodwch ei oedran bras mewn blynyddoedd.
 individualAge.suffix = mlwydd oed
 individualAge.checkYourAnswersLabel = Oedran Bras
-individualAge.error.nonNumeric = Nodwch ei oedran bras
-individualAge.error.required = Nodwch ei oedran bras.
-individualAge.error.wholeNumber = Nodwch ei oedran bras
+individualAge.error.nonNumeric = Nodwch oedran bras yr unigolyn gan ddefnyddio gwerthoedd rhifol
+individualAge.error.required = Nodwch oedran bras yr unigolyn.
+individualAge.error.wholeNumber = Nodwch oedran bras yr unigolyn gan ddefnyddio gwerthoedd rhifol
 individualAge.error.outOfRange = Rhaid i''r oedran bras fod rhwng {0} a {1}
 individualAge.change.hidden = Oedran Bras
 
 businessInformationCheck.title = Beth ydych yn ei wybod am y busnes?
 businessInformationCheck.heading = Beth ydych yn ei wybod am y busnes?
-businessInformationCheck.hint = <p>Gofynnir i chi roi manylion yn seiliedig ar eich dewis.<br> Nid oes disgwyl i chi gael gwybodaeth nad oes gennych eisoes</p>
+businessInformationCheck.hint = <p>Gofynnir i chi roi manylion yn seiliedig ar eich dewis.<br> Nid oes disgwyl i chi gael gwybodaeth nad oes gennych eisoes.</p>
 businessInformationCheck.name = Enw’r busnes
 businessInformationCheck.type = Math o fusnes
 businessInformationCheck.type.hint = Er enghraifft, adeiladwr, siop trin gwallt neu fwyty.
@@ -737,35 +373,35 @@ businessInformationCheck.contact = Manylion cyswllt y busnes
 businessInformationCheck.businessReference = Cyfeirnodau’r busnes
 businessInformationCheck.businessReference.hint = Er enghraifft, rhif TAW neu Gyfeirnod y Cyflogwr
 businessInformationCheck.checkYourAnswersLabel = Beth ydych yn ei wybod am y busnes?
-businessInformationCheck.error.required = Nodwch y wybodaeth rydych chi''n ei wybod am y busnes.
+businessInformationCheck.error.required = Dewiswch neu nodwch yr wybodaeth sydd gennych am y busnes.
 businessInformationCheck.change.hidden = Beth ydych yn ei wybod am y busnes?
 
 businessName.title = Beth yw enw’r busnes?
 businessName.heading = Beth yw enw’r busnes?
 businessName.checkYourAnswersLabel = EN’r busnes
 businessName.error.required = Nodwch enw''r busnes.
-businessName.error.length = Rhaid i enwau busnes fod yn 255 nod neu lai.
+businessName.error.length = Mae’n rhaid i enwau busnes fod yn 255 o gymeriadau neu lai.
 businessName.change.hidden = EN’r busnes
 
 descriptionActivity.title = Rhowch ddisgrifiad cryno o’r gweithgaredd rydych yn rhoi gwybod amdano
 descriptionActivity.heading = Rhowch ddisgrifiad cryno o’r gweithgaredd rydych yn rhoi gwybod amdano
 descriptionActivity.hint = Mae disgrifiad cryno yn caniatáu i CThEM brosesu’ch gwybodaeth yn effeithiol. Nid oes angen ailadrodd unrhyw wybodaeth rydych eisoes wedi’i rhoi.
 descriptionActivity.checkYourAnswersLabel = Disgrifiad o’r gweithgaredd
-descriptionActivity.error.required = Rhowch ddisgrifiad cryno o’r gweithgaredd rydych yn rhoi gwybod amdano.
-descriptionActivity.error.length = Rhaid i ddisgrifiad fod yn 1200 nod neu lai.
+descriptionActivity.error.required = Nodwch ddisgrifiad o’r gweithgaredd rydych yn rhoi gwybod amdano.
+descriptionActivity.error.length = Mae’n rhaid i’r disgrifiad o’r gweithgaredd fod yn 1200 o gymeriadau neu lai.
 descriptionActivity.change.hidden = Disgrifiad o’r gweithgaredd
 
 typeBusiness.title = Pa fath o fusnes yw hwn?
 typeBusiness.heading = Pa fath o fusnes yw hwn?
 typeBusiness.hint = Er enghraifft, adeiladwr, siop trin gwallt neu fwyty.
 typeBusiness.checkYourAnswersLabel = Math o fusnes
-typeBusiness.error.required = Nodwch math o fusnes.
-typeBusiness.error.length =  Rhaid i''r math o fusnes fod yn 255 nod neu lai.
+typeBusiness.error.required = Nodwch pa fath o fusnes ydyw
+typeBusiness.error.length =  Mae’n rhaid i’r math o fusnes fod yn 255 o gymeriadau neu lai.
 typeBusiness.change.hidden = Math o fusnes
 
 selectConnectionBusiness.title = Sut ydych yn gwybod am y busnes?
 selectConnectionBusiness.heading = Sut ydych yn gwybod am y busnes?
-selectConnectionBusiness.hint = Dewiswch y disgrifiad agosaf sy'n berthnasol i'ch sefyllfa orau
+selectConnectionBusiness.hint = Dewiswch y disgrifiad agosaf sy''n berthnasol i''ch sefyllfa orau
 selectConnectionBusiness.accountant = cyfrifydd y busnes
 selectConnectionBusiness.auditor = archwiliwr y busnes
 selectConnectionBusiness.business-competitor = cystadleuydd busnes y busnes
@@ -779,14 +415,14 @@ selectConnectionBusiness.treasure = trysorydd y busnes
 selectConnectionBusiness.other = Arall
 selectConnectionBusiness.otherValue = Nodwch sut rydych yn gwybod am y busnes
 selectConnectionBusiness.checkYourAnswersLabel = Sut rydych yn gwybod am y busnes
-selectConnectionBusiness.error.required = Nodwch sut rydych chi'n adnabod y busnes.
-selectConnectionBusiness.error.otherValue.required = Nodwch sut rydych chi'n adnabod y busnes.
-selectConnectionBusiness.error.otherValue.maxLength = Sut rydych chi'n gwybod bod yn rhaid i'r busnes fod yn 100 nod neu lai
+selectConnectionBusiness.error.required = Dewiswch sut rydych yn adnabod y busnes.
+selectConnectionBusiness.error.otherValue.required = Dewiswch sut rydych yn adnabod y busnes.
+selectConnectionBusiness.error.otherValue.maxLength = Mae’n rhaid i’ch esboniad ynghylch sut rydych yn adnabod y busnes fod yn 100 o gymeriadau neu lai.
 selectConnectionBusiness.change.hidden = Sut rydych yn gwybod am y busnes
 
 referenceNumbers.title = Beth yw cyfeirnodau’r busnes?
 referenceNumbers.heading = Beth yw cyfeirnodau’r busnes?
-referenceNumbers.hint = Nodwch gymaint ag y gallwch
+referenceNumbers.hint = Nodwch gymaint ag y gallwch.
 referenceNumbers.vat.label = Rhif cofrestru TAW
 referenceNumbers.vat.hint = Mae’n rhaid iddo fod yn 9 digid, neu’n 11 digid gyda ‘GB’ ar y dechrau. Er enghraifft, 123456789 neu GB123456789.
 referenceNumbers.efn.label = Cyfeirnod y Cyflogwr (ERN)
@@ -794,25 +430,26 @@ referenceNumbers.efn.hint = Mae’n rhaid iddo fod yn rhif swyddfa dreth 3 digid
 referenceNumbers.ct-utr.label = Cyfeirnod Unigryw y Trethdalwr ar gyfer Treth Gorfforaeth (CT UTR)
 referenceNumbers.ct-utr.hint = Mae’n rhaid iddo fod yn 10 digid, er enghraifft 1234567890.
 referenceNumbers.checkYourAnswersLabel = Cyfeirnodau Busnes
-referenceNumbers.error.vatRegistration.length = Rhif cofrestru TAW rhaid iddo fod yn 9 digid, neu’n 11 digid.
-referenceNumbers.error.employeeRefNo.length =  Gyfeirnod y Cyflogwr fod yn {0} digid.
-referenceNumbers.error.corporationTax.length = Cyfeirnod Unigryw y Trethdalwr ar gyfer Treth Gorfforaeth (CT UTR) rhaid iddo fod yn 10 digid, er enghraifft 1234567890.
+referenceNumbers.error.vatRegistration.length = Mae’n rhaid i rifau cofrestru TAW fod yn 9 neu’n 11 digid o hyd
+referenceNumbers.error.employeeRefNo.invalid =  Rhaid i Gyfeirnod y Cyflogwr (ERN) fod yn y fformat cywir
+referenceNumbers.error.corporationTax.length = Mae’n rhaid i Gyfeirnod Unigryw y Trethdalwr ar gyfer Treth Gorfforaeth fod yn 10 digid o hyd
 referenceNumbers.change.hidden = Cyfeirnodau Busnes
 referenceNumbers.cya.vat = Rhif cofrestru TAW
 referenceNumbers.cya.ern = ERN
 referenceNumbers.cya.cturn = CTUTR
 
-approximateValue.title = Beth yw cyfanswm gwerth y gweithgaredd
-approximateValue.heading = Beth yw cyfanswm gwerth y gweithgaredd
-approximateValue.p = Nid oes angen union ffigur ar CThEM, bydd amcangyfrif yn dal i fod yn ddefnyddiol.
+approximateValue.title = Beth yw cyfanswm gwerth y gweithgaredd?
+approximateValue.heading = Beth yw cyfanswm gwerth y gweithgaredd?
+approximateValue.p1 = Nid oes angen union ffigur ar CThEM, bydd amcangyfrif yn dal i fod yn ddefnyddiol.
 approximateValue.hint = Nodwch y cyfanswm gwerth bras, mewn punnoedd.
 approximateValue.suffix = £
 approximateValue.checkYourAnswersLabel = Swm y gweithgaredd (£)
-approximateValue.error.nonNumeric = Rhaid i gyfanswm y gwerth bras fod yn 12 nod neu lai.
-approximateValue.error.required = Nodwch y cyfanswm gwerth bras
-approximateValue.error.wholeNumber = Nodwch y cyfanswm gwerth bras
-approximateValue.error.length = Rhaid i gyfanswm y gwerth bras fod yn 12 nod neu lai.
-approximateValue.change.hidden = Swm y gweithgaredd
+approximateValue.error.nonNumeric = Nodwch y cyfanswm amcangyfrifedig fel gwerth rhifol.
+approximateValue.error.required = Nodwch y cyfanswm amcangyfrifedig fel gwerth rhifol.
+approximateValue.error.wholeNumber = Nodwch y cyfanswm amcangyfrifedig fel gwerth rhifol.
+approximateValue.error.maxTwoDecimals = Rhaid i gyfanswm y gwerth fod yn uchafswm o ddau le degol
+approximateValue.error.length = Mae’n rhaid i’r cyfanswm amcangyfrifedig fod yn 12 o gymeriadau neu lai.
+approximateValue.change.hidden = Swm y gweithgaredd (£)
 
 businessContactDetails.title = Beth yw manylion cyswllt y busnes?
 businessContactDetails.heading = Beth yw manylion cyswllt y busnes?
@@ -821,32 +458,36 @@ businessContactDetails.landlineNumber = Rhif ffôn llinell dir
 businessContactDetails.mobileNumber = Rhif ffôn symudol
 businessContactDetails.email = Cyfeiriad e-bost
 businessContactDetails.checkYourAnswersLabel = Manylion cyswllt y busnes
-businessContactDetails.error.landlineNumber.invalid = Nodwch rif llinell dir, er enghraifft 01632 960 001.
-businessContactDetails.error.mobileNumber.invalid = Nodwch rif ffôn symudol, er enghraifft 07700 900 982 neu +44 808 157 0192.
-businessContactDetails.error.email.length = Rhaid i gyfeiriadau e-bost fod yn {0} nod neu lai.
-businessContactDetails.error.email.invalid = Nodwch gyfeiriad e-bost yn y fformat cywir, er enghraifft name@example.com
+businessContactDetails.error.landlineNumber.invalid = Nodwch rif ffôn llinell dir, megis 01632 960 001.
+businessContactDetails.error.mobileNumber.invalid = Nodwch rif ffôn symudol, megis 07700 900 982 neu +44 7700 900 982.
+businessContactDetails.error.email.length = Mae’n rhaid i gyfeiriadau e-bost fod yn {0} o gymeriadau neu lai.
+businessContactDetails.error.email.invalid = Nodwch gyfeiriad e-bost yn y fformat cywir, megis enw@enghraifft.com
 businessContactDetails.change.hidden = Manylion cyswllt y busnes
 
 addAnotherPerson.title = Rydych wedi ychwanegu {0} unigolyn
 addAnotherPerson.heading = A oes pobl ychwanegol yn cymryd rhan yn y gweithgaredd hwn yr hoffech roi gwybod i ni amdanynt?
-addAnotherPerson.hint = Gallwch nodi hyd at 5 unigolyn
+addAnotherPerson.hint = Gallwch nodi hyd at 5 unigolyn.
 addAnotherPerson.yes = Iawn
 addAnotherPerson.no = Na
 addAnotherPerson.checkYourAnswersLabel = A oes pobl ychwanegol yn cymryd rhan yn y gweithgaredd hwn yr hoffech roi gwybod i ni amdanynt?
-addAnotherPerson.error.required = (W) Select yes if you need to add another individual. (W)
-addAnotherPerson.change.hidden = (W) Add another individual (W)
+addAnotherPerson.error.required = Dewiswch ‘Iawn’ os oes angen i chi ychwanegu unigolyn arall.
+addAnotherPerson.change.hidden = Ychwanegu Unigolyn arall
 
 individualConfirmRemove.title = A ydych yn siŵr eich bod am dynnu {0}?
 individualConfirmRemove.heading = A ydych yn siŵr eich bod am dynnu {0}?
+individualConfirmRemove.error.required = Dewiswch ‘Iawn’ os oes angen i chi dynnu’r unigolyn.
 
 individual.addAnother.header = Rydych wedi ychwanegu {0} unigolyn
 individual.addAnother.header.plural = Rydych wedi ychwanegu {0} unigolyn
 addAnotherPerson.reached.maximum = Ni allwch ychwanegu unigolyn arall gan eich bod wedi nodi uchafswm o 5.
-individual.1 = Unigolyn  A
-individual.2 = Unigolyn  B
-individual.3 = Unigolyn  C
-individual.4 = Unigolyn  D
-individual.5 = Unigolyn  E
+individual.1 = Unigolyn A
+individual.2 = Unigolyn B
+individual.3 = Unigolyn C
+individual.4 = Unigolyn D
+individual.5 = Unigolyn E
+
+individual.change = Newid<span class="govuk-visually-hidden"> {0} </span>
+individual.remove = Dileu<span class="govuk-visually-hidden"> {0} </span>
 
 whenActivityHappen.title = Beth yw hyd y gweithgaredd a nodwyd?
 whenActivityHappen.heading = Beth yw hyd y gweithgaredd a nodwyd?
@@ -858,7 +499,7 @@ whenActivityHappen.onlyOneOccasion = Gweithgaredd hyn unwaith
 whenActivityHappen.notHappen = Digwyddodd gweithgaredd eto
 whenActivityHappen.doNotKnow = Nid wyf yn gwybod
 whenActivityHappen.checkYourAnswersLabel = Hyd y gweithgaredd
-whenActivityHappen.error.required = (W) Select when the activity you''re reporting started (W)
+whenActivityHappen.error.required = Dewiswch pryd dechreuodd y gweithgaredd rydych yn rhoi gwybod amdano
 whenActivityHappen.change.hidden = Hyd y gweithgaredd
 
 activityTimePeriod.title = Pryd fydd y gweithgaredd rydych yn rhoi gwybod amdano yn debygol o ddigwydd?
@@ -868,7 +509,7 @@ activityTimePeriod.threeMonths = Yn ystod y 3 mis nesaf
 activityTimePeriod.later = Yn ystod y flwyddyn nesaf neu ar ôl hynny
 activityTimePeriod.doNotKnow = Nid wyf yn gwybod
 activityTimePeriod.checkYourAnswersLabel = Cyfnod dechrau’r gweithgaredd
-activityTimePeriod.error.required = (W) Select when the activity you''re reporting will likely happen (W)
+activityTimePeriod.error.required = Dewiswch pryd bydd y gweithgaredd rydych yn rhoi gwybod amdano’n debygol o ddigwydd
 activityTimePeriod.change.hidden = Cyfnod dechrau’r gweithgaredd
 
 howManyPeopleKnow.title = Faint o bobl eraill sy’n gwybod am y gweithgaredd?
@@ -880,7 +521,7 @@ howManyPeopleKnow.sixToTenIndividuals = 6 i 10 unigolyn
 howManyPeopleKnow.moreThanTenIndividuals = Mwy na 10 unigolyn
 howManyPeopleKnow.doNotKnow = Nid wyf yn gwybod
 howManyPeopleKnow.checkYourAnswersLabel = Faint o bobl sy’n gwybod
-howManyPeopleKnow.error.required = Nodwch faint o bobl eraill sy''n gwybod am y gweithgaredd neu dewiswch "Nid wyf yn gwybod"
+howManyPeopleKnow.error.required = Nodwch sawl person sy’n gwybod am y gweithgaredd neu dewiswch “Nid wyf yn gwybod”
 howManyPeopleKnow.change.hidden = Faint o bobl sy’n gwybod
 
 supportingDocument.title = A oes gennych unrhyw wybodaeth ategol?
@@ -889,11 +530,12 @@ supportingDocument.hint = <p>Cyfeiriwch at wybodaeth sydd gennych ar hyn o bryd 
 supportingDocument.yes = Iawn
 supportingDocument.no = Na
 supportingDocument.checkYourAnswersLabel = Gwybodaeth ategol a roddwyd
-supportingDocument.error.required = (W) Select whether you have any supporting information you could provide if requested by HMRC. (W)
+supportingDocument.error.required = Dewiswch a oes gennych unrhyw wybodaeth ategol y gallech ei darparu pe bai CThEM yn gofyn amdani.
 supportingDocument.change.hidden = Gwybodaeth ategol a roddwyd
 
 individualAddress.lookup.title = Beth yw enw’r unigolyn?
 individualAddress.lookup.heading = Beth yw enw’r unigolyn?
+individualAddress.change.hidden = Cyfeiriad cartref
 
 provideContactDetails.title = A ydych am roi’ch manylion cyswllt?
 provideContactDetails.heading = A ydych am roi’ch manylion cyswllt?
@@ -901,44 +543,43 @@ provideContactDetails.hint = Bydd gwybodaeth bersonol yn cael ei chadw’n gyfri
 provideContactDetails.yes = Iawn, byddaf yn rhoi fy manylion cyswllt
 provideContactDetails.no = Na, rwyf am roi’r wybodaeth yn ddienw
 provideContactDetails.checkYourAnswersLabel = Manylion a roddwyd
-provideContactDetails.error.required = (W) Select yes if you will provide your contact details. (W)
+provideContactDetails.error.required = Dewiswch ‘Iawn’ os byddwch yn darparu’ch manylion cyswllt.
 provideContactDetails.change.hidden = Manylion a roddwyd
 
-yourContactDetails.title = Nodwch eich manylion cyswllt.
-yourContactDetails.heading = Nodwch eich manylion cyswllt.
+yourContactDetails.title = Nodwch eich manylion cyswllt
+yourContactDetails.heading = Nodwch eich manylion cyswllt
 yourContactDetails.firstName = Enw cyntaf
 yourContactDetails.lastName = Enw olaf
 yourContactDetails.tel = Rhif ffôn
 yourContactDetails.email = Cyfeiriad e-bost (dewisol)
-yourContactDetails.emailLabel = Cyfeiriad e-bost
-yourContactDetails.uniqueIdentifier = Dynodwr CThEM cofiadwy
 yourContactDetails.memorableWord = Creu’ch dynodydd unigryw CThEM (dewisol)
 yourContactDetails.memorableWord.hint = Os ydych am gadarnhau bod cyswllt o CThEM yn ddilys ac nid yn alwr sgam, gallwn roi’ch dynodydd unigryw CThEM i chi. Peidiwch â chynnwys gwybodaeth bersonol yn eich dynodydd unigryw CThEM.
 yourContactDetails.checkYourAnswersLabel = eich manylion cyswllt
 yourContactDetails.error.firstName.required = Nodwch eich enw cyntaf.
 yourContactDetails.error.lastName.required = Nodwch eich enw olaf.
-yourContactDetails.error.tel.required = Nodwch rif ffôn symudol.
-yourContactDetails.error.tel.invalid = Nodwch rif llinell dir, fel 01632 960 001, 07700 900 982 neu +44 808 157 0192..
-yourContactDetails.error.email.invalid = Nodwch gyfeiriad e-bost yn y fformat cywir, er enghraifft name@example.com
-yourContactDetails.error.firstName.length = Enw cynta fod yn 255 o gymeriadau neu lai.
-yourContactDetails.error.lastName.length = Enw olaf fod yn 255 o gymeriadau neu lai.
-yourContactDetails.error.email.length = Rhaid i gyfeiriadau e-bost fod yn 255 nod neu lai.
-yourContactDetails.error.memorableWord.length = Dynodwr CThEM cofiadwy fod yn 255 o gymeriadau neu lai.
-yourContactDetails.FirstName.change.hidden = Enw cynta
+yourContactDetails.error.tel.required = Nodwch eich rhif ffôn.
+yourContactDetails.error.tel.invalid = Nodwch rif ffôn, megis 01632 960 001, 07700 900 982 neu +44 808 157 0192.
+yourContactDetails.error.email.invalid = Nodwch eich cyfeiriad e-bost yn y fformat cywir, megis enw@enghraifft.com
+yourContactDetails.error.firstName.length = Mae’n rhaid i enwau cyntaf fod yn 255 o gymeriadau neu lai.
+yourContactDetails.error.lastName.length = Mae’n rhaid i enwau olaf fod yn 255 o gymeriadau neu lai.
+yourContactDetails.error.memorableWord.length = Mae’n rhaid i’r dynodydd CThEM cofiadwy fod yn 255 o gymeriadau neu lai.
+yourContactDetails.FirstName.change.hidden = Enw cyntaf
 yourContactDetails.LastName.change.hidden = Enw olaf
+yourContactDetails.uniqueIdentifier = Dynodwr CThEM cofiadwy
+yourContactDetails.emailLabel = Cyfeiriad e-bost
 
 businessAddress.lookup.title = Beth yw cyfeiriad y busnes?
 businessAddress.lookup.heading = Beth yw cyfeiriad y busnes?
 
 reportSubmitted.title = Mae''ch adroddiad wedi''i gyflwyno
 reportSubmitted.heading = Mae''ch adroddiad wedi''i gyflwyno
-reportSubmitted.whatHappensNext.header = Mae’ch adroddiad wedi’i gyflwyno
+reportSubmitted.whatHappensNext.header = Yr hyn sy’n digwydd nesaf
 reportSubmitted.p1 = Bydd CThEM:
 reportSubmitted.list.line1 = byddwn yn adolygu’r adroddiad a gyflwynwyd gennych
 reportSubmitted.list.line2 = oherwydd cyfrinachedd, ni ellir rhoi diweddariadau
 reportSubmitted.list.line3 = bydd yr wybodaeth a roddwyd gennych yn cael ei thrin fel gwybodaeth breifat a chyfrinachol
 reportSubmitted.list.line4 = bydd CThEM yn cysylltu â chi dim ond os bydd angen gwneud hynny
-reportSubmitted.feedback.text = Wrth roi adborth am ein gwasanaeth, peidiwch â nodi manylion amdanoch chi eich hun na'r gweithgaredd yr ydych wedi rhoi gwybod amdano.
+reportSubmitted.feedback.text = Wrth roi adborth am ein gwasanaeth, peidiwch â nodi manylion amdanoch chi eich hun na''r gweithgaredd yr ydych wedi rhoi gwybod amdano.
 reportSubmitted.feedback.url.text = Dywedwch wrthym beth yw eich barn am ein gwasanaeth.
 reportSubmitted.take.time =  (mae’n cymryd 30 eiliad)
 
@@ -946,35 +587,39 @@ documentationDescription.title = Disgrifiwch y wybodaeth ategol a allai fod genn
 documentationDescription.heading = Disgrifiwch y wybodaeth ategol a allai fod gennych
 documentationDescription.hint = Ni fydd CThEM yn gofyn i chi atodi unrhyw ddogfennau i’r adroddiad hwn.
 documentationDescription.checkYourAnswersLabel = Gwybodaeth ategol disgrifiad
-documentationDescription.error.required = (W) Enter a description of the supporting information you hold. (W)
-documentationDescription.error.length = (W) The description of the supporting information you hold must be 500 characters or fewer. (W)
+documentationDescription.error.required = Nodwch ddisgrifiad o’r wybodaeth ategol sydd gennych.
+documentationDescription.error.length = Mae’n rhaid i’r disgrifiad o’r wybodaeth ategol sydd gennych fod yn 500 o gymeriadau neu lai.
 documentationDescription.change.hidden = Gwybodaeth ategol disgrifiad
 
-checkYourAnswers.activityDetails = Y gweithgaredd rydych yn rhoi gwybod amdano
-checkYourAnswers.yourDetails = Eich manylion
-checkYourAnswers.businessDetails = Y busnes yr ydych yn rhoi gwybod amdano
-businessAddress.checkYourAnswersLabel = Cyfeiriad y busnes
-businessAddress.change.hidden = Cyfeiriad y busnes
-checkYourAnswers.individualDetails = Y Unigolyn yr ydych yn rhoi gwybod amdano
-individualCheckYourAnswers.title = Gwiriwch eich cyflwyniad
-individualCheckYourAnswers.heading = Gwiriwch eich cyflwyniad
-individualCheckYourAnswers.individualDetails = Gwybodaeth am {0}
-individualCheckYourAnswers.individualBusinessDetails = Gwybodaeth am fusnes yr unigolyn hwn
+activitySourceOfInformation.title = (W) How do you know this information? (W)
+activitySourceOfInformation.heading = (W) How do you know this information? (W)
+activitySourceOfInformation.hint = (W) Select the closest description. (W)
+activitySourceOfInformation.reportedIndividuals = (W) Connection to the reported individual(s) (W)
+activitySourceOfInformation.informationInLocalArea = (W) Information known in the local area (W)
+activitySourceOfInformation.observedTheActivity = (W) Observed the activity (W)
+activitySourceOfInformation.overheardTheActivity = (W) Overheard about the activity (W)
+activitySourceOfInformation.speculatedThisActivity = (W) Speculated this activity may be happening (W)
+activitySourceOfInformation.reportedByIndividual = (W) Told by reported individual(s) (W)
+activitySourceOfInformation.byThirdPart = (W) Told by third party (W)
+activitySourceOfInformation.other = (W) Other (W)
+activitySourceOfInformation.otherValue = (W) Enter how you know the information (W)
+activitySourceOfInformation.checkYourAnswersLabel = (W) How do you know this information? (W)
+activitySourceOfInformation.error.required = (W) Enter how you know the information (W)
+activitySourceOfInformation.error.otherValue.required = (W) Select or enter how you know the information. (W)
+activitySourceOfInformation.error.otherValue.maxLength = (W) How you know the information must be 100 characters or fewer. (W)
+activitySourceOfInformation.change.hidden = (W) ActivitySourceOfInformation (W)
 
-submitYourReport.title = Cyflwyno’ch adroddiad
-submitYourReport.heading = Cyflwyno’ch adroddiad
-submitYourReport.p1 = Mae CThEM yn gwerthfawrogi’r amser a dreuliwyd gennych yn rhoi gwybod am y gweithgaredd hwn.
-submitYourReport.p2 = Er mwyn cadw’ch gwybodaeth yn gyfrinachol,ni allwn:
-submitYourReport.list1 = anfon e-bost cadarnhau atoch
-submitYourReport.list2 = roi’r wybodaeth ddiweddaraf i chi am y gweithgaredd a nodwyd
-submitYourReport.p3 = I gadw’n ddiogel ar ôl cyflwyno’ch adroddiad, peidiwch â:
-submitYourReport.list3 = chael gwybod mwy am y gweithgaredd
-submitYourReport.list4 = gwneud adroddiadau pellach ar yr un gweithgaredd
-submitYourReport.submit = Cyflwyno’ch adroddiad
+technicalProblems.title = (W) Get help with technical problems (W)
+technicalProblems.heading = (W) Get help with technical problems (W)
+technicalProblems.uk.phone = (W) Telephone in UK: 0800 788 887 (W)
+technicalProblems.outside.phone = (W) Telephone outside UK:+44 (0)203 080 0871 (W)
+technicalProblems.weekdays.time = (W) Monday to Friday: 9am to 5pm (W)
+technicalProblems.weekend = (W) Closed weekends and bank holidays (W)
+technicalProblems.link.text = (W) Is this page not working properly? (opens in new tab) (W)
 
 activitySourceOfInformation.title = Sut cawsoch yr wybodaeth hon?
 activitySourceOfInformation.heading = Sut cawsoch yr wybodaeth hon?
-activitySourceOfInformation.hint = Dewiswch y disgrifiad gorau
+activitySourceOfInformation.hint = Dewiswch y disgrifiad gorau.
 activitySourceOfInformation.reportedIndividuals = Cefais wybod gan y person dan sylw
 activitySourceOfInformation.informationInLocalArea = Mae’r wybodaeth yn hysbys yn yr ardal leol
 activitySourceOfInformation.observedTheActivity = Sylwais ar yr wybodaeth
@@ -985,9 +630,9 @@ activitySourceOfInformation.byThirdPart = Cefais wybod gan drydydd parti
 activitySourceOfInformation.other = Arall
 activitySourceOfInformation.otherValue = Nodwch sut rydych yn gwybod am y wybodaeth
 activitySourceOfInformation.checkYourAnswersLabel = Sut cawsoch yr wybodaeth hon
-activitySourceOfInformation.error.required = Nodwch sut rydych yn gwybod am y wybodaeth.
-activitySourceOfInformation.error.otherValue.required = Nodwch sut rydych yn gwybod am y wybodaeth
-activitySourceOfInformation.error.otherValue.maxLength = Nodwch sut rydych chi''n gwybod bod yn rhaid i''r wybodaeth fod yn 100 nod neu lai.
+activitySourceOfInformation.error.required = Dewiswch neu nodwch yr wybodaeth sydd gennych am y busnes.
+activitySourceOfInformation.error.otherValue.required = Dewiswch neu nodwch yr wybodaeth sydd gennych am y busnes.
+activitySourceOfInformation.error.otherValue.maxLength = Mae’n rhaid i’ch esboniad ynghylch sut rydych yn gwybod am y wybodaeth fod yn 100 o gymeriadau neu lai.
 activitySourceOfInformation.change.hidden = Sut cawsoch yr wybodaeth hon
 
 technicalProblems.title = Cael help gyda phroblem dechnegol
@@ -1000,3 +645,5 @@ technicalProblems.link.text = Onid yw''r dudalen hon yn gweithio''n iawn? (yn ag
 
 serviceTimeout.title =  Er eich diogelwch, rydym wedi dileu eich atebion
 serviceTimeout.heading =  Er eich diogelwch, rydym wedi dileu eich atebion
+
+betaBanner.service.text = Gwasanaeth newydd yw hwn

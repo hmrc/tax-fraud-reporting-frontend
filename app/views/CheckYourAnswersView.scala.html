@@ -41,7 +41,7 @@
             @listWithAction(ListWithActions(
                 items = (0 until numberOfNominals).map { id =>
                     ListWithActionsItem(name = messages(s"individual.${id + 1}"), actions = List(
-                        ListWithActionsAction(content = messages("site.change"), href = routes.IndividualCheckYourAnswersController.onPageLoad(Index(id), CheckMode).url)
+                        ListWithActionsAction(content = HtmlContent(messages("individual.change",messages(s"individual.${id + 1}"))), href = routes.IndividualCheckYourAnswersController.onPageLoad(Index(id), CheckMode).url)
                     ))
                 }
             ))

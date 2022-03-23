@@ -29,9 +29,12 @@
 
 @contentHeader = {
         @if(!isBusinessJourney) {
-        <span class="govuk-caption-xl">@messages(s"individual.${index.display}")</span>
+        <span class="govuk-caption-xl">
+            <span class="govuk-visually-hidden">@messages("individual.caption.text.screen.reader")</span>
+            @messages(s"individual.${index.display}")
+        </span>
         }
-        <h1 class="govuk-fieldset__legend--xl govuk-!-margin-top-0">@messages("typeBusiness.heading")</h1>
+        @messages("typeBusiness.heading")
 }
 
 @layout(pageTitle = title(form, messages("typeBusiness.title"))) {
@@ -45,7 +48,7 @@
     @govukInput(
         InputViewModel(
             field = form("value"),
-            label = LabelViewModel(HtmlContent(contentHeader)),
+            label = LabelViewModel(HtmlContent(contentHeader)).asPageHeading(LabelSize.ExtraLarge)
         )
         .withWidth(Full)
         .withHint(HintViewModel(messages("typeBusiness.hint")))
