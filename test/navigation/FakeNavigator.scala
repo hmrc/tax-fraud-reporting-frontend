@@ -21,7 +21,8 @@ import pages._
 import models.{Mode, UserAnswers}
 import services.ActivityTypeService
 
-class FakeNavigator(desiredRoute: Call, activityTypeService: ActivityTypeService) extends Navigator(activityTypeService) {
+class FakeNavigator(desiredRoute: Call, activityTypeService: ActivityTypeService)
+    extends Navigator(activityTypeService) {
 
   override def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call =
     desiredRoute

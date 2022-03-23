@@ -85,8 +85,8 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index, CheckMode)
     case BusinessAddressConfirmationPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.Address, CheckMode)
-    case p: IndexedConfirmationPage    => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
-    case _ => _ => routes.CheckYourAnswersController.onPageLoad
+    case p: IndexedConfirmationPage => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
+    case _                          => _ => routes.CheckYourAnswersController.onPageLoad
   }
 
   private def individualInformationRoute(answer: IndividualInformation, index: Index, mode: Mode): Call =

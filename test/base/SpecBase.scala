@@ -31,7 +31,8 @@ import play.api.mvc.Call
 import play.api.test.FakeRequest
 
 trait SpecBase
-    extends AnyFreeSpec with Matchers with TryValues with OptionValues with ScalaFutures with IntegrationPatience  with MockActivityTypes {
+    extends AnyFreeSpec with Matchers with TryValues with OptionValues with ScalaFutures with IntegrationPatience
+    with MockActivityTypes {
 
   val userAnswersId: String = "id"
 

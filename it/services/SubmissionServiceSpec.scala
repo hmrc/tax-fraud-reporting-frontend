@@ -36,11 +36,13 @@ class SubmissionServiceSpec extends AnyFreeSpec with Matchers with WireMockHelpe
   lazy val messages: Messages = application.injector.instanceOf[MessagesApi].preferred(List(Lang("en")))
   lazy val service: SubmissionService = application.injector.instanceOf[SubmissionService]
 
+  private val mockActivityTypeNameKey = "furlough"
+
   "submit" - {
     val validAnswer: BigDecimal = 100.99
 
     lazy val individualAnswers: UserAnswers = UserAnswers("id")
-      .set(ActivityTypePage, ActivityType.list.head).success.value
+      .set(ActivityTypePage, mockActivityTypeNameKey).success.value
       .set(IndividualOrBusinessPage, IndividualOrBusiness.Individual).success.value
       .set(IndividualNamePage(Index(0)), IndividualName(
         firstName = Some("forename"),
@@ -86,7 +88,7 @@ class SubmissionServiceSpec extends AnyFreeSpec with Matchers with WireMockHelpe
       .set(DocumentationDescriptionPage, "evidence details").success.value
 
     lazy val businessAnswers: UserAnswers = UserAnswers("id")
-      .set(ActivityTypePage, ActivityType.list.head).success.value
+      .set(ActivityTypePage, mockActivityTypeNameKey).success.value
       .set(IndividualOrBusinessPage, IndividualOrBusiness.Business).success.value
       .set(BusinessNamePage(Index(0)), "business name").success.value
       .set(TypeBusinessPage(Index(0)), "business type").success.value

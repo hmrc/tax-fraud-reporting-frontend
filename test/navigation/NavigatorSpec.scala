@@ -1327,7 +1327,8 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         def assertNavigationToIndividualCheckAnswersPage(currentPage: IndexedConfirmationPage) = {
           val index = currentPage.index
           forAll(individualInformationGen) { individualInformationAnswer =>
-            val userAnswers = UserAnswers("id").set(IndividualInformationPage(index), individualInformationAnswer).success.value
+            val userAnswers =
+              UserAnswers("id").set(IndividualInformationPage(index), individualInformationAnswer).success.value
             navigator.nextPage(
               currentPage,
               CheckMode,

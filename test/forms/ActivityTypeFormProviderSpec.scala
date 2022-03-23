@@ -31,8 +31,8 @@ class ActivityTypeFormProviderSpec extends StringFieldBehaviours with MockActivi
 
     val fieldName = "value"
 
-      val result = form.bind(emptyForm).apply(fieldName)
-      result.errors mustEqual Seq(FormError(fieldName, requiredKey))
+    val result = form.bind(emptyForm).apply(fieldName)
+    result.errors mustEqual Seq(FormError(fieldName, requiredKey))
 
   }
 }

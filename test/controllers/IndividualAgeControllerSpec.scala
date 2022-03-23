@@ -37,8 +37,8 @@ class IndividualAgeControllerSpec extends SpecBase {
 
     val form = (new IndividualAgeFormProvider)()
 
-    def onwardRoute = Call("GET", "/foo")
-    val validAnswer = 0
+    def onwardRoute             = Call("GET", "/foo")
+    val validAnswer             = 0
     lazy val individualAgeRoute = routes.IndividualAgeController.onPageLoad(Index(0), NormalMode).url
 
     "must return OK and the correct view for a GET" in {

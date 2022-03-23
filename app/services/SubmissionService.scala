@@ -40,7 +40,7 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
 
   private val baseUrl: String                  = configuration.get[Service]("microservice.services.tax-fraud-reporting").baseUrl
   private val dateFormatter: DateTimeFormatter = DateTimeFormatter.ISO_DATE
-  private implicit val messages: Messages               = messagesApi.preferred(List(Lang("en")))
+  private implicit val messages: Messages      = messagesApi.preferred(List(Lang("en")))
 
   def submit(answers: UserAnswers)(implicit hc: HeaderCarrier): Future[Unit] = {
 
