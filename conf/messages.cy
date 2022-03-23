@@ -64,53 +64,230 @@ activityType.checkYourAnswersLabel = Math o weithgaredd
 activityType.error.required = Nodwch y math o weithgaredd.
 activityType.change.hidden = Math o weithgaredd
 
-activityType.name.furlough = Twyll yn ymwneud â ffyrlo
-activityType.name.defrauding-self-employment = Twyllo’r Cynllun Cymhorthdal Incwm Hunangyflogaeth
-activityType.name.defrauding-sick-pay = Twyllo Tâl Salwch Statudol (SSP) neu’r Cynllun Ad-dalu Tâl Salwch Statudol
-activityType.name.defrauding-eat-out = Twyllo’r Cynllun Bwyta Allan i Helpu Allan
-activityType.name.incorrect-emp-status = Statws cyflogaeth anghywir
-activityType.name.avoiding-tax = Osgoi treth
-activityType.name.fraud-related-tax = Twyll yn ymwneud â TAW
-activityType.name.defrauding-c-i-scheme = Twyllo’r Cynllun Diwydiant Adeiladu
-activityType.name.fraud-related-private-sec-industry = Twyll yn ymwneud â’r diwydiant diogelwch preifat
-activityType.name.fraud-related-income-tax = Twyll yn ymwneud â Threth Incwm Hunanasesiad
-activityType.name.breaking-off-payroll-IR35 = Torri rheolau gweithio oddi ar y gyflogres (IR35)
-activityType.name.not-registered-self-emp = Heb gofrestru fel person hunangyflogedig
-activityType.name.suspicious-cash-dep = Adneuon arian parod amheus
-activityType.name.suspicious-transport = Cludo arian parod amheus
-activityType.name.money-funding-criminal-org = Ariannu sefydliadau troseddol
-activityType.name.not-paying-betting-duty = Peidio â thalu toll betio
-activityType.name.illegal-flow-money = Llif arian anghyfreithlon
-activityType.name.money-laundering = Gwyngalchu arian
-activityType.name.not-paying-capital-gains-tax = Peidio â thalu Treth Enillion Cyfalaf
-activityType.name.offshore-bank-accounts = Cyfrifon banc alltraeth
-activityType.name.more-than-two-million-assets-not-paying-tax = Pobl â mwy na £2 filiwn o asedau sydd ddim yn talu treth
-activityType.name.not-paying-inheritance-tax = Peidio â thalu Treth Etifeddiant
-activityType.name.fraud-related-charities = Twyll yn ymwneud ag elusennau
-activityType.name.not-paying-duty-on-alcohol = Peidio â thalu toll ar alcohol
-activityType.name.not-paying-duty-on-tobacco = Peidio â thalu toll ar dybaco
-activityType.name.illegal-use-of-red-diesel = Defnydd anghyfreithlon o ddiesel coch
-activityType.name.not-paying-sugar-ax = Peidio â thalu treth siwgr
-activityType.name.false-tax-credit-claims = Hawliadau Credyd Treth ffug
-activityType.name.false-child-benfit-claims = Hawliadau Budd-dal Plant ffug
-activityType.name.fraud-related-to-brexit = Twyll yn ymwneud â Brexit
-activityType.name.fraud-related-to-import-and-export = Twyll yn ymwneud â mewnforio ac allforio
-activityType.name.false-vat-refund-claims = Hawliadau Ad-daliadau TAW ffug
-activityType.name.not-paying-tax-when-winding-up-company = Peidio â thalu treth wrth ddirwyn cwmni i ben
-activityType.name.importing-goods = Mewnforio nwyddau sy’n rhydd o TAW ac yna codi TAW ar gwsmeriaid
-activityType.name.suspicious-hmrc-emails-text-messages-phone = Negeseuon e-bost, negeseuon testun a galwadau ffôn amheus gan CThEM
-activityType.name.not-being-paid-minimum-wage = Peidio â chael isafswm cyflog
-activityType.name.landfill-waste-tax = Twyll Treth Tirlenwi/Gwastraff
-activityType.name.fraud-related-plastic-package-tax = Twyll yn ymwneud â Threth Pecynnu Plastig
+# Any non-HMRC activities here are associated with their corresponding department
+# in the activityTypes.conf file.
+activityType.name.drugs                        = Gweithgaredd sy’n gysylltiedig â chyffuriau
+activityType.name.avoidingTax                  = Osgoi treth
+activityType.name.mostBenefits                 = Twyll budd-daliadau (heb gynnwys budd-dal plant neu gredydau treth)
+activityType.name.borderCrime                  = Troseddau wrth y ffin
+activityType.name.offPayrollWorking            = Torri rheolau gweithio oddi ar y gyflogres (IR35)
+activityType.name.statutorySickPay             = Twyllo Tâl Salwch Statudol (SSP) neu’r Cynllun Ad-dalu Tâl Salwch Statudol
+activityType.name.constructionIndustryScheme   = Twyllo’r Cynllun Diwydiant Adeiladu
+activityType.name.eatOutToHelpOut              = Twyllo’r Cynllun Bwyta Allan i Helpu Allan.
+activityType.name.incomeSupport                = Twyllo’r Cynllun Cymhorthdal Incwm Hunangyflogaeth
+activityType.name.childBenefits                = Hawliadau Budd-dal Plant ffug
+activityType.name.taxCredit                    = Hawliadau Credyd Treth ffug
+activityType.name.vatRefund                    = Hawliadau Ad-daliadau TAW ffug
+activityType.name.brexit                       = Twyll yn ymwneud â Brexit
+activityType.name.charities                    = Twyll yn ymwneud ag elusennau
+activityType.name.furlough                     = Twyll yn ymwneud â ffyrlo
+activityType.name.importExport                 = Twyll yn ymwneud â mewnforio ac allforio
+activityType.name.selfAssessment               = Twyll yn ymwneud â Threth Incwm Hunanasesiad
+activityType.name.privateSecurity              = Twyll yn ymwneud â’r diwydiant diogelwch preifat
+activityType.name.vatRelated                   = Twyll yn ymwneud â TAW
+activityType.name.humanTrafficking             = Masnachu pobl
+activityType.name.illegalFlowOfMoney           = Llif arian anghyfreithlon
+activityType.name.immigration                  = Mewnfudiad anghyfreithlon
+activityType.name.redDiesel                    = Defnydd anghyfreithlon o ddiesel coch
+activityType.name.vatFreeImports               = Mewnforio nwyddau sy’n rhydd o TAW ac yna codi TAW ar gwsmeriaid
+activityType.name.employmentStatus             = Statws cyflogaeth anghywir
+activityType.name.landfillAndWaste             = Twyll Treth Tirlenwi/Gwastraff
+activityType.name.organisedCrime               = Ariannu sefydliadau troseddol
+activityType.name.laundering                   = Gwyngalchu arian
+activityType.name.minimumWage                  = Peidio â chael isafswm cyflog
+activityType.name.betting                      = Peidio â thalu toll betio
+activityType.name.capitalGains                 = Peidio â thalu Treth Enillion Cyfalaf
+activityType.name.alcohol                      = Peidio â thalu toll ar alcohol
+activityType.name.tobacco                      = Peidio â thalu toll ar dybaco
+activityType.name.inheritance                  = Peidio â thalu Treth Etifeddiant
+activityType.name.sugar                        = Peidio â thalu treth siwgr
+activityType.name.windingUpACompany            = Peidio â thalu treth wrth ddirwyn cwmni i ben
+activityType.name.selfEmployment               = Heb gofrestru fel person hunangyflogedig
+activityType.name.offShoreAccounts             = Cyfrifon banc alltraeth
+activityType.name.assets                       = Pobl â mwy na £2 filiwn o asedau sydd ddim yn talu treth
+activityType.name.smuggling                    = Smyglo
+activityType.name.cashDeposits                 = Adneuon arian parod amheus
+activityType.name.hmrcImpostor                 = Negeseuon e-bost, negeseuon testun a galwadau ffôn amheus gan CThEM
+activityType.name.cashTransport                = Cludo arian parod amheus
+activityType.name.universalCredit              = Twyll credyd cynhwysol
+activityType.name.plasticPackaging             = Twyll yn ymwneud â Threth Pecynnu Plastig
 
-# TODO why aren't these prefixed with activityType.name?
-activity-related-drugs = Gweithgaredd sy’n gysylltiedig â chyffuriau
-smuggling = Smyglo
-benefit-fraud = Twyll budd-daliadau (heb gynnwys budd-dal plant neu gredydau treth)
-universal-credit-fraud = Twyll credyd cynhwysol
-human-trafficking = Masnachu pobl
-illegal-immigration = Mewnfudiad anghyfreithlon
-border-crime = Troseddau wrth y ffin
+# Synonyms are associated with their corresponding activity names
+# in the activityTypes.conf file.
+
+# minimumWage
+activityType.synonym.underpayment      = Tandaliad
+activityType.synonym.underpaid         = Tandalu
+activityType.synonym.workRights        = Hawliau gwaith
+activityType.synonym.employmentAgency  = Asiantaeth gyflogi
+activityType.synonym.workingTimeLimits = Terfynau amser gweithio
+activityType.synonym.earnings          = Enillion
+activityType.synonym.salary            = Cyflog
+activityType.synonym.exploitation      = Cymryd mantais
+activityType.synonym.swindle           = Twyllo
+activityType.synonym.corrupt           = Llygredig
+activityType.synonym.boss              = rheolwr
+activityType.synonym.national          = Cenedlaethol
+activityType.synonym.slave             = Caethwas
+activityType.synonym.labour            = Llafur
+activityType.synonym.paid              = Talwyd
+activityType.synonym.nmw               = Isafswm Cyflog Cenedlaethol (NMW)
+
+# capitalGains
+activityType.synonym.profit    = Elw
+activityType.synonym.houseSale = Gwerthu Tŷ
+activityType.synonym.property  = Eiddo
+activityType.synonym.home      = Cartref
+activityType.synonym.sold      = Wedi’i werthu
+activityType.synonym.estate    = Ystâd
+activityType.synonym.auction   = Ocsiwn
+activityType.synonym.value     = Gwerth
+
+# alcohol
+activityType.synonym.exciseDuty     = Toll ecséis
+activityType.synonym.commodityFraud = Twyll nwyddau
+activityType.synonym.booze          = Diod gadarn
+activityType.synonym.spirit         = Gwirodydd
+activityType.synonym.liquor         = Gwirodydd
+activityType.synonym.beer           = Cwrw
+activityType.synonym.wine           = Gwin
+activityType.synonym.offie          = Siop ddiodydd
+activityType.synonym.offLicence     = Siop drwyddedig
+activityType.synonym.cornerShop     = Siop Gornel
+activityType.synonym.cider          = Seidr
+activityType.synonym.vodka          = Fodca
+activityType.synonym.underCounter   = Dan y Cownter
+activityType.synonym.distill        = Distyllu
+activityType.synonym.fake           = Ffug
+activityType.title = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
+activityType.heading = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
+activityType.hint = Nodwch eiriau allweddol sy’n gysylltiedig â’r gweithgaredd i awgrymu categorïau perthnasol neu dewiswch weithgaredd o'r rhestr.
+activityType.checkYourAnswersLabel = Math o weithgaredd
+activityType.error.required = Nodwch y math o weithgaredd.
+activityType.change.hidden = Math o weithgaredd
+
+# tobacco
+activityType.synonym.cigarettes = Sigaréts
+activityType.synonym.cigars     = Sigârs
+activityType.synonym.baccy      = Tybaco
+activityType.synonym.cigs       = Sigaréts
+activityType.synonym.ciggy      = Sigarét
+activityType.synonym.tabs       = Tabiau
+activityType.synonym.sleeve     = Llewys
+activityType.synonym.rolling    = Rolio
+activityType.synonym.smoke      = Ysmygu
+activityType.synonym.fag        = Sigarét
+activityType.synonym.fake       = Ffug
+activityType.synonym.counter    = Cownter
+activityType.synonym.loose      = Rhydd
+activityType.synonym.pouch      = Cod
+
+# inheritance
+activityType.synonym.dead   = Wedi marw
+activityType.synonym.death  = Marwolaeth
+activityType.synonym.will   = Ewyllys
+activityType.synonym.family = Teulu
+
+# sugar
+activityType.synonym.sdil_long     = Ardoll y Diwydiant Diodydd Ysgafn
+activityType.synonym.sdil          = SDIL
+activityType.synonym.softDrinks    = Diodydd ysgafn
+activityType.synonym.fizz          = Fizz
+activityType.synonym.carbonated    = Carbonedig
+activityType.synonym.cola          = Cola
+activityType.synonym.sweet         = Melys
+activityType.synonym.drink         = Diod
+activityType.synonym.chocolate     = Siocled
+activityType.synonym.confectionery = Melysion
+
+# windingUpACompany
+activityType.synonym.phoenixism = Adfywio
+activityType.synonym.close      = Cau
+activityType.synonym.fold       = Plygu
+activityType.synonym.closure    = Cau
+activityType.synonym.shutdown   = Cau lawr
+activityType.synonym.open       = Agored
+activityType.synonym.redundant  = Diswyddo
+
+# selfEmployment
+activityType.synonym.unregisteredTrader = Masnachwr heb ei gofrestru
+activityType.synonym.cashInHand         = Arian mewn llaw
+activityType.synonym.business           = Busnes
+activityType.synonym.trading            = Masnachu
+activityType.synonym.self               = Hunan
+activityType.synonym.oddJob             = Mân swyddi
+
+# offShoreAccounts
+activityType.synonym.undeclaredOffshoreIncome = Peidio â datgan incwm alltraeth
+activityType.synonym.dubai                    = Dubai
+activityType.synonym.bvi                      = BVI
+activityType.synonym.panama                   = Panamá
+activityType.synonym.britishVirginIslands     = Ynysoedd y Wyryf (Prydeinig)
+activityType.synonym.swiss                    = Y Swistir
+activityType.synonym.jersey                   = Jersey
+activityType.synonym.divert                   = Dargyfeirio
+
+# assets
+activityType.synonym.wealthyIndividuals = Unigolion cyfoethog
+activityType.synonym.famous             = Enwog
+activityType.synonym.wellKnown          = Adnabyddus
+activityType.synonym.rich               = Cyfoethog
+activityType.synonym.professional       = Proffesiynol
+activityType.synonym.media              = Cyfryngau
+activityType.synonym.wellOff            = Cyfoethog
+activityType.synonym.minted             = Cyfoethog
+activityType.synonym.sports             = Chwaraeon
+activityType.synonym.football           =  Pêl-droed
+activityType.synonym.tv                 = Teledu
+activityType.synonym.celebrity          = Person enwog
+activityType.synonym.politic            = Gwleidyddiaeth
+activityType.synonym.presenter          = Cyflwynydd
+activityType.synonym.act                = Actio
+activityType.synonym.million            = Miliwn
+
+# smuggling
+activityType.synonym.smuggle = Smyglo
+
+# cashDeposits
+activityType.synonym.largeCashDeposits   = Adneuon arian parod mawr
+activityType.synonym.cashDepositIncrease = Cynnydd mawr mewn adneuon arian parod
+activityType.synonym.finance             = Cyllid
+activityType.synonym.account             = Cyfrif
+activityType.synonym.pay                 = Talu
+activityType.synonym.band                = Band
+
+# hmrcImpostor
+activityType.synonym.phishing   = Gwe-rwydo
+activityType.synonym.scam       = Sgam
+activityType.synonym.cyber      = Seiber
+activityType.synonym.whatsApp   = WhatsApp
+activityType.synonym.unknown    = Anhysbys
+activityType.synonym.telecomms  = Telathrebu
+activityType.synonym.callCentre = Canolfan alwadau
+activityType.synonym.con        = Twyl
+
+# cashTransport
+activityType.synonym.bank     = Banc
+activityType.synonym.deposit  = Adnau
+
+# universalCredit
+# All synonyms covered earlier.
+
+# plasticPackaging
+activityType.synonym.plastic       = plastig
+activityType.synonym.packing       = pacio
+activityType.synonym.packaging     = pecynnu
+activityType.synonym.wrapping      = lapio
+activityType.synonym.manufacture   = gweithgynhyrchu
+activityType.synonym.import        = mewnforio
+activityType.synonym.supply        = cyflenwad
+activityType.synonym.tax           = treth
+activityType.synonym.storage       = storio
+activityType.synonym.product       = cynnyrch
+activityType.synonym.bag           = bag
+activityType.synonym.biodegradable = bioddiraddadwy
+activityType.synonym.bio           = bio
+activityType.synonym.compostable   = compostadwy
 
 individualOrBusiness.title = A ydych yn rhoi gwybod am unigolyn neu fusnes?
 individualOrBusiness.heading = A ydych yn rhoi gwybod am unigolyn neu fusnes?

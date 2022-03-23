@@ -20,7 +20,6 @@ import base.SpecBase
 import models.{AddressLookupLabels, CheckMode, Index, LookupPageLabels, NormalMode}
 import org.mockito.ArgumentMatchers.{eq => eqTo, _}
 import org.mockito.Mockito._
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -28,7 +27,7 @@ import services.AddressLookupService
 
 import scala.concurrent.Future
 
-class IndividualAddressRedirectControllerSpec extends SpecBase with MockitoSugar {
+class IndividualAddressRedirectControllerSpec extends SpecBase {
 
   val mockAddressLookupService = mock[AddressLookupService]
 

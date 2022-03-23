@@ -40,7 +40,7 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
 
   private val baseUrl: String                  = configuration.get[Service]("microservice.services.tax-fraud-reporting").baseUrl
   private val dateFormatter: DateTimeFormatter = DateTimeFormatter.ISO_DATE
-  private val messages: Messages               = messagesApi.preferred(List(Lang("en")))
+  private implicit val messages: Messages               = messagesApi.preferred(List(Lang("en")))
 
   def submit(answers: UserAnswers)(implicit hc: HeaderCarrier): Future[Unit] = {
 
@@ -50,9 +50,9 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
       getAnswer(answers, HowManyPeopleKnowPage),
       getNominals(answers).toRight(NonEmptyChain.one("nominals")),
       getAnswer(answers, ActivitySourceOfInformationPage)
-    ).parMapN { (activityType, valueFraud, howManyKnow, nominals, informationSource) =>
+    ).parMapN { (activityTypeNameKey, valueFraud, howManyKnow, nominals, informationSource) =>
       FraudReportBody(
-        activityType = messages(activityType.activityName),
+        activityType = ActivityType translate activityTypeNameKey,
         nominals = nominals,
         valueFraud = Some(valueFraud),
         durationFraud = getFraudDuration(answers),
@@ -179,5 +179,12 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
       case ActivitySourceOfInformation.Other(value) => value
       case _                                        => messages(s"activitySourceOfInformation.$answer")
     }
+
+}
+
+object SubmissionService {
+
+  def getErrorMessage(errors: Seq[String]) =
+    s"Failed to create fraud report from user answers, failing pages: ${errors mkString ", "}"
 
 }

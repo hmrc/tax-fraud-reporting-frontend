@@ -17,30 +17,31 @@
 package controllers
 
 import controllers.actions._
-import models.ActivityType
 import pages.ActivityTypePage
-
-import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import services.ActivityTypeService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.DoNotUseThisServiceView
 
+import javax.inject.Inject
+
 class DoNotUseThisServiceController @Inject() (
-  override val messagesApi: MessagesApi,
-  identify: IdentifierAction,
-  getData: DataRetrievalAction,
-  requireData: DataRequiredAction,
-  val controllerComponents: MessagesControllerComponents,
-  view: DoNotUseThisServiceView
-) extends FrontendBaseController with I18nSupport {
+                                                override val messagesApi: MessagesApi,
+                                                identify: IdentifierAction,
+                                                getData: DataRetrievalAction,
+                                                requireData: DataRequiredAction,
+                                                val controllerComponents: MessagesControllerComponents,
+                                                view: DoNotUseThisServiceView,
+                                                activityTypeService: ActivityTypeService
+                                              ) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      (for {
-        activity   <- request.userAnswers.get(ActivityTypePage)
-        department <- ActivityType.otherDepartments.get(activity.activityName)
-      } yield Ok(view(department))).getOrElse(Redirect(routes.JourneyRecoveryController.onPageLoad()))
+      request.userAnswers get ActivityTypePage flatMap activityTypeService.getDepartmentFor match {
+        case Some(department) => Ok(view(department))
+        case None             => Redirect(routes.JourneyRecoveryController.onPageLoad())
+      }
   }
 
 }

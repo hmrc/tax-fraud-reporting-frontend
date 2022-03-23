@@ -18,20 +18,25 @@ package navigation
 
 import base.SpecBase
 import controllers.routes
-import pages._
 import models._
 import org.scalacheck.Gen
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
+import pages._
+import services.ActivityTypeService
+
+import scala.language.postfixOps
 
 class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
-
-  val navigator                = new Navigator
-  val individualInformationGen = Gen.containerOf[Set, IndividualInformation](Gen.oneOf(IndividualInformation.values))
-
-  val businessInformationCheckGen: Gen[Set[BusinessInformationCheck]] =
-    Gen.containerOf[Set, BusinessInformationCheck](Gen.oneOf(BusinessInformationCheck.values))
-
   "Navigator" - {
+    val app = applicationBuilder().build()
+
+    val activityTypeService = app.injector.instanceOf[ActivityTypeService]
+    val navigator           = new Navigator(activityTypeService)
+
+    val individualInformationGen = Gen.containerOf[Set, IndividualInformation](Gen.oneOf(IndividualInformation.values))
+
+    val businessInformationCheckGen: Gen[Set[BusinessInformationCheck]] =
+      Gen.containerOf[Set, BusinessInformationCheck](Gen.oneOf(BusinessInformationCheck.values))
 
     "in Normal mode" - {
 
@@ -44,28 +49,26 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
       "must go from activity type page" - {
 
         "to the individual or business page when the user chooses an activity which HMRC is responsible for investigating" in {
-          ActivityType.list.filterNot(
-            activity => ActivityType.otherDepartments.isDefinedAt(activity.activityName)
-          ).foreach { activity =>
-            val result = navigator.nextPage(
-              ActivityTypePage,
-              NormalMode,
-              UserAnswers("id").set(ActivityTypePage, activity).success.value
-            )
-            result mustBe routes.IndividualOrBusinessController.onPageLoad(NormalMode)
+          activityTypeService.allActivities collect {
+            case activity if activityTypeService getDepartmentFor activity._1 isEmpty =>
+              val result = navigator.nextPage(
+                ActivityTypePage,
+                NormalMode,
+                UserAnswers("id").set(ActivityTypePage, activity._1).success.value
+              )
+              result mustBe routes.IndividualOrBusinessController.onPageLoad(NormalMode)
           }
         }
 
         "to the do not use this service page when the user chooses an activity which HMRC is not responsible for investigating" in {
-          ActivityType.list.filter(
-            activity => ActivityType.otherDepartments.isDefinedAt(activity.activityName)
-          ).foreach { activity =>
-            val result = navigator.nextPage(
-              ActivityTypePage,
-              NormalMode,
-              UserAnswers("id").set(ActivityTypePage, activity).success.value
-            )
-            result mustBe routes.DoNotUseThisServiceController.onPageLoad()
+          activityTypeService.allActivities collect {
+            case activity if activityTypeService getDepartmentFor activity._1 nonEmpty =>
+              val result = navigator.nextPage(
+                ActivityTypePage,
+                NormalMode,
+                UserAnswers("id").set(ActivityTypePage, activity._1).success.value
+              )
+              result mustBe routes.DoNotUseThisServiceController.onPageLoad()
           }
         }
 

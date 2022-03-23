@@ -19,10 +19,8 @@ package controllers
 import base.SpecBase
 import forms.BusinessInformationCheckFormProvider
 import models.{BusinessInformationCheck, Index, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import pages.BusinessInformationCheckPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -33,7 +31,7 @@ import views.html.BusinessInformationCheckView
 
 import scala.concurrent.Future
 
-class BusinessInformationCheckControllerSpec extends SpecBase with MockitoSugar {
+class BusinessInformationCheckControllerSpec extends SpecBase {
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -103,7 +101,7 @@ class BusinessInformationCheckControllerSpec extends SpecBase with MockitoSugar 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()

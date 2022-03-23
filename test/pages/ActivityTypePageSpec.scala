@@ -16,17 +16,27 @@
 
 package pages
 
+import base.MockActivityTypes
 import models.ActivityType
+import org.scalacheck.{Arbitrary, Gen}
 import pages.behaviours.PageBehaviours
+import play.api.libs.json.{Format, JsString}
+import services.ActivityTypeService
 
-class ActivityTypePageSpec extends PageBehaviours {
+class ActivityTypePageSpec extends PageBehaviours with MockActivityTypes {
+
+  private implicit def arbActivityType(implicit activityTypeService: ActivityTypeService): Arbitrary[String] =
+    Arbitrary(Gen oneOf activityTypeService.allActivities.keys)
+
+  private implicit def formatActivityType(implicit activityTypeService: ActivityTypeService): Format[String] =
+    Format(_.validate[String] filter activityTypeService.allActivities.contains, JsString.apply)
 
   "ActivityTypePage" - {
 
-    beRetrievable[ActivityType](ActivityTypePage)
+    beRetrievable[String](ActivityTypePage)
 
-    beSettable[ActivityType](ActivityTypePage)
+    beSettable[String](ActivityTypePage)
 
-    beRemovable[ActivityType](ActivityTypePage)
+    beRemovable[String](ActivityTypePage)
   }
 }

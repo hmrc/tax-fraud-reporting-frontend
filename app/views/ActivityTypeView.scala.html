@@ -16,6 +16,7 @@
 
 @import play.api.libs.json.Json
 @import views.html.components.Autocomplete
+@import services.ActivityTypeService
 
 @this(
     layout: templates.Layout,
@@ -23,10 +24,11 @@
     govukErrorSummary: GovukErrorSummary,
     govukInput: GovukInput,
     govukButton: GovukButton,
-    autocomplete: Autocomplete
+    autocomplete: Autocomplete,
+    activityTypeService: ActivityTypeService
 )
 
-@(form: Form[ActivityType], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[String], mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("activityType.title"))) {
 
@@ -44,8 +46,7 @@
             hint = Some("activityType.hint"),
             isPageHeading = true,
             label = "activityType.heading",
-            list = ActivityType.list.map(c => (c.code, messages(c.activityName))),
-            jsonData = Json.toJson(ActivityType.list.map(_.toAutoCompleteJson))
+            activityTypes = activityTypeService.allActivities map { case (name, synonyms) => ActivityType(name, synonyms) }
         )
 
         @govukButton(

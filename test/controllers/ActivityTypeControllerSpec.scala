@@ -18,11 +18,10 @@ package controllers
 
 import base.SpecBase
 import forms.ActivityTypeFormProvider
-import models.{ActivityType, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import models.{NormalMode, UserAnswers}
+import navigation.{Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import pages.ActivityTypePage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -30,142 +29,156 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.ActivityTypeView
+import services.ActivityTypeService
+import play.api.Application
+import play.api.data.Form
+import org.scalatest.Assertion
 
 import scala.concurrent.Future
 
-class ActivityTypeControllerSpec extends SpecBase with MockitoSugar {
-
-  def onwardRoute = Call("GET", "/foo")
-
-  val formProvider = new ActivityTypeFormProvider()
-  val form         = formProvider()
-
-  lazy val activityTypeRoute = routes.ActivityTypeController.onPageLoad(NormalMode).url
+class ActivityTypeControllerSpec extends SpecBase {
 
   "ActivityType Controller" - {
+    def onwardRoute = Call("GET", "/foo")
 
-    "must return OK and the correct view for a GET" in {
-
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+    def withForm(application: Application)(test: Form[String] => Assertion) = {
+      val formProvider = new ActivityTypeFormProvider(mockActivityTypeService)
 
       running(application) {
-        val request = FakeRequest(GET, activityTypeRoute)
-
-        val result = route(application, request).value
-
-        val view = application.injector.instanceOf[ActivityTypeView]
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        test(formProvider())
       }
     }
 
-    "must return OK and the correct view for a GET when the user has no session data" in {
+    lazy val activityTypeRoute = routes.ActivityTypeController.onPageLoad(NormalMode).url
 
-      val application = applicationBuilder(userAnswers = None).build()
+    "ActivityType Controller" - {
 
-      running(application) {
-        val request = FakeRequest(GET, activityTypeRoute)
+      "must return OK and the correct view for a GET" in {
 
-        val result = route(application, request).value
+        val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
-        val view = application.injector.instanceOf[ActivityTypeView]
+        withForm(application) { form =>
+          val request = FakeRequest(GET, activityTypeRoute)
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+          val result = route(application, request).value
+
+          val view = application.injector.instanceOf[ActivityTypeView]
+
+          status(result) mustEqual OK
+          contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        }
       }
-    }
 
-    "must populate the view correctly on a GET when the question has previously been answered" in {
+      "must return OK and the correct view for a GET when the user has no session data" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ActivityTypePage, ActivityType.list.head).success.value
+        val application = applicationBuilder(userAnswers = None).build()
 
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+        withForm(application) { form =>
+          val request = FakeRequest(GET, activityTypeRoute)
 
-      running(application) {
-        val request = FakeRequest(GET, activityTypeRoute)
+          val result = route(application, request).value
 
-        val view = application.injector.instanceOf[ActivityTypeView]
+          val view = application.injector.instanceOf[ActivityTypeView]
 
-        val result = route(application, request).value
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ActivityType.list.head), NormalMode)(
-          request,
-          messages(application)
-        ).toString
+          status(result) mustEqual OK
+          contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        }
       }
-    }
 
-    "must redirect to the next page when valid data is submitted" in {
+      "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+        val userAnswers =
+          UserAnswers(userAnswersId).set(ActivityTypePage, firstMockActivityType).success.value
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+        val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
+        withForm(application) { form =>
+          val request = FakeRequest(GET, activityTypeRoute)
 
-      running(application) {
-        val request =
-          FakeRequest(POST, activityTypeRoute)
-            .withFormUrlEncodedBody(("value", ActivityType.list.head.code))
+          val view = application.injector.instanceOf[ActivityTypeView]
 
-        val result = route(application, request).value
+          val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual onwardRoute.url
+          status(result) mustEqual OK
+          contentAsString(result) mustEqual view(form fill firstMockActivityType, NormalMode)(
+            request,
+            messages(application)
+          ).toString
+        }
       }
-    }
 
-    "must redirect to the next page when valid data is submitted when the user has no session" in {
+      "must redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+        val mockSessionRepository = mock[SessionRepository]
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+        when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
-      val application =
-        applicationBuilder(userAnswers = None)
-          .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
+        val application =
+          applicationBuilder(userAnswers = Some(emptyUserAnswers))
+            .overrides(
+              bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
+              bind[SessionRepository].toInstance(mockSessionRepository),
+              bind[ActivityTypeService].toInstance(mockActivityTypeService)
+            )
+            .build()
 
-      running(application) {
-        val request =
-          FakeRequest(POST, activityTypeRoute)
-            .withFormUrlEncodedBody(("value", ActivityType.list.head.code))
+        running(application) {
+          val request =
+            FakeRequest(POST, activityTypeRoute)
+              .withFormUrlEncodedBody(("value", firstMockActivityType))
 
-        val result = route(application, request).value
+          val result = route(application, request).value
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual onwardRoute.url
+          status(result) mustEqual SEE_OTHER
+          redirectLocation(result).value mustEqual onwardRoute.url
+        }
       }
-    }
 
-    "must return a Bad Request and errors when invalid data is submitted" in {
+      "must redirect to the next page when valid data is submitted when the user has no session" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+        val mockSessionRepository = mock[SessionRepository]
 
-      running(application) {
-        val request =
-          FakeRequest(POST, activityTypeRoute)
-            .withFormUrlEncodedBody(("value", ""))
+        when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
-        val boundForm = form.bind(Map("value" -> ""))
+        val application =
+          applicationBuilder(userAnswers = None)
+            .overrides(
+              bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
+              bind[SessionRepository].toInstance(mockSessionRepository),
+              bind[ActivityTypeService].toInstance(mockActivityTypeService)
+            )
+            .build()
 
-        val view = application.injector.instanceOf[ActivityTypeView]
+        running(application) {
+          val request =
+            FakeRequest(POST, activityTypeRoute)
+              .withFormUrlEncodedBody(("value", firstMockActivityType))
 
-        val result = route(application, request).value
+          val result = route(application, request).value
 
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+          status(result) mustEqual SEE_OTHER
+          redirectLocation(result).value mustEqual onwardRoute.url
+        }
+      }
+
+      "must return a Bad Request and errors when invalid data is submitted" in {
+
+        val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+        withForm(application) { form =>
+          val request =
+            FakeRequest(POST, activityTypeRoute)
+              .withFormUrlEncodedBody(("value", ""))
+
+          val boundForm = form.bind(Map("value" -> ""))
+
+          val view = application.injector.instanceOf[ActivityTypeView]
+
+          val result = route(application, request).value
+
+          status(result) mustEqual BAD_REQUEST
+          contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        }
       }
     }
   }
