@@ -52,10 +52,10 @@ index.p1 = Nid yw CThEM yn gallu ymchwilio i faterion yr heddlu na Llu’r Ffini
 checkYourAnswers.title = Gwiriwch eich cyflwyniad
 checkYourAnswers.heading = Gwiriwch eich cyflwyniad
 
-journeyRecovery.continue.title =  Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
-journeyRecovery.continue.heading =  Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
-journeyRecovery.startAgain.title = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
-journeyRecovery.startAgain.heading = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
+journeyRecovery.continue.title =  Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
+journeyRecovery.continue.heading =  Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
+journeyRecovery.startAgain.title = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
+journeyRecovery.startAgain.heading = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth
 journeyRecovery.startAgain.guidance = Rhowch gynnig arall arni yn nes ymlaen.
 journeyRecovery.p1 = Nid ydym wedi arbed eich atebion. Pan fydd y gwasanaeth ar gael, bydd yn rhaid i chi ddechrau eto.
 journeyRecovery.p2 = Cysylltwch â CThEM os oes gennych unrhyw gwestiynau.
@@ -65,7 +65,7 @@ journeyRecovery.outside.uk-phone.text = ffôn y tu allan i’r DU:
 journeyRecovery.outside.uk-phone.number = +44 (0)203 080 0871
 journeyRecovery.opening.time.text = Dydd Llun i Ddydd Gwener:
 journeyRecovery.opening.time = 9am i 5pm
-journeyRecovery.closed = Ffôn ar gau ar benwythnosau a gwyliau banc
+journeyRecovery.closed = Ffôn ar gau ar benwythnosau a gwyliau banc.
 
 activityType.title = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
 activityType.heading = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
@@ -668,7 +668,7 @@ individualConnection.change.hidden = Sut rydych yn adnabod yr unigolyn
 
 individualBusinessDetails.title = A allwch roi manylion busnes ar gyfer yr unigolyn hwn?
 individualBusinessDetails.heading = A allwch roi manylion busnes ar gyfer yr unigolyn hwn?
-individualBusinessDetails.hint = Er enghraifft, enw, cyfeiriad neu fanylion cyswllt y busnes
+individualBusinessDetails.hint = Er enghraifft, enw, cyfeiriad neu fanylion cyswllt y busnes.
 individualBusinessDetails.yes = Iawn
 individualBusinessDetails.no = Na
 individualBusinessDetails.dontKnow = Nid wyf yn gwybod
@@ -748,7 +748,7 @@ typeBusiness.change.hidden = Math o fusnes
 
 selectConnectionBusiness.title = Sut ydych yn gwybod am y busnes?
 selectConnectionBusiness.heading = Sut ydych yn gwybod am y busnes?
-selectConnectionBusiness.hint = Dewiswch y disgrifiad agosaf sy''n berthnasol i''ch sefyllfa orau
+selectConnectionBusiness.hint = Dewiswch y disgrifiad agosaf sy''n berthnasol i''ch sefyllfa orau.
 selectConnectionBusiness.accountant = cyfrifydd y busnes
 selectConnectionBusiness.auditor = archwiliwr y busnes
 selectConnectionBusiness.business-competitor = cystadleuydd busnes y busnes
@@ -983,7 +983,7 @@ technicalProblems.heading = Cael help gyda phroblem dechnegol
 technicalProblems.uk.phone = ffôn yn u DU: 0800 788 887
 technicalProblems.outside.phone = ffôn y tu allan i’r DU:+44 (0)203 080 0871
 technicalProblems.weekdays.time = Dydd Llun i Ddydd Gwener: 9am i 5pm
-technicalProblems.weekend = Ffôn ar gau ar benwythnosau a gwyliau banc
+technicalProblems.weekend = Ffôn ar gau ar benwythnosau a gwyliau banc.
 technicalProblems.link.text = Onid yw''r dudalen hon yn gweithio''n iawn? (yn agor mewn tab newydd)
 
 serviceTimeout.title =  Er eich diogelwch, rydym wedi dileu eich atebion
