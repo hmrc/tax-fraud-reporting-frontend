@@ -56,6 +56,16 @@ journeyRecovery.continue.title =  Mae’n ddrwg gennym, mae problem gyda’r gwa
 journeyRecovery.continue.heading =  Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
 journeyRecovery.startAgain.title = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
 journeyRecovery.startAgain.heading = Mae’n ddrwg gennym, mae problem gyda’r gwasanaeth.
+journeyRecovery.startAgain.guidance = Rhowch gynnig arall arni yn nes ymlaen.
+journeyRecovery.p1 = Nid ydym wedi arbed eich atebion. Pan fydd y gwasanaeth ar gael, bydd yn rhaid i chi ddechrau eto.
+journeyRecovery.p2 = Cysylltwch â CThEM os oes gennych unrhyw gwestiynau.
+journeyRecovery.uk-phone.text = ffôn yn u DU:
+journeyRecovery.uk-phone.number = 0800 788 887
+journeyRecovery.outside.uk-phone.text = ffôn y tu allan i’r DU:
+journeyRecovery.outside.uk-phone.number = +44 (0)203 080 0871
+journeyRecovery.opening.time.text = Dydd Llun i Ddydd Gwener:
+journeyRecovery.opening.time = 9am i 5pm
+journeyRecovery.closed = Ffôn ar gau ar benwythnosau a gwyliau banc
 
 activityType.title = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
 activityType.heading = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
@@ -340,7 +350,7 @@ approximateValue.checkYourAnswersLabel = Swm y gweithgaredd (£)
 approximateValue.error.nonNumeric = Nodwch y cyfanswm amcangyfrifedig fel gwerth rhifol.
 approximateValue.error.required = Nodwch y cyfanswm amcangyfrifedig fel gwerth rhifol.
 approximateValue.error.wholeNumber = Nodwch y cyfanswm amcangyfrifedig fel gwerth rhifol.
-approximateValue.error.maxTwoDecimals = Rhaid i gyfanswm y gwerth fod yn uchafswm o ddau le degol
+approximateValue.error.maxTwoDecimals = Mae’n rhaid i’r gwerth bras fod ag uchafswm o ddau bwynt degol
 approximateValue.error.length = Mae’n rhaid i’r cyfanswm amcangyfrifedig fod yn 12 o gymeriadau neu lai.
 approximateValue.change.hidden = Swm y gweithgaredd (£)
 
@@ -536,3 +546,5 @@ serviceTimeout.title =  Er eich diogelwch, rydym wedi dileu eich atebion
 serviceTimeout.heading =  Er eich diogelwch, rydym wedi dileu eich atebion
 
 betaBanner.service.text = Gwasanaeth newydd yw hwn
+
+individual.caption.text.screen.reader = Mae hyn yn ymwneud ag
