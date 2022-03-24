@@ -19,10 +19,8 @@ package controllers
 import base.SpecBase
 import forms.IndividualInformationFormProvider
 import models.{Index, IndividualInformation, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import pages.IndividualInformationPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -33,7 +31,7 @@ import views.html.IndividualInformationView
 
 import scala.concurrent.Future
 
-class IndividualInformationControllerSpec extends SpecBase with MockitoSugar {
+class IndividualInformationControllerSpec extends SpecBase {
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -94,7 +92,7 @@ class IndividualInformationControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()

@@ -19,10 +19,8 @@ package controllers
 import base.SpecBase
 import forms.ApproximateValueFormProvider
 import models.{NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
-import org.mockito.ArgumentMatchers.{any, anyDouble}
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
+import navigation.Navigator
+import org.mockito.ArgumentMatchers.any
 import pages.ApproximateValuePage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -32,9 +30,8 @@ import repositories.SessionRepository
 import views.html.ApproximateValueView
 
 import scala.concurrent.Future
-import scala.math.Ordering.BigDecimal
 
-class ApproximateValueControllerSpec extends SpecBase with MockitoSugar {
+class ApproximateValueControllerSpec extends SpecBase {
 
   private val formProvider = new ApproximateValueFormProvider()
   private val form         = formProvider()
@@ -93,7 +90,7 @@ class ApproximateValueControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()

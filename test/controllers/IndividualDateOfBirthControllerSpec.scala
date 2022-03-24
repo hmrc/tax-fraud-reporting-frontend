@@ -16,14 +16,11 @@
 
 package controllers
 
-import java.time.{LocalDate, ZoneOffset}
 import base.SpecBase
 import forms.IndividualDateOfBirthFormProvider
 import models.{Index, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import pages.IndividualDateOfBirthPage
 import play.api.data.Form
 import play.api.i18n.Messages
@@ -34,13 +31,14 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.IndividualDateOfBirthView
 
+import java.time.{LocalDate, ZoneOffset}
 import scala.concurrent.Future
 
-class IndividualDateOfBirthControllerSpec (implicit messages: Messages) extends SpecBase with MockitoSugar {
+class IndividualDateOfBirthControllerSpec(implicit messages: Messages) extends SpecBase {
 
   val formProvider = new IndividualDateOfBirthFormProvider()
 
-  private def form(implicit messages: Messages): Form[LocalDate]= formProvider()
+  private def form(implicit messages: Messages): Form[LocalDate] = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -105,7 +103,7 @@ class IndividualDateOfBirthControllerSpec (implicit messages: Messages) extends 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
