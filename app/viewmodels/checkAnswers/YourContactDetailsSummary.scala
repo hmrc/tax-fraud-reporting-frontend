@@ -25,6 +25,7 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
+import viewmodels.Util._
 
 object YourContactDetailsSummary {
 
@@ -33,12 +34,12 @@ object YourContactDetailsSummary {
       answer =>
         def msg(key: String) = messages("yourContactDetails." + key)
 
-        val values = List(
+        val values = Map(
           "firstName"        -> answer.FirstName,
           "lastName"         -> answer.LastName,
           "tel"              -> answer.Tel,
           "emailLabel"       -> answer.Email.getOrElse(messages("site.unknown")),
-          "uniqueIdentifier" -> answer.MemorableWord.getOrElse(messages("site.unknown"))
+          "uniqueIdentifier" -> sanitizeString(answer.MemorableWord).getOrElse(messages("site.unknown"))
         )
 
         values map {
