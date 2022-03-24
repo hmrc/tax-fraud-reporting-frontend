@@ -14,19 +14,27 @@
  * limitations under the License.
  */
 
-package forms
+package services
 
-import forms.mappings.Mappings
-import play.api.data.Form
-import services.ActivityTypeService
+import play.api.Configuration
 
 import javax.inject.{Inject, Singleton}
 
 @Singleton
-class ActivityTypeFormProvider @Inject() (activityTypeService: ActivityTypeService) extends Mappings {
+class ActivityTypeService @Inject() (configuration: Configuration) {
 
-  def apply(): Form[String] = Form(
-    "value" -> text().verifying("activityType.error.invalid", activityTypeService.allActivities.contains _)
-  )
+  private def getMap(path: String) =
+    configuration.get[Map[String, String]](path) map {
+      case (key, values) => key -> (values split ",")
+    }
+
+  val allActivities: Map[String, Array[String]] = getMap("activityTypes")
+
+  private val nonHmrcActivities = getMap("nonHmrcActivities")
+
+  def getDepartmentFor(activityType: String): Option[String] =
+    nonHmrcActivities collectFirst {
+      case (department, activities) if activities contains activityType => department
+    }
 
 }

@@ -26,7 +26,7 @@ import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.data.{Form, FormError}
 import play.api.i18n.Messages
 
-class DateMappingsSpec (implicit messages: Messages)
+class DateMappingsSpec(implicit messages: Messages)
     extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with Generators with OptionValues with Mappings {
 
   val form = Form(

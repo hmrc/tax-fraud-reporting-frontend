@@ -21,9 +21,9 @@ import forms.behaviours.DateBehaviours
 import play.api.data.FormError
 import play.api.i18n.Messages
 
-class IndividualDateOfBirthFormProviderSpec (implicit messages: Messages) extends DateBehaviours {
+class IndividualDateOfBirthFormProviderSpec(implicit messages: Messages) extends DateBehaviours {
 
-  val form  = new IndividualDateOfBirthFormProvider()()
+  val form = new IndividualDateOfBirthFormProvider()()
 
   ".value" - {
 

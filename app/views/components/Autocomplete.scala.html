@@ -16,48 +16,46 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.{components => hmrcComponent}
 @import viewmodels.LabelSize
-@import play.api.libs.json.JsValue
+@import play.api.libs.json.Json
 
 @this(select: GovukSelect)
 
 @(
-        form: Form[ActivityType],
-        id: String,
-        name: String,
-        label: String,
-        isPageHint: Boolean = true,
-        isPageHeading: Boolean = true,
-        headingMessageArgs: Seq[String] = Seq(),
-        hint: Option[String],
-        list: Seq[(String, String)],
-        jsonData: JsValue,
-        labelClass: Boolean = false
+form: Form[String],
+id: String,
+name: String,
+label: String,
+isPageHint: Boolean = true,
+isPageHeading: Boolean = true,
+headingMessageArgs: Seq[String] = Seq(),
+hint: Option[String],
+activityTypes: Iterable[ActivityType],
+labelClass: Boolean = false
 )(implicit messages: Messages)
 
 <link href='@controllers.routes.Assets.versioned("stylesheets/autocomplete.min.css")' media="all" rel="stylesheet" type="text/css" />
 
 @select(hmrcComponent.Select(
-    id = id,
-    name = name,
-    label = if (isPageHeading) {
-        LabelViewModel(messages(label)).asPageHeading((LabelSize.ExtraLarge))
-    } else {
-        LabelViewModel(messages(label))
-    },
-    describedBy = hint.map(_ => s"$id-hint"),
-    errorMessage = form(id).error.map(fe ⇒ ErrorMessage(content = messages(fe.message),visuallyHiddenText = Some(messages("govukErrorMessage.visuallyHiddenText")))),
-    hint = hint.map(c => Hint(content = messages(c))),
-    items = Seq(SelectItem(attributes= Map("label" -> " "))) ++ list.map {
-        case (k, v) ⇒ SelectItem(
-            value = Some(k),
-            text = v,
-            selected = k == (form.value map {
-                _.code
-            } getOrElse ""),
-            attributes = Map("id" → (id + s"-$k"))
-        )
-    },
-    formGroupClasses = "form-field-group"
+id = id,
+name = name,
+label = if (isPageHeading) {
+LabelViewModel(messages(label)).asPageHeading((LabelSize.ExtraLarge))
+} else {
+LabelViewModel(messages(label))
+},
+describedBy = hint map { _ => s"$id-hint" },
+errorMessage = form(id).error map { fe => ErrorMessage(content = messages(fe.message)) },
+hint = hint map { c => Hint(content = messages(c)) },
+items = SelectItem(attributes = Map("label" -> " ")) +: activityTypes.map {
+case ActivityType(key, name, _) =>
+SelectItem(
+value = Some(key),
+text = name,
+selected = form.value contains key,
+attributes = Map("id" -> s"$id-$key")
+)
+}.toSeq,
+formGroupClasses = "form-field-group"
 ))
 
 <script src="@controllers.routes.Assets.versioned("javascripts/autocomplete.min.js")" ></script>
@@ -80,7 +78,7 @@
             let element = !!confirmed ? confirmed : foundInData
 
             if(!!element) {
-                document.querySelector('select[name="@id"]').value = element.code || element.value;
+                document.querySelector('select[name="@id"]').value = element.key || element.value;
 
             }
             else {
@@ -90,20 +88,29 @@
         },
         templates: {
             inputValue: function (result) {
-                return (!!result && result.activityName ? result.activityName : '');
+                return (!!result && result.name ? result.name : '');
             },
             suggestion: function (result) {
-                return !!result.activityName ? result.activityName : result;
+                return !!result.name ? result.name : result;
             }
         }
     })
 
+    const unsortedResults = @Html(Json toJson activityTypes toString);
+    const results = unsortedResults.sort( (a, b) => a.name.localeCompare(b.name) );
+    console.log(results);
+
+    function includes(string, substring) {
+      return string.toLowerCase().includes(substring.toLowerCase());
+    }
+
     function customSuggest(query, syncResults) {
-        var results = @{Html(jsonData.toString)}.sort( (a, b) => a.activityName.localeCompare(b.activityName) );
-        syncResults(query ? results.filter(function (result) {
-            return (result.synonyms.findIndex(function (s) {
-                return s.toLowerCase().indexOf(query.toLowerCase()) !== -1
-            }) !== -1) || (result.activityName.toLowerCase().indexOf(query.toLowerCase()) !== -1)
-        }) : results)
+      syncResults( query?
+        results.filter( result => {
+          const matchesSynonym = result.synonyms.some( synonym => includes(synonym, query) );
+          return matchesSynonym || includes(result.name, query);
+        }):
+        results
+      );
     }
 </script>

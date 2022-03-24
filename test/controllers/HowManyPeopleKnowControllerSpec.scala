@@ -19,10 +19,8 @@ package controllers
 import base.SpecBase
 import forms.HowManyPeopleKnowFormProvider
 import models.{HowManyPeopleKnow, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import pages.HowManyPeopleKnowPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -33,7 +31,7 @@ import views.html.HowManyPeopleKnowView
 
 import scala.concurrent.Future
 
-class HowManyPeopleKnowControllerSpec extends SpecBase with MockitoSugar {
+class HowManyPeopleKnowControllerSpec extends SpecBase {
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -91,7 +89,7 @@ class HowManyPeopleKnowControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()

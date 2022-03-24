@@ -43,11 +43,13 @@ class ActivityTypeController @Inject() (
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
-  val form = formProvider()
+  private val form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData) {
     implicit request =>
-      val preparedForm = request.userAnswers.getOrElse(UserAnswers(request.userId)).get(ActivityTypePage) match {
+      val userAnswers = request.userAnswers getOrElse UserAnswers(request.userId)
+
+      val preparedForm = userAnswers get ActivityTypePage match {
         case None        => form
         case Some(value) => form.fill(value)
       }
@@ -60,7 +62,7 @@ class ActivityTypeController @Inject() (
       form.bindFromRequest().fold(
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
         value => {
-          val userAnswers = request.userAnswers.getOrElse(UserAnswers(request.userId))
+          val userAnswers = request.userAnswers getOrElse UserAnswers(request.userId)
           for {
             updatedAnswers <- Future.fromTry(userAnswers.set(ActivityTypePage, value))
             _              <- sessionRepository.set(updatedAnswers)

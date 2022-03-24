@@ -20,11 +20,12 @@ import controllers.routes
 import models.{WhenActivityHappen, _}
 import pages.{IndividualNamePage, _}
 import play.api.mvc.Call
+import services.ActivityTypeService
 
 import javax.inject.{Inject, Singleton}
 
 @Singleton
-class Navigator @Inject() () {
+class Navigator @Inject() (activityTypeService: ActivityTypeService) {
 
   private val normalRoutes: Page => UserAnswers => Call = {
     case ActivityTypePage                => activityPageRoutes
@@ -84,8 +85,8 @@ class Navigator @Inject() () {
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index, CheckMode)
     case BusinessAddressConfirmationPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.Address, CheckMode)
-    case p: IndexedConfirmationPage    => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
-    case _ => _ => routes.CheckYourAnswersController.onPageLoad
+    case p: IndexedConfirmationPage => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
+    case _                          => _ => routes.CheckYourAnswersController.onPageLoad
   }
 
   private def individualInformationRoute(answer: IndividualInformation, index: Index, mode: Mode): Call =
@@ -122,12 +123,14 @@ class Navigator @Inject() () {
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def activityPageRoutes(answers: UserAnswers): Call =
-    answers.get(ActivityTypePage).map { activity =>
-      if (ActivityType.otherDepartments.isDefinedAt(activity.activityName))
-        routes.DoNotUseThisServiceController.onPageLoad()
-      else
-        routes.IndividualOrBusinessController.onPageLoad(NormalMode)
-    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+    answers get ActivityTypePage match {
+      case Some(activity) =>
+        activityTypeService getDepartmentFor activity match {
+          case Some(_) => routes.DoNotUseThisServiceController.onPageLoad()
+          case None    => routes.IndividualOrBusinessController.onPageLoad(NormalMode)
+        }
+      case None => routes.JourneyRecoveryController.onPageLoad()
+    }
 
   private def individualOrBusinessRoutes(answers: UserAnswers): Call =
     answers.get(IndividualOrBusinessPage).map {

@@ -32,7 +32,7 @@ object ActivityTypeSummary {
       answer =>
         SummaryListRowViewModel(
           key = "activityType.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlFormat.escape(answer.activityName).toString),
+          value = ValueViewModel(HtmlFormat.escape(messages("activityType.name." + answer)).toString),
           actions = Seq(
             ActionItemViewModel("site.change", routes.ActivityTypeController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText(messages("activityType.change.hidden"))

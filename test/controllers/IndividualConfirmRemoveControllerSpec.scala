@@ -18,12 +18,9 @@ package controllers
 
 import base.SpecBase
 import forms.IndividualConfirmRemoveFormProvider
-import models.{Index, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import models.{Index, NormalMode}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.{never, times, verify, when}
-import org.scalatestplus.mockito.MockitoSugar
-import pages.IndividualConfirmRemovePage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -33,7 +30,7 @@ import views.html.IndividualConfirmRemoveView
 
 import scala.concurrent.Future
 
-class IndividualConfirmRemoveControllerSpec extends SpecBase with MockitoSugar {
+class IndividualConfirmRemoveControllerSpec extends SpecBase {
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -69,7 +66,7 @@ class IndividualConfirmRemoveControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
@@ -95,7 +92,7 @@ class IndividualConfirmRemoveControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
@@ -118,7 +115,7 @@ class IndividualConfirmRemoveControllerSpec extends SpecBase with MockitoSugar {
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
@@ -130,7 +127,7 @@ class IndividualConfirmRemoveControllerSpec extends SpecBase with MockitoSugar {
 
         route(application, request).value.futureValue
 
-        verify(mockSessionRepository, never()).set(any())
+        verify(mockSessionRepository, never).set(any())
       }
     }
 

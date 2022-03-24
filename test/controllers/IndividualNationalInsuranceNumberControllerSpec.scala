@@ -19,10 +19,8 @@ package controllers
 import base.SpecBase
 import forms.IndividualNationalInsuranceNumberFormProvider
 import models.{Index, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
 import pages.IndividualNationalInsuranceNumberPage
 import play.api.inject.bind
 import play.api.mvc.Call
@@ -33,7 +31,7 @@ import views.html.IndividualNationalInsuranceNumberView
 
 import scala.concurrent.Future
 
-class IndividualNationalInsuranceNumberControllerSpec extends SpecBase with MockitoSugar {
+class IndividualNationalInsuranceNumberControllerSpec extends SpecBase {
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -92,7 +90,7 @@ class IndividualNationalInsuranceNumberControllerSpec extends SpecBase with Mock
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()

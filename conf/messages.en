@@ -91,53 +91,396 @@ activityType.checkYourAnswersLabel = Activity type
 activityType.error.required = Enter the type of activity.
 activityType.change.hidden = Activity Type
 
-activityType.name.furlough = Fraud related to furlough
-activityType.name.defrauding-self-employment = Defrauding the Self-Employment Income Support Scheme
-activityType.name.defrauding-sick-pay = Defrauding Statutory Sick Pay (SSP) or the SSP Rebate Scheme
-activityType.name.defrauding-eat-out = Defrauding the Eat Out to Help Out scheme
-activityType.name.incorrect-emp-status = Incorrect employment status
-activityType.name.avoiding-tax = Avoiding tax
-activityType.name.fraud-related-tax = Fraud related to VAT
-activityType.name.defrauding-c-i-scheme = Defrauding the Construction Industry Scheme
-activityType.name.fraud-related-private-sec-industry = Fraud related to the private security industry
-activityType.name.fraud-related-income-tax = Fraud related to Income Tax Self Assessment
-activityType.name.breaking-off-payroll-IR35 = Breaking off-payroll working rules (IR35)
-activityType.name.not-registered-self-emp = Not registered as self-employed
-activityType.name.suspicious-cash-dep = Suspicious cash deposits
-activityType.name.suspicious-transport = Suspicious transport of cash
-activityType.name.money-funding-criminal-org = Money funding criminal organisations
-activityType.name.not-paying-betting-duty = Not paying betting duty
-activityType.name.illegal-flow-money = Illegal flow of money
-activityType.name.money-laundering = Money laundering
-activityType.name.not-paying-capital-gains-tax = Not paying Capital Gains Tax
-activityType.name.offshore-bank-accounts = Offshore bank accounts
-activityType.name.more-than-two-million-assets-not-paying-tax = People with more than £2 million of assets not paying tax
-activityType.name.not-paying-inheritance-tax = Not paying Inheritance Tax
-activityType.name.fraud-related-charities = Fraud related to charities
-activityType.name.not-paying-duty-on-alcohol = Not paying duty on alcohol
-activityType.name.not-paying-duty-on-tobacco = Not paying duty on tobacco
-activityType.name.illegal-use-of-red-diesel = Illegal use of red diesel
-activityType.name.not-paying-sugar-ax = Not paying sugar tax
-activityType.name.false-tax-credit-claims = False Tax Credit claims
-activityType.name.false-child-benfit-claims = False Child Benefit claims
-activityType.name.fraud-related-to-brexit = Fraud related to Brexit
-activityType.name.fraud-related-to-import-and-export = Fraud related to import and export
-activityType.name.false-vat-refund-claims = False VAT refund claims
-activityType.name.not-paying-tax-when-winding-up-company = Not paying tax when winding up a company
-activityType.name.importing-goods = Importing goods VAT-free and then charging customers VAT
-activityType.name.suspicious-hmrc-emails-text-messages-phone = Suspicious HMRC emails, text messages, and phone calls
-activityType.name.not-being-paid-minimum-wage = Not being paid minimum wage
-activityType.name.fraud-related-plastic-package-tax = Fraud relating to Plastic Packaging Tax
-activityType.name.landfill-waste-tax = Landfill/WasteTax Fraud
+# Any non-HMRC activities here are associated with their corresponding department
+# in the activityTypes.conf file.
+activityType.name.drugs                        = Activity related to drugs
+activityType.name.avoidingTax                  = Avoiding Tax
+activityType.name.mostBenefits                 = Benefit fraud (not including child benefit or tax credits)
+activityType.name.borderCrime                  = Border Crime
+activityType.name.offPayrollWorking            = Breaking off-payroll working rules (IR35)
+activityType.name.statutorySickPay             = Defrauding Statutory Sick Pay (SS) or the SSP Rebate Scheme
+activityType.name.constructionIndustryScheme   = Defrauding the Construction Industry Scheme
+activityType.name.eatOutToHelpOut              = Defrauding the Eat Out to Help Out scheme
+activityType.name.incomeSupport                = Defrauding the Self-Employment Income Support Scheme
+activityType.name.childBenefits                = False Child Benefit claims
+activityType.name.taxCredit                    = False Tax Credit claims
+activityType.name.vatRefund                    = False VAT refund claims
+activityType.name.brexit                       = Fraud related to Brexit
+activityType.name.charities                    = Fraud related to charities
+activityType.name.furlough                     = Fraud related to furlough
+activityType.name.importExport                 = Fraud related to import and export
+activityType.name.selfAssessment               = Fraud related to Income Tax Self Assessment
+activityType.name.privateSecurity              = Fraud related to the private security industry
+activityType.name.vatRelated                   = Fraud related to VAT
+activityType.name.humanTrafficking             = Human trafficking
+activityType.name.illegalFlowOfMoney           = Illegal flow of money
+activityType.name.immigration                  = Illegal immigration
+activityType.name.redDiesel                    = Illegal use of red diesel
+activityType.name.vatFreeImports               = Importing goods VAT-free and then charging customers VAT
+activityType.name.employmentStatus             = Incorrect employment status
+activityType.name.landfillAndWaste             = Landfill/WasteTax Fraud
+activityType.name.organisedCrime               = Money funding criminal organisations
+activityType.name.laundering                   = Money laundering
+activityType.name.minimumWage                  = Not being paid minimum wage
+activityType.name.betting                      = Not paying betting duty
+activityType.name.capitalGains                 = Not paying Capital Gains Tax
+activityType.name.alcohol                      = Not paying duty on alcohol
+activityType.name.tobacco                      = Not paying duty on tobacco
+activityType.name.inheritance                  = Not paying Inheritance Tax
+activityType.name.sugar                        = Not paying sugar tax
+activityType.name.windingUpACompany            = Not paying tax when winding up a company
+activityType.name.selfEmployment               = Not registered as self-employed
+activityType.name.offShoreAccounts             = Offshore bank accounts
+activityType.name.assets                       = People with more than £2 million of assets not paying tax
+activityType.name.smuggling                    = Smuggling
+activityType.name.cashDeposits                 = Suspicious cash deposits
+activityType.name.hmrcImpostor                 = Suspicious HMRC emails, text messages, and phone calls
+activityType.name.cashTransport                = Suspicious transport of cash
+activityType.name.universalCredit              = Universal credit fraud
+activityType.name.plasticPackaging             = Fraud relating to Plastic Packaging Tax
 
-# TODO why aren't these prefixed with activityType.name?
-activity-related-drugs = Activity related to drugs
-smuggling = Smuggling
-benefit-fraud = Benefit fraud (not including child benefit or tax credits)
-universal-credit-fraud = Universal credit fraud
-human-trafficking = Human trafficking
-illegal-immigration = Illegal immigration
-border-crime = Border crime
+# Synonyms are associated with their corresponding activity names
+# in the activityTypes.conf file.
+
+# drugs
+activityType.synonym.heroin       = Heroin
+activityType.synonym.cocaine      = Cocaine
+activityType.synonym.weed         = Weed
+activityType.synonym.marijuana    = Marijuana
+activityType.synonym.opioids      = Opioids
+activityType.synonym.cannabis     = Cannabis
+activityType.synonym.meth         = Meth
+activityType.synonym.amphetamines = Amphetamines
+activityType.synonym.ecstasy      = Ecstasy
+activityType.synonym.mdma         = MDMA
+activityType.synonym.pills        = Pills
+activityType.synonym.lsd          = LSD
+activityType.synonym.speed        = Speed
+activityType.synonym.narcotics    = Narcotics
+activityType.synonym.dope         = Dope
+activityType.synonym.crack        = Crack
+activityType.synonym.ketamine     = Ketamine
+activityType.synonym.mushrooms    = Mushrooms
+activityType.synonym.joint        = Joint
+activityType.synonym.blunt        = Blunt
+activityType.synonym.coke         = Coke
+
+# avoidingTax
+activityType.synonym.avoidance         = Avoidance
+activityType.synonym.umbrellaCompanies = Umbrella Companies
+activityType.synonym.offshore          = Offshore
+activityType.synonym.evasion           = Evasion
+activityType.synonym.account           = Account
+activityType.synonym.payroll           = Payroll
+activityType.synonym.outsource         = Outsource
+activityType.synonym.taxEvasion        = Tax Evasion
+
+# benefitsNotChildOrTaxCredits
+activityType.synonym.benefit     = Benefit
+activityType.synonym.claiming    = Claiming
+activityType.synonym.disability  = Disability
+activityType.synonym.carer       = Carer
+activityType.synonym.savings     = Savings
+activityType.synonym.abroad      = Abroad
+activityType.synonym.livingAlone = Living alone
+activityType.synonym.working     = Working
+
+# borderCrime
+activityType.synonym.port  = Port
+activityType.synonym.ferry = Ferry
+activityType.synonym.plane = Plane
+activityType.synonym.force = Force
+
+# offPayrollWorking
+activityType.synonym.contractor = Contractor
+activityType.synonym.employment = Employment
+
+# statutorySickPay
+activityType.synonym.illness = Illness
+
+# constructionIndustryScheme
+activityType.synonym.cis      = CIS
+activityType.synonym.building = Building
+activityType.synonym.foreman  = Foreman
+activityType.synonym.site     = Site
+activityType.synonym.trade    = Trade
+
+# eatOutToHelpOut
+activityType.synonym.eotho      = EOTHO
+activityType.synonym.restaurant = Restaurant
+activityType.synonym.takeaway   = Takeaway
+
+# incomeSupport
+activityType.synonym.seiss        = SEISS
+activityType.synonym.covid        = COVID
+activityType.synonym.grant        = Grant
+activityType.synonym.corona       = Corona
+activityType.synonym.selfEmployed = Self Employed
+
+# childBenefits
+activityType.synonym.csa          = CSA
+activityType.synonym.cms          = CMS
+activityType.synonym.maintenance  = Maintenance
+activityType.synonym.kid          = Kid
+activityType.synonym.education    = Education
+activityType.synonym.school       = School
+activityType.synonym.benefitFraud = Benefit Fraud
+
+# taxCredit
+activityType.synonym.childTaxCredit   = Child Tax Credit
+activityType.synonym.workingTaxCredit = Working Tax Credit
+activityType.synonym.taxCredit        = Tax Credit
+activityType.synonym.benefitFraud     = Benefit fraud
+activityType.synonym.work             = Work
+activityType.synonym.partner          = Partner
+activityType.synonym.fraud            = Fraud
+
+# vatRefund
+activityType.synonym.vatRepaymentFraud = VAT Repayment Fraud
+activityType.synonym.loanRepayment     = Loan Repayment
+activityType.synonym.valueAddedTax     = Value Added Tax
+activityType.synonym.vatFraud          = VAT Fraud
+
+# brexit
+activityType.synonym.eu        = EU
+activityType.synonym.rules     = Rules
+activityType.synonym.document  = Document
+activityType.synonym.europe    = Europe
+activityType.synonym.border    = Border
+activityType.synonym.movement  = Movement
+activityType.synonym.ireland   = Ireland
+activityType.synonym.irish     = Irish
+activityType.synonym.port      = Port
+activityType.synonym.transport = Transport
+activityType.synonym.hgv       = HGV
+activityType.synonym.transit   = Transit
+
+# charities
+activityType.synonym.charity           = Charity
+activityType.synonym.donation          = Donation
+activityType.synonym.misrepresentation = Misrepresentation
+activityType.synonym.goodwill          = Goodwill
+activityType.synonym.giftAid           = Gift Aid
+activityType.synonym.relief            = Relief
+activityType.synonym.registered        = Registered
+
+# furlough
+activityType.synonym.cjrs      = CJRS
+activityType.synonym.furlough  = Furlough
+activityType.synonym.cjrs_long = Coronavirus Job Retention Scheme
+
+# importExport
+activityType.synonym.citex            = CITEX
+activityType.synonym.customs          = Customs
+activityType.synonym.tradeAndExcise   = International Trade and Excise
+activityType.synonym.livestock        = Livestock
+activityType.synonym.transport        = Transport
+activityType.synonym.carnet           = Carnet
+activityType.synonym.tir              = TIR
+activityType.synonym.communityTransit = Community Transit
+activityType.synonym.customs          = Customs
+activityType.synonym.border           = Border
+activityType.synonym.courier          = Courier
+activityType.synonym.goods            = Goods
+activityType.synonym.agent            = Agent
+activityType.synonym.shipping         = Shipping
+activityType.synonym.van              = Van
+
+# selfAssessment
+activityType.synonym.itsa              = ITSA
+activityType.synonym.workingCashInHand = Working Cash in Hand
+activityType.synonym.selfEmployed      = Self Employed
+activityType.synonym.offRecord         = Off record
+activityType.synonym.offBook           = Off book
+activityType.synonym.money             = Money
+activityType.synonym.backPocket        = Back pocket
+activityType.synonym.sole              = Sole
+activityType.synonym.declare           = Declare
+activityType.synonym.trader            = Trader
+activityType.synonym.cash              = Cash
+activityType.synonym.undeclared        = Undeclared
+activityType.synonym.hide              = Hide
+
+# privateSecurity
+activityType.synonym.sia             = SIA
+activityType.synonym.bouncer         = Bouncer
+activityType.synonym.doorman         = Doorman
+activityType.synonym.closeProtection = Close Protection
+activityType.synonym.guard           = Guard
+activityType.synonym.bodyguard       = bodyguard
+
+# vatRelated
+activityType.synonym.company = Company
+activityType.synonym.invoice = Invoice
+activityType.synonym.bill    = Bill
+activityType.synonym.receipt = Receipt
+activityType.synonym.account = Account
+activityType.synonym.cash    = Cash
+
+# humanTrafficking
+activityType.synonym.human      = Human
+activityType.synonym.people     = People
+activityType.synonym.harbouring = Harbouring
+activityType.synonym.exploit    = Exploit
+
+# illegalFlowOfMoney
+activityType.synonym.illicitFinance = Illicit finance
+activityType.synonym.laundering     = Laundering
+activityType.synonym.transfer       = Transfer
+activityType.synonym.dirty          = Dirty
+activityType.synonym.move           = Move
+activityType.synonym.gang           = Gang
+activityType.synonym.criminal       = Criminal
+activityType.synonym.stash          = Stash
+activityType.synonym.clean          = Clean
+activityType.synonym.hawala         = Hawala
+activityType.synonym.money          = Money
+activityType.synonym.exchange       = Exchange
+
+# immigration
+activityType.synonym.immigrant = Immigrant
+activityType.synonym.illegal   = Illegal
+activityType.synonym.refugee   = Refugee
+activityType.synonym.asylum    = Asylum
+activityType.synonym.seeker    = Seeker
+activityType.synonym.migrant   = Migrant
+
+# redDiesel
+activityType.synonym.commodityFraud = Commodity fraud
+activityType.synonym.fuel           = Fuel
+activityType.synonym.petrol         = Petrol
+activityType.synonym.farm           = Farm
+activityType.synonym.agriculture    = Agriculture
+activityType.synonym.green          = Green
+activityType.synonym.car            = Car
+activityType.synonym.hgv            = HGV
+activityType.synonym.vehicle        = Vehicle
+activityType.synonym.van            = Van
+activityType.synonym.road           = Road
+activityType.synonym.tank           = Tank
+activityType.synonym.gas            = Gas
+activityType.synonym.kerosene       = Kerosene
+
+# vatFreeImports
+activityType.synonym.carouselFraud      = Carousel fraud
+activityType.synonym.mticFraud          = MTIC fraud
+activityType.synonym.missingTraderFraud = Missing trader fraud
+activityType.synonym.movement           = Movement
+activityType.synonym.warehouse          = Warehouse
+
+# employmentStatus
+activityType.synonym.lyingAboutStatus = Lying about status
+activityType.synonym.changeOfStatus   = Not informing about change of status
+activityType.synonym.employ           = Employ
+activityType.synonym.payroll          = Payroll
+activityType.synonym.status           = Status
+activityType.synonym.register         = Register
+activityType.synonym.declare          = Declare
+activityType.synonym.incorrect        = Incorrect
+
+# landfillAndWaste
+activityType.synonym.landfill    = Landfill
+activityType.synonym.waste       = Waste
+activityType.synonym.rubbish     = Rubbish
+activityType.synonym.dump        = Dump
+activityType.synonym.trash       = Trash
+activityType.synonym.toxic       = Toxic
+activityType.synonym.recycle     = Recycle
+activityType.synonym.green       = Green
+activityType.synonym.disposal    = Disposal
+activityType.synonym.environment = Environment
+activityType.synonym.tip         = tip
+activityType.synonym.flyTipping  = fly tipping
+
+# organisedCrime
+activityType.synonym.ocg             = OCGs
+activityType.synonym.criminalFinance = Criminal finance
+activityType.synonym.organisedCrime  = Organised crime
+activityType.synonym.crime           = Crime
+activityType.synonym.offence         = Offence
+activityType.synonym.dirty           = Dirty
+activityType.synonym.dodgy           = Dodgy
+activityType.synonym.poca            = POCA
+activityType.synonym.confiscate      = Confiscate
+activityType.synonym.stash           = Stash
+activityType.synonym.hidden          = Hidden
+
+# laundering
+activityType.synonym.transfer       = Transfer
+activityType.synonym.accounts       = Accounts
+activityType.synonym.taxHaven       = Tax Haven
+activityType.synonym.hawala         = Hawala
+activityType.synonym.moneyServices  = Money Services
+activityType.synonym.moneyBureau    = Money Bureau
+activityType.synonym.bureau         = Bureau
+activityType.synonym.bureauDeChange = Bureau De Change
+activityType.synonym.clean          = Clean
+activityType.synonym.dirty          = Dirty
+activityType.synonym.proceeds       = Proceeds
+activityType.synonym.poca           = POCA
+activityType.synonym.money          = Money
+activityType.synonym.launder        = Launder
+activityType.synonym.international  = International
+
+# minimumWage
+activityType.synonym.underpayment      = Underpayment
+activityType.synonym.underpaid         = Underpaid
+activityType.synonym.workRights        = Work rights
+activityType.synonym.employmentAgency  = Employment agency
+activityType.synonym.workingTimeLimits = Working time limits
+activityType.synonym.earnings          = Earnings
+activityType.synonym.salary            = Salary
+activityType.synonym.exploitation      = Exploitation
+activityType.synonym.swindle           = Swindle
+activityType.synonym.corrupt           = Corrupt
+activityType.synonym.boss              = boss
+activityType.synonym.national          = National
+activityType.synonym.slave             = Slave
+activityType.synonym.labour            = Labour
+activityType.synonym.paid              = Paid
+activityType.synonym.nmw               = NMW
+
+# betting
+activityType.synonym.gambling = Gambling
+activityType.synonym.gbd_long = General Betting Duty
+activityType.synonym.gbd      = GBD
+activityType.synonym.pbd_long = Pool Betting Duty
+activityType.synonym.pbd      = PBD
+activityType.synonym.rgd_long = Remote gaming duty
+activityType.synonym.rgd      = RGD
+activityType.synonym.gamble   = Gamble
+activityType.synonym.lottery  = Lottery
+activityType.synonym.raffle   = Raffle
+activityType.synonym.licence  = Licence
+activityType.synonym.bet      = Bet
+activityType.synonym.casino   = Casino
+
+# capitalGains
+activityType.synonym.profit    = Profit
+activityType.synonym.houseSale = House Sale
+activityType.synonym.property  = Property
+activityType.synonym.home      = Home
+activityType.synonym.sold      = Sold
+activityType.synonym.estate    = Estate
+activityType.synonym.auction   = Auction
+activityType.synonym.value     = Value
+
+# alcohol
+activityType.synonym.exciseDuty     = Excise duty
+activityType.synonym.commodityFraud = Commodity fraud
+activityType.synonym.booze          = Booze
+activityType.synonym.spirit         = Spirit
+activityType.synonym.liquor         = Liquor
+activityType.synonym.beer           = Beer
+activityType.synonym.wine           = Wine
+activityType.synonym.offie          = Offie
+activityType.synonym.offLicence     = Off Licence
+activityType.synonym.cornerShop     = Corner Shop
+activityType.synonym.cider          = Cider
+activityType.synonym.vodka          = Vodka
+activityType.synonym.underCounter   = Under Counter
+activityType.synonym.distill        = Distill
+activityType.synonym.fake           = Fake
 
 individualOrBusiness.title = Are you reporting an individual or a business?
 individualOrBusiness.heading = Are you reporting an individual or a business?
