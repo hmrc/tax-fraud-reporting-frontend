@@ -91,7 +91,7 @@ activityType.name.vatRefund                    = Hawliadau Ad-daliadau TAW ffug
 activityType.name.brexit                       = Twyll yn ymwneud â Brexit
 activityType.name.charities                    = Twyll yn ymwneud ag elusennau
 activityType.name.furlough                     = Twyll yn ymwneud â ffyrlo
-activityType.name.importExport                 = Twyll yn ymwneud â mewnforio ac allforio
+activityType.name.importExport                 = Twyll yn ymwneud â mewnforio ac allforio-no
 activityType.name.selfAssessment               = Twyll yn ymwneud â Threth Incwm Hunanasesiad
 activityType.name.privateSecurity              = Twyll yn ymwneud â’r diwydiant diogelwch preifat
 activityType.name.vatRelated                   = Twyll yn ymwneud â TAW
@@ -147,6 +147,31 @@ activityType.synonym.mushrooms    = Madarch
 activityType.synonym.joint        = Mariwana
 activityType.synonym.blunt        = Blunt
 activityType.synonym.coke         = cocên
+
+# mostBenefits
+activityType.synonym.universalCredit = Credyd Cynhwysol
+activityType.synonym.claiming = Hawlio
+activityType.synonym.disability = Anabledd
+activityType.synonym.carer = Gofalwr
+activityType.synonym.savings = Cynilion
+activityType.synonym.abroad = Tramor
+activityType.synonym.livingAlone = Byw ar eich pen eich hun
+activityType.synonym.working = Gweithio
+
+# betting
+activityType.synonym.gambling = Hapchwarae
+activityType.synonym.gbd_long = Toll Fetio Gyffredinol
+activityType.synonym.gbd      = GBD
+activityType.synonym.pbd_long = Toll Cronfa Fetio
+activityType.synonym.pbd      = PBD
+activityType.synonym.rgd_long = Toll hapchwarae o bell
+activityType.synonym.rgd      = RGD
+activityType.synonym.gamble   = Hapchwarae
+activityType.synonym.lottery  = Loteri
+activityType.synonym.raffle   = Raffl
+activityType.synonym.licence  = Trwydded
+activityType.synonym.bet      = Betio
+activityType.synonym.casino   = casino
 
 # avoidingTax
 activityType.synonym.avoidance         = Arbed treth
@@ -377,7 +402,7 @@ activityType.synonym.hidden          = Wedi’i guddio
 
 # laundering
 activityType.synonym.transfer       = Trosglwyddo
-activityType.synonym.accounts       = Cyfrifon
+activityType.synonym.accounts       = Cyfrif
 activityType.synonym.taxHaven       = Lloches Treth
 activityType.synonym.hawala         = Hawala
 activityType.synonym.moneyServices  = Gwasanaethau arian
@@ -390,7 +415,7 @@ activityType.synonym.proceeds       = Enillion
 activityType.synonym.poca           = Deddf Enillion Troseddau (POCA)
 activityType.synonym.money          = Arian
 activityType.synonym.launder        = Gwyngalchu
-activityType.synonym.international  = Rhyngwlado
+activityType.synonym.international  = Rhyngwladol
 
 # minimumWage
 activityType.synonym.underpayment      = Tandaliad
@@ -548,7 +573,14 @@ activityType.synonym.bank     = Banc
 activityType.synonym.deposit  = Adnau
 
 # universalCredit
-# All synonyms covered earlier.
+activityType.synonym.benefit = Budd-dal
+activityType.synonym.claiming = Hawlio
+activityType.synonym.disability = Anabledd
+activityType.synonym.carer = Gofalwr
+activityType.synonym.savings = Cynilion
+activityType.synonym.abroad = Tramor
+activityType.synonym.livingAlone = Byw ar eich pen eich hun
+activityType.synonym..working = Gweithio
 
 # plasticPackaging
 activityType.synonym.plastic       = plastig
