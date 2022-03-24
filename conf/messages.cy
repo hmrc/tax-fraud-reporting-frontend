@@ -115,6 +115,273 @@ activityType.name.plasticPackaging             = Twyll yn ymwneud â Threth Pecy
 # Synonyms are associated with their corresponding activity names
 # in the activityTypes.conf file.
 
+# drugs
+activityType.synonym.heroin       = Heroin
+activityType.synonym.cocaine      = Cocên
+activityType.synonym.weed         = Weed
+activityType.synonym.marijuana    = Mariwana
+activityType.synonym.opioids      = Opioids
+activityType.synonym.cannabis     = Canabis
+activityType.synonym.meth         = Meth
+activityType.synonym.amphetamines = Amffetaminau
+activityType.synonym.ecstasy      = Ecstasi
+activityType.synonym.mdma         = MDMA
+activityType.synonym.pills        = Tabledi
+activityType.synonym.lsd          = LSD
+activityType.synonym.speed        = Speed
+activityType.synonym.narcotics    = Cyffuriau
+activityType.synonym.dope         = Mariwana
+activityType.synonym.crack        = Crac
+activityType.synonym.ketamine     = Cetamin
+activityType.synonym.mushrooms    = Madarch
+activityType.synonym.joint        = Mariwana
+activityType.synonym.blunt        = Blunt
+activityType.synonym.coke         = cocên
+
+# avoidingTax
+activityType.synonym.avoidance         = Arbed treth
+activityType.synonym.umbrellaCompanies = Cwmnïau ambarél
+activityType.synonym.offshore          = Alltraeth
+activityType.synonym.evasion           = Osgoi treth
+activityType.synonym.account           = Cyfrif
+activityType.synonym.payroll           = Y gyflogres
+activityType.synonym.outsource         = Allanoli
+activityType.synonym.taxEvasion        = osgoi treth
+
+# borderCrime
+activityType.synonym.port  = Porthladd
+activityType.synonym.ferry = Fferi
+activityType.synonym.plane = Awyren
+activityType.synonym.force = Llu
+
+# offPayrollWorking
+activityType.synonym.contractor = Contractwr
+activityType.synonym.employment = Cyflogaeth
+
+# statutorySickPay
+activityType.synonym.illness = Salwch
+activityType.synonym.disability = Anabledd
+
+# constructionIndustryScheme
+activityType.synonym.cis      = CIS
+activityType.synonym.building = Adeilad
+activityType.synonym.foreman  = Fforman
+activityType.synonym.site     = Safle
+activityType.synonym.trade    = Masnach
+
+# eatOutToHelpOut
+activityType.synonym.eotho      = Bwyta Allan i Helpu Allan (EOTHO)
+activityType.synonym.restaurant = Bwytai
+activityType.synonym.takeaway   = Tecawê
+
+# incomeSupport
+activityType.synonym.seiss        = SEISS
+activityType.synonym.covid        = COVID
+activityType.synonym.grant        = Grant
+activityType.synonym.corona       = Corona
+activityType.synonym.selfEmployed = Hunangyflogedig
+
+# childBenefits
+activityType.synonym.csa          = Asiantaeth Cynnal Plant (CSA)
+activityType.synonym.cms          = Gwasanaeth Cynhaliaeth Plant (CMS)
+activityType.synonym.maintenance  = Gwaith cynnal a chadw
+activityType.synonym.kid          = Plentyn
+activityType.synonym.education    = Addysg
+activityType.synonym.school       = Ysgol
+activityType.synonym.benefitFraud = Twyll Budd-daliadau
+
+# taxCredit
+activityType.synonym.childTaxCredit   = Credyd Treth Plant
+activityType.synonym.workingTaxCredit = Credyd Treth Gwaith
+activityType.synonym.taxCredit        = Credyd Treth
+activityType.synonym.benefitFraud     = Twyll Budd-daliadau
+activityType.synonym.work             = Gwaith
+activityType.synonym.partner          = Partner
+activityType.synonym.fraud            = Twyll
+
+# vatRefund
+activityType.synonym.vatRepaymentFraud = Twyll Ad-dalu TAW
+activityType.synonym.loanRepayment     = Benthyciad Myfyriwr
+activityType.synonym.valueAddedTax     = Treth Ar Werth
+activityType.synonym.vatFraud          = Twyll TAW
+
+# brexit
+activityType.synonym.eu        = Yr UE
+activityType.synonym.rules     = Rheolau
+activityType.synonym.document  = Dogfen
+activityType.synonym.europe    = Ewrop
+activityType.synonym.border    = Ffin
+activityType.synonym.movement  = Symudiad
+activityType.synonym.ireland   = Iwerddon
+activityType.synonym.irish     = Gwyddelig
+activityType.synonym.port      = Porthladd
+activityType.synonym.transport = Cludiant
+activityType.synonym.hgv       = HGV
+activityType.synonym.transit   = Cludo
+
+# charities
+activityType.synonym.charity           = Elusen
+activityType.synonym.donation          = Cyfraniad
+activityType.synonym.misrepresentation = Camgyflwyno
+activityType.synonym.goodwill          = Ewyllys da
+activityType.synonym.giftAid           = Rhodd Cymorth
+activityType.synonym.relief            = Rhyddhad
+activityType.synonym.registered        = Wedi cofrestru
+
+# furlough
+activityType.synonym.cjrs      = Cynllun Cadw Swyddi yn sgil Coronafeirws (CJRS)
+activityType.synonym.furlough  = Ffyrlo
+activityType.synonym.cjrs_long = Cynllun Cadw Swyddi yn sgil Coronafeirws
+
+# importExport
+activityType.synonym.citex            = CITEX
+activityType.synonym.customs          = Tollau
+activityType.synonym.tradeAndExcise   = Masnach ac Ecséis Rhyngwladol
+activityType.synonym.livestock        = Da byw
+activityType.synonym.transport        = Cludiant
+activityType.synonym.carnet           = Carnet
+activityType.synonym.tir              = TIR
+activityType.synonym.communityTransit = Tramwy’r Gymuned
+activityType.synonym.customs          = Tollau
+activityType.synonym.border           = Ffin
+activityType.synonym.courier          = Cludwr
+activityType.synonym.goods            = Nwyddau
+activityType.synonym.agent            = Asiant
+activityType.synonym.shipping         = Cludiant
+activityType.synonym.van              = Fan
+
+# selfAssessment
+activityType.synonym.itsa              = Hunanasesiad Treth Incwm (ITSA)
+activityType.synonym.workingCashInHand = Gweithio ar gyfer arian mewn llaw
+activityType.synonym.selfEmployed      = Hunangyflogedig
+activityType.synonym.offRecord         = Oddi ar y cofnod
+activityType.synonym.offBook           = Oddi ar y llyfr
+activityType.synonym.money             = Arian
+activityType.synonym.backPocket        = Poced ôl
+activityType.synonym.sole              = Unig
+activityType.synonym.declare           = Datgan
+activityType.synonym.trader            = Masnachwr
+activityType.synonym.cash              = Arian parod
+activityType.synonym.undeclared        = Heb ei ddatgan
+activityType.synonym.hide              = Cuddio
+
+# privateSecurity
+activityType.synonym.sia             = SIA
+activityType.synonym.bouncer         = Dryswr
+activityType.synonym.doorman         = Porthor
+activityType.synonym.closeProtection = Amddiffyn Agos
+activityType.synonym.guard           = Gwarchodwr
+activityType.synonym.bodyguard       = gwarchodwr
+
+# vatRelated
+activityType.synonym.company = Cwmni
+activityType.synonym.invoice = Anfoneb
+activityType.synonym.bill    = Bill
+activityType.synonym.receipt = Derbynneb
+activityType.synonym.account = Cyfrif
+activityType.synonym.cash    = Arian parod
+
+# humanTrafficking
+activityType.synonym.human      = Dynol
+activityType.synonym.people     = Pobl
+activityType.synonym.harbouring = Llochesu
+activityType.synonym.exploit    = Cymryd mantais
+
+# illegalFlowOfMoney
+activityType.synonym.illicitFinance = Cyllid anghyfreithlon
+activityType.synonym.laundering     = Gwyngalchu
+activityType.synonym.transfer       = Trosglwyddo
+activityType.synonym.dirty          = Brwnt
+activityType.synonym.move           = Symud
+activityType.synonym.gang           = Gang
+activityType.synonym.criminal       = Troseddwr
+activityType.synonym.stash          = Celu
+activityType.synonym.clean          = Glân
+activityType.synonym.hawala         = Hawala
+activityType.synonym.money          = Arian
+activityType.synonym.exchange       = Cyfnewid
+
+# immigration
+activityType.synonym.immigrant = Mewnfudwr
+activityType.synonym.illegal   = Anghyfreithlon
+activityType.synonym.refugee   = Ffoadur
+activityType.synonym.asylum    = Ceisiwr
+activityType.synonym.seeker    = Lloches
+activityType.synonym.migrant   = Mewnfudwr
+
+# redDiesel
+activityType.synonym.commodityFraud = Twyll nwyddau
+activityType.synonym.fuel           = Tanwydd
+activityType.synonym.petrol         = Petrol
+activityType.synonym.farm           = Fferm
+activityType.synonym.agriculture    = Amaethyddiaeth
+activityType.synonym.green          = Gwyrdd
+activityType.synonym.car            = Car
+activityType.synonym.hgv            = HGV
+activityType.synonym.vehicle        = Cerbyd
+activityType.synonym.van            = Fan
+activityType.synonym.road           = Ffyrdd
+activityType.synonym.tank           = Tanc
+activityType.synonym.gas            = Nwy
+activityType.synonym.kerosene       = Cerosîn
+
+# vatFreeImports
+activityType.synonym.carouselFraud      = Twyll carwsél
+activityType.synonym.mticFraud          = Twyll masnachwr coll o fewn y gymuned (MTIC)
+activityType.synonym.missingTraderFraud = Twyll gan fasnachwyr coll
+activityType.synonym.movement           = Symudiad
+activityType.synonym.warehouse          = Warws
+
+# employmentStatus
+activityType.synonym.status           = OCGau
+activityType.synonym.register         = Cyllid troseddol
+activityType.synonym.declare          = Troseddau Cyfundrefnol
+activityType.synonym.incorrect        = Troseddau
+
+# landfillAndWaste
+activityType.synonym.landfill    = Tirlenwi
+activityType.synonym.waste       = gwastraff
+activityType.synonym.rubbish     = Sbwriel
+activityType.synonym.dump        = Dympio
+activityType.synonym.trash       = Sbwriel
+activityType.synonym.toxic       = Gwenwynig
+activityType.synonym.recycle     = Ailgylchu
+activityType.synonym.green       = gwyrdd
+activityType.synonym.disposal    = Gwaredu
+activityType.synonym.environment = Amgylchedd
+activityType.synonym.tip         = Awgrym
+activityType.synonym.flyTipping  = tipio anghyfreithlon
+
+# organisedCrime
+activityType.synonym.ocg             = OCGs
+activityType.synonym.criminalFinance = Cyllid troseddol
+activityType.synonym.organisedCrime  = Troseddau Cyfundrefnol
+activityType.synonym.crime           = Troseddau
+activityType.synonym.offence         = Trosedd
+activityType.synonym.dirty           = Brwnt
+activityType.synonym.dodgy           = Amheus
+activityType.synonym.poca            = Deddf Enillion Troseddau (POCA)
+activityType.synonym.confiscate      = Atafaelu
+activityType.synonym.stash           = Celu
+activityType.synonym.hidden          = Wedi’i guddio
+
+# laundering
+activityType.synonym.transfer       = Trosglwyddo
+activityType.synonym.accounts       = Cyfrifon
+activityType.synonym.taxHaven       = Lloches Treth
+activityType.synonym.hawala         = Hawala
+activityType.synonym.moneyServices  = Gwasanaethau arian
+activityType.synonym.moneyBureau    = Canolfan Arian
+activityType.synonym.bureau         = Canolfan
+activityType.synonym.bureauDeChange = Canolfan Newid Arian
+activityType.synonym.clean          = Glân
+activityType.synonym.dirty          = Brwnt
+activityType.synonym.proceeds       = Enillion
+activityType.synonym.poca           = Deddf Enillion Troseddau (POCA)
+activityType.synonym.money          = Arian
+activityType.synonym.launder        = Gwyngalchu
+activityType.synonym.international  = Rhyngwlado
+
 # minimumWage
 activityType.synonym.underpayment      = Tandaliad
 activityType.synonym.underpaid         = Tandalu
