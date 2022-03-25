@@ -85,6 +85,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index, CheckMode)
     case BusinessAddressConfirmationPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.Address, CheckMode)
+    case SelectConnectionBusinessPage(index)    => selectConnectionBusinessCheckRoute(_, index)
     case p: IndexedConfirmationPage => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
     case _                          => _ => routes.CheckYourAnswersController.onPageLoad
   }
@@ -235,6 +236,12 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
     else
       routes.AddAnotherPersonController.onPageLoad(NormalMode)
+
+  private def selectConnectionBusinessCheckRoute(answers: UserAnswers, index: Index): Call =
+    if (answers.isBusinessJourney)
+      routes.CheckYourAnswersController.onPageLoad
+    else
+      routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
 
   private def individualDateFormatPageCheckRoutes(answers: UserAnswers, index: Index): Call =
     answers.get(IndividualDateFormatPage(index)).map {

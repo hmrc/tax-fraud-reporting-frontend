@@ -1379,6 +1379,27 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         }
       }
 
+      "must go from select connection business page" - {
+
+        "to check your submission page for business journey" in {
+          val answers = UserAnswers("id").set(IndividualOrBusinessPage, IndividualOrBusiness.Business).success.value
+          navigator.nextPage(
+            SelectConnectionBusinessPage(Index(0)),
+            CheckMode,
+            answers
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+        "to check individual information check after updating business details" in {
+          val answers = UserAnswers("id").set(IndividualOrBusinessPage, IndividualOrBusiness.Individual).success.value
+          navigator.nextPage(
+            SelectConnectionBusinessPage(Index(0)),
+            CheckMode,
+            answers
+          ) mustBe routes.IndividualCheckYourAnswersController.onPageLoad(Index(0), CheckMode)
+        }
+
+      }
+
     }
   }
 }
