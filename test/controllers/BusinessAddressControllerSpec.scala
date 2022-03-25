@@ -110,7 +110,11 @@ class BusinessAddressControllerSpec extends AnyFlatSpec with MockitoSugar with S
     }
 
   it should "respond with status 200 given a request with a cached answer" in
-    scenario(Json.obj("businessAddress" -> Address(addressLine1 = Some("mockLine1"), country = "gb"))) {
+    scenario(
+      Json.obj(
+        "businessAddress" -> Address(addressLine1 = Some("221b Baker St"), postcode = Some("NW1 6XE"), country = "gb")
+      )
+    ) {
       (userAnswers, controller) =>
         val requestWithCache =
           fakeDataRequest(Json.obj("nominals" -> Seq(userAnswers)))
