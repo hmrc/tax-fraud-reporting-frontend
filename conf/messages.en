@@ -165,6 +165,26 @@ activityType.synonym.joint        = Joint
 activityType.synonym.blunt        = Blunt
 activityType.synonym.coke         = Coke
 
+# universalCredit
+activityType.synonym.benefit = Benefit
+activityType.synonym.claiming = Claiming
+activityType.synonym.disability = Disability
+activityType.synonym.carer = Carer
+activityType.synonym.savings = Savings
+activityType.synonym.abroad = Abroad
+activityType.synonym.livingAlone = Living alone
+activityType.synonym..working = Working
+
+# mostBenefits
+activityType.synonym.universalCredit = Universal Credit
+activityType.synonym.claiming = Claiming
+activityType.synonym.disability = Disability
+activityType.synonym.carer = Carer
+activityType.synonym.savings = Savings
+activityType.synonym.abroad = Abroad
+activityType.synonym.livingAlone = Living alone
+activityType.synonym.working = Working
+
 # avoidingTax
 activityType.synonym.avoidance         = Avoidance
 activityType.synonym.umbrellaCompanies = Umbrella Companies
