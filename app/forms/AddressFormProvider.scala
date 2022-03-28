@@ -25,7 +25,7 @@ import play.api.data.{Form, FormError, Forms}
 import scala.language.postfixOps
 
 class AddressFormProvider extends Mappings {
-  private val maxLen      = 256
+  private val maxLen      = 255
   private val errorPrefix = "address.error"
 
   def apply(): Form[Address] = Form(

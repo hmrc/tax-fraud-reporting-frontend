@@ -1188,10 +1188,10 @@ address.townOrCity = Tref/dinas
 address.postCode   = Cod post (dweisol)
 address.country    = Gwlad
 
-address.error.line1.length = Nodwch linell gyntaf y cyfeiriad gan ddefnyddio 256 o gymeriadau neu lai
-address.error.line2.length = Nodwch ail linell y cyfeiriad gan ddefnyddio 256 o gymeriadau neu lai
-address.error.line3.length = Nodwch drydedd linell y cyfeiriad gan ddefnyddio 256 o gymeriadau neu lai
-address.error.townOrCity.length = Nodwch dref neu ddinas ddefnyddio 256 o gymeriadau neu lai
+address.error.line1.length = Nodwch linell gyntaf y cyfeiriad gan ddefnyddio 255 o gymeriadau neu lai
+address.error.line2.length = Nodwch ail linell y cyfeiriad gan ddefnyddio 255 o gymeriadau neu lai
+address.error.line3.length = Nodwch drydedd linell y cyfeiriad gan ddefnyddio 255 o gymeriadau neu lai
+address.error.townOrCity.length = Nodwch dref neu ddinas ddefnyddio 255 o gymeriadau neu lai
 
 ## Answers Summary
 individualAddress.change.hidden = Cyfeiriad cartref
