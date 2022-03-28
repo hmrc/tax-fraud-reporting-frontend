@@ -18,7 +18,8 @@ package controllers
 
 import base.SpecBase
 import models._
-import navigation.{FakeNavigator, Navigator}
+import models.backend.Address
+import navigation.Navigator
 import pages._
 import play.api.http.Status.{OK, SEE_OTHER}
 import play.api.inject
@@ -57,8 +58,8 @@ class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryList
         .set(IndividualAgePage(Index(0)), testAge).success.value
         .set(IndividualDateOfBirthPage(Index(0)), LocalDate.now).success.value
         .set(
-          IndividualAddressConfirmationPage(Index(0)),
-          AddressResponse(List("line"), None, Some("postcode"), Some("country"))
+          IndividualAddressPage(Index(0)),
+          Address(Some("123 Example Street"), None, None, Some("Townsville"), Some("postcode"), "country")
         ).success.value
         .set(
           IndividualContactDetailsPage(Index(0)),
@@ -70,8 +71,8 @@ class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryList
         .set(BusinessNamePage(Index(0)), "name").success.value
         .set(TypeBusinessPage(Index(0)), "businessType").success.value
         .set(
-          BusinessAddressConfirmationPage(Index(0)),
-          AddressResponse(List("line"), None, Some("postcode"), Some("country"))
+          BusinessAddressPage(Index(0)),
+          Address(Some("123 Example Street"), None, None, Some("Townsville"), Some("postcode"), "country")
         ).success.value
         .set(
           BusinessContactDetailsPage(Index(0)),

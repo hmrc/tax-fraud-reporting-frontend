@@ -18,6 +18,7 @@ package controllers
 
 import base.SpecBase
 import models._
+import models.backend.Address
 import pages._
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -37,8 +38,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(BusinessNamePage(Index(0)), "name").success.value
         .set(TypeBusinessPage(Index(0)), "businessType").success.value
         .set(
-          BusinessAddressConfirmationPage(Index(0)),
-          AddressResponse(List("line"), None, Some("postcode"), Some("country"))
+          BusinessAddressPage(Index(0)),
+          Address(Some("123 Example Street"), None, None, Some("Townsville"), Some("postcode"), "country")
         ).success.value
         .set(
           BusinessContactDetailsPage(Index(0)),
@@ -56,8 +57,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(IndividualAgePage(Index(0)), 45).success.value
         .set(IndividualDateOfBirthPage(Index(0)), LocalDate.now).success.value
         .set(
-          IndividualAddressConfirmationPage(Index(0)),
-          AddressResponse(List("line"), None, Some("postcode"), Some("country"))
+          IndividualAddressPage(Index(0)),
+          Address(Some("1234 Example Street"), None, None, Some("Townsville"), Some("postcode"), "country")
         ).success.value
         .set(
           IndividualContactDetailsPage(Index(0)),
@@ -92,15 +93,13 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         )
 
         val yourDetails = SummaryListViewModel(
-          Seq(
-            YourContactDetailsSummary.rows(answers)(messages(application)).toList ++
-              SupportingDocumentSummary.row(answers)(messages(application)).toList ++
-              DocumentationDescriptionSummary.row(answers)(messages(application))
-          ).flatten
+          YourContactDetailsSummary.rows(answers)(messages(application)) ++
+            SupportingDocumentSummary.row(answers)(messages(application)).toList ++
+            DocumentationDescriptionSummary.row(answers)(messages(application))
         )
 
         val provideContact =
-          SummaryListViewModel(Seq(ProvideContactDetailsSummary.row(answers)(messages(application))).flatten)
+          SummaryListViewModel(ProvideContactDetailsSummary.row(answers)(messages(application)).toSeq)
 
         val businessDetails = SummaryListViewModel(
           Seq(

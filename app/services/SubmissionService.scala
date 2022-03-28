@@ -52,7 +52,7 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
       getAnswer(answers, ActivitySourceOfInformationPage)
     ).parMapN { (activityTypeNameKey, valueFraud, howManyKnow, nominals, informationSource) =>
       FraudReportBody(
-        activityType = ActivityType translate activityTypeNameKey,
+        activityType = messages(s"activityType.name.$activityTypeNameKey"),
         nominals = nominals,
         valueFraud = Some(valueFraud),
         durationFraud = getFraudDuration(answers),
@@ -112,7 +112,7 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
     name = answers.get(IndividualNamePage(Index(index))).map { name =>
       Name(forename = name.firstName, surname = name.lastName, middleName = name.middleName, alias = name.aliases)
     },
-    address = answers.get(IndividualAddressConfirmationPage(Index(index))).map(getAddress),
+    address = answers.get(IndividualAddressPage(Index(index))),
     contact = answers.get(IndividualContactDetailsPage(Index(index))).map { details =>
       Contact(landline = details.landlineNumber, mobile = details.mobileNumber, email = details.email)
     },
@@ -130,7 +130,7 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
   } yield Business(
     businessName = answers.get(BusinessNamePage(Index(index))),
     businessType = answers.get(TypeBusinessPage(Index(index))),
-    address = answers.get(BusinessAddressConfirmationPage(Index(index))).map(getAddress),
+    address = answers.get(BusinessAddressPage(Index(index))),
     contact = answers.get(BusinessContactDetailsPage(Index(index))).map { details =>
       Contact(landline = details.landlineNumber, mobile = details.mobileNumber, email = details.email)
     },
@@ -142,16 +142,6 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
       case _                                     => messages(s"selectConnectionBusiness.$connection")
     }
   )
-
-  private def getAddress(address: AddressResponse): Address =
-    Address(
-      addressLine1 = address.lines.headOption,
-      addressLine2 = address.lines.lift(1),
-      addressLine3 = Some(address.lines.drop(2).mkString(", ")).filter(_.nonEmpty),
-      townCity = address.town,
-      postcode = address.postcode,
-      country = address.country
-    )
 
   private def getReporter(answers: UserAnswers): Option[Reporter] =
     for {

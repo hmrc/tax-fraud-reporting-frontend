@@ -16,46 +16,46 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.{components => hmrcComponent}
 @import viewmodels.LabelSize
-@import play.api.libs.json.Json
+@import viewmodels.govuk.AutocompleteOption
+@import play.api.libs.json.{Json, JsValue}
 
 @this(select: GovukSelect)
 
 @(
-form: Form[String],
-id: String,
-name: String,
-label: String,
-isPageHint: Boolean = true,
-isPageHeading: Boolean = true,
-headingMessageArgs: Seq[String] = Seq(),
-hint: Option[String],
-activityTypes: Iterable[ActivityType],
-labelClass: Boolean = false
+        field: Field,
+        id: String,
+        name: String,
+        label: String,
+        isPageHint: Boolean = true,
+        isPageHeading: Boolean = true,
+        headingMessageArgs: Seq[String] = Seq(),
+        hint: Option[String],
+        options: Seq[AutocompleteOption],
+        labelClass: Boolean = false
 )(implicit messages: Messages)
 
 <link href='@controllers.routes.Assets.versioned("stylesheets/autocomplete.min.css")' media="all" rel="stylesheet" type="text/css" />
 
 @select(hmrcComponent.Select(
-id = id,
-name = name,
-label = if (isPageHeading) {
-LabelViewModel(messages(label)).asPageHeading((LabelSize.ExtraLarge))
-} else {
-LabelViewModel(messages(label))
-},
-describedBy = hint map { _ => s"$id-hint" },
-errorMessage = form(id).error map { fe => ErrorMessage(content = messages(fe.message)) },
-hint = hint map { c => Hint(content = messages(c)) },
-items = SelectItem(attributes = Map("label" -> " ")) +: activityTypes.map {
-case ActivityType(key, name, _) =>
-SelectItem(
-value = Some(key),
-text = name,
-selected = form.value contains key,
-attributes = Map("id" -> s"$id-$key")
-)
-}.toSeq,
-formGroupClasses = "form-field-group"
+    id = id,
+    name = name,
+    label = if (isPageHeading) {
+        LabelViewModel(messages(label)).asPageHeading((LabelSize.ExtraLarge))
+    } else {
+        LabelViewModel(messages(label))
+    },
+    describedBy = hint.map(_ => s"$id-hint"),
+    errorMessage = field.error.map(fe ⇒ ErrorMessage(content = messages(fe.message),visuallyHiddenText = Some(messages("govukErrorMessage.visuallyHiddenText")))),
+    hint = hint.map(c => Hint(content = messages(c))),
+    items = SelectItem(attributes= Map("label" -> " ")) +: options.map {
+        case AutocompleteOption(value, text, _) ⇒ SelectItem(
+            value = Some(value),
+            text = text,
+            selected = field.value contains value,
+            attributes = Map("id" → (id + s"-$value"))
+        )
+    },
+    formGroupClasses = "form-field-group"
 ))
 
 <script src="@controllers.routes.Assets.versioned("javascripts/autocomplete.min.js")" ></script>
@@ -78,7 +78,7 @@ formGroupClasses = "form-field-group"
             let element = !!confirmed ? confirmed : foundInData
 
             if(!!element) {
-                document.querySelector('select[name="@id"]').value = element.key || element.value;
+                document.querySelector('select[name="@id"]').value = element.value;
 
             }
             else {
@@ -88,29 +88,24 @@ formGroupClasses = "form-field-group"
         },
         templates: {
             inputValue: function (result) {
-                return (!!result && result.name ? result.name : '');
+                return (!!result && result.text ? result.text : '');
             },
             suggestion: function (result) {
-                return !!result.name ? result.name : result;
+                return !!result.text ? result.text : result;
             }
         }
     })
 
-    const unsortedResults = @Html(Json toJson activityTypes toString);
-    const results = unsortedResults.sort( (a, b) => a.name.localeCompare(b.name) );
-    console.log(results);
+    const unsortedResults = @{Html(Json toJson options toString)};
+    const results = unsortedResults.sort( (a, b) => a.text.localeCompare(b.text) );
 
-    function includes(string, substring) {
-      return string.toLowerCase().includes(substring.toLowerCase());
+    function includes(string, query){
+      return string.toLowerCase().includes(query.toLowerCase());
     }
 
     function customSuggest(query, syncResults) {
-      syncResults( query?
-        results.filter( result => {
-          const matchesSynonym = result.synonyms.some( synonym => includes(synonym, query) );
-          return matchesSynonym || includes(result.name, query);
-        }):
-        results
-      );
+        syncResults(query ? results.filter( result =>
+            includes(result.searchTerms, query) || includes(result.text, query)
+        ) : results)
     }
 </script>

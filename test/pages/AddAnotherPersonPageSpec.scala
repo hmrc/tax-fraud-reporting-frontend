@@ -16,7 +16,7 @@
 
 package pages
 
-import models.{AddAnotherPerson, Index}
+import models.AddAnotherPerson
 import pages.behaviours.PageBehaviours
 
 class AddAnotherPersonPageSpec extends PageBehaviours {

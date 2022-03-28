@@ -18,7 +18,7 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{CheckMode, Index, Mode, UserAnswers}
-import pages.BusinessAddressConfirmationPage
+import pages.BusinessAddressPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
@@ -31,12 +31,17 @@ object BusinessAddressSummary {
   def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
     messages: Messages
   ): Option[SummaryListRow] = {
-    val answer = answers.get(BusinessAddressConfirmationPage(Index(index))).map {
+    val answer = answers.get(BusinessAddressPage(Index(index))).map {
       answer =>
-        List(answer.lines, answer.postcode.toList, answer.country.toList).flatten.map(HtmlFormat.escape).mkString(
-          "<br/>"
-        )
-    }.getOrElse(messages("site.unknown"))
+        List(
+          answer.addressLine1,
+          answer.addressLine2,
+          answer.addressLine3,
+          answer.townCity,
+          answer.postcode,
+          Some(messages(s"country.${answer.country}.text"))
+        ).flatten map HtmlFormat.escape mkString "<br/>"
+    } getOrElse messages("site.unknown")
 
     Some(
       SummaryListRowViewModel(
@@ -45,7 +50,7 @@ object BusinessAddressSummary {
         actions = Seq(
           ActionItemViewModel(
             "site.change",
-            routes.BusinessAddressRedirectController.onPageLoad(Index(index), mode).url
+            routes.BusinessAddressController.onPageLoad(Index(index), mode).url
           ).withVisuallyHiddenText(messages("businessAddress.change.hidden"))
         )
       )

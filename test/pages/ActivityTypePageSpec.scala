@@ -17,7 +17,6 @@
 package pages
 
 import base.MockActivityTypes
-import models.ActivityType
 import org.scalacheck.{Arbitrary, Gen}
 import pages.behaviours.PageBehaviours
 import play.api.libs.json.{Format, JsString}

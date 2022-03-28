@@ -38,7 +38,6 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(ActivityTimePeriodPage.type, JsValue)] ::
       arbitrary[(WhenActivityHappenPage.type, JsValue)] ::
       arbitrary[(ApproximateValuePage.type, JsValue)] ::
-      arbitrary[(IndividualAddressConfirmationPage, JsValue)] ::
       arbitrary[(BusinessContactDetailsPage, JsValue)] ::
       arbitrary[(ReferenceNumbersPage, JsValue)] ::
       arbitrary[(SelectConnectionBusinessPage, JsValue)] ::
@@ -57,7 +56,6 @@ trait UserAnswersGenerator extends TryValues {
       arbitrary[(IndividualInformationPage, JsValue)] ::
       arbitrary[(IndividualOrBusinessPage.type, JsValue)] ::
       arbitrary[(ActivityTypePage.type, JsValue)] ::
-      arbitrary[(BusinessAddressConfirmationPage, JsValue)] ::
       Nil
 
   implicit lazy val arbitraryUserData: Arbitrary[UserAnswers] = {

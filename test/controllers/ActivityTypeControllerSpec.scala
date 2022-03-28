@@ -19,20 +19,19 @@ package controllers
 import base.SpecBase
 import forms.ActivityTypeFormProvider
 import models.{NormalMode, UserAnswers}
-import navigation.{Navigator}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import org.scalatest.Assertion
 import pages.ActivityTypePage
+import play.api.Application
+import play.api.data.Form
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.ActivityTypeView
 import services.ActivityTypeService
-import play.api.Application
-import play.api.data.Form
-import org.scalatest.Assertion
+import views.html.ActivityTypeView
 
 import scala.concurrent.Future
 

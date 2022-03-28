@@ -43,14 +43,7 @@ class ReferenceNumbersFormProviderSpec extends StringFieldBehaviours {
   }
 
   ".employeeRefNo" - {
-
     val fieldName = "employeeRefNo"
-
-    val validData = for {
-      firstDigits <- Gen.listOfN(3, Gen.alphaChar).map(_.mkString)
-      numDigits   <- Gen.choose(1, 10)
-      lastChars   <- Gen.listOfN(numDigits, Gen.alphaNumChar)
-    } yield s"$firstDigits/$lastChars"
 
     "bind values with spaces" in {
 
