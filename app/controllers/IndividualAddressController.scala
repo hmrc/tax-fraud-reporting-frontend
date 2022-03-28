@@ -25,6 +25,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import viewmodels.IndividualPart
 import views.html.AddressView
 
 import javax.inject.Inject
@@ -52,13 +53,13 @@ class IndividualAddressController @Inject() (
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, index, mode, forBusiness = false))
+      Ok(view(preparedForm, index, mode, IndividualPart(false)))
   }
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, forBusiness = true))),
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, IndividualPart(false)))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualAddressPage(index), value))

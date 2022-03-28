@@ -19,6 +19,8 @@
 @import models.backend.Address
 @import views.html.components.Autocomplete
 @import play.api.Configuration
+@import viewmodels.LegendSize
+@import viewmodels.{BusinessPart, JourneyPart}
 
 @this(
 	layout: templates.Layout,
@@ -31,22 +33,17 @@
 	configuration: Configuration
 )
 
-@(form: Form[Address], index: Index, mode: Mode, forBusiness: Boolean)(implicit request: Request[_], messages: Messages)
+@(form: Form[Address], index: Index, mode: Mode, journeyPart: JourneyPart)(implicit request: Request[_], messages: Messages)
 
-@journeyParams = @{
-	if( forBusiness ) ("business", routes.BusinessAddressController.onSubmit(index, mode) )
-	else              ("individual", routes.IndividualAddressController.onSubmit(index, mode) )
-}
-
-@msgHeading = @{ messages( journeyParams._1 + "Address.heading" ) }
-@submissionRoute = @{ journeyParams._2 }
 
 @contentHeader = {
-	@if( !forBusiness ){
-		<span class="govuk-visually-hidden">@messages("individual.caption.text.screen.reader")</span>
-		<span class="govuk-caption-xl">@messages(s"individual.${index.display}")</span>
-	}
-	<h1 class="govuk-fieldset__legend--xl govuk-!-margin-top-0">@msgHeading</h1>
+	@if(journeyPart != BusinessPart) {
+		<span class="govuk-caption-xl">
+           <span class="govuk-visually-hidden">@messages("individual.caption.text.screen.reader")</span>
+           @messages(s"individual.${index.display}")
+        </span>
+		}
+	@messages(journeyPart.heading + "Address.heading")
 }
 
 @fields = @{ Seq(
@@ -81,8 +78,8 @@
 	)
 }
 
-@layout(pageTitle = title(form, msgHeading)) {
-	@formHelper(action = submissionRoute, 'autoComplete -> "off") {
+@layout(pageTitle = title(form, messages(journeyPart.heading + "Address.heading"))) {
+	@formHelper(action = journeyPart.addressSubmit( index, mode), 'autoComplete -> "off") {
 
 		@if(form.errors.nonEmpty) {
 			@govukErrorSummary(ErrorSummaryViewModel(form))
@@ -90,10 +87,7 @@
 
 		@fieldset(
 			Fieldset(
-				legend = Some(Legend(
-					content = HtmlContent(contentHeader)
-				)),
-				describedBy = Some("hint-text"),
+				legend = Some(LegendViewModel(HtmlContent(contentHeader)).asPageHeading(LegendSize.ExtraLarge)),
 				role = Some("group"),
 				html = content
 			)

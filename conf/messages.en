@@ -1027,6 +1027,11 @@ address.townOrCity = Town/city
 address.postCode   = Postcode (optional)
 address.country    = Country
 
+address.error.line1.length = The first address line needs to be fewer than 256 characters
+address.error.line2.length = The second address line needs to be fewer than 256 characters
+address.error.line3.length = The third address line needs to be fewer than 256 characters
+address.error.townOrCity.length = The town or city needs to be fewer than 256 characters
+
 individualAddress.checkYourAnswersLabel = Home address
 individualAddress.change.hidden = Home address
 

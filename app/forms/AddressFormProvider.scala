@@ -25,7 +25,8 @@ import play.api.data.{Form, FormError, Forms}
 import scala.language.postfixOps
 
 class AddressFormProvider extends Mappings {
-  private val maxLen = 255
+  private val maxLen      = 256
+  private val errorPrefix = "address.error"
 
   def apply(): Form[Address] = Form(
     mapping(
@@ -72,7 +73,7 @@ class AddressFormProvider extends Mappings {
             case Some(line) if line.length <= maxLen =>
               acc map { _.updated(subKey, line) }
             case Some(_) =>
-              val error = FormError(subKey, "error.length")
+              val error = FormError(subKey, s"$errorPrefix.$subKey.length")
               Left(acc.fold(_ :+ error, _ => Seq(error)))
           }
       }

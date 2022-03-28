@@ -39,7 +39,7 @@ object IndividualAddressSummary {
           answer.addressLine3,
           answer.townCity,
           answer.postcode,
-          Some(answer.country)
+          Some(messages(s"country.${answer.country}.text"))
         ).flatten map HtmlFormat.escape mkString "<br/>"
     } getOrElse messages("site.unknown")
 

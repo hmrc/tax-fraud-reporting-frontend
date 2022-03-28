@@ -25,6 +25,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import viewmodels.{BusinessPart, IndividualPart}
 import views.html.AddressView
 
 import javax.inject.Inject
@@ -47,18 +48,20 @@ class BusinessAddressController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      val journeyPart = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
       val preparedForm = request.userAnswers get BusinessAddressPage(index) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, index, mode, forBusiness = true))
+      Ok(view(preparedForm, index, mode, journeyPart))
   }
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+      val journeyPart = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
       form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, forBusiness = true))),
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, journeyPart))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessAddressPage(index), value))
