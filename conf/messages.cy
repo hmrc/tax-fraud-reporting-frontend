@@ -1217,7 +1217,7 @@ yourContactDetails.lastName = Enw olaf
 yourContactDetails.tel = Rhif ffôn
 yourContactDetails.email = Cyfeiriad e-bost (dewisol)
 yourContactDetails.memorableWord = Creu’ch dynodydd unigryw CThEM (dewisol)
-yourContactDetails.memorableWord.hint = Os ydych am gadarnhau bod cyswllt o CThEM yn ddilys ac nid yn alwr sgam, gallwn roi’ch dynodydd unigryw CThEM i chi. Peidiwch â chynnwys gwybodaeth bersonol yn eich dynodydd unigryw CThEM.
+yourContactDetails.memorableWord.hint = Os bydd CThEM yn cysylltu â chi, byddwn yn dyfynnu eich dynodwr CThEM fel y gallwch gadarnhau bod cyswllt CThEM yn ddilys. Peidiwch â chynnwys gwybodaeth bersonol yn eich dynodydd unigryw CThEM.
 yourContactDetails.checkYourAnswersLabel = eich manylion cyswllt
 yourContactDetails.error.firstName.required = Nodwch eich enw cyntaf.
 yourContactDetails.error.lastName.required = Nodwch eich enw olaf.
@@ -1295,6 +1295,7 @@ activitySourceOfInformation.change.hidden = Sut cawsoch yr wybodaeth hon
 
 technicalProblems.title = Cael help gyda phroblem dechnegol
 technicalProblems.heading = Cael help gyda phroblem dechnegol
+technicalProblems.p1 = Defnyddio’r ffurflen hon i roi gwybod am broblemau technegol yn unig.
 technicalProblems.uk.phone = ffôn yn u DU: 0800 788 887
 technicalProblems.outside.phone = ffôn y tu allan i’r DU:+44 (0)203 080 0871
 technicalProblems.weekdays.time = Dydd Llun i Ddydd Gwener: 9am i 5pm
