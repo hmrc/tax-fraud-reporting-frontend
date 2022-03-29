@@ -1031,6 +1031,7 @@ address.error.line1.length = The first address line needs to be fewer than 255 c
 address.error.line2.length = The second address line needs to be fewer than 255 characters
 address.error.line3.length = The third address line needs to be fewer than 255 characters
 address.error.townOrCity.length = The town or city needs to be fewer than 255 characters
+address.error.postcode.length = Enter a valid postcode
 
 individualAddress.checkYourAnswersLabel = Home address
 individualAddress.change.hidden = Home address

@@ -79,6 +79,6 @@ class AddressFormProviderSpec extends StringFieldBehaviours with OptionValues {
       Map("line1" -> "221B Baker St", "postCode" -> longLine, "country" -> "aa")
     val Left(bindingErrors) = form.mapping bind addressWithLongPostcode
 
-    bindingErrors mustBe Seq(FormError("postCode", "error.length"))
+    bindingErrors mustBe Seq(FormError("postCode", "address.error.postcode.length"))
   }
 }
