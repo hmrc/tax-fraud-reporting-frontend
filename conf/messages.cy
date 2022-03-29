@@ -46,9 +46,9 @@ error.required = Rhowch ateb
 error.length = Rhaid i'r mewnbwn hwn fod yn 255 nod neu lai.
 error.summary.title = Mae problem wedi codi
 
-error.addressLines.required = Rhowch o leiaf un llinell cyfeiriad neu dref.
-error.postcode.invalid      = Rhaid i'r mewnbwn hwn fod yn god post dilys y DU.
-error.country.required      = Dewiswch wlad o'r rhestr.
+error.addressLines.required = Nodwch o leiaf un llinell cyfeiriad neu dref
+error.postcode.invalid      = Nodwch god post dilys
+error.country.required      = Dewiswch wlad o'r rhestr
 
 country.ad.text = Andorra
 country.ae.text = Emiradau Arabaidd Unedig

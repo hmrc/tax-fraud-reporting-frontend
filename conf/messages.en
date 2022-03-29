@@ -46,9 +46,9 @@ error.required = Please enter a value
 error.length = This input must be 255 characters or fewer.
 error.summary.title = There is a problem
 
-error.addressLines.required = Enter at least one address line or a town.
-error.postcode.invalid      = This input must be a valid UK postcode.
-error.country.required      = Please select a country from the list.
+error.addressLines.required = Enter at least one address line or a town
+error.postcode.invalid      = Enter a valid postcode
+error.country.required      = Please select a country from the list
 
 country.ad.text = Andorra
 country.ae.text = United Arab Emirates
