@@ -1096,7 +1096,7 @@ yourContactDetails.email = Email address (optional)
 yourContactDetails.emailLabel = Email address
 yourContactDetails.memorableWord = Create a memorable HMRC identifier (optional)
 yourContactDetails.uniqueIdentifier = Memorable HMRC identifier
-yourContactDetails.memorableWord.hint = You can ask a HMRC caller to quote your HMRC identifier to confirm the contact is not a scam caller. Do not include personal information in your HMRC identifier.
+yourContactDetails.memorableWord.hint = If HMRC contact you, we will quote your HMRC identifier so that you can confirm the HMRC contact is legitimate. Do not include personal information in your HMRC identifier.
 yourContactDetails.checkYourAnswersLabel = What are your details?
 yourContactDetails.error.firstName.required = Enter your first name.
 yourContactDetails.error.lastName.required = Enter your last name.
@@ -1183,6 +1183,7 @@ addAnotherPerson.reached.maximum = You cannot add another individual as you have
 
 technicalProblems.title = Get help with technical problems
 technicalProblems.heading = Get help with technical problems
+technicalProblems.p1 = Only use this form to report technical problems.
 technicalProblems.uk.phone = Telephone in UK: 0800 788 887
 technicalProblems.outside.phone = Telephone outside UK:+44 (0)203 080 0871
 technicalProblems.weekdays.time = Monday to Friday: 9am to 5pm
