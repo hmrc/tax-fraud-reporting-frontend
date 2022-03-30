@@ -107,7 +107,11 @@ class AddressFormProvider extends Mappings {
         case None => Left(Seq(FormError("country", "error.country.required")))
         case Some("gb") =>
           Right(postCodeOpt).filterOrElse(_ forall (_ matches pattern), Seq(FormError(key, s"error.postcode.invalid")))
-        case _ => Right(postCodeOpt).filterOrElse(_ forall (_.length <= maxLen), Seq(FormError(key, s"address.error.postcode.length")))
+        case _ =>
+          Right(postCodeOpt).filterOrElse(
+            _ forall (_.length <= maxLen),
+            Seq(FormError(key, s"address.error.postcode.length"))
+          )
       }
     }
 

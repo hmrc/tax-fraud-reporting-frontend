@@ -23,7 +23,6 @@ import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
-import viewmodels.Util.sanitizeString
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
@@ -35,10 +34,10 @@ object IndividualNameSummary {
     val answer = answers.get(IndividualNamePage(Index(index)))
 
     val value = List(
-      messages("individualName.firstName")  -> sanitizeString(answer.flatMap(_.firstName)),
-      messages("individualName.middleName") -> sanitizeString(answer.flatMap(_.middleName)),
-      messages("individualName.lastName")   -> sanitizeString(answer.flatMap(_.lastName)),
-      messages("individualName.aliases")    -> sanitizeString(answer.flatMap(_.aliases))
+      messages("individualName.firstName")  -> answer.flatMap(_.firstName),
+      messages("individualName.middleName") -> answer.flatMap(_.middleName),
+      messages("individualName.lastName")   -> answer.flatMap(_.lastName),
+      messages("individualName.aliases")    -> answer.flatMap(_.aliases)
     ) map {
       case (label, valueOpt) =>
         HtmlFormat.escape(label + ": " + valueOpt.getOrElse(messages("site.unknown")))

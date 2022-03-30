@@ -39,6 +39,9 @@ class ActivitySourceOfInformationFormProvider @Inject() extends Mappings {
           "other",
           text("activitySourceOfInformation.error.otherValue.required")
             .verifying(maxLength(100, "activitySourceOfInformation.error.otherValue.maxLength"))
+            .verifying(
+              regexpRestrict(Validation.validString.toString, "activitySourceOfInformation.error.otherValue.required")
+            )
         )
       )
         .transform[ActivitySourceOfInformation](
