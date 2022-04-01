@@ -16,21 +16,9 @@
 
 package pages
 
+import models.IndividualBusinessDetails.Yes
 import models.backend.Address
-import models.{
-  BusinessContactDetails,
-  BusinessInformationCheck,
-  Index,
-  IndividualBusinessDetails,
-  IndividualConnection,
-  IndividualContactDetails,
-  IndividualDateFormat,
-  IndividualInformation,
-  IndividualName,
-  ReferenceNumbers,
-  SelectConnectionBusiness,
-  UserAnswers
-}
+import models.{BusinessContactDetails, BusinessInformationCheck, Index, IndividualBusinessDetails, IndividualConnection, IndividualContactDetails, IndividualDateFormat, IndividualInformation, IndividualName, ReferenceNumbers, SelectConnectionBusiness, UserAnswers}
 import play.api.libs.json.JsPath
 
 import java.time.LocalDate
@@ -83,7 +71,18 @@ final case class IndividualConnectionPage(index: Index)
     extends NominalsQuestionPage[IndividualConnection]("individualConnection")
 
 final case class IndividualBusinessDetailsPage(index: Index)
-    extends NominalsQuestionPage[IndividualBusinessDetails]("individualBusinessDetails")
+    extends NominalsQuestionPage[IndividualBusinessDetails]("individualBusinessDetails") {
+
+  override def cleanup(value: Option[IndividualBusinessDetails], userAnswers: UserAnswers): Try[UserAnswers] =
+    if (value exists { _ != Yes })
+      userAnswers.remove(BusinessInformationCheckPage(index)).flatMap(_.remove(BusinessNamePage(index))).flatMap(
+          _.remove(TypeBusinessPage(index))).flatMap(
+          _.remove(BusinessAddressPage(index))).flatMap(
+          _.remove(BusinessContactDetailsPage(index))).flatMap(
+          _.remove(ReferenceNumbersPage(index))).flatMap(
+        _.remove(SelectConnectionBusinessPage(index)))
+    else super.cleanup(value, userAnswers)
+}
 
 final case class IndividualConfirmRemovePage(index: Index)
     extends NominalsQuestionPage[Boolean]("individualConfirmRemove")

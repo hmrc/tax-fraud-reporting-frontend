@@ -83,15 +83,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case WhenActivityHappenPage               => whenActivityHappenCheckRoutes
     case IndividualDateFormatPage(index)      => individualDateFormatPageCheckRoutes(_, index)
     case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index, CheckMode)
-    case BusinessNamePage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Name, CheckMode)
-    case TypeBusinessPage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Type, CheckMode)
-    case ReferenceNumbersPage(index) =>
-      businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference, CheckMode)
-    case BusinessContactDetailsPage(index) =>
-      businessInformationRoutes(_, index, BusinessInformationCheck.Contact, CheckMode)
-    case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index, CheckMode)
-    case BusinessAddressPage(index) =>
-      businessInformationRoutes(_, index, BusinessInformationCheck.Address, CheckMode)
+    case BusinessInformationCheckPage(index) =>  businessInformationRoutes(_, index, CheckMode)
     case SelectConnectionBusinessPage(index) => selectConnectionBusinessCheckRoute(_, index)
     case p: IndexedConfirmationPage          => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
     case _                                   => _ => routes.CheckYourAnswersController.onPageLoad
@@ -202,6 +194,9 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
   private def individualBusinessDetailsRoutes(answers: UserAnswers, index: Index, mode: Mode): Call =
     answers.get(IndividualBusinessDetailsPage(index)).map {
       case IndividualBusinessDetails.Yes =>
+        if(answers.get(BusinessInformationCheckPage(index)).isDefined)
+          routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
+          else
         routes.BusinessInformationCheckController.onPageLoad(index, mode)
       case _ =>
         mode match {
