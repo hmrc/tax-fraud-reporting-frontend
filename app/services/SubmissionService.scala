@@ -20,7 +20,7 @@ import cats.data.NonEmptyChain
 import cats.implicits._
 import config.Service
 import models._
-import models.backend._
+import models.backend.{Address, _}
 import pages._
 import play.api.Configuration
 import play.api.http.Status.CREATED
@@ -112,7 +112,7 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
     name = answers.get(IndividualNamePage(Index(index))).map { name =>
       Name(forename = name.firstName, surname = name.lastName, middleName = name.middleName, alias = name.aliases)
     },
-    address = answers.get(IndividualAddressPage(Index(index))),
+    address = getAddress(answers.get(IndividualAddressPage(Index(index)))),
     contact = answers.get(IndividualContactDetailsPage(Index(index))).map { details =>
       Contact(landline = details.landlineNumber, mobile = details.mobileNumber, email = details.email)
     },
@@ -130,7 +130,7 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
   } yield Business(
     businessName = sanitizeOptionalString(answers.get(BusinessNamePage(Index(index)))),
     businessType = sanitizeOptionalString(answers.get(TypeBusinessPage(Index(index)))),
-    address = answers.get(BusinessAddressPage(Index(index))),
+    address = getAddress(answers.get(BusinessAddressPage(Index(index)))),
     contact = answers.get(BusinessContactDetailsPage(Index(index))).map { details =>
       Contact(landline = details.landlineNumber, mobile = details.mobileNumber, email = details.email)
     },
@@ -164,16 +164,24 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
       case whenActivityHappen => Some(messages(s"whenActivityHappen.$whenActivityHappen"))
     }
 
+  private def getAddress(address: Option[Address]): Option[Address] =
+    address map (
+      address =>
+        Address(
+          addressLine1 = sanitizeOptionalString(address.addressLine1),
+          addressLine2 = sanitizeOptionalString(address.addressLine2),
+          addressLine3 = sanitizeOptionalString(address.addressLine3),
+          townCity = sanitizeOptionalString(address.townCity),
+          postcode = sanitizeOptionalString(address.postcode),
+          country = address.country
+        )
+    )
+
   private def getInformationSource(answer: ActivitySourceOfInformation): String =
     answer match {
       case ActivitySourceOfInformation.Other(value) => value
       case _                                        => messages(s"activitySourceOfInformation.$answer")
     }
-
-  private def sanitizeString(optionalStringVal: String): Option[String] = optionalStringVal match {
-    case string if string != null => Some(string.replaceAll("\\?|\\*", ""))
-    case _                        => Option.empty
-  }
 
   private def sanitizeOptionalString(string: Option[String]): Option[String] =
     string.filter(_.nonEmpty).map(_ replaceAll ("\\?|\\*", ""))
