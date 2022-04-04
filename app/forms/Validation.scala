@@ -23,6 +23,6 @@ object Validation {
   val vatRegistrationPattern: Regex = "(?:[Gg][Bb])?\\d{9}".r.anchored
   val utrPattern: Regex             = "\\d{10}".r.anchored
   val payeReferencePattern: Regex   = """\d{3}/[A-Za-z0-9]{1,10}""".r.anchored
-  val validString: Regex            = "\\?|\\*".r.unanchored
-  val validAddress: Regex            = "^(?!\\?|\\*).*".r.unanchored
+  val validString: Regex            = "(\\?+|\\*+)+".r.unanchored
+  val validAddress: Regex           = "^(?!\\?|\\*).*".r.unanchored
 }

@@ -24,7 +24,7 @@ class BusinessNameFormProviderSpec extends StringFieldBehaviours {
   val requiredKey  = "businessName.error.required"
   val lengthKey    = "businessName.error.length"
   val maxLength    = 255
-  val regexPattern = "\\?|\\*"
+  val regexPattern = "(\\?+|\\*+)+"
 
   val form = new BusinessNameFormProvider()()
 

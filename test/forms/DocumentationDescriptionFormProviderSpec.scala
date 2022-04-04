@@ -24,7 +24,7 @@ class DocumentationDescriptionFormProviderSpec extends StringFieldBehaviours {
   val requiredKey  = "documentationDescription.error.required"
   val lengthKey    = "documentationDescription.error.length"
   val maxLength    = 500
-  val regexPattern = "\\?|\\*"
+  val regexPattern = "(\\?+|\\*+)+"
 
   val form = new DocumentationDescriptionFormProvider()()
 

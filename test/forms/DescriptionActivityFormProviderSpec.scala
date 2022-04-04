@@ -25,7 +25,7 @@ class DescriptionActivityFormProviderSpec extends StringFieldBehaviours {
   val lengthKey    = "descriptionActivity.error.length"
   val invalidKey   = "descriptionActivity.error.invalid"
   val maxLength    = 1200
-  val regexPattern = "\\?|\\*"
+  val regexPattern = "(\\?+|\\*+)+"
 
   val form = new DescriptionActivityFormProvider()()
 

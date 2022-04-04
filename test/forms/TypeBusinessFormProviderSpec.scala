@@ -24,7 +24,7 @@ class TypeBusinessFormProviderSpec extends StringFieldBehaviours {
   val requiredKey  = "typeBusiness.error.required"
   val lengthKey    = "typeBusiness.error.length"
   val maxLength    = 255
-  val regexPattern = "\\?|\\*"
+  val regexPattern = "(\\?+|\\*+)+"
 
   val form = new TypeBusinessFormProvider()()
 

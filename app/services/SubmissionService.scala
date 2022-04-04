@@ -110,7 +110,12 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
     connection <- answers.get(IndividualConnectionPage(Index(index)))
   } yield Person(
     name = answers.get(IndividualNamePage(Index(index))).map { name =>
-      Name(forename = name.firstName, surname = name.lastName, middleName = name.middleName, alias = name.aliases)
+      Name(
+        forename = sanitizeOptionalString(name.firstName),
+        surname = sanitizeOptionalString(name.lastName),
+        middleName = sanitizeOptionalString(name.middleName),
+        alias = sanitizeOptionalString(name.aliases)
+      )
     },
     address = getAddress(answers.get(IndividualAddressPage(Index(index)))),
     contact = answers.get(IndividualContactDetailsPage(Index(index))).map { details =>
@@ -184,7 +189,12 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
     }
 
   private def sanitizeOptionalString(string: Option[String]): Option[String] =
-    string.filter(_.nonEmpty).map(_ replaceAll ("\\?|\\*", ""))
+    string match {
+      case string if string.getOrElse("").matches("(\\?+|\\*+)+".r.unanchored.toString()) =>
+        Some("")
+      case _ =>
+        string
+    }
 
 }
 

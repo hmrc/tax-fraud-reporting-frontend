@@ -30,7 +30,7 @@ class YourContactDetailsFormProviderSpec extends StringFieldBehaviours with Scal
     val requiredKey  = "yourContactDetails.error.firstName.required"
     val lengthKey    = "yourContactDetails.error.firstName.length"
     val maxLength    = 255
-    val regexPattern = "\\?|\\*"
+    val regexPattern = "(\\?+|\\*+)+"
 
     behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
@@ -56,7 +56,7 @@ class YourContactDetailsFormProviderSpec extends StringFieldBehaviours with Scal
     val requiredKey  = "yourContactDetails.error.lastName.required"
     val lengthKey    = "yourContactDetails.error.lastName.length"
     val maxLength    = 255
-    val regexPattern = "\\?|\\*"
+    val regexPattern = "(\\?+|\\*+)+"
 
     behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
