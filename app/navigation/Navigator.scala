@@ -83,15 +83,15 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case WhenActivityHappenPage               => whenActivityHappenCheckRoutes
     case IndividualDateFormatPage(index)      => individualDateFormatPageCheckRoutes(_, index)
     case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index, CheckMode)
-    case BusinessNamePage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Name, CheckMode)
-    case TypeBusinessPage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Type, CheckMode)
-    case ReferenceNumbersPage(index) =>
-      businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference, CheckMode)
-    case BusinessContactDetailsPage(index) =>
-      businessInformationRoutes(_, index, BusinessInformationCheck.Contact, CheckMode)
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index, CheckMode)
+    case BusinessNamePage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Name)
+    case TypeBusinessPage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
+    case ReferenceNumbersPage(index) =>
+      businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference)
+    case BusinessContactDetailsPage(index) =>
+      businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
     case BusinessAddressPage(index) =>
-      businessInformationRoutes(_, index, BusinessInformationCheck.Address, CheckMode)
+      businessInformationRoutes(_, index, BusinessInformationCheck.Address)
     case SelectConnectionBusinessPage(index) => selectConnectionBusinessCheckRoute(_, index)
     case p: IndexedConfirmationPage          => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
     case _                                   => _ => routes.CheckYourAnswersController.onPageLoad
@@ -174,9 +174,12 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       val laterSections     = BusinessInformationCheck.values dropWhile (_ != answer) drop 1 toSet
       val remainingSections = checkedInfo & laterSections
 
-      if (remainingSections.isEmpty)
-        Some(routes.SelectConnectionBusinessController.onPageLoad(index, mode))
-      else
+      if (remainingSections.isEmpty) Some{
+        mode match {
+          case NormalMode => routes.SelectConnectionBusinessController.onPageLoad(index, mode)
+          case CheckMode => routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
+        }
+    }else
         BusinessInformationCheck.values find remainingSections.contains map {
           businessInformationRoute(_, index, mode)
         }
