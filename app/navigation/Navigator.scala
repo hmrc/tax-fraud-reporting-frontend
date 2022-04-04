@@ -84,14 +84,14 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case IndividualDateFormatPage(index)      => individualDateFormatPageCheckRoutes(_, index)
     case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index, CheckMode)
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index, CheckMode)
-    case BusinessNamePage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Name)
-    case TypeBusinessPage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Type)
+    case BusinessNamePage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Name, CheckMode)
+    case TypeBusinessPage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Type, CheckMode)
     case ReferenceNumbersPage(index) =>
-      businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference)
+      businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference, CheckMode)
     case BusinessContactDetailsPage(index) =>
-      businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
+      businessInformationRoutes(_, index, BusinessInformationCheck.Contact, CheckMode)
     case BusinessAddressPage(index) =>
-      businessInformationRoutes(_, index, BusinessInformationCheck.Address)
+      businessInformationRoutes(_, index, BusinessInformationCheck.Address, CheckMode)
     case SelectConnectionBusinessPage(index) => selectConnectionBusinessCheckRoute(_, index)
     case p: IndexedConfirmationPage          => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
     case _                                   => _ => routes.CheckYourAnswersController.onPageLoad
