@@ -126,4 +126,7 @@ trait Generators extends UserAnswersGenerator with PageGenerators with ModelGene
     }
   }
 
+  def asteriskOrQuestion: Gen[String] =
+    arbitrary[String] suchThat (_.matches("\\?|\\*"))
+
 }

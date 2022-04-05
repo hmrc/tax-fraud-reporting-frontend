@@ -39,6 +39,9 @@ class SelectConnectionBusinessFormProvider @Inject() extends Mappings {
           "other",
           text("selectConnectionBusiness.error.otherValue.required")
             .verifying(maxLength(100, "selectConnectionBusiness.error.otherValue.maxLength"))
+            .verifying(
+              regexpRestrict(Validation.validString.toString, "selectConnectionBusiness.error.otherValue.required")
+            )
         )
       )
         .transform[SelectConnectionBusiness](
