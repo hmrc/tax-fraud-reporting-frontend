@@ -628,6 +628,26 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         }
       }
 
+      "to the business reference details page if the user has selected contact details and has not selected previous answers" in {
+        forAll(businessInformationCheckGen) { businessInformationCheckCheckAnswer =>
+          val previousAnswers =
+            Set(
+              BusinessInformationCheck.Name,
+              BusinessInformationCheck.Type,
+              BusinessInformationCheck.Address,
+              BusinessInformationCheck.Contact
+            )
+          val answer =
+            businessInformationCheckCheckAnswer -- previousAnswers + BusinessInformationCheck.BusinessReference
+          val userAnswers = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
+          navigator.nextPage(
+            ReferenceNumbersPage(Index(0)),
+            NormalMode,
+            userAnswers
+          ) mustBe routes.SelectConnectionBusinessController.onPageLoad(Index(0), NormalMode)
+        }
+      }
+
       "to the business reference page if the user has selected business reference and has not selected previous answers" in {
         forAll(businessInformationCheckGen) { businessInformationAnswer =>
           val previousAnswers = Set(
