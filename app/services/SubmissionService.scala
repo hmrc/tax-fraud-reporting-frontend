@@ -158,7 +158,7 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
       surname = Some(details.LastName),
       telephoneNumber = Some(details.Tel),
       emailAddress = details.Email,
-      memorableWord = details.MemorableWord
+      memorableWord = sanitizeOptionalString(details.MemorableWord)
     )
 
   // TODO more tests for this please
