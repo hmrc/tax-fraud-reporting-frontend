@@ -39,6 +39,9 @@ class IndividualConnectionFormProvider @Inject() extends Mappings {
           "other",
           text("individualConnection.error.otherValue.required")
             .verifying(maxLength(100, "individualConnection.error.otherValue.maxLength"))
+            .verifying(
+              regexpRestrict(Validation.validString.toString, "individualConnection.error.otherValue.required")
+            )
         )
       )
         .transform[IndividualConnection](

@@ -20,7 +20,7 @@ import cats.data.NonEmptyChain
 import cats.implicits._
 import config.Service
 import models._
-import models.backend._
+import models.backend.{Address, _}
 import pages._
 import play.api.Configuration
 import play.api.http.Status.CREATED
@@ -110,9 +110,14 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
     connection <- answers.get(IndividualConnectionPage(Index(index)))
   } yield Person(
     name = answers.get(IndividualNamePage(Index(index))).map { name =>
-      Name(forename = name.firstName, surname = name.lastName, middleName = name.middleName, alias = name.aliases)
+      Name(
+        forename = sanitizeOptionalString(name.firstName),
+        surname = sanitizeOptionalString(name.lastName),
+        middleName = sanitizeOptionalString(name.middleName),
+        alias = sanitizeOptionalString(name.aliases)
+      )
     },
-    address = answers.get(IndividualAddressPage(Index(index))),
+    address = getAddress(answers.get(IndividualAddressPage(Index(index)))),
     contact = answers.get(IndividualContactDetailsPage(Index(index))).map { details =>
       Contact(landline = details.landlineNumber, mobile = details.mobileNumber, email = details.email)
     },
@@ -128,9 +133,9 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
   private def getBusiness(answers: UserAnswers, index: Int): Option[Business] = for {
     connection <- answers.get(SelectConnectionBusinessPage(Index(index)))
   } yield Business(
-    businessName = answers.get(BusinessNamePage(Index(index))),
-    businessType = answers.get(TypeBusinessPage(Index(index))),
-    address = answers.get(BusinessAddressPage(Index(index))),
+    businessName = sanitizeOptionalString(answers.get(BusinessNamePage(Index(index)))),
+    businessType = sanitizeOptionalString(answers.get(TypeBusinessPage(Index(index)))),
+    address = getAddress(answers.get(BusinessAddressPage(Index(index)))),
     contact = answers.get(BusinessContactDetailsPage(Index(index))).map { details =>
       Contact(landline = details.landlineNumber, mobile = details.mobileNumber, email = details.email)
     },
@@ -153,7 +158,7 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
       surname = Some(details.LastName),
       telephoneNumber = Some(details.Tel),
       emailAddress = details.Email,
-      memorableWord = details.MemorableWord
+      memorableWord = sanitizeOptionalString(details.MemorableWord)
     )
 
   // TODO more tests for this please
@@ -164,10 +169,31 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
       case whenActivityHappen => Some(messages(s"whenActivityHappen.$whenActivityHappen"))
     }
 
+  private def getAddress(address: Option[Address]): Option[Address] =
+    address map (
+      address =>
+        Address(
+          addressLine1 = sanitizeOptionalString(address.addressLine1),
+          addressLine2 = sanitizeOptionalString(address.addressLine2),
+          addressLine3 = sanitizeOptionalString(address.addressLine3),
+          townCity = sanitizeOptionalString(address.townCity),
+          postcode = sanitizeOptionalString(address.postcode),
+          country = address.country
+        )
+    )
+
   private def getInformationSource(answer: ActivitySourceOfInformation): String =
     answer match {
       case ActivitySourceOfInformation.Other(value) => value
       case _                                        => messages(s"activitySourceOfInformation.$answer")
+    }
+
+  private def sanitizeOptionalString(string: Option[String]): Option[String] =
+    string match {
+      case string if string.getOrElse("").matches("(\\?+|\\*+)+".r.unanchored.toString()) =>
+        Some("")
+      case _ =>
+        string
     }
 
 }

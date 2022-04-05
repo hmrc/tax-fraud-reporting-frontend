@@ -26,10 +26,11 @@ class YourContactDetailsFormProviderSpec extends StringFieldBehaviours with Scal
 
   ".firstName" - {
 
-    val fieldName   = "firstName"
-    val requiredKey = "yourContactDetails.error.firstName.required"
-    val lengthKey   = "yourContactDetails.error.firstName.length"
-    val maxLength   = 255
+    val fieldName    = "firstName"
+    val requiredKey  = "yourContactDetails.error.firstName.required"
+    val lengthKey    = "yourContactDetails.error.firstName.length"
+    val maxLength    = 255
+    val regexPattern = "(\\?+|\\*+)+"
 
     behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
@@ -40,15 +41,22 @@ class YourContactDetailsFormProviderSpec extends StringFieldBehaviours with Scal
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
     )
 
+    behave like fieldWithUnacceptableCharacter(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey, Seq(regexPattern))
+    )
+
     behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
   }
 
   ".lastName" - {
 
-    val fieldName   = "lastName"
-    val requiredKey = "yourContactDetails.error.lastName.required"
-    val lengthKey   = "yourContactDetails.error.lastName.length"
-    val maxLength   = 255
+    val fieldName    = "lastName"
+    val requiredKey  = "yourContactDetails.error.lastName.required"
+    val lengthKey    = "yourContactDetails.error.lastName.length"
+    val maxLength    = 255
+    val regexPattern = "(\\?+|\\*+)+"
 
     behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
@@ -57,6 +65,12 @@ class YourContactDetailsFormProviderSpec extends StringFieldBehaviours with Scal
       fieldName,
       maxLength = maxLength,
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+
+    behave like fieldWithUnacceptableCharacter(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey, Seq(regexPattern))
     )
 
     behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))

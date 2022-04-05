@@ -27,6 +27,7 @@ class DocumentationDescriptionFormProvider @Inject() extends Mappings {
     Form(
       "value" -> text("documentationDescription.error.required")
         .verifying(maxLength(500, "documentationDescription.error.length"))
+        .verifying(regexpRestrict(Validation.validString.toString, "documentationDescription.error.required"))
     )
 
 }

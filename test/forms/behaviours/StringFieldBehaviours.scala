@@ -30,4 +30,19 @@ trait StringFieldBehaviours extends FieldBehaviours {
       }
     }
 
+  def fieldWithUnacceptableCharacter(form: Form[_], fieldName: String, requiredError: FormError): Unit = {
+
+    "not bind questionMark values" in {
+
+      val result = form.bind(Map(fieldName -> "?")).apply(fieldName)
+      result.errors mustEqual Seq(requiredError)
+    }
+
+    "not bind asterisk  values" in {
+
+      val result = form.bind(Map(fieldName -> "*")).apply(fieldName)
+      result.errors mustEqual Seq(requiredError)
+    }
+  }
+
 }

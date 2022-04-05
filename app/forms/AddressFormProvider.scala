@@ -18,7 +18,7 @@ package forms
 
 import forms.mappings.Mappings
 import models.backend.Address
-import play.api.data.Forms.mapping
+import play.api.data.Forms.{list, mapping}
 import play.api.data.format.Formatter
 import play.api.data.{Form, FormError, Forms}
 
@@ -79,13 +79,14 @@ class AddressFormProvider extends Mappings {
       }
 
       errorsOrLines.filterOrElse(
-        _.nonEmpty,
+        lines => lines.nonEmpty && lines.values.exists(_.matches(Validation.validAddress.toString)),
         validKeys.zipWithIndex map {
           case (subKey, index) =>
             val message = if (index > 0) "" else "error.addressLines.required"
             FormError(subKey, message)
         }
       )
+
     }
 
     def unbind(key: String, value: Lines): Map[String, String] = value

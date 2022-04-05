@@ -37,8 +37,12 @@ class YourContactDetailsFormProvider @Inject() extends Mappings with Constraints
 
   def apply(): Form[YourContactDetails] = Form(
     mapping(
-      "firstName" -> field("firstName"),
-      "lastName"  -> field("lastName"),
+      "firstName" -> field("firstName").verifying(
+        regexpRestrict(Validation.validString.toString, s"$errorPrefix.firstName.required")
+      ),
+      "lastName" -> field("lastName").verifying(
+        regexpRestrict(Validation.validString.toString, s"$errorPrefix.lastName.required")
+      ),
       "tel" -> (
         field("tel").verifying(firstError(telephoneNumberValidation(errorPrefix + ".tel.invalid")))
       ),
