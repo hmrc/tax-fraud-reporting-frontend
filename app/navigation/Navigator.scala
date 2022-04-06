@@ -224,9 +224,6 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
   private def individualBusinessDetailsRoutes(answers: UserAnswers, index: Index, mode: Mode): Call =
     answers.get(IndividualBusinessDetailsPage(index)).map {
       case IndividualBusinessDetails.Yes =>
-        if (answers.get(BusinessInformationCheckPage(index)).isDefined)
-          routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
-        else
           routes.BusinessInformationCheckController.onPageLoad(index, mode)
       case _ =>
         mode match {
