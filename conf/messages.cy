@@ -1,4 +1,4 @@
-service.name = Rhoi gwybod am dwyll treth neu osgoi treth
+service.name = Rhoi gwybod i CThEM am achosion o dwyll treth neu arbed treth
 
 site.back = Yn ôl
 site.remove = Dileu
