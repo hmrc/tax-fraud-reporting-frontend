@@ -1071,7 +1071,7 @@ individual.remove = Remove<span class="govuk-visually-hidden"> {0} </span>
 
 supportingDocument.title = Do you have any supporting information?
 supportingDocument.heading = Do you have any supporting information?
-supportingDocument.hint = <p>Only refer to the information that is currently in your possession.<br> Do not try to get supporting information you do not already have.</p>
+supportingDocument.hint = <p>Only refer to the information that is currently in your possession.<br> Do not try to get supporting information you do not already have. <br> Supporting documents are not routinely required to progress a report.</p>
 supportingDocument.yes = Yes
 supportingDocument.no = No
 supportingDocument.checkYourAnswersLabel = Supporting information provided
@@ -1096,7 +1096,7 @@ yourContactDetails.email = Email address (optional)
 yourContactDetails.emailLabel = Email address
 yourContactDetails.memorableWord = Create a memorable HMRC identifier (optional)
 yourContactDetails.uniqueIdentifier = Memorable HMRC identifier
-yourContactDetails.memorableWord.hint = If HMRC contact you, we will quote your HMRC identifier so that you can confirm the HMRC contact is legitimate. Do not include personal information in your HMRC identifier.
+yourContactDetails.memorableWord.hint = If HMRC contacts you, we will quote your HMRC identifier so that you can confirm the HMRC contact is legitimate. Do not include personal information in your HMRC identifier.
 yourContactDetails.checkYourAnswersLabel = What are your details?
 yourContactDetails.error.firstName.required = Enter your first name.
 yourContactDetails.error.lastName.required = Enter your last name.

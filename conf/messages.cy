@@ -1169,7 +1169,7 @@ howManyPeopleKnow.change.hidden = Faint o bobl sy’n gwybod
 
 supportingDocument.title = A oes gennych unrhyw wybodaeth ategol?
 supportingDocument.heading = A oes gennych unrhyw wybodaeth ategol?
-supportingDocument.hint = <p>Cyfeiriwch at wybodaeth sydd gennych ar hyn o bryd yn unig. <br> Peidiwch â cheisio cael gwybodaeth ategol nad oes gennych eisoes.</p>
+supportingDocument.hint = <p>Cyfeiriwch at wybodaeth sydd gennych ar hyn o bryd yn unig. <br> Peidiwch â cheisio cael gwybodaeth ategol nad oes gennych eisoes. <br> Fel rheol, nid oes angen dogfennau ategol i symud ymlaen ag adroddiad.</p>
 supportingDocument.yes = Iawn
 supportingDocument.no = Na
 supportingDocument.checkYourAnswersLabel = Gwybodaeth ategol a roddwyd
@@ -1217,7 +1217,7 @@ yourContactDetails.lastName = Enw olaf
 yourContactDetails.tel = Rhif ffôn
 yourContactDetails.email = Cyfeiriad e-bost (dewisol)
 yourContactDetails.memorableWord = Creu’ch dynodydd unigryw CThEM (dewisol)
-yourContactDetails.memorableWord.hint = Os bydd CThEM yn cysylltu â chi, byddwn yn dyfynnu eich dynodwr CThEM fel y gallwch gadarnhau bod cyswllt CThEM yn ddilys. Peidiwch â chynnwys gwybodaeth bersonol yn eich dynodydd unigryw CThEM.
+yourContactDetails.memorableWord.hint = Os bydd CThEM yn cysylltu â chi, byddwn yn rhoi’ch dynodydd CThEM fel y gallwch gadarnhau bod y cysylltiad gan CThEM yn un dilys. Peidiwch â chynnwys gwybodaeth bersonol yn eich dynodydd CThEM.
 yourContactDetails.checkYourAnswersLabel = eich manylion cyswllt
 yourContactDetails.error.firstName.required = Nodwch eich enw cyntaf.
 yourContactDetails.error.lastName.required = Nodwch eich enw olaf.
