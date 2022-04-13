@@ -773,8 +773,8 @@ doNotUseThisService.p1.activity-related-to-drugs = HMRC is unable to investigate
 doNotUseThisService.p2.activity-related-to-drugs = You should report activity related to drugs to the police. Call 999 if it’s an emergency, or 101 if it’s not urgent.
 doNotUseThisService.p1.smuggling = HMRC is unable to investigate this activity.
 doNotUseThisService.p2.smuggling = You should <a class="govuk-link" href="https://www.gov.uk/report-smuggling">report smuggling to the Home Office</a>.
-doNotUseThisService.p1.benefit-fraud-and-universal-credit = HMRC is unable to investigate any benefit fraud other than Child Benefit or Tax Credit fraud.
-doNotUseThisService.p2.benefit-fraud-and-universal-credit = You should <a class="govuk-link" href="https://www.gov.uk/report-benefit-fraud">report all other benefit fraud</a> to the Department for Work and Pensions.
+doNotUseThisService.p1.benefit-and-universal-credit = HMRC is unable to investigate any benefit fraud other than Child Benefit or Tax Credit fraud.
+doNotUseThisService.p2.benefit-and-universal-credit = You should <a class="govuk-link" href="https://www.gov.uk/report-benefit-fraud">report all other benefit fraud</a> to the Department for Work and Pensions.
 doNotUseThisService.p1.human-trafficking = HMRC is unable to investigate this activity.
 doNotUseThisService.p2.human-trafficking = You should report human trafficking to the police. Call 999 if it’s an emergency, or 101 if it’s not urgent.
 doNotUseThisService.p1.immigration-border-crime = HMRC is unable to investigate this activity.
