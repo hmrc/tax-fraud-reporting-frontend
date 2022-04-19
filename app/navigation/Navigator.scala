@@ -23,7 +23,7 @@ import play.api.mvc.Call
 import services.ActivityTypeService
 
 import javax.inject.{Inject, Singleton}
-import language.postfixOps
+import scala.language.postfixOps
 
 @Singleton
 class Navigator @Inject() (activityTypeService: ActivityTypeService) {
@@ -83,13 +83,13 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case WhenActivityHappenPage               => whenActivityHappenCheckRoutes
     case IndividualDateFormatPage(index)      => individualDateFormatPageCheckRoutes(_, index)
     case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index, CheckMode)
+    case BusinessInformationCheckPage(index)  => businessInformationRoutes(_, index, CheckMode)
     case BusinessNamePage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Name, CheckMode)
     case TypeBusinessPage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Type, CheckMode)
     case ReferenceNumbersPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference, CheckMode)
     case BusinessContactDetailsPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.Contact, CheckMode)
-    case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index, CheckMode)
     case BusinessAddressPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.Address, CheckMode)
     case SelectConnectionBusinessPage(index) => selectConnectionBusinessCheckRoute(_, index)
@@ -171,14 +171,36 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     mode: Mode = NormalMode
   ): Call =
     answers get BusinessInformationCheckPage(index) flatMap { checkedInfo =>
-      val laterSections     = BusinessInformationCheck.values dropWhile (_ != answer) drop 1 toSet
-      val remainingSections = checkedInfo & laterSections
+      import BusinessInformationCheck._
+      def isEmpty(section: BusinessInformationCheck) = section match {
+        case Name              => answers get BusinessNamePage(index) isEmpty
+        case Type              => answers get TypeBusinessPage(index) isEmpty
+        case Contact           => answers get BusinessContactDetailsPage(index) isEmpty
+        case Address           => answers get BusinessAddressPage(index) isEmpty
+        case BusinessReference => answers get ReferenceNumbersPage(index) isEmpty
+      }
 
-      if (remainingSections.isEmpty)
-        Some(routes.SelectConnectionBusinessController.onPageLoad(index, mode))
+      val laterSections     = BusinessInformationCheck.values dropWhile (_ != answer) drop 1 toSet
+      val remainingSections = checkedInfo & laterSections filter isEmpty
+
+      if (remainingSections.isEmpty) Some {
+        mode match {
+          case NormalMode => routes.SelectConnectionBusinessController.onPageLoad(index, mode)
+          case CheckMode =>
+            if (!answers.isBusinessJourney)
+              routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
+            else
+              routes.CheckYourAnswersController.onPageLoad
+        }
+      }
       else
         BusinessInformationCheck.values find remainingSections.contains map {
-          businessInformationRoute(_, index, mode)
+          mode match {
+            case NormalMode => businessInformationRoute(_, index, mode)
+            case CheckMode =>
+              routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
+              businessInformationRoute(_, index, mode)
+          }
         }
     } getOrElse routes.JourneyRecoveryController.onPageLoad()
 
@@ -202,7 +224,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
   private def individualBusinessDetailsRoutes(answers: UserAnswers, index: Index, mode: Mode): Call =
     answers.get(IndividualBusinessDetailsPage(index)).map {
       case IndividualBusinessDetails.Yes =>
-        routes.BusinessInformationCheckController.onPageLoad(index, mode)
+          routes.BusinessInformationCheckController.onPageLoad(index, mode)
       case _ =>
         mode match {
           case CheckMode  => routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
