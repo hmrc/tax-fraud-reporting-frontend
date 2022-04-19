@@ -22,8 +22,11 @@ import controllers.actions._
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ReportSubmittedView
+
+import scala.concurrent.ExecutionContext
 
 class ReportSubmittedController @Inject() (
   override val messagesApi: MessagesApi,
@@ -32,13 +35,19 @@ class ReportSubmittedController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: ReportSubmittedView
-) extends FrontendBaseController with I18nSupport {
+  view: ReportSubmittedView,
+  sessionRepository: SessionRepository
+)(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       val isProvideContact = request.userAnswers.isProvideContact
-      Ok(view(appConfig, isProvideContact))
+      sessionRepository
+        .clear(request.userId)
+        .map {
+          _ =>
+            Ok(view(appConfig, isProvideContact))
+        }
   }
 
 }
