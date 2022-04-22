@@ -80,11 +80,7 @@ class AddressFormProvider extends Mappings {
 
       errorsOrLines.filterOrElse(
         lines => lines.nonEmpty && lines.values.exists(_.matches(Validation.validAddress.toString)),
-        validKeys.zipWithIndex map {
-          case (subKey, index) =>
-            val message = if (index > 0) "" else "error.addressLines.required"
-            FormError(subKey, message)
-        }
+        Seq(FormError("line1", "error.addressLines.required"))
       )
 
     }
