@@ -80,6 +80,9 @@ final case class IndividualNationalInsuranceNumberPage(index: Index)
 
 /** END Checked Info Pages */
 
+final case class IndividualSelectCountryPage(index: Index)
+    extends NominalsQuestionPage[String]("individualSelectCountry")
+
 final case class IndividualConnectionPage(index: Index)
     extends NominalsQuestionPage[IndividualConnection]("individualConnection")
 
@@ -118,6 +121,8 @@ final case class BusinessContactDetailsPage(index: Index)
 final case class ReferenceNumbersPage(index: Index) extends NominalsQuestionPage[ReferenceNumbers]("referenceNumbers")
 
 /** END Checked Info */
+
+final case class BusinessSelectCountryPage(index: Index) extends NominalsQuestionPage[String]("businessSelectCountry")
 
 final case class SelectConnectionBusinessPage(index: Index)
     extends NominalsQuestionPage[SelectConnectionBusiness]("selectConnectionBusiness")

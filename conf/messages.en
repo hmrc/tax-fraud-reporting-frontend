@@ -1196,3 +1196,10 @@ serviceTimeout.heading = For your security, we deleted your answers
 betaBanner.service.text = This is a new service
 
 individual.caption.text.screen.reader = This is about
+
+individualSelectCountry.title = Select your Country
+individualSelectCountry.heading = Select your Country
+individualSelectCountry.label = Select country
+individualSelectCountry.checkYourAnswersLabel = country
+individualSelectCountry.error.required = Please select a country from the list.
+individualSelectCountry.change.hidden = Select your Country

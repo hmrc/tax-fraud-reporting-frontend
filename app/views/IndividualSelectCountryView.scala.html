@@ -1,0 +1,75 @@
+@*
+ * Copyright 2022 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import viewmodels.govuk.AutocompleteOption
+@import viewmodels.InputWidth._
+@import models.backend.Address
+@import views.html.components.Autocomplete
+@import play.api.Configuration
+@import viewmodels.LegendSize
+@import viewmodels.{Business, CountryJourneyPart}
+
+@this(
+        layout: templates.Layout,
+        formHelper: FormWithCSRF,
+        fieldset: GovukFieldset,
+        govukErrorSummary: GovukErrorSummary,
+        govukInput: GovukInput,
+        govukButton: GovukButton,
+        autocomplete: Autocomplete,
+        configuration: Configuration
+)
+
+@(form: Form[String], index: Index, mode: Mode, countryJourney: CountryJourneyPart)(implicit request: Request[_], messages: Messages)
+
+@countries = @{ configuration.get[Seq[String]]("countries") }
+
+@contentHeader = {
+    @if(countryJourney != Business) {
+            <span class="govuk-caption-xl">
+                   <span class="govuk-visually-hidden">@messages("individual.caption.text.screen.reader")</span>
+                   @messages(s"individual.${index.display}")
+            </span>
+    }
+    @messages("individualSelectCountry.heading")
+}
+
+@layout(pageTitle = title(form, messages("individualSelectCountry.title"))) {
+
+    @formHelper(action = countryJourney.countrySubmit( index, mode), 'autoComplete -> "off") {
+
+        @if(form.errors.nonEmpty) {
+            @govukErrorSummary(ErrorSummaryViewModel(form))
+        }
+        <h1 class="govuk-heading-xl">@contentHeader</h1>
+
+        @autocomplete(
+            field = form("country"),
+            id = "country",
+            name = "country",
+            isPageHint = false,
+            hint = None,
+            isPageHeading = false,
+            label = "individualSelectCountry.label",
+            options = countries map AutocompleteOption.get(messages, "country")
+        )
+
+        @govukButton(
+            ButtonViewModel(messages("site.continue"))
+                .withAttribute("id" -> "continue-button")
+        )
+    }
+}

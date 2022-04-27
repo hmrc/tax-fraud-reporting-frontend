@@ -148,7 +148,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualInformationPage(Index(0)),
               NormalMode,
               userAnswers
-            ) mustBe routes.IndividualAddressController.onPageLoad(Index(0), NormalMode)
+            ) mustBe routes.IndividualSelectCountryController.onPageLoad(Index(0), NormalMode)
           }
         }
 
@@ -217,7 +217,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualNamePage(Index(0)),
               NormalMode,
               userAnswers
-            ) mustBe routes.IndividualAddressController.onPageLoad(Index(0), NormalMode)
+            ) mustBe routes.IndividualSelectCountryController.onPageLoad(Index(0), NormalMode)
           }
         }
 
@@ -323,7 +323,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualAgePage(Index(0)),
               NormalMode,
               userAnswers
-            ) mustBe routes.IndividualAddressController.onPageLoad(Index(0), NormalMode)
+            ) mustBe routes.IndividualSelectCountryController.onPageLoad(Index(0), NormalMode)
           }
         }
 
@@ -394,7 +394,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualDateOfBirthPage(Index(0)),
               NormalMode,
               userAnswers
-            ) mustBe routes.IndividualAddressController.onPageLoad(Index(0), NormalMode)
+            ) mustBe routes.IndividualSelectCountryController.onPageLoad(Index(0), NormalMode)
           }
         }
 
@@ -610,7 +610,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             BusinessInformationCheckPage(Index(0)),
             NormalMode,
             userAnswers
-          ) mustBe routes.BusinessAddressController.onPageLoad(Index(0), NormalMode)
+          ) mustBe routes.BusinessSelectCountryController.onPageLoad(Index(0), NormalMode)
         }
       }
 
@@ -699,7 +699,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             BusinessInformationCheckPage(Index(0)),
             NormalMode,
             userAnswers
-          ) mustBe routes.BusinessAddressController.onPageLoad(Index(0), NormalMode)
+          ) mustBe routes.BusinessSelectCountryController.onPageLoad(Index(0), NormalMode)
         }
       }
 
@@ -774,7 +774,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             BusinessInformationCheckPage(Index(0)),
             NormalMode,
             userAnswers
-          ) mustBe routes.BusinessAddressController.onPageLoad(Index(0), NormalMode)
+          ) mustBe routes.BusinessSelectCountryController.onPageLoad(Index(0), NormalMode)
         }
       }
 
@@ -1153,6 +1153,30 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         ) mustBe routes.CheckYourAnswersController.onPageLoad
       }
 
+    }
+
+    "must go from the individual select country page" - {
+
+      "to the individual select country page if the user has selected address" in {
+        val answers = UserAnswers("id").set(IndividualSelectCountryPage(Index(0)), "country").success.value
+        navigator.nextPage(
+          IndividualSelectCountryPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.IndividualAddressController.onPageLoad(Index(0), NormalMode)
+      }
+    }
+
+    "must go from the business select country page" - {
+
+      "to the business select country page if the user has selected address" in {
+        val answers = UserAnswers("id").set(BusinessSelectCountryPage(Index(0)), "country").success.value
+        navigator.nextPage(
+          BusinessSelectCountryPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.BusinessAddressController.onPageLoad(Index(0), NormalMode)
+      }
     }
 
     "in Check mode" - {
