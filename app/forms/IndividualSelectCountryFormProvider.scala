@@ -27,6 +27,6 @@ class IndividualSelectCountryFormProvider @Inject() (configuration: Configuratio
   val countries = configuration.get[Seq[String]]("countries")
 
   def apply(): Form[String] =
-    Form(("country" -> text.verifying("selectCountry.error.required", countries.contains _)))
+    Form(("country" -> text.verifying("individualSelectCountry.error.required", countries.contains _)))
 
 }
