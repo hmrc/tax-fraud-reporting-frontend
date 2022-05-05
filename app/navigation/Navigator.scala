@@ -60,9 +60,9 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case IndividualCheckYourAnswersPage(_)    => _ => routes.AddAnotherPersonController.onPageLoad(NormalMode)
     case IndividualConfirmRemovePage(_)       => individualConfirmRemoveRoutes
     case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index, NormalMode)
-    case ApproximateValuePage                 => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
+    case ApproximateValuePage                 => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
     case WhenActivityHappenPage               => whenActivityHappenRoutes
-    case ActivityTimePeriodPage               => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+    case ActivityTimePeriodPage               => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
     case IndividualConnectionPage(index) =>
       _ => routes.IndividualBusinessDetailsController.onPageLoad(index, NormalMode)
     case DescriptionActivityPage         => _ => routes.ProvideContactDetailsController.onPageLoad(NormalMode)
@@ -70,7 +70,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case HowManyPeopleKnowPage           => _ => routes.DescriptionActivityController.onPageLoad(NormalMode)
     case ProvideContactDetailsPage       => provideContactDetailsRoutes
     case YourContactDetailsPage          => _ => routes.SupportingDocumentController.onPageLoad(NormalMode)
-    case ActivitySourceOfInformationPage => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
+    case ActivitySourceOfInformationPage => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
     case DocumentationDescriptionPage    => _ => routes.CheckYourAnswersController.onPageLoad
     case IndividualDateFormatPage(index) => individualDateFormatPageCheckRoutes(_, index)
     case WhenActivityHappenPage          => whenActivityHappenCheckRoutes
@@ -237,7 +237,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       case WhenActivityHappen.NotHappen =>
         routes.ActivityTimePeriodController.onPageLoad(NormalMode)
       case _ =>
-        routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+        routes.ApproximateValueController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def supportingDocumentRoutes(answers: UserAnswers): Call =

@@ -972,13 +972,13 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must go from when activity start page" - {
 
-      "to the description of activity page for the first selection" in {
+      "to the what is the total value of the activity page for the first selection" in {
         val answers = UserAnswers("id").set(WhenActivityHappenPage, WhenActivityHappen.OverFiveYears).success.value
         navigator.nextPage(
           WhenActivityHappenPage,
           NormalMode,
           answers
-        ) mustBe routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+        ) mustBe routes.ApproximateValueController.onPageLoad(NormalMode)
       }
 
       "to the When will the activity likely happen page for the it's going to happen in the future selection" in {
@@ -1002,25 +1002,25 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must go from approximate total value page" - {
 
-      "to the What is the duration of the reported activity page for the next selection" in {
+      "to the how many people know about the activity page for the next selection" in {
         val answers = UserAnswers("id").set(ApproximateValuePage, BigDecimal(45.99)).success.value
         navigator.nextPage(
           ApproximateValuePage,
           NormalMode,
           answers
-        ) mustBe routes.WhenActivityHappenController.onPageLoad(NormalMode)
+        ) mustBe routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
       }
     }
 
     "must go from when activity likely happen page" - {
 
-      "to the how many other people know about the activity page for the first selection" in {
+      "to the what is the total value of the activity page for the first selection" in {
         val answers = UserAnswers("id").set(ActivityTimePeriodPage, ActivityTimePeriod.NextWeek).success.value
         navigator.nextPage(
           ActivityTimePeriodPage,
           NormalMode,
           answers
-        ) mustBe routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+        ) mustBe routes.ApproximateValueController.onPageLoad(NormalMode)
       }
     }
 
@@ -1121,12 +1121,12 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must go from how do you know this information page" - {
 
-      "to the what is the total value of the activity page for the first selection" in {
+      "to the when activity happened page for the first selection" in {
         navigator.nextPage(
           ActivitySourceOfInformationPage,
           NormalMode,
           emptyUserAnswers
-        ) mustBe routes.ApproximateValueController.onPageLoad(NormalMode)
+        ) mustBe routes.WhenActivityHappenController.onPageLoad(NormalMode)
       }
 
     }
