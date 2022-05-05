@@ -65,7 +65,9 @@ class IndividualSelectCountryController @Inject() (
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualSelectCountryPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(IndividualSelectCountryPage(index), mode, updatedAnswers))
+          } yield Redirect(
+            navigator.nextPage(IndividualSelectCountryPage(index), mode, updatedAnswers)
+          ) addingToSession "country" -> value
       )
   }
 

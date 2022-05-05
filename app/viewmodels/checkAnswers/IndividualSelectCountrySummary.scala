@@ -33,8 +33,8 @@ object IndividualSelectCountrySummary {
     answers.get(IndividualSelectCountryPage(Index(index))).map {
       answer =>
         SummaryListRowViewModel(
-          key = "selectCountry.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlFormat.escape(answer).toString),
+          key = "individualSelectCountry.checkYourAnswersLabel",
+          value = ValueViewModel(HtmlFormat.escape(messages(s"country.${answer}.text")).toString),
           actions = Seq(
             ActionItemViewModel(
               "site.change",

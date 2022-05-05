@@ -18,9 +18,10 @@ package forms
 
 import forms.mappings.Mappings
 import models.backend.Address
-import play.api.data.Forms.{list, mapping}
+import play.api.data.Forms.mapping
 import play.api.data.format.Formatter
 import play.api.data.{Form, FormError, Forms}
+import Forms.{of, optional}
 
 import scala.language.postfixOps
 
@@ -30,63 +31,14 @@ class AddressFormProvider extends Mappings {
 
   def apply(): Form[Address] = Form(
     mapping(
-      "lines"    -> Forms.of(addressLinesFormatter),
-      "postCode" -> Forms.of(ukPostCodeFormatter),
-      "country" -> text("error.country.required")
-        .verifying(maxLength(maxLen, "error.length"))
-    )(toModel)(fromModel)
+      "line1"      -> text("error.address.line1").verifying(maxLength(maxLen, "address.error.line1.length")),
+      "line2"      -> optional(text().verifying(maxLength(maxLen, "address.error.line2.length"))),
+      "line3"      -> optional(text().verifying(maxLength(maxLen, "address.error.line3.length"))),
+      "townOrCity" -> text("error.address.townOrCity").verifying(maxLength(maxLen, "address.error.townOrCity.length")),
+      "postCode"   -> of(ukPostCodeFormatter),
+      "country"    -> text("error.country.required")
+    )(Address.apply)(Address.unapply)
   )
-
-  private def toModel(lines: Map[String, String], postCode: Option[String], country: String) =
-    Address(lines get "line1", lines get "line2", lines get "line3", lines get "townOrCity", postCode, country)
-
-  private def fromModel(address: Address): Option[(Map[String, String], Option[String], String)] =
-    Some {
-      import address._
-      (
-        Seq(
-          "line1"      -> addressLine1,
-          "line2"      -> addressLine2,
-          "line3"      -> addressLine3,
-          "townOrCity" -> townCity
-        ) flatMap {
-          case (key, valueOpt) => valueOpt map { key -> _ }
-        } toMap,
-        postcode,
-        country
-      )
-    }
-
-  type Lines = Map[String, String]
-
-  private val addressLinesFormatter = new Formatter[Lines] {
-
-    def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Lines] = {
-      val validKeys = List("line1", "line2", "line3", "townOrCity")
-
-      val emptyLines: Either[Seq[FormError], Lines] = Right(Map.empty)
-
-      val errorsOrLines = (validKeys foldLeft emptyLines) {
-        (acc, subKey) =>
-          data get subKey filter { _.nonEmpty } match {
-            case None => acc
-            case Some(line) if line.length <= maxLen =>
-              acc map { _.updated(subKey, line) }
-            case Some(_) =>
-              val error = FormError(subKey, s"$errorPrefix.$subKey.length")
-              Left(acc.fold(_ :+ error, _ => Seq(error)))
-          }
-      }
-
-      errorsOrLines.filterOrElse(
-        lines => lines.nonEmpty && lines.values.exists(_.matches(Validation.validAddress.toString)),
-        Seq(FormError("line1", "error.addressLines.required"))
-      )
-
-    }
-
-    def unbind(key: String, value: Lines): Map[String, String] = value
-  }
 
   type PostCode = String
 

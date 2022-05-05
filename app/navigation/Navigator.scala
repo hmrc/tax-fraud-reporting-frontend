@@ -95,6 +95,8 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case BusinessAddressPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.Address, CheckMode)
     case SelectConnectionBusinessPage(index) => selectConnectionBusinessCheckRoute(_, index)
+    case IndividualSelectCountryPage(index)  => individualSelectCountryPageRoutes(_, index)
+    case BusinessSelectCountryPage(index)    => businessSelectCountryPageRoutes(_, index)
     case p: IndexedConfirmationPage          => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
     case _                                   => _ => routes.CheckYourAnswersController.onPageLoad
   }
@@ -304,6 +306,18 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       case _ =>
         routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def individualSelectCountryPageRoutes(answers: UserAnswers, index: Index): Call =
+    if (answers.get(IndividualSelectCountryPage(index)).isDefined)
+      routes.IndividualAddressController.onPageLoad(index, CheckMode)
+    else
+      routes.CheckYourAnswersController.onPageLoad
+
+  private def businessSelectCountryPageRoutes(answers: UserAnswers, index: Index): Call =
+    if (answers.get(BusinessSelectCountryPage(index)).isDefined)
+      routes.BusinessAddressController.onPageLoad(index, CheckMode)
+    else
+      routes.CheckYourAnswersController.onPageLoad
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
     case NormalMode =>

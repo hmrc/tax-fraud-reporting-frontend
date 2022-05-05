@@ -34,10 +34,10 @@ object IndividualAddressSummary {
     val answer = answers get IndividualAddressPage(Index(index)) map {
       answer =>
         List(
-          answer.addressLine1,
+          Some(answer.addressLine1),
           answer.addressLine2,
           answer.addressLine3,
-          answer.townCity,
+          Some(answer.townCity),
           answer.postcode,
           Some(messages(s"country.${answer.country}.text"))
         ).flatten map HtmlFormat.escape mkString "<br/>"

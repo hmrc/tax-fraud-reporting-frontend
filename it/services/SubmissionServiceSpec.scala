@@ -55,10 +55,10 @@ class SubmissionServiceSpec
       .set(
         IndividualAddressPage(Index(0)),
         Address(
-          Some("123 Example Street"),
+          "123 Example Street",
           None,
           None,
-          Some("Townsville"),
+          "Townsville",
           postcode = Some("postcode"),
           country = "country"
         )
@@ -81,10 +81,10 @@ class SubmissionServiceSpec
       .set(
         BusinessAddressPage(Index(0)),
         Address(
-          Some("business line 1"),
+          "business line 1",
           Some("business line 2"),
           Some("business line 3"),
-          Some("town"),
+          "town",
           postcode = Some("business postcode"),
           country = "business country"
         )
@@ -137,10 +137,10 @@ class SubmissionServiceSpec
       .set(
         BusinessAddressPage(Index(0)),
         Address(
-          Some("business line 1"),
+          "business line 1",
           Some("business line 2"),
           Some("business line 3"),
-          Some("town"),
+          "town",
           postcode = Some("business postcode"),
           country = "business country"
         )
@@ -203,10 +203,10 @@ class SubmissionServiceSpec
                   ),
                   address = Some(
                     Address(
-                      addressLine1 = Some("123 Example Street"),
+                      addressLine1 = "123 Example Street",
                       addressLine2 = None,
                       addressLine3 = None,
-                      townCity = Some("Townsville"),
+                      townCity = "Townsville",
                       postcode = Some("postcode"),
                       country = "country"
                     )
@@ -224,10 +224,10 @@ class SubmissionServiceSpec
                   businessType = Some("business type"),
                   address = Some(
                     Address(
-                      addressLine1 = Some("business line 1"),
+                      addressLine1 = "business line 1",
                       addressLine2 = Some("business line 2"),
                       addressLine3 = Some("business line 3"),
-                      townCity = Some("town"),
+                      townCity = "town",
                       postcode = Some("business postcode"),
                       country = "business country"
                     )
@@ -293,10 +293,10 @@ class SubmissionServiceSpec
                   businessType = Some("business type"),
                   address = Some(
                     Address(
-                      addressLine1 = Some("business line 1"),
+                      addressLine1 = "business line 1",
                       addressLine2 = Some("business line 2"),
                       addressLine3 = Some("business line 3"),
-                      townCity = Some("town"),
+                      townCity = "town",
                       postcode = Some("business postcode"),
                       country = "business country"
                     )

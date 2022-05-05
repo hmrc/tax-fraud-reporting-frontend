@@ -1446,6 +1446,15 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
       }
 
+      "to the check your answers page when select country" in {
+        val answers = UserAnswers("id").set(BusinessSelectCountryPage(Index(0)), "foobar").success.value
+        navigator.nextPage(
+          BusinessSelectCountryPage(Index(0)),
+          CheckMode,
+          answers
+        ) mustBe routes.BusinessAddressController.onPageLoad(Index(0), CheckMode)
+      }
+
     }
   }
 }

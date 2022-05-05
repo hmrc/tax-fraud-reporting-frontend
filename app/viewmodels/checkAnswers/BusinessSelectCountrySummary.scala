@@ -18,14 +18,14 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{CheckMode, Index, Mode, UserAnswers}
-import pages.{BusinessSelectCountryPage}
+import pages.BusinessSelectCountryPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-class BusinessSelectCountrySummary {
+object BusinessSelectCountrySummary {
 
   def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
     messages: Messages
@@ -34,7 +34,7 @@ class BusinessSelectCountrySummary {
       answer =>
         SummaryListRowViewModel(
           key = "individualSelectCountry.checkYourAnswersLabel",
-          value = ValueViewModel(HtmlFormat.escape(answer).toString),
+          value = ValueViewModel(HtmlFormat.escape(messages(s"country.${answer}.text")).toString),
           actions = Seq(
             ActionItemViewModel(
               "site.change",

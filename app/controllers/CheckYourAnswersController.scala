@@ -68,6 +68,7 @@ class CheckYourAnswersController @Inject() (
           Seq(
             BusinessNameSummary.row(answers, 0),
             TypeBusinessSummary.row(answers, 0),
+            BusinessSelectCountrySummary.row(answers, 0),
             BusinessAddressSummary.row(answers, 0),
             BusinessContactDetailsSummary.row(answers, 0),
             ReferenceNumbersSummary.row(answers, 0),
