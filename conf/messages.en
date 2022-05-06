@@ -1082,7 +1082,7 @@ supportingDocument.change.hidden = Supporting information provided
 
 provideContactDetails.title = Do you wish to provide your contact details?
 provideContactDetails.heading = Do you wish to provide your contact details?
-provideContactDetails.hint = <p>Personal information will remain confidential.</p>
+provideContactDetails.hint = Personal information will remain confidential.
 provideContactDetails.yes = Yes, I will provide my contact details
 provideContactDetails.no = No, I want to report anonymously
 provideContactDetails.checkYourAnswersLabel = Details provided
@@ -1155,7 +1155,7 @@ submitYourReport.submit = Submit your report
 
 activitySourceOfInformation.title = How do you know about the activity you are reporting?
 activitySourceOfInformation.heading = How do you know about the activity you are reporting?
-activitySourceOfInformation.hint = <p>Select the option that best applies in your situation.</p>
+activitySourceOfInformation.hint = Select the option that best applies in your situation.
 activitySourceOfInformation.reportedIndividuals = Connection to the reported individual(s)
 activitySourceOfInformation.informationInLocalArea = Information known in the local area
 activitySourceOfInformation.observedTheActivity = Observed the activity

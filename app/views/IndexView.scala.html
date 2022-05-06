@@ -43,7 +43,7 @@
 
     <p id="second-line" class="govuk-body">@messages("index.p1")</p>
 
-    <a id="continue-button" href="https://www.tax.service.gov.uk/shortforms/form/TEH_IRF" role="button" class="govuk-button" data-module="govuk-button">
+    <a id="continue-button" href="@routes.ActivityTypeController.onPageLoad(NormalMode)" role="button" class="govuk-button" data-module="govuk-button">
         @messages("site.accept")
     </a>
 }
