@@ -26,17 +26,18 @@ import Forms.{of, optional}
 import scala.language.postfixOps
 
 class AddressFormProvider extends Mappings {
-  private val maxLen      = 255
-  private val errorPrefix = "address.error"
+  private val maxLen = 255
 
   def apply(): Form[Address] = Form(
     mapping(
-      "line1"      -> text("error.address.line1").verifying(maxLength(maxLen, "address.error.line1.length")),
-      "line2"      -> optional(text().verifying(maxLength(maxLen, "address.error.line2.length"))),
-      "line3"      -> optional(text().verifying(maxLength(maxLen, "address.error.line3.length"))),
-      "townOrCity" -> text("error.address.townOrCity").verifying(maxLength(maxLen, "address.error.townOrCity.length")),
-      "postCode"   -> of(ukPostCodeFormatter),
-      "country"    -> text("error.country.required")
+      "line1" -> text("error.address.line1").verifying(maxLength(maxLen, "address.error.line1.length"))
+        .verifying(regexpRestrict(Validation.validString.toString, "error.address.line1")),
+      "line2" -> optional(text().verifying(maxLength(maxLen, "address.error.line2.length"))),
+      "line3" -> optional(text().verifying(maxLength(maxLen, "address.error.line3.length"))),
+      "townOrCity" -> text("error.address.townOrCity").verifying(maxLength(maxLen, "address.error.townOrCity.length"))
+        .verifying(regexpRestrict(Validation.validString.toString, "error.address.townOrCity")),
+      "postCode" -> of(ukPostCodeFormatter),
+      "country"  -> text("error.country.required")
     )(Address.apply)(Address.unapply)
   )
 

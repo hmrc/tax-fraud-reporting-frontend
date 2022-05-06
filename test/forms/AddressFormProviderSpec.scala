@@ -17,24 +17,34 @@
 package forms
 
 import forms.behaviours.StringFieldBehaviours
-import org.scalatest.OptionValues
 import play.api.data.FormError
 
-class AddressFormProviderSpec extends StringFieldBehaviours with OptionValues {
-  private val maxLen      = 255
-  private val longLine    = "a" * (maxLen + 1)
-  private val errorPrefix = "address.error"
-  private val line1Error  = "address.error.line1.length"
+class AddressFormProviderSpec extends StringFieldBehaviours {
+  private val maxLen       = 255
+  private val longLine     = "a" * (maxLen + 1)
+  private val regexPattern = "(\\?+|\\*+)+"
+  private val requiredKey  = "error.address.line1"
+  private val lengthKey    = "address.error.line1.length"
 
   private val form = (new AddressFormProvider)()
 
   ".line1" - {
     val fieldName = "line1"
 
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLen))
+
     "must not bind when address line1 is longer than 255 characters" in {
       val result = form.bind(Map(fieldName -> "a" * 256))(fieldName)
-      result.errors must contain(FormError(fieldName, "address.error.line1.length", Seq(maxLen)))
+      result.errors must contain(FormError(fieldName, lengthKey, Seq(maxLen)))
     }
+
+    behave like fieldWithUnacceptableCharacter(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey, Seq(regexPattern))
+    )
+
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
 
   }
 
@@ -63,6 +73,14 @@ class AddressFormProviderSpec extends StringFieldBehaviours with OptionValues {
       val result = form.bind(Map(fieldName -> "a" * 256))(fieldName)
       result.errors must contain(FormError(fieldName, "address.error.townOrCity.length", Seq(maxLen)))
     }
+
+    behave like fieldWithUnacceptableCharacter(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, "error.address.townOrCity", Seq(regexPattern))
+    )
+
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, "error.address.townOrCity"))
 
   }
 
