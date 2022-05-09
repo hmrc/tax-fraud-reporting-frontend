@@ -202,3 +202,5 @@ POST       /:index/individual-select-a-country                        controller
 GET        /:index/change-individual-select-a-country                  controllers.IndividualSelectCountryController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-individual-select-a-country                  controllers.IndividualSelectCountryController.onSubmit(index: Index, mode: Mode = CheckMode)
 
+
+GET        /:index/confirm-address                       controllers.ConfirmAddressController.onPageLoad()

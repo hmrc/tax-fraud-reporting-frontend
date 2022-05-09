@@ -1205,3 +1205,6 @@ individualSelectCountry.label = Select country
 individualSelectCountry.checkYourAnswersLabel = Country
 individualSelectCountry.error.required = Please select a country from the list.
 individualSelectCountry.change.hidden = Select your Country
+
+confirmAddress.title = Review and Confirm
+confirmAddress.heading = Review and Confirm

@@ -115,6 +115,8 @@ final case class TypeBusinessPage(index: Index) extends NominalsQuestionPage[Str
 
 final case class BusinessAddressPage(index: Index) extends NominalsQuestionPage[Address]("businessAddress")
 
+final case class ConfirmAddressPage(index: Index) extends NominalsQuestionPage[String]("confirmAddress")
+
 final case class BusinessContactDetailsPage(index: Index)
     extends NominalsQuestionPage[BusinessContactDetails]("businessContactDetails")
 
