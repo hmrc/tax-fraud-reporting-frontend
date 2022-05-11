@@ -16,28 +16,41 @@
 
 package controllers
 
+import akka.http.scaladsl.model.HttpHeader.ParsingResult.Ok
 import base.SpecBase
+import forms.AddressFormProvider
+import models.backend.Address
+import models.{Index, NormalMode, UserAnswers}
+import pages.BusinessSelectCountryPage
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
+import viewmodels.{BusinessPart, IndividualPart}
 import views.html.ConfirmAddressView
 
 class ConfirmAddressControllerSpec extends SpecBase {
 
+  private val userAnswers = UserAnswers(userAnswersId)
+  private val answers     = emptyUserAnswers
+
   "ConfirmAddress Controller" - {
 
-    "must return OK and the correct view for a GET" in {
+    "must return other and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(answers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, routes.ConfirmAddressController.onPageLoad().url)
+
+        val isBusinessJourney = userAnswers.isBusinessJourney
+        val journeyPart       = if (isBusinessJourney) BusinessPart else IndividualPart(true)
+        val x                 = userAnswers.getAddress(Index(0), true)
+
+        val request = FakeRequest(GET, routes.ConfirmAddressController.onPageLoad(Index(0), isBusinessJourney).url)
 
         val result = route(application, request).value
-
-        val view = application.injector.instanceOf[ConfirmAddressView]
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view()(request, messages(application)).toString
+        val view   = application.injector.instanceOf[ConfirmAddressView]
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.IndividualAddressController.onPageLoad(Index(0), NormalMode).url
       }
     }
   }

@@ -123,7 +123,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       val remainingSections = checkedInfo & laterSections
 
       if (remainingSections.isEmpty)
-        Some(routes.IndividualConnectionController.onPageLoad(index, NormalMode))
+        Some(routes.ConfirmAddressController.onPageLoad(index, false))
       else
         IndividualInformation.values find remainingSections.contains map {
           individualInformationRoute(_, index, NormalMode)
@@ -189,7 +189,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
 
       if (remainingSections.isEmpty) Some {
         mode match {
-          case NormalMode => routes.SelectConnectionBusinessController.onPageLoad(index, mode)
+          case NormalMode => routes.ConfirmAddressController.onPageLoad(index, true)
           case CheckMode =>
             if (!answers.isBusinessJourney)
               routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)

@@ -17,6 +17,7 @@
 package forms
 
 import forms.behaviours.StringFieldBehaviours
+import play.api.data.Form._
 import play.api.data.FormError
 
 class AddressFormProviderSpec extends StringFieldBehaviours {
@@ -26,7 +27,8 @@ class AddressFormProviderSpec extends StringFieldBehaviours {
   private val requiredKey  = "error.address.line1"
   private val lengthKey    = "address.error.line1.length"
 
-  private val form = (new AddressFormProvider)()
+  val form = AddressFormProvider.get(isCountryUK = true)
+  //private val form = (new AddressFormProvider)()
 
   ".line1" - {
     val fieldName = "line1"
@@ -97,6 +99,6 @@ class AddressFormProviderSpec extends StringFieldBehaviours {
       Map("line1" -> "221B Baker St", "townOrCity" -> "London", "postCode" -> longLine, "country" -> "aa")
     val Left(bindingErrors) = form.mapping bind addressWithLongPostcode
 
-    bindingErrors mustBe Seq(FormError("postCode", "address.error.postcode.length"))
+    bindingErrors mustBe Seq(FormError("postCode", "error.postcode.invalid"))
   }
 }

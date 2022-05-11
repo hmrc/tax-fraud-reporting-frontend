@@ -18,12 +18,15 @@ package controllers
 
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import forms.AddressFormProvider
-import models.{Index, Mode}
+import models.requests.DataRequest
+import models.{AddressSansCountry, Index, Mode}
 import navigation.Navigator
-import pages.BusinessAddressPage
+import pages.{BusinessAddressPage, BusinessSelectCountryPage}
+import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepository
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.{BusinessPart, IndividualPart}
 import views.html.AddressView
@@ -38,36 +41,55 @@ class BusinessAddressController @Inject() (
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
-  formProvider: AddressFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: AddressView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
-  private val form = formProvider()
-
-  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      val journeyPart = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
-      val preparedForm = request.userAnswers get BusinessAddressPage(index) match {
-        case None        => form
-        case Some(value) => form.fill(value)
-      }
+      withCountry(
+        index,
+        mode,
+        (countryCode, form) =>
+          Future successful {
+            val journeyPart = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
+            val preparedForm = request.userAnswers get BusinessAddressPage(index) match {
+              case None        => form
+              case Some(value) => form.fill(value)
+            }
 
-      Ok(view(preparedForm, index, mode, journeyPart))
+            Ok(view(preparedForm, countryCode, index, mode, journeyPart))
+          }
+      )
   }
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       val journeyPart = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
-      form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, journeyPart))),
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessAddressPage(index), value))
-            _              <- sessionRepository set updatedAnswers
-          } yield Redirect(navigator.nextPage(BusinessAddressPage(index), mode, updatedAnswers))
+      withCountry(
+        index,
+        mode,
+        (countryCode, form) =>
+          form.bindFromRequest().fold(
+            formWithErrors =>
+              Future.successful(BadRequest(view(formWithErrors, countryCode, index, mode, journeyPart))),
+            address =>
+              for {
+                updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessAddressPage(index), address))
+                _              <- sessionRepository set updatedAnswers
+              } yield Redirect(navigator.nextPage(BusinessAddressPage(index), mode, updatedAnswers))
+          )
       )
   }
+
+  private def withCountry[R](index: Index, mode: Mode, f: (String, Form[AddressSansCountry]) => Future[Result])(implicit
+    request: DataRequest[AnyContent]
+  ): Future[Result] =
+    request.userAnswers get BusinessSelectCountryPage(index) match {
+      case None => Future successful Redirect(routes.BusinessSelectCountryController.onPageLoad(index, mode))
+      case Some(countryCode) =>
+        f(countryCode, AddressFormProvider.get(countryCode == "gb"))
+    }
 
 }

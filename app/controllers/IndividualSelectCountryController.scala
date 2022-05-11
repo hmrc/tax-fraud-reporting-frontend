@@ -45,7 +45,7 @@ class IndividualSelectCountryController @Inject() (
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
-  val form = formProvider()
+  private val form = formProvider()
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
@@ -61,13 +61,11 @@ class IndividualSelectCountryController @Inject() (
     implicit request =>
       form.bindFromRequest().fold(
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, Individual(false)))),
-        value =>
+        country =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualSelectCountryPage(index), value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualSelectCountryPage(index), country))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(
-            navigator.nextPage(IndividualSelectCountryPage(index), mode, updatedAnswers)
-          ) addingToSession "country" -> value
+          } yield Redirect(navigator.nextPage(IndividualSelectCountryPage(index), mode, updatedAnswers))
       )
   }
 

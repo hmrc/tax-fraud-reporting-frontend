@@ -34,7 +34,7 @@
 	configuration: Configuration
 )
 
-@(form: Form[Address], index: Index, mode: Mode, journeyPart: JourneyPart)(implicit request: Request[_], messages: Messages)
+@(form: Form[AddressSansCountry], countryCode: String, index: Index, mode: Mode, journeyPart: JourneyPart)(implicit request: Request[_], messages: Messages)
 
 @addressLinesInputErrorClass = @{
 	form("line1").error match {
@@ -93,19 +93,9 @@
 			name 	= "country",
 			id 		= "country",
 			label 	= Label(content = Text("Country")),
-			value 	= request.session.data get "country" map {
-			  code 	=> messages(s"country.$code.text")
-			},
+			value = Some( messages(s"country.$countryCode.text") ),
 			attributes = Map("disabled" -> "disabled")
 		  )
-		)
-
-		@govukInput(
-		  Input(
-			label = Label(content = Text("Country"), classes = "hidden"),
-			value      = request.session.data get "country",
-			attributes = Map("hidden" -> "hidden")
-		  ) withFormField form("country")
 		)
 }
 

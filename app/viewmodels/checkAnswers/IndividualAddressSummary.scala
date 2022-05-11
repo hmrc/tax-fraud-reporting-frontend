@@ -31,7 +31,7 @@ object IndividualAddressSummary {
   def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
     messages: Messages
   ): Option[SummaryListRow] = {
-    val answer = answers get IndividualAddressPage(Index(index)) map {
+    val answer = answers.getAddress(Index(index), forBusiness = false) map {
       answer =>
         List(
           Some(answer.addressLine1),

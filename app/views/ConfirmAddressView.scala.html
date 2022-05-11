@@ -16,30 +16,60 @@
 
 @import models.backend.Address
 @import play.api.Configuration
+@import viewmodels.{BusinessPart, JourneyPart}
 
 @this(
         layout: templates.Layout,
         govukButton: GovukButton
 )
 
-@(index:Index, mode: Mode)(implicit request: Request[_], messages: Messages)
+@(index:Index, address: Address, isBusinessJourney: Boolean, journeyPart: JourneyPart)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("confirmAddress.title"))) {
+
+    @if(journeyPart != BusinessPart) {
+    <span class="govuk-caption-xl">
+               <span class="govuk-visually-hidden">@messages("individual.caption.text.screen.reader")</span>
+               @messages(s"individual.${index.display}")
+            </span>
+    }
 
     <h1 class="govuk-heading-xl">@messages("confirmAddress.heading")</h1>
 
 
     <div id="address">
 
-        <span class="govuk-body-l"  id="line1"></span><br>
+        <span class="govuk-body-l"  id="line1">@address.addressLine1</span><br>
+        @for( line2 <- address.addressLine2){
+        <span class="govuk-body-l"  id="line2">@line2</span><br>
+        }
+        @for( line3 <- address.addressLine3){
+        <span class="govuk-body-l"  id="line3">@line3</span><br>
+        }
+        <span class="govuk-body-l"  id="townOrCity">@address.townCity</span><br>
 
-        <span class="govuk-body-l" id="postCode"></span><br>
+        @for( postcode <- address.postcode){
+        <span class="govuk-body-l" id="postCode">@postcode</span><br>
+        }
 
-        <span class="govuk-body-l" id="country"></span>
+        <div class="govuk-body-l" id="country">@messages(s"country.${address.country}.text")</div>
 
     </div>
+    @if(isBusinessJourney) {
+         <p class="govuk-!-margin-bottom-7">
+                <a class="govuk-link" href="@routes.BusinessAddressController.onPageLoad(index, NormalMode)" id="changeLinkBus">Edit address</a>
+         </p>
+        <a id="continue-button-bus" href="@routes.SelectConnectionBusinessController.onPageLoad(index, NormalMode)" role="button" class="govuk-button" data-module="govuk-button">
+            @messages("site.continue")
+        </a>
+    }
+    @if(!isBusinessJourney) {
+        <p class="govuk-!-margin-bottom-7">
+            <a class="govuk-link" href="@routes.IndividualAddressController.onPageLoad(index, NormalMode)" id="changeLinkInd">Edit address</a>
+        </p>
+        <a id="continue-button-ind" href="@routes.IndividualConnectionController.onPageLoad(index, NormalMode)" role="button" class="govuk-button" data-module="govuk-button">
+            @messages("site.continue")
+        </a>
+    }
 
-    <a id="continue-button" href="@routes.IndividualConnectionController.onPageLoad(index, NormalMode)" role="button" class="govuk-button" data-module="govuk-button">
-        @messages("site.continue")
-    </a>
 }

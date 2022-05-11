@@ -267,7 +267,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualNamePage(Index(0)),
               NormalMode,
               userAnswers
-            ) mustBe routes.IndividualConnectionController.onPageLoad(Index(0), NormalMode)
+            ) mustBe routes.ConfirmAddressController.onPageLoad(Index(0), false)
           }
         }
 
@@ -369,7 +369,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualAgePage(Index(0)),
               NormalMode,
               userAnswers
-            ) mustBe routes.IndividualConnectionController.onPageLoad(Index(0), NormalMode)
+            ) mustBe routes.ConfirmAddressController.onPageLoad(Index(0), false)
           }
         }
 
@@ -440,7 +440,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualDateOfBirthPage(Index(0)),
               NormalMode,
               userAnswers
-            ) mustBe routes.IndividualConnectionController.onPageLoad(Index(0), NormalMode)
+            ) mustBe routes.ConfirmAddressController.onPageLoad(Index(0), false)
           }
         }
 
@@ -496,7 +496,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualAddressPage(Index(0)),
               NormalMode,
               userAnswers
-            ) mustBe routes.IndividualConnectionController.onPageLoad(Index(0), NormalMode)
+            ) mustBe routes.ConfirmAddressController.onPageLoad(Index(0), false)
           }
         }
 
@@ -538,7 +538,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualContactDetailsPage(Index(0)),
               NormalMode,
               userAnswers
-            ) mustBe routes.IndividualConnectionController.onPageLoad(Index(0), NormalMode)
+            ) mustBe routes.ConfirmAddressController.onPageLoad(Index(0), false)
           }
         }
 
@@ -560,7 +560,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
               IndividualNationalInsuranceNumberPage(Index(0)),
               NormalMode,
               userAnswers
-            ) mustBe routes.IndividualConnectionController.onPageLoad(Index(0), NormalMode)
+            ) mustBe routes.ConfirmAddressController.onPageLoad(Index(0), false)
           }
         }
 
@@ -644,7 +644,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             ReferenceNumbersPage(Index(0)),
             NormalMode,
             userAnswers
-          ) mustBe routes.SelectConnectionBusinessController.onPageLoad(Index(0), NormalMode)
+          ) mustBe routes.ConfirmAddressController.onPageLoad(Index(0), true)
         }
       }
 
@@ -750,7 +750,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             BusinessNamePage(Index(0)),
             NormalMode,
             userAnswers
-          ) mustBe routes.SelectConnectionBusinessController.onPageLoad(Index(0), NormalMode)
+          ) mustBe routes.ConfirmAddressController.onPageLoad(Index(0), true)
         }
       }
 
@@ -825,7 +825,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             BusinessNamePage(Index(0)),
             NormalMode,
             userAnswers
-          ) mustBe routes.SelectConnectionBusinessController.onPageLoad(Index(0), NormalMode)
+          ) mustBe routes.ConfirmAddressController.onPageLoad(Index(0), true)
         }
       }
 
@@ -1453,6 +1453,27 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           CheckMode,
           answers
         ) mustBe routes.BusinessAddressController.onPageLoad(Index(0), CheckMode)
+      }
+
+      "must go from the individual select country page" - {
+
+        "to the individual select country page if the user has selected address" in {
+          val answers = UserAnswers("id").set(IndividualSelectCountryPage(Index(0)), "country").success.value
+          navigator.nextPage(
+            IndividualSelectCountryPage(Index(0)),
+            CheckMode,
+            answers
+          ) mustBe routes.IndividualAddressController.onPageLoad(Index(0), CheckMode)
+        }
+
+        "to the journey recovery controller if there is no activity type set" in {
+          navigator.nextPage(
+            IndividualSelectCountryPage(Index(0)),
+            CheckMode,
+            UserAnswers("id")
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
       }
 
     }

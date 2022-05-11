@@ -17,33 +17,36 @@
 package controllers
 
 import controllers.actions._
-import forms.AddressFormProvider
-import models.{Index, Mode}
-
+import models.{Index, Mode, NormalMode}
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import viewmodels.{BusinessPart, IndividualPart}
 import views.html.ConfirmAddressView
-import views.html.helper.form
 
 import scala.concurrent.ExecutionContext
 
-class ConfirmAddressController @Inject()(
-                                       override val messagesApi: MessagesApi,
-                                       identify: IdentifierAction,
-                                       getData: DataRetrievalAction,
-                                       requireData: DataRequiredAction,
-                                       val controllerComponents: MessagesControllerComponents,
-                                       formProvider: AddressFormProvider,
-                                       view: ConfirmAddressView
-                                     ) (implicit ec: ExecutionContext)
-  extends FrontendBaseController with I18nSupport {
+class ConfirmAddressController @Inject() (
+  override val messagesApi: MessagesApi,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  val controllerComponents: MessagesControllerComponents,
+  view: ConfirmAddressView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
-  //private val form = formProvider()
+  def onPageLoad(index: Index, forBusiness: Boolean): Action[AnyContent] =
+    (identify andThen getData andThen requireData) {
+      implicit request =>
+        val isBusinessJourney = request.userAnswers.isBusinessJourney
+        val journeyPart       = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
+        request.userAnswers getAddress (index, forBusiness) match {
+          case Some(address) => Ok(view(index, address, isBusinessJourney, journeyPart))
+          case None          => Redirect(routes.IndividualAddressController.onPageLoad(index, NormalMode))
+        }
+    }
 
-  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
-      Ok(view(index, mode))
-  }
 }

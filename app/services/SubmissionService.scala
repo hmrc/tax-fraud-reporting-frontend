@@ -117,7 +117,8 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
         name.aliases map sanitiseString
       )
     },
-    address = getAddress(answers.get(IndividualAddressPage(Index(index)))),
+    //address = getAddress(answers.get(IndividualAddressPage(Index(index)))),
+    address = getAddress(answers.getAddress(Index(index), forBusiness = false)),
     contact = answers.get(IndividualContactDetailsPage(Index(index))).map { details =>
       Contact(landline = details.landlineNumber, mobile = details.mobileNumber, email = details.email)
     },
@@ -135,7 +136,8 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
   } yield Business(
     businessName = answers.get(BusinessNamePage(Index(index))) map sanitiseString,
     businessType = answers.get(TypeBusinessPage(Index(index))) map sanitiseString,
-    address = getAddress(answers.get(BusinessAddressPage(Index(index)))),
+    address = getAddress(answers.getAddress(Index(index), forBusiness = true)),
+    //address = getAddress(answers.get(BusinessAddressPage(Index(index)))),
     contact = answers.get(BusinessContactDetailsPage(Index(index))).map { details =>
       Contact(landline = details.landlineNumber, mobile = details.mobileNumber, email = details.email)
     },
