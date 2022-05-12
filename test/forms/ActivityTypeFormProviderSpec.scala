@@ -23,16 +23,23 @@ import play.api.data.FormError
 // TODO tests
 class ActivityTypeFormProviderSpec extends StringFieldBehaviours with MockActivityTypes {
 
-  ".value" in {
+  val form = new ActivityTypeFormProvider(mockActivityTypeService)()
 
+  ".value" - {
+    val fieldName   = "value"
     val requiredKey = "error.required"
+    val invalid     = "activityType.error.invalid"
 
-    val form = new ActivityTypeFormProvider(mockActivityTypeService)()
+    "must not bind an invalid option" in {
+      val result = form.bind(Map(fieldName -> "test"))
+      result.errors must contain(FormError(fieldName, invalid))
+    }
 
-    val fieldName = "value"
-
-    val result = form.bind(emptyForm).apply(fieldName)
-    result.errors mustEqual Seq(FormError(fieldName, requiredKey))
+    "must not bind an empty map" in {
+      val result = form.bind(Map.empty[String, String])
+      result.errors must contain(FormError(fieldName, requiredKey))
+    }
 
   }
+
 }
