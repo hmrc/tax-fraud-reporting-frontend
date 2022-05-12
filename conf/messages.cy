@@ -49,6 +49,8 @@ error.summary.title = Mae problem wedi codi
 error.addressLines.required = Nodwch o leiaf un llinell cyfeiriad neu dref
 error.postcode.invalid      = Nodwch god post dilys
 error.country.required      = Dewiswch wlad o'r rhestr
+error.address.line1         = (W)Enter address line one(W)
+error.address.townOrCity    = (W)Enter a town or city(W)
 
 country.ad.text = Andorra
 country.ae.text = Emiradau Arabaidd Unedig
