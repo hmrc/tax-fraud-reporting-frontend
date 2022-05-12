@@ -43,6 +43,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       individualInformationRoutes(_, index, IndividualInformation.ContactDetails)
     case IndividualNationalInsuranceNumberPage(index) =>
       individualInformationRoutes(_, index, IndividualInformation.NiNumber)
+    case IndividualSelectCountryPage(index) => _ => routes.IndividualAddressController.onPageLoad(index, NormalMode)
 
     /** END Individual journey
       * Start Business journey */
@@ -52,6 +53,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case BusinessContactDetailsPage(index)   => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index, NormalMode)
     case BusinessAddressPage(index)          => businessInformationRoutes(_, index, BusinessInformationCheck.Address)
+    case BusinessSelectCountryPage(index)    => _ => routes.BusinessAddressController.onPageLoad(index, NormalMode)
     case SelectConnectionBusinessPage(_)     => selectConnectionBusinessRoutes
 
     /** END Business journey */
@@ -101,7 +103,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     answer match {
       case IndividualInformation.Name           => routes.IndividualNameController.onPageLoad(index, mode)
       case IndividualInformation.Age            => routes.IndividualDateFormatController.onPageLoad(index, mode)
-      case IndividualInformation.Address        => routes.IndividualAddressController.onPageLoad(index, mode)
+      case IndividualInformation.Address        => routes.IndividualSelectCountryController.onPageLoad(index, mode)
       case IndividualInformation.ContactDetails => routes.IndividualContactDetailsController.onPageLoad(index, mode)
       case IndividualInformation.NiNumber       => routes.IndividualNationalInsuranceNumberController.onPageLoad(index, mode)
     }
@@ -156,7 +158,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       case BusinessInformationCheck.Type              => routes.TypeBusinessController.onPageLoad(index, mode)
       case BusinessInformationCheck.BusinessReference => routes.ReferenceNumbersController.onPageLoad(index, mode)
       case BusinessInformationCheck.Contact           => routes.BusinessContactDetailsController.onPageLoad(index, mode)
-      case BusinessInformationCheck.Address           => routes.BusinessAddressController.onPageLoad(index, mode)
+      case BusinessInformationCheck.Address           => routes.BusinessSelectCountryController.onPageLoad(index, mode)
     }
 
   private def businessInformationRoutes(answers: UserAnswers, index: Index, mode: Mode): Call =

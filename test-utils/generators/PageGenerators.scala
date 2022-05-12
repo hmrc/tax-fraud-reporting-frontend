@@ -22,6 +22,12 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryBusinessSelectCountryPage: Arbitrary[BusinessSelectCountryPage] =
+    Arbitrary(BusinessSelectCountryPage(Index(0)))
+
+  implicit lazy val arbitraryIndividualSelectCountryPage: Arbitrary[IndividualSelectCountryPage] =
+    Arbitrary(IndividualSelectCountryPage(Index(0)))
+
   implicit lazy val arbitraryIndividualConfirmRemovePage: Arbitrary[IndividualConfirmRemovePage] =
     Arbitrary(IndividualConfirmRemovePage(Index(0)))
 

@@ -1308,3 +1308,10 @@ serviceTimeout.heading =  Er eich diogelwch, rydym wedi dileu eich atebion
 betaBanner.service.text = Gwasanaeth newydd yw hwn
 
 individual.caption.text.screen.reader = Mae hyn yn ymwneud ag
+
+individualSelectCountry.title = Dewiswch eich wlad
+individualSelectCountry.heading = Dewiswch eich wlad
+individualSelectCountry.label = Dewiswch wlad
+individualSelectCountry.checkYourAnswersLabel = Dewiswch eich wlad
+individualSelectCountry.error.required = Dewiswch wlad o'r rhestr.
+individualSelectCountry.change.hidden = Dewiswch eich wlad
