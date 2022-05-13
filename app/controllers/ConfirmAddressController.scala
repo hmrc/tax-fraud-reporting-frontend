@@ -17,7 +17,7 @@
 package controllers
 
 import controllers.actions._
-import models.{BusinessInformationCheck, Index, IndividualInformation, Mode, NormalMode}
+import models.{BusinessInformationCheck, CheckMode, Index, IndividualInformation, Mode, NormalMode}
 import navigation.Navigator
 
 import javax.inject.Inject
@@ -49,7 +49,13 @@ class ConfirmAddressController @Inject() (
         val nextPage =
           if (isBusinessJourney)
             navigator.businessInformationRoutes(request.userAnswers, index, BusinessInformationCheck.Address, mode)
-          else navigator.individualInformationRoutes(request.userAnswers, index, IndividualInformation.Address, mode)
+          else
+            mode match {
+              case NormalMode =>
+                navigator.individualInformationRoutes(request.userAnswers, index, IndividualInformation.Address, mode)
+              case CheckMode =>
+                routes.CheckYourAnswersController.onPageLoad
+            }
         request.userAnswers getAddress (index, forBusiness) match {
           case Some(address) => Ok(view(index, address, isBusinessJourney, journeyPart, nextPage))
           case None          => Redirect(routes.IndividualAddressController.onPageLoad(index, NormalMode))

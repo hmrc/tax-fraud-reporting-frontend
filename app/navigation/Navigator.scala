@@ -73,10 +73,12 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case ProvideContactDetailsPage       => provideContactDetailsRoutes
     case YourContactDetailsPage          => _ => routes.SupportingDocumentController.onPageLoad(NormalMode)
     case ActivitySourceOfInformationPage => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
-    case DocumentationDescriptionPage    => _ => routes.CheckYourAnswersController.onPageLoad
-    case IndividualDateFormatPage(index) => individualDateFormatPageCheckRoutes(_, index)
-    case WhenActivityHappenPage          => whenActivityHappenCheckRoutes
-    case _                               => _ => routes.IndexController.onPageLoad
+    case DocumentationDescriptionPage =>
+      _ =>
+        routes.CheckYourAnswersController.onPageLoad
+      //case IndividualDateFormatPage(index) => individualDateFormatPageCheckRoutes(_, index)
+    //case WhenActivityHappenPage          => whenActivityHappenCheckRoutes
+    case _ => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
@@ -123,11 +125,11 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     answer: IndividualInformation,
     mode: Mode = NormalMode
   ): Call =
-    answers get IndividualInformationPage(index) map { checkedInfo =>
+    answers get IndividualInformationPage(index) flatMap { checkedInfo =>
       val laterSections     = IndividualInformation.values.dropWhile(_ != answer).drop(1).toSet
       val remainingSections = checkedInfo & laterSections
 
-      mode match {
+      /*mode match {
         case NormalMode =>
           remainingSections collectFirst {
             case section if remainingSections contains section =>
@@ -136,6 +138,23 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
             routes.IndividualConnectionController.onPageLoad(index, NormalMode)
         case CheckMode => routes.CheckYourAnswersController.onPageLoad
       }
+    } getOrElse routes.JourneyRecoveryController.onPageLoad()*/
+      if (remainingSections.isEmpty) Some {
+        mode match {
+          case NormalMode => routes.IndividualConnectionController.onPageLoad(index, mode)
+          case CheckMode =>
+            routes.CheckYourAnswersController.onPageLoad
+        }
+      }
+      else
+        IndividualInformation.values find remainingSections.contains map {
+          mode match {
+            case NormalMode => individualInformationRoute(_, index, mode)
+            case CheckMode =>
+              routes.CheckYourAnswersController.onPageLoad
+              individualInformationRoute(_, index, mode)
+          }
+        }
     } getOrElse routes.JourneyRecoveryController.onPageLoad()
 
   private def ageFormatPageRoutes(answers: UserAnswers, index: Index): Call =
