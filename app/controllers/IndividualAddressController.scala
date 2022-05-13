@@ -21,7 +21,7 @@ import forms.AddressFormProvider
 import models.requests.DataRequest
 import models.{AddressSansCountry, Index, Mode}
 import navigation.Navigator
-import pages.{IndividualAddressPage, IndividualSelectCountryPage}
+import pages.{ConfirmAddressPage, IndividualAddressPage, IndividualSelectCountryPage}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
@@ -76,7 +76,7 @@ class IndividualAddressController @Inject() (
               for {
                 updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualAddressPage(index), address))
                 _              <- sessionRepository.set(updatedAnswers)
-              } yield Redirect(navigator.nextPage(IndividualAddressPage(index), mode, updatedAnswers))
+              } yield Redirect(routes.ConfirmAddressController.onPageLoad(index, false, mode))
           )
       )
   }

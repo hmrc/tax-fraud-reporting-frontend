@@ -17,7 +17,9 @@
 package controllers
 
 import controllers.actions._
-import models.{Index, Mode, NormalMode}
+import models.{BusinessInformationCheck, Index, IndividualInformation, Mode, NormalMode}
+import navigation.Navigator
+
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -34,17 +36,22 @@ class ConfirmAddressController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: ConfirmAddressView
+  view: ConfirmAddressView,
+  navigator: Navigator
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad(index: Index, forBusiness: Boolean): Action[AnyContent] =
+  def onPageLoad(index: Index, forBusiness: Boolean, mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireData) {
       implicit request =>
         val isBusinessJourney = request.userAnswers.isBusinessJourney
         val journeyPart       = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
+        val nextPage =
+          if (isBusinessJourney)
+            navigator.businessInformationRoutes(request.userAnswers, index, BusinessInformationCheck.Address, mode)
+          else navigator.individualInformationRoutes(request.userAnswers, index, IndividualInformation.Address, mode)
         request.userAnswers getAddress (index, forBusiness) match {
-          case Some(address) => Ok(view(index, address, isBusinessJourney, journeyPart))
+          case Some(address) => Ok(view(index, address, isBusinessJourney, journeyPart, nextPage))
           case None          => Redirect(routes.IndividualAddressController.onPageLoad(index, NormalMode))
         }
     }

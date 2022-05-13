@@ -43,9 +43,9 @@ class ConfirmAddressControllerSpec extends SpecBase {
 
         val isBusinessJourney = userAnswers.isBusinessJourney
         val journeyPart       = if (isBusinessJourney) BusinessPart else IndividualPart(true)
-        val x                 = userAnswers.getAddress(Index(0), true)
 
-        val request = FakeRequest(GET, routes.ConfirmAddressController.onPageLoad(Index(0), isBusinessJourney).url)
+        val request =
+          FakeRequest(GET, routes.ConfirmAddressController.onPageLoad(Index(0), isBusinessJourney, NormalMode).url)
 
         val result = route(application, request).value
         val view   = application.injector.instanceOf[ConfirmAddressView]

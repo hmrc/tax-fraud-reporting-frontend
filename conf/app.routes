@@ -203,5 +203,7 @@ GET        /:index/change-individual-select-a-country                  controlle
 POST       /:index/change-individual-select-a-country                  controllers.IndividualSelectCountryController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 
-GET        /:index/individual/confirm-address                     controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = false)
-GET        /:index/business/confirm-address                       controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = true)
+GET        /:index/individual/confirm-address                     controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = false, mode: Mode = NormalMode)
+GET        /:index/individual/confirm-address-change                     controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = false, mode: Mode = CheckMode)
+GET        /:index/business/confirm-address                       controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = true, mode: Mode = NormalMode)
+  GET      /:index/business/confirm-address-change                       controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = true, mode: Mode = CheckMode)

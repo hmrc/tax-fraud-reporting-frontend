@@ -117,17 +117,25 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       )
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def individualInformationRoutes(answers: UserAnswers, index: Index, answer: IndividualInformation): Call =
-    answers get IndividualInformationPage(index) flatMap { checkedInfo =>
+  def individualInformationRoutes(
+    answers: UserAnswers,
+    index: Index,
+    answer: IndividualInformation,
+    mode: Mode = NormalMode
+  ): Call =
+    answers get IndividualInformationPage(index) map { checkedInfo =>
       val laterSections     = IndividualInformation.values.dropWhile(_ != answer).drop(1).toSet
       val remainingSections = checkedInfo & laterSections
 
-      if (remainingSections.isEmpty)
-        Some(routes.ConfirmAddressController.onPageLoad(index, false))
-      else
-        IndividualInformation.values find remainingSections.contains map {
-          individualInformationRoute(_, index, NormalMode)
-        }
+      mode match {
+        case NormalMode =>
+          remainingSections collectFirst {
+            case section if remainingSections contains section =>
+              individualInformationRoute(section, index, mode)
+          } getOrElse
+            routes.IndividualConnectionController.onPageLoad(index, NormalMode)
+        case CheckMode => routes.CheckYourAnswersController.onPageLoad
+      }
     } getOrElse routes.JourneyRecoveryController.onPageLoad()
 
   private def ageFormatPageRoutes(answers: UserAnswers, index: Index): Call =
@@ -168,7 +176,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       BusinessInformationCheck.values.find(businessInformation.contains).map(businessInformationRoute(_, index, mode))
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def businessInformationRoutes(
+  def businessInformationRoutes(
     answers: UserAnswers,
     index: Index,
     answer: BusinessInformationCheck,
@@ -189,7 +197,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
 
       if (remainingSections.isEmpty) Some {
         mode match {
-          case NormalMode => routes.ConfirmAddressController.onPageLoad(index, true)
+          case NormalMode => routes.SelectConnectionBusinessController.onPageLoad(index, mode)
           case CheckMode =>
             if (!answers.isBusinessJourney)
               routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)

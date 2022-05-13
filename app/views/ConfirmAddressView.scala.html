@@ -23,7 +23,7 @@
         govukButton: GovukButton
 )
 
-@(index:Index, address: Address, isBusinessJourney: Boolean, journeyPart: JourneyPart)(implicit request: Request[_], messages: Messages)
+@(index:Index, address: Address, isBusinessJourney: Boolean, journeyPart: JourneyPart, nextPage: Call)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("confirmAddress.title"))) {
 
@@ -59,7 +59,7 @@
          <p class="govuk-!-margin-bottom-7">
                 <a class="govuk-link" href="@routes.BusinessAddressController.onPageLoad(index, NormalMode)" id="changeLinkBus">Edit address</a>
          </p>
-        <a id="continue-button-bus" href="@routes.SelectConnectionBusinessController.onPageLoad(index, NormalMode)" role="button" class="govuk-button" data-module="govuk-button">
+        <a id="continue-button-bus" href="@nextPage" role="button" class="govuk-button" data-module="govuk-button">
             @messages("site.continue")
         </a>
     }
@@ -67,7 +67,7 @@
         <p class="govuk-!-margin-bottom-7">
             <a class="govuk-link" href="@routes.IndividualAddressController.onPageLoad(index, NormalMode)" id="changeLinkInd">Edit address</a>
         </p>
-        <a id="continue-button-ind" href="@routes.IndividualConnectionController.onPageLoad(index, NormalMode)" role="button" class="govuk-button" data-module="govuk-button">
+        <a id="continue-button-ind" href="@nextPage" role="button" class="govuk-button" data-module="govuk-button">
             @messages("site.continue")
         </a>
     }
