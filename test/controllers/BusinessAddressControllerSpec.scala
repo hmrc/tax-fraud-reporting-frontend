@@ -18,7 +18,6 @@ package controllers
 
 import akka.actor.ActorSystem
 import controllers.actions.{DataRequiredActionImpl, DataRetrievalActionImpl, SessionIdentifierAction}
-import forms.AddressFormProvider
 import models.backend.Address
 import models.requests.DataRequest
 import models.{AddressSansCountry, Index, NormalMode, UserAnswers}
@@ -83,7 +82,6 @@ class BusinessAddressControllerSpec extends AnyFlatSpec with MockitoSugar with S
       new SessionIdentifierAction(new BodyParsers.Default(stubPlayBodyParsers)),
       new DataRetrievalActionImpl(mockSessionRepository),
       new DataRequiredActionImpl(),
-      //new AddressFormProvider(AddressSansCountry),
       mcc,
       mockAddressView
     )
@@ -100,19 +98,20 @@ class BusinessAddressControllerSpec extends AnyFlatSpec with MockitoSugar with S
     DataRequest(fakeRequest.withSession(SessionKeys.sessionId -> "fakeSessionId"), "", UserAnswers(mockId, userAnswers))
   }
 
-  "IndividualAddressController" should "respond with status 200 given a request without a cached answer" in
-    scenario(Json.obj()) {
+  "BusinessAddressController" should "respond with status 200 given a request without a cached answer" in
+    scenario(Json.obj("businessSelectCountry" -> "gb")) {
       (_, controller) =>
         val response = controller.onPageLoad(Index(0), NormalMode)(fakeDataRequest())
 
-        status(response) shouldBe SEE_OTHER
+        status(response) shouldBe OK
         val responseBody = response.futureValue.body.consumeData.futureValue
-        responseBody decodeString Charset.defaultCharset() shouldBe ""
+        responseBody decodeString Charset.defaultCharset() shouldBe "testHtml"
     }
 
   it should "respond with status 200 given a request with a cached answer" in
     scenario(
       Json.obj(
+        "businessSelectCountry" -> "gb",
         "businessAddress" -> Address(
           addressLine1 = "221b Baker St",
           townCity = "London",
@@ -127,21 +126,21 @@ class BusinessAddressControllerSpec extends AnyFlatSpec with MockitoSugar with S
 
         val response = controller.onPageLoad(Index(0), NormalMode)(requestWithCache)
 
-        status(response) shouldBe SEE_OTHER
+        status(response) shouldBe OK
         val responseBody = response.futureValue.body.consumeData.futureValue
-        responseBody decodeString Charset.defaultCharset() shouldBe ""
+        responseBody decodeString Charset.defaultCharset() shouldBe "testHtml"
     }
 
   it should "response with status 400 and remain on the same page given invalid data" in
-    scenario(Json.obj()) {
+    scenario(Json.obj("businessSelectCountry" -> "gb")) {
       (_, controller) =>
         val badRequest = fakeDataRequest(bodyOpt = Some(Seq("postCode" -> "mockPostCode")))
 
         val response = controller.onSubmit(Index(0), NormalMode)(badRequest)
 
-        status(response) shouldBe SEE_OTHER
+        status(response) shouldBe BAD_REQUEST
         val responseBody = response.futureValue.body.consumeData.futureValue
-        responseBody decodeString Charset.defaultCharset shouldBe ""
+        responseBody decodeString Charset.defaultCharset shouldBe "testHtml"
     }
 
   it should "response with status 303 given valid data" in
