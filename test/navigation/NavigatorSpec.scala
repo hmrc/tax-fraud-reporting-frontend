@@ -1488,6 +1488,25 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
       }
 
+      "to the connection page if there are no following options selected" in {
+        forAll(businessInformationCheckGen) { businesslInformationAnswer =>
+          val followingAnswers = Set(
+            BusinessInformationCheck.Name,
+            BusinessInformationCheck.Type,
+            BusinessInformationCheck.Address,
+            BusinessInformationCheck.Contact,
+            BusinessInformationCheck.BusinessReference
+          )
+          val answer      = businesslInformationAnswer -- followingAnswers
+          val userAnswers = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
+          navigator.nextPage(
+            BusinessNamePage(Index(0)),
+            CheckMode,
+            userAnswers
+          ) mustBe routes.IndividualCheckYourAnswersController.onPageLoad(Index(0), CheckMode)
+        }
+      }
+
     }
   }
 }
