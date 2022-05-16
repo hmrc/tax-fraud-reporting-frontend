@@ -57,7 +57,7 @@
     </div>
     @if(isBusinessJourney) {
          <p class="govuk-!-margin-bottom-7">
-                <a class="govuk-link" href="@routes.BusinessAddressController.onPageLoad(index, NormalMode)" id="changeLinkBus">Edit address</a>
+                <a class="govuk-link" href="@routes.BusinessAddressController.onPageLoad(index, NormalMode)" id="continue-button">Edit address</a>
          </p>
         <a id="continue-button-bus" href="@nextPage" role="button" class="govuk-button" data-module="govuk-button">
             @messages("site.continue")
@@ -65,7 +65,7 @@
     }
     @if(!isBusinessJourney) {
         <p class="govuk-!-margin-bottom-7">
-            <a class="govuk-link" href="@routes.IndividualAddressController.onPageLoad(index, NormalMode)" id="changeLinkInd">Edit address</a>
+            <a class="govuk-link" href="@routes.IndividualAddressController.onPageLoad(index, NormalMode)" id="continue-button">Edit address</a>
         </p>
         <a id="continue-button-ind" href="@nextPage" role="button" class="govuk-button" data-module="govuk-button">
             @messages("site.continue")
