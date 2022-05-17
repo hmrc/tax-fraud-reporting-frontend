@@ -1208,3 +1208,4 @@ individualSelectCountry.change.hidden = Select your Country
 
 confirmAddress.title = Review and Confirm
 confirmAddress.heading = Review and Confirm
+confirmAddress.change-address = Change address

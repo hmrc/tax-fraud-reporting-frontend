@@ -1317,3 +1317,7 @@ individualSelectCountry.label = Dewiswch wlad
 individualSelectCountry.checkYourAnswersLabel = Dewiswch eich wlad
 individualSelectCountry.error.required = Dewiswch wlad o'r rhestr.
 individualSelectCountry.change.hidden = Dewiswch eich wlad
+
+confirmAddress.title = Adolygu a Chadarnhau
+confirmAddress.heading = Adolygu a Chadarnhau
+confirmAddress.change-address = Newid y cyfeiriad
