@@ -17,8 +17,8 @@
 package pages
 
 import models.IndividualBusinessDetails.Yes
-import models.backend.Address
 import models.{
+  AddressSansCountry,
   BusinessContactDetails,
   BusinessInformationCheck,
   Index,
@@ -70,7 +70,8 @@ final case class IndividualAgePage(index: Index) extends NominalsQuestionPage[In
 
 /** END Age Pages */
 
-final case class IndividualAddressPage(index: Index) extends NominalsQuestionPage[Address]("individualAddress")
+final case class IndividualAddressPage(index: Index)
+    extends NominalsQuestionPage[AddressSansCountry]("individualAddress")
 
 final case class IndividualContactDetailsPage(index: Index)
     extends NominalsQuestionPage[IndividualContactDetails]("individualContactDetails")
@@ -113,7 +114,9 @@ final case class BusinessNamePage(index: Index) extends NominalsQuestionPage[Str
 
 final case class TypeBusinessPage(index: Index) extends NominalsQuestionPage[String]("typeBusiness")
 
-final case class BusinessAddressPage(index: Index) extends NominalsQuestionPage[Address]("businessAddress")
+final case class BusinessAddressPage(index: Index) extends NominalsQuestionPage[AddressSansCountry]("businessAddress")
+
+final case class ConfirmAddressPage(index: Index) extends NominalsQuestionPage[String]("confirmAddress")
 
 final case class BusinessContactDetailsPage(index: Index)
     extends NominalsQuestionPage[BusinessContactDetails]("businessContactDetails")

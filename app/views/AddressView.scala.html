@@ -21,6 +21,7 @@
 @import play.api.Configuration
 @import viewmodels.LegendSize
 @import viewmodels.{BusinessPart, JourneyPart}
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 
 @this(
 	layout: templates.Layout,
@@ -33,7 +34,7 @@
 	configuration: Configuration
 )
 
-@(form: Form[Address], index: Index, mode: Mode, journeyPart: JourneyPart)(implicit request: Request[_], messages: Messages)
+@(form: Form[AddressSansCountry], countryCode: String, index: Index, mode: Mode, journeyPart: JourneyPart)(implicit request: Request[_], messages: Messages)
 
 @addressLinesInputErrorClass = @{
 	form("line1").error match {
@@ -87,16 +88,15 @@
 			)
 		)
 
-	@autocomplete(
-		field = form("country"),
-		id = "country",
-		name = "country",
-		isPageHint = false,
-		hint = None,
-		isPageHeading = false,
-		label = "address.country",
-		options = countries map AutocompleteOption.get(messages, "country")
-	)
+	@govukInput(
+		  Input(
+			name 	= "country",
+			id 		= "country",
+			label 	= Label(content = Text("Country")),
+			value = Some( messages(s"country.$countryCode.text") ),
+			attributes = Map("disabled" -> "disabled")
+		  )
+		)
 }
 
 @layout(pageTitle = title(form, messages(journeyPart.heading + "Address.heading"))) {

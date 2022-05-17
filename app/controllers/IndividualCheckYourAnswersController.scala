@@ -49,6 +49,7 @@ class IndividualCheckYourAnswersController @Inject() (
             IndividualDateFormatSummary.row(answers, index.position, mode),
             IndividualDateOfBirthSummary.row(answers, index.position, mode),
             IndividualAgeSummary.row(answers, index.position, mode),
+            IndividualSelectCountrySummary.row(answers, index.position, mode),
             IndividualAddressSummary.row(answers, index.position, mode),
             IndividualContactDetailsSummary.row(answers, index.position, mode),
             IndividualNationalInsuranceNumberSummary.row(answers, index.position, mode),
@@ -63,6 +64,7 @@ class IndividualCheckYourAnswersController @Inject() (
             Seq(
               BusinessNameSummary.row(answers, index.position, mode),
               TypeBusinessSummary.row(answers, index.position, mode),
+              BusinessSelectCountrySummary.row(answers, index.position, mode),
               BusinessAddressSummary.row(answers, index.position, mode),
               BusinessContactDetailsSummary.row(answers, index.position, mode),
               ReferenceNumbersSummary.row(answers, index.position, mode),

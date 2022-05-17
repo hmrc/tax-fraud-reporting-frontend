@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package forms
+package models
 
-import play.api.Configuration
-import play.api.data.Form
-import play.api.data.Forms.text
+import play.api.libs.json.{Json, OFormat}
 
-import javax.inject.Inject
+case class AddressSansCountry(
+  addressLine1: String,
+  addressLine2: Option[String],
+  addressLine3: Option[String],
+  townCity: String,
+  postcode: Option[String]
+)
 
-class IndividualSelectCountryFormProvider @Inject() (configuration: Configuration) {
-
-  private val countries = configuration.get[Seq[String]]("countries")
-
-  def apply(): Form[String] =
-    Form("country" -> text.verifying("individualSelectCountry.error.required", countries.contains _))
-
+object AddressSansCountry {
+  implicit val format: OFormat[AddressSansCountry] = Json.format
 }

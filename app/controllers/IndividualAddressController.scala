@@ -18,12 +18,15 @@ package controllers
 
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import forms.AddressFormProvider
-import models.{Index, Mode}
+import models.requests.DataRequest
+import models.{AddressSansCountry, Index, Mode}
 import navigation.Navigator
-import pages.IndividualAddressPage
+import pages.{ConfirmAddressPage, IndividualAddressPage, IndividualSelectCountryPage}
+import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepository
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.IndividualPart
 import views.html.AddressView
@@ -38,34 +41,53 @@ class IndividualAddressController @Inject() (
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
-  formProvider: AddressFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: AddressView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
-  private val form = formProvider()
-
-  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      val preparedForm = request.userAnswers get IndividualAddressPage(index) match {
-        case None        => form
-        case Some(value) => form.fill(value)
-      }
+      withCountry(
+        index,
+        mode,
+        (countryCode, form) =>
+          Future.successful {
+            val addressForm = request.userAnswers get IndividualAddressPage(index) match {
+              case None          => form
+              case Some(address) => form.fill(address)
+            }
 
-      Ok(view(preparedForm, index, mode, IndividualPart(false)))
+            Ok(view(addressForm, countryCode, index, mode, IndividualPart(false)))
+          }
+      )
   }
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, IndividualPart(false)))),
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualAddressPage(index), value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(IndividualAddressPage(index), mode, updatedAnswers))
+      withCountry(
+        index,
+        mode,
+        (countryCode, form) =>
+          form.bindFromRequest().fold(
+            formWithErrors =>
+              Future.successful(BadRequest(view(formWithErrors, countryCode, index, mode, IndividualPart(false)))),
+            address =>
+              for {
+                updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualAddressPage(index), address))
+                _              <- sessionRepository.set(updatedAnswers)
+              } yield Redirect(routes.ConfirmAddressController.onPageLoad(index, false, mode))
+          )
       )
   }
+
+  private def withCountry[R](index: Index, mode: Mode, f: (String, Form[AddressSansCountry]) => Future[Result])(implicit
+    request: DataRequest[AnyContent]
+  ): Future[Result] =
+    request.userAnswers get IndividualSelectCountryPage(index) match {
+      case None => Future successful Redirect(routes.IndividualSelectCountryController.onPageLoad(index, mode))
+      case Some(countryCode) =>
+        f(countryCode, AddressFormProvider.get(countryCode == "gb"))
+    }
 
 }

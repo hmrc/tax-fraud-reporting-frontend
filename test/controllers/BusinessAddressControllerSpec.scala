@@ -18,13 +18,13 @@ package controllers
 
 import akka.actor.ActorSystem
 import controllers.actions.{DataRequiredActionImpl, DataRetrievalActionImpl, SessionIdentifierAction}
-import forms.AddressFormProvider
 import models.backend.Address
 import models.requests.DataRequest
-import models.{Index, NormalMode, UserAnswers}
+import models.{AddressSansCountry, Index, NormalMode, UserAnswers}
 import navigation.Navigator
 import org.mockito.ArgumentMatchers.{any, anyString}
 import org.mockito.MockitoSugar
+import org.scalacheck.Gen.const
 import org.scalatest.Assertion
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.flatspec.AnyFlatSpec
@@ -55,7 +55,7 @@ class BusinessAddressControllerSpec extends AnyFlatSpec with MockitoSugar with S
   private val mockAddressView = mock[AddressView]
   private val testHtml        = "testHtml"
   when {
-    mockAddressView.apply(any(), any(), any(), any())(any(), any())
+    mockAddressView.apply(any(), any(), any(), any(), any())(any(), any())
   } thenReturn Html(testHtml)
 
   private val mcc                                   = stubMessagesControllerComponents
@@ -82,7 +82,6 @@ class BusinessAddressControllerSpec extends AnyFlatSpec with MockitoSugar with S
       new SessionIdentifierAction(new BodyParsers.Default(stubPlayBodyParsers)),
       new DataRetrievalActionImpl(mockSessionRepository),
       new DataRequiredActionImpl(),
-      new AddressFormProvider,
       mcc,
       mockAddressView
     )
@@ -99,20 +98,26 @@ class BusinessAddressControllerSpec extends AnyFlatSpec with MockitoSugar with S
     DataRequest(fakeRequest.withSession(SessionKeys.sessionId -> "fakeSessionId"), "", UserAnswers(mockId, userAnswers))
   }
 
-  "IndividualAddressController" should "respond with status 200 given a request without a cached answer" in
-    scenario(Json.obj()) {
+  "BusinessAddressController" should "respond with status 200 given a request without a cached answer" in
+    scenario(Json.obj("businessSelectCountry" -> "gb")) {
       (_, controller) =>
         val response = controller.onPageLoad(Index(0), NormalMode)(fakeDataRequest())
 
         status(response) shouldBe OK
         val responseBody = response.futureValue.body.consumeData.futureValue
-        responseBody decodeString Charset.defaultCharset() shouldBe testHtml
+        responseBody decodeString Charset.defaultCharset() shouldBe "testHtml"
     }
 
   it should "respond with status 200 given a request with a cached answer" in
     scenario(
       Json.obj(
-        "businessAddress" -> Address(addressLine1 = Some("221b Baker St"), postcode = Some("NW1 6XE"), country = "gb")
+        "businessSelectCountry" -> "gb",
+        "businessAddress" -> Address(
+          addressLine1 = "221b Baker St",
+          townCity = "London",
+          postcode = Some("NW1 6XE"),
+          country = "gb"
+        )
       )
     ) {
       (userAnswers, controller) =>
@@ -123,11 +128,11 @@ class BusinessAddressControllerSpec extends AnyFlatSpec with MockitoSugar with S
 
         status(response) shouldBe OK
         val responseBody = response.futureValue.body.consumeData.futureValue
-        responseBody decodeString Charset.defaultCharset() shouldBe testHtml
+        responseBody decodeString Charset.defaultCharset() shouldBe "testHtml"
     }
 
   it should "response with status 400 and remain on the same page given invalid data" in
-    scenario(Json.obj()) {
+    scenario(Json.obj("businessSelectCountry" -> "gb")) {
       (_, controller) =>
         val badRequest = fakeDataRequest(bodyOpt = Some(Seq("postCode" -> "mockPostCode")))
 
@@ -135,13 +140,14 @@ class BusinessAddressControllerSpec extends AnyFlatSpec with MockitoSugar with S
 
         status(response) shouldBe BAD_REQUEST
         val responseBody = response.futureValue.body.consumeData.futureValue
-        responseBody decodeString Charset.defaultCharset shouldBe testHtml
+        responseBody decodeString Charset.defaultCharset shouldBe "testHtml"
     }
 
   it should "response with status 303 given valid data" in
     scenario(Json.obj()) {
       (_, controller) =>
-        val goodRequest = fakeDataRequest(bodyOpt = Some(Seq("line1" -> "mockLine1", "country" -> "gb")))
+        val goodRequest =
+          fakeDataRequest(bodyOpt = Some(Seq("line1" -> "mockLine1", "townOrCity" -> "London", "country" -> "gb")))
 
         val response = controller.onSubmit(Index(0), NormalMode)(goodRequest)
 

@@ -19,10 +19,10 @@ package models.backend
 import play.api.libs.json.{Json, OFormat}
 
 final case class Address(
-  addressLine1: Option[String] = None,
+  addressLine1: String,
   addressLine2: Option[String] = None,
   addressLine3: Option[String] = None,
-  townCity: Option[String] = None,
+  townCity: String,
   postcode: Option[String] = None,
   country: String
 )

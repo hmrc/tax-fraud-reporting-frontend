@@ -54,15 +54,14 @@ class SubmissionServiceSpec
       ).success.value
       .set(
         IndividualAddressPage(Index(0)),
-        Address(
-          Some("123 Example Street"),
+        AddressSansCountry(
+          "123 Example Street",
           None,
           None,
-          Some("Townsville"),
-          postcode = Some("postcode"),
-          country = "country"
+          "Townsville",
+          postcode = Some("postcode")
         )
-      ).success.value
+      ).success.value.set(IndividualSelectCountryPage(Index(0)), "country").success.value
       .set(
         IndividualContactDetailsPage(Index(0)),
         IndividualContactDetails(
@@ -80,15 +79,17 @@ class SubmissionServiceSpec
       .set(TypeBusinessPage(Index(0)), "business type").success.value
       .set(
         BusinessAddressPage(Index(0)),
-        Address(
-          Some("business line 1"),
+        AddressSansCountry(
+          "business line 1",
           Some("business line 2"),
           Some("business line 3"),
-          Some("town"),
-          postcode = Some("business postcode"),
-          country = "business country"
+          "town",
+          postcode = Some("business postcode")
         )
-      ).success.value
+      ).success.value.set(
+      BusinessSelectCountryPage(Index(0)),
+      "business country"
+    ).success.value
       .set(
         BusinessContactDetailsPage(Index(0)),
         BusinessContactDetails(
@@ -136,15 +137,14 @@ class SubmissionServiceSpec
       .set(TypeBusinessPage(Index(0)), "business type").success.value
       .set(
         BusinessAddressPage(Index(0)),
-        Address(
-          Some("business line 1"),
+        AddressSansCountry(
+          "business line 1",
           Some("business line 2"),
           Some("business line 3"),
-          Some("town"),
-          postcode = Some("business postcode"),
-          country = "business country"
+          "town",
+          postcode = Some("business postcode")
         )
-      ).success.value
+      ).success.value.set(BusinessSelectCountryPage(Index(0)),"business country").success.value
       .set(
         BusinessContactDetailsPage(Index(0)),
         BusinessContactDetails(
@@ -203,10 +203,10 @@ class SubmissionServiceSpec
                   ),
                   address = Some(
                     Address(
-                      addressLine1 = Some("123 Example Street"),
+                      addressLine1 = "123 Example Street",
                       addressLine2 = None,
                       addressLine3 = None,
-                      townCity = Some("Townsville"),
+                      townCity = "Townsville",
                       postcode = Some("postcode"),
                       country = "country"
                     )
@@ -224,10 +224,10 @@ class SubmissionServiceSpec
                   businessType = Some("business type"),
                   address = Some(
                     Address(
-                      addressLine1 = Some("business line 1"),
+                      addressLine1 = "business line 1",
                       addressLine2 = Some("business line 2"),
                       addressLine3 = Some("business line 3"),
-                      townCity = Some("town"),
+                      townCity = "town",
                       postcode = Some("business postcode"),
                       country = "business country"
                     )
@@ -293,10 +293,10 @@ class SubmissionServiceSpec
                   businessType = Some("business type"),
                   address = Some(
                     Address(
-                      addressLine1 = Some("business line 1"),
+                      addressLine1 = "business line 1",
                       addressLine2 = Some("business line 2"),
                       addressLine3 = Some("business line 3"),
-                      townCity = Some("town"),
+                      townCity = "town",
                       postcode = Some("business postcode"),
                       country = "business country"
                     )

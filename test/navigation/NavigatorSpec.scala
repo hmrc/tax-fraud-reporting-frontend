@@ -1446,6 +1446,67 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
       }
 
+      "must go from the business select country page" - {
+
+        "to the check your answers page when select country" in {
+          val answers = UserAnswers("id").set(BusinessSelectCountryPage(Index(0)), "foobar").success.value
+          navigator.nextPage(
+            BusinessSelectCountryPage(Index(0)),
+            CheckMode,
+            answers
+          ) mustBe routes.BusinessAddressController.onPageLoad(Index(0), CheckMode)
+        }
+
+        "to the journey recovery controller if there is no activity type set" in {
+          navigator.nextPage(
+            BusinessSelectCountryPage(Index(0)),
+            CheckMode,
+            UserAnswers("id")
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+      }
+
+      "must go from the individual select country page" - {
+
+        "to the individual select country page if the user has selected address" in {
+          val answers = UserAnswers("id").set(IndividualSelectCountryPage(Index(0)), "country").success.value
+          navigator.nextPage(
+            IndividualSelectCountryPage(Index(0)),
+            CheckMode,
+            answers
+          ) mustBe routes.IndividualAddressController.onPageLoad(Index(0), CheckMode)
+        }
+
+        "to the journey recovery controller if there is no activity type set" in {
+          navigator.nextPage(
+            IndividualSelectCountryPage(Index(0)),
+            CheckMode,
+            UserAnswers("id")
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+      }
+
+      "to the connection page if there are no following options selected" in {
+        forAll(businessInformationCheckGen) { businesslInformationAnswer =>
+          val followingAnswers = Set(
+            BusinessInformationCheck.Name,
+            BusinessInformationCheck.Type,
+            BusinessInformationCheck.Address,
+            BusinessInformationCheck.Contact,
+            BusinessInformationCheck.BusinessReference
+          )
+          val answer      = businesslInformationAnswer -- followingAnswers
+          val userAnswers = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
+          navigator.nextPage(
+            BusinessNamePage(Index(0)),
+            CheckMode,
+            userAnswers
+          ) mustBe routes.IndividualCheckYourAnswersController.onPageLoad(Index(0), CheckMode)
+        }
+      }
+
     }
   }
 }

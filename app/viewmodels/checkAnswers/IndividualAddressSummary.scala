@@ -31,13 +31,13 @@ object IndividualAddressSummary {
   def row(answers: UserAnswers, index: Int, mode: Mode = CheckMode)(implicit
     messages: Messages
   ): Option[SummaryListRow] = {
-    val answer = answers get IndividualAddressPage(Index(index)) map {
+    val answer = answers.getAddress(Index(index), forBusiness = false) map {
       answer =>
         List(
-          answer.addressLine1,
+          Some(answer.addressLine1),
           answer.addressLine2,
           answer.addressLine3,
-          answer.townCity,
+          Some(answer.townCity),
           answer.postcode,
           Some(messages(s"country.${answer.country}.text"))
         ).flatten map HtmlFormat.escape mkString "<br/>"

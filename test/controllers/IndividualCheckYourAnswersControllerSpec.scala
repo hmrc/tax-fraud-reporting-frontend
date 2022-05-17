@@ -34,6 +34,7 @@ import play.api.test.Helpers.{
   writeableOf_AnyContentAsEmpty,
   GET
 }
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import viewmodels.checkAnswers._
 import viewmodels.govuk.SummaryListFluency
 import views.html.IndividualCheckYourAnswersView
@@ -59,7 +60,7 @@ class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryList
         .set(IndividualDateOfBirthPage(Index(0)), LocalDate.now).success.value
         .set(
           IndividualAddressPage(Index(0)),
-          Address(Some("123 Example Street"), None, None, Some("Townsville"), Some("postcode"), "country")
+          AddressSansCountry("123 Example Street", None, None, "Townsville", Some("postcode"))
         ).success.value
         .set(
           IndividualContactDetailsPage(Index(0)),
@@ -72,7 +73,7 @@ class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryList
         .set(TypeBusinessPage(Index(0)), "businessType").success.value
         .set(
           BusinessAddressPage(Index(0)),
-          Address(Some("123 Example Street"), None, None, Some("Townsville"), Some("postcode"), "country")
+          AddressSansCountry("123 Example Street", None, None, "Townsville", Some("postcode"))
         ).success.value
         .set(
           BusinessContactDetailsPage(Index(0)),

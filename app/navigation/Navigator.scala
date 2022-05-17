@@ -73,10 +73,12 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case ProvideContactDetailsPage       => provideContactDetailsRoutes
     case YourContactDetailsPage          => _ => routes.SupportingDocumentController.onPageLoad(NormalMode)
     case ActivitySourceOfInformationPage => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
-    case DocumentationDescriptionPage    => _ => routes.CheckYourAnswersController.onPageLoad
-    case IndividualDateFormatPage(index) => individualDateFormatPageCheckRoutes(_, index)
-    case WhenActivityHappenPage          => whenActivityHappenCheckRoutes
-    case _                               => _ => routes.IndexController.onPageLoad
+    case DocumentationDescriptionPage =>
+      _ =>
+        routes.CheckYourAnswersController.onPageLoad
+      //case IndividualDateFormatPage(index) => individualDateFormatPageCheckRoutes(_, index)
+    //case WhenActivityHappenPage          => whenActivityHappenCheckRoutes
+    case _ => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
@@ -95,6 +97,8 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case BusinessAddressPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.Address, CheckMode)
     case SelectConnectionBusinessPage(index) => selectConnectionBusinessCheckRoute(_, index)
+    case IndividualSelectCountryPage(index)  => individualSelectCountryPageRoutes(_, index)
+    case BusinessSelectCountryPage(index)    => businessSelectCountryPageRoutes(_, index)
     case p: IndexedConfirmationPage          => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
     case _                                   => _ => routes.CheckYourAnswersController.onPageLoad
   }
@@ -115,16 +119,41 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       )
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def individualInformationRoutes(answers: UserAnswers, index: Index, answer: IndividualInformation): Call =
+  def individualInformationRoutes(
+    answers: UserAnswers,
+    index: Index,
+    answer: IndividualInformation,
+    mode: Mode = NormalMode
+  ): Call =
     answers get IndividualInformationPage(index) flatMap { checkedInfo =>
       val laterSections     = IndividualInformation.values.dropWhile(_ != answer).drop(1).toSet
       val remainingSections = checkedInfo & laterSections
 
-      if (remainingSections.isEmpty)
-        Some(routes.IndividualConnectionController.onPageLoad(index, NormalMode))
+      /*mode match {
+        case NormalMode =>
+          remainingSections collectFirst {
+            case section if remainingSections contains section =>
+              individualInformationRoute(section, index, mode)
+          } getOrElse
+            routes.IndividualConnectionController.onPageLoad(index, NormalMode)
+        case CheckMode => routes.CheckYourAnswersController.onPageLoad
+      }
+    } getOrElse routes.JourneyRecoveryController.onPageLoad()*/
+      if (remainingSections.isEmpty) Some {
+        mode match {
+          case NormalMode => routes.IndividualConnectionController.onPageLoad(index, mode)
+          case CheckMode =>
+            routes.CheckYourAnswersController.onPageLoad
+        }
+      }
       else
         IndividualInformation.values find remainingSections.contains map {
-          individualInformationRoute(_, index, NormalMode)
+          mode match {
+            case NormalMode => individualInformationRoute(_, index, mode)
+            case CheckMode =>
+              routes.CheckYourAnswersController.onPageLoad
+              individualInformationRoute(_, index, mode)
+          }
         }
     } getOrElse routes.JourneyRecoveryController.onPageLoad()
 
@@ -166,7 +195,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       BusinessInformationCheck.values.find(businessInformation.contains).map(businessInformationRoute(_, index, mode))
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def businessInformationRoutes(
+  def businessInformationRoutes(
     answers: UserAnswers,
     index: Index,
     answer: BusinessInformationCheck,
@@ -304,6 +333,18 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       case _ =>
         routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def individualSelectCountryPageRoutes(answers: UserAnswers, index: Index): Call =
+    if (answers.get(IndividualSelectCountryPage(index)).isDefined)
+      routes.IndividualAddressController.onPageLoad(index, CheckMode)
+    else
+      routes.CheckYourAnswersController.onPageLoad
+
+  private def businessSelectCountryPageRoutes(answers: UserAnswers, index: Index): Call =
+    if (answers.get(BusinessSelectCountryPage(index)).isDefined)
+      routes.BusinessAddressController.onPageLoad(index, CheckMode)
+    else
+      routes.CheckYourAnswersController.onPageLoad
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
     case NormalMode =>

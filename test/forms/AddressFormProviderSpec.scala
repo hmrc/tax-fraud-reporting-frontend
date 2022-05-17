@@ -17,33 +17,45 @@
 package forms
 
 import forms.behaviours.StringFieldBehaviours
-import org.scalatest.OptionValues
+import play.api.data.Form._
 import play.api.data.FormError
 
-class AddressFormProviderSpec extends StringFieldBehaviours with OptionValues {
-  private val maxLen      = 255
-  private val longLine    = "a" * (maxLen + 1)
-  private val errorPrefix = "address.error"
-  private val line1Error  = "address.error.line1.length"
+class AddressFormProviderSpec extends StringFieldBehaviours {
+  private val maxLen       = 255
+  private val longLine     = "a" * (maxLen + 1)
+  private val regexPattern = "(\\?+|\\*+)+"
+  private val requiredKey  = "error.address.line1"
+  private val lengthKey    = "address.error.line1.length"
 
-  private val form = (new AddressFormProvider)()
+  val form = AddressFormProvider.get(isCountryUK = true)
+  //private val form = (new AddressFormProvider)()
 
   ".line1" - {
     val fieldName = "line1"
 
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLen))
+
     "must not bind when address line1 is longer than 255 characters" in {
       val result = form.bind(Map(fieldName -> "a" * 256))(fieldName)
-      result.errors must contain(FormError(fieldName, "address.error.line1.length"))
+      result.errors must contain(FormError(fieldName, lengthKey, Seq(maxLen)))
     }
+
+    behave like fieldWithUnacceptableCharacter(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey, Seq(regexPattern))
+    )
+
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
 
   }
 
   ".line2" - {
     val fieldName = "line2"
 
-    "must not bind when address line1 is longer than 255 characters" in {
+    "must not bind when address line2 is longer than 255 characters" in {
       val result = form.bind(Map(fieldName -> "a" * 256))(fieldName)
-      result.errors must contain(FormError(fieldName, "address.error.line2.length"))
+      result.errors must contain(FormError(fieldName, "address.error.line2.length", Seq(maxLen)))
     }
 
   }
@@ -52,7 +64,7 @@ class AddressFormProviderSpec extends StringFieldBehaviours with OptionValues {
 
     "must not bind when address line3 is longer than 255 characters" in {
       val result = form.bind(Map(fieldName -> "a" * 256))(fieldName)
-      result.errors must contain(FormError(fieldName, "address.error.line3.length"))
+      result.errors must contain(FormError(fieldName, "address.error.line3.length", Seq(maxLen)))
     }
 
   }
@@ -61,14 +73,22 @@ class AddressFormProviderSpec extends StringFieldBehaviours with OptionValues {
 
     "must not bind when address townOrCity is longer than 255 characters" in {
       val result = form.bind(Map(fieldName -> "a" * 256))(fieldName)
-      result.errors must contain(FormError(fieldName, "address.error.townOrCity.length"))
+      result.errors must contain(FormError(fieldName, "address.error.townOrCity.length", Seq(maxLen)))
     }
+
+    behave like fieldWithUnacceptableCharacter(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, "error.address.townOrCity", Seq(regexPattern))
+    )
+
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, "error.address.townOrCity"))
 
   }
 
   "return an error when country is GB and postcode invalid" in {
     val addressWithBadPostcode =
-      Map("line1" -> "221B Baker St", "postCode" -> "aaa aaa", "country" -> "gb")
+      Map("line1" -> "221B Baker St", "postCode" -> "aaa aaa", "townOrCity" -> "London", "country" -> "gb")
     val Left(bindingErrors) = form.mapping bind addressWithBadPostcode
 
     bindingErrors mustBe Seq(FormError("postCode", "error.postcode.invalid"))
@@ -76,9 +96,9 @@ class AddressFormProviderSpec extends StringFieldBehaviours with OptionValues {
 
   "return a length error when country not GB and postcode exceeds $maxLen chars" in {
     val addressWithLongPostcode =
-      Map("line1" -> "221B Baker St", "postCode" -> longLine, "country" -> "aa")
+      Map("line1" -> "221B Baker St", "townOrCity" -> "London", "postCode" -> longLine, "country" -> "aa")
     val Left(bindingErrors) = form.mapping bind addressWithLongPostcode
 
-    bindingErrors mustBe Seq(FormError("postCode", "address.error.postcode.length"))
+    bindingErrors mustBe Seq(FormError("postCode", "error.postcode.invalid"))
   }
 }

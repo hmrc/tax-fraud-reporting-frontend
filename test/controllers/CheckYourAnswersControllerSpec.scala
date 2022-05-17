@@ -22,6 +22,7 @@ import models.backend.Address
 import pages._
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import viewmodels.checkAnswers._
 import viewmodels.govuk.SummaryListFluency
 import views.html.CheckYourAnswersView
@@ -39,7 +40,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(TypeBusinessPage(Index(0)), "businessType").success.value
         .set(
           BusinessAddressPage(Index(0)),
-          Address(Some("123 Example Street"), None, None, Some("Townsville"), Some("postcode"), "country")
+          AddressSansCountry("123 Example Street", None, None, "Townsville", Some("postcode"))
         ).success.value
         .set(
           BusinessContactDetailsPage(Index(0)),
@@ -58,7 +59,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(IndividualDateOfBirthPage(Index(0)), LocalDate.now).success.value
         .set(
           IndividualAddressPage(Index(0)),
-          Address(Some("1234 Example Street"), None, None, Some("Townsville"), Some("postcode"), "country")
+          AddressSansCountry("1234 Example Street", None, None, "Townsville", Some("postcode"))
         ).success.value
         .set(
           IndividualContactDetailsPage(Index(0)),

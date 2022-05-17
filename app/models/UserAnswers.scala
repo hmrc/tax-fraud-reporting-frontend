@@ -16,7 +16,16 @@
 
 package models
 
-import pages.{IndividualBusinessDetailsPage, IndividualOrBusinessPage, ProvideContactDetailsPage}
+import models.backend.Address
+import pages.{
+  BusinessAddressPage,
+  BusinessSelectCountryPage,
+  IndividualAddressPage,
+  IndividualBusinessDetailsPage,
+  IndividualOrBusinessPage,
+  IndividualSelectCountryPage,
+  ProvideContactDetailsPage
+}
 import play.api.libs.json._
 import queries.{Gettable, Settable}
 import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
@@ -25,6 +34,19 @@ import java.time.Instant
 import scala.util.{Failure, Success, Try}
 
 final case class UserAnswers(id: String, data: JsObject = Json.obj(), lastUpdated: Instant = Instant.now) {
+
+  def getAddress(index: Index, forBusiness: Boolean): Option[Address] = {
+    val (countryPage, addressPage) =
+      if (forBusiness)
+        (BusinessSelectCountryPage(index), BusinessAddressPage(index))
+      else
+        (IndividualSelectCountryPage(index), IndividualAddressPage(index))
+
+    for {
+      countryCode                                                       <- get(countryPage)
+      AddressSansCountry(line1, line2Opt, line3Opt, townCity, postCode) <- get(addressPage)
+    } yield Address(line1, line2Opt, line3Opt, townCity, postCode, countryCode)
+  }
 
   def isBusinessJourney: Boolean = get(IndividualOrBusinessPage).contains(IndividualOrBusiness.Business)
   def isProvideContact: Boolean  = get(ProvideContactDetailsPage).contains(ProvideContactDetails.Yes)
