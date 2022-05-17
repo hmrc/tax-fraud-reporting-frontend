@@ -45,6 +45,7 @@ class ConfirmAddressController @Inject() (
     (identify andThen getData andThen requireData) {
       implicit request =>
         val isBusinessJourney = request.userAnswers.isBusinessJourney
+        val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
         val journeyPart       = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
         val nextPage =
           if (isBusinessJourney)
@@ -52,7 +53,15 @@ class ConfirmAddressController @Inject() (
           else
             mode match {
               case NormalMode =>
-                navigator.individualInformationRoutes(request.userAnswers, index, IndividualInformation.Address, mode)
+                if (isBusinessDetails)
+                  navigator.businessInformationRoutes(
+                    request.userAnswers,
+                    index,
+                    BusinessInformationCheck.Address,
+                    mode
+                  )
+                else
+                  navigator.individualInformationRoutes(request.userAnswers, index, IndividualInformation.Address, mode)
               case CheckMode =>
                 routes.CheckYourAnswersController.onPageLoad
             }
