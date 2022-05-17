@@ -76,8 +76,6 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case DocumentationDescriptionPage =>
       _ =>
         routes.CheckYourAnswersController.onPageLoad
-      //case IndividualDateFormatPage(index) => individualDateFormatPageCheckRoutes(_, index)
-    //case WhenActivityHappenPage          => whenActivityHappenCheckRoutes
     case _ => _ => routes.IndexController.onPageLoad
   }
 
