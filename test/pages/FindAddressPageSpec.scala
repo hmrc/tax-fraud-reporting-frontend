@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package forms
+package pages
 
-import scala.util.matching.Regex
+import models.FindAddress
+import pages.behaviours.PageBehaviours
 
-object Validation {
+class FindAddressPageSpec extends PageBehaviours {
 
-  val vatRegistrationPattern: Regex = "(?:[Gg][Bb])?\\d{9}".r.anchored
-  val utrPattern: Regex             = "\\d{10}".r.anchored
-  val payeReferencePattern: Regex   = """\d{3}/[A-Za-z0-9]{1,10}""".r.anchored
-  val validString: Regex            = "(\\?+|\\*+)+".r.unanchored
-  val validAddress: Regex           = "^(?!\\?|\\*).*".r.unanchored
+  "FindAddressPage" - {
 
-  val ukPostCode: Regex =
-    "^([A-Za-z][A-Ha-hJ-Yj-y]?[0-9][A-Za-z0-9]? ?[0-9][A-Za-z]{2}|[Gg][Ii][Rr] ?0[Aa]{2})$".r.anchored
+    beRetrievable[FindAddress](FindAddressPage)
 
+    beSettable[FindAddress](FindAddressPage)
+
+    beRemovable[FindAddress](FindAddressPage)
+  }
 }

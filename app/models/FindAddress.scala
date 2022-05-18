@@ -14,19 +14,12 @@
  * limitations under the License.
  */
 
-package forms
+package models
 
-import scala.util.matching.Regex
+import play.api.libs.json._
 
-object Validation {
+case class FindAddress(Postcode: String, Property: Option[String])
 
-  val vatRegistrationPattern: Regex = "(?:[Gg][Bb])?\\d{9}".r.anchored
-  val utrPattern: Regex             = "\\d{10}".r.anchored
-  val payeReferencePattern: Regex   = """\d{3}/[A-Za-z0-9]{1,10}""".r.anchored
-  val validString: Regex            = "(\\?+|\\*+)+".r.unanchored
-  val validAddress: Regex           = "^(?!\\?|\\*).*".r.unanchored
-
-  val ukPostCode: Regex =
-    "^([A-Za-z][A-Ha-hJ-Yj-y]?[0-9][A-Za-z0-9]? ?[0-9][A-Za-z]{2}|[Gg][Ii][Rr] ?0[Aa]{2})$".r.anchored
-
+object FindAddress {
+  implicit val format = Json.format[FindAddress]
 }

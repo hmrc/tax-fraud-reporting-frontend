@@ -74,8 +74,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case YourContactDetailsPage          => _ => routes.SupportingDocumentController.onPageLoad(NormalMode)
     case ActivitySourceOfInformationPage => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
     case DocumentationDescriptionPage =>
-      _ =>
-        routes.CheckYourAnswersController.onPageLoad
+      _ => routes.CheckYourAnswersController.onPageLoad
     case _ => _ => routes.IndexController.onPageLoad
   }
 
@@ -196,12 +195,13 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
           val sortedSteps = checkedInfo.toSeq.sortBy(_.order)
           sortedSteps.find(_.order > answer.order) match {
             case Some(nextStep) => businessInformationRoute(nextStep, index, NormalMode)
-            case None => routes.SelectConnectionBusinessController.onPageLoad(index, NormalMode)
+            case None           => routes.SelectConnectionBusinessController.onPageLoad(index, NormalMode)
           }
-        case CheckMode => if (!answers.isBusinessJourney)
-          routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
-        else
-          routes.CheckYourAnswersController.onPageLoad
+        case CheckMode =>
+          if (!answers.isBusinessJourney)
+            routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
+          else
+            routes.CheckYourAnswersController.onPageLoad
       }
 
     } getOrElse routes.JourneyRecoveryController.onPageLoad()
