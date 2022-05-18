@@ -17,15 +17,7 @@
 package models
 
 import models.backend.Address
-import pages.{
-  BusinessAddressPage,
-  BusinessSelectCountryPage,
-  IndividualAddressPage,
-  IndividualBusinessDetailsPage,
-  IndividualOrBusinessPage,
-  IndividualSelectCountryPage,
-  ProvideContactDetailsPage
-}
+import pages._
 import play.api.libs.json._
 import queries.{Gettable, Settable}
 import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
@@ -50,6 +42,9 @@ final case class UserAnswers(id: String, data: JsObject = Json.obj(), lastUpdate
 
   def isBusinessJourney: Boolean = get(IndividualOrBusinessPage).contains(IndividualOrBusiness.Business)
   def isProvideContact: Boolean  = get(ProvideContactDetailsPage).contains(ProvideContactDetails.Yes)
+
+  def isBusinessDetails(index: Index): Boolean =
+    get(IndividualBusinessDetailsPage(index)).contains(IndividualBusinessDetails.Yes)
 
   def individualHasBusiness: Boolean =
     get(IndividualBusinessDetailsPage(Index(0))).contains(IndividualBusinessDetails.Yes)

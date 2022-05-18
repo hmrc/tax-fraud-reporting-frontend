@@ -21,15 +21,14 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 import viewmodels.govuk.checkbox._
 
-sealed trait BusinessInformationCheck
+sealed abstract class BusinessInformationCheck(val order: Byte, name: String) extends WithName(name)
 
 object BusinessInformationCheck extends Enumerable.Implicits {
-
-  case object Name              extends WithName("name") with BusinessInformationCheck
-  case object Type              extends WithName("type") with BusinessInformationCheck
-  case object Address           extends WithName("address") with BusinessInformationCheck
-  case object Contact           extends WithName("contact") with BusinessInformationCheck
-  case object BusinessReference extends WithName("businessReference") with BusinessInformationCheck
+  case object Name              extends BusinessInformationCheck(0, "name")
+  case object Type              extends BusinessInformationCheck(1, "type")
+  case object Address           extends BusinessInformationCheck(2, "address")
+  case object Contact           extends BusinessInformationCheck(3, "contact")
+  case object BusinessReference extends BusinessInformationCheck(4, "businessReference")
 
   val values: Seq[BusinessInformationCheck] = Seq(Name, Type, Address, Contact, BusinessReference)
 

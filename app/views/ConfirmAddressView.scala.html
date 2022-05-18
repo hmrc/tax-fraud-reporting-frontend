@@ -57,17 +57,17 @@
     </div>
     @if(isBusinessJourney) {
          <p class="govuk-!-margin-bottom-7">
-                <a class="govuk-link" href="@routes.BusinessAddressController.onPageLoad(index, NormalMode)" id="continue-button">Edit address</a>
+                <a class="govuk-link" href="@routes.BusinessAddressController.onPageLoad(index, NormalMode)" id="edit-address">@messages("confirmAddress.change-address")</a>
          </p>
-        <a id="continue-button-bus" href="@nextPage" role="button" class="govuk-button" data-module="govuk-button">
+        <a id="continue-button" href="@nextPage" role="button" class="govuk-button" data-module="govuk-button">
             @messages("site.continue")
         </a>
     }
     @if(!isBusinessJourney) {
         <p class="govuk-!-margin-bottom-7">
-            <a class="govuk-link" href="@routes.IndividualAddressController.onPageLoad(index, NormalMode)" id="continue-button">Edit address</a>
+            <a class="govuk-link" href="@routes.IndividualAddressController.onPageLoad(index, NormalMode)" id="edit-address-business">@messages("confirmAddress.change-address")</a>
         </p>
-        <a id="continue-button-ind" href="@nextPage" role="button" class="govuk-button" data-module="govuk-button">
+        <a id="continue-button" href="@nextPage" role="button" class="govuk-button" data-module="govuk-button">
             @messages("site.continue")
         </a>
     }
