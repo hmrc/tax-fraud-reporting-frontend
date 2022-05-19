@@ -212,3 +212,8 @@ GET        /findAddress                        controllers.FindAddressController
 POST       /findAddress                        controllers.FindAddressController.onSubmit( mode: Mode = NormalMode)
 GET        /changeFindAddress                  controllers.FindAddressController.onPageLoad( mode: Mode = CheckMode)
 POST       /changeFindAddress                  controllers.FindAddressController.onSubmit( mode: Mode = CheckMode)
+
+GET        /chooseYourAddress                        controllers.ChooseYourAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /chooseYourAddress                        controllers.ChooseYourAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changeChooseYourAddress                  controllers.ChooseYourAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeChooseYourAddress                  controllers.ChooseYourAddressController.onSubmit(mode: Mode = CheckMode)

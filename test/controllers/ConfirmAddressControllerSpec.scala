@@ -52,27 +52,6 @@ class ConfirmAddressControllerSpec extends SpecBase {
       }
     }
 
-    /* "must return OK and the correct view for a GET" in {
-
-      val application = applicationBuilder(userAnswers = Some(answers)).build()
-
-      running(application) {
-
-        val isBusinessJourney = userAnswers.isBusinessJourney
-        val journeyPart       = if (isBusinessJourney) BusinessPart else IndividualPart(true)
-
-        val request =
-          FakeRequest(GET, routes.ConfirmAddressController.onPageLoad(Index(0), isBusinessJourney, NormalMode).url)
-
-        val result = route(application, request).value
-        val nextPage = if (isBusinessJourney) { routes.BusinessAddressController.onPageLoad(Index(0), NormalMode)}
-        val view   = application.injector.instanceOf[ConfirmAddressView]
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(Index(0), Address, isBusinessJourney, journeyPart, nextPage)(request, messages(application)).toString
-        //redirectLocation(result).value mustEqual routes.IndividualAddressController.onPageLoad(Index(0), NormalMode).url
-      }
-    }*/
-
     "must redirect to Journey Recovery for a GET if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()

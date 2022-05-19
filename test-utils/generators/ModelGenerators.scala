@@ -22,6 +22,11 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryChooseYourAddress: Arbitrary[ChooseYourAddress] =
+    Arbitrary {
+      Gen.oneOf(ChooseYourAddress.values.toSeq)
+    }
+
   implicit lazy val arbitraryFindAddress: Arbitrary[FindAddress] =
     Arbitrary {
       for {

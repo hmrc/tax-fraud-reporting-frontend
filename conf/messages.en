@@ -1226,3 +1226,11 @@ findAddress.error.postcode.length = Enter a real Postcode e.g. AA1 1AA
 findAddress.error.property.length = The house name or number needs to be fewer than 255 characters
 findAddress.postcode.change.hidden = Postcode
 findAddress.property.change.hidden = Property
+
+chooseYourAddress.title = Choose your address
+chooseYourAddress.heading = Choose your address
+chooseYourAddress.address = Address
+chooseYourAddress.ds = dd
+chooseYourAddress.checkYourAnswersLabel = Select an address
+chooseYourAddress.error.required = Select an address
+chooseYourAddress.change.hidden = Select an address

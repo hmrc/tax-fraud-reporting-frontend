@@ -14,47 +14,35 @@
  * limitations under the License.
  *@
 
-@import viewmodels.InputWidth._
-
 @this(
     layout: templates.Layout,
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
-    govukInput: GovukInput,
+    govukRadios: GovukRadios,
     govukButton: GovukButton
 )
 
 @(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("findAddress.title"))) {
+@layout(pageTitle = title(form, messages("chooseYourAddress.title"))) {
 
-    @formHelper(action = routes.FindAddressController.onSubmit(mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.ChooseYourAddressController.onSubmit(mode), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form))
+            @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
         }
 
-        <h1 class="govuk-heading-xl">@messages("findAddress.heading")</h1>
-
-        @govukInput(
-            InputViewModel(
-                field = form("Postcode"),
-                label = LabelViewModel(messages("findAddress.postcode"))
-            )
-            .withWidth(Fixed10)
-        )
-
+        <h1 class="govuk-heading-xl">@messages("chooseYourAddress.heading")</h1>
         <p>
             <a href="">@messages("findAddress.manually")</a>
         </p>
 
-        @govukInput(
-            InputViewModel(
-                field = form("Property"),
-                label = LabelViewModel(messages("findAddress.property"))
+        @govukRadios(
+            RadiosViewModel(
+                field  = form("value"),
+                legend = LegendViewModel(messages("chooseYourAddress.heading")).withCssClass("govuk-visually-hidden"),
+                items  = ChooseYourAddress.options
             )
-            .withWidth(Fixed20)
-            .withHint(Hint(content = "findAddress.property.hint"))
         )
 
         @govukButton(
