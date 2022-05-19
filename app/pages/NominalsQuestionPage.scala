@@ -94,7 +94,7 @@ final case class IndividualBusinessDetailsPage(index: Index)
     if (value exists { _ != Yes })
       userAnswers.remove(BusinessInformationCheckPage(index)).flatMap(_.remove(BusinessNamePage(index))).flatMap(
         _.remove(TypeBusinessPage(index))
-      ).flatMap(_.remove(BusinessAddressPage(index))).flatMap(_.remove(BusinessContactDetailsPage(index))).flatMap(
+      ).flatMap(_.remove(BusinessSelectCountryPage(index))).flatMap(_.remove(BusinessAddressPage(index))).flatMap(_.remove(BusinessContactDetailsPage(index))).flatMap(
         _.remove(ReferenceNumbersPage(index))
       ).flatMap(_.remove(SelectConnectionBusinessPage(index)))
     else super.cleanup(value, userAnswers)
