@@ -189,7 +189,17 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     answer: BusinessInformationCheck,
     mode: Mode = NormalMode
   ): Call =
-    answers get BusinessInformationCheckPage(index) map { checkedInfo =>
+    answers get BusinessInformationCheckPage(index) flatMap { checkedInfo =>
+      import BusinessInformationCheck._
+      def isEmpty(section: BusinessInformationCheck) = section match {
+        case Name              => answers get BusinessNamePage(index) isEmpty
+        case Type              => answers get TypeBusinessPage(index) isEmpty
+        case Contact           => answers get BusinessContactDetailsPage(index) isEmpty
+        case Address           => answers get BusinessAddressPage(index) isEmpty
+        case BusinessReference => answers get ReferenceNumbersPage(index) isEmpty
+      }
+      val laterSections     = BusinessInformationCheck.values dropWhile (_ != answer) drop 1 toSet
+      val remainingSections = checkedInfo & laterSections filter isEmpty
       mode match {
         case NormalMode =>
           val sortedSteps = checkedInfo.toSeq.sortBy(_.order)
@@ -203,7 +213,25 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
           else
             routes.CheckYourAnswersController.onPageLoad
       }
-
+      if (remainingSections.isEmpty) Some {
+        mode match {
+          case NormalMode => routes.SelectConnectionBusinessController.onPageLoad(index, mode)
+          case CheckMode =>
+            if (!answers.isBusinessJourney)
+              routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
+            else
+              routes.CheckYourAnswersController.onPageLoad
+        }
+      }
+      else
+        BusinessInformationCheck.values find remainingSections.contains map {
+          mode match {
+            case NormalMode => businessInformationRoute(_, index, mode)
+            case CheckMode =>
+              routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
+              businessInformationRoute(_, index, mode)
+          }
+        }
     } getOrElse routes.JourneyRecoveryController.onPageLoad()
 
   private def addAnotherPersonRoutes(answers: UserAnswers): Call =
