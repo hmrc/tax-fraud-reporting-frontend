@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{ActivityTypeEvent, AuditAndAnalyticsEventDispatcher, EventDispatcher}
 import controllers.actions._
 import forms.ActivityTypeFormProvider
 
@@ -39,7 +40,8 @@ class ActivityTypeController @Inject() (
   getData: DataRetrievalAction,
   formProvider: ActivityTypeFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: ActivityTypeView
+  view: ActivityTypeView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -63,6 +65,7 @@ class ActivityTypeController @Inject() (
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
         value => {
           val userAnswers = request.userAnswers getOrElse UserAnswers(request.userId)
+          eventDispatcher.dispatchEvent(ActivityTypeEvent(ActivityTypePage))
           for {
             updatedAnswers <- Future.fromTry(userAnswers.set(ActivityTypePage, value))
             _              <- sessionRepository.set(updatedAnswers)

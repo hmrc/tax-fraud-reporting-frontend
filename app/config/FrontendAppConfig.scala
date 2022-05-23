@@ -72,4 +72,6 @@ class FrontendAppConfig @Inject() (servicesConfig: ServicesConfig, configuration
     s"$accessibilityStatementFrontendBaseUrl/accessibility-statement$accessibilityStatementPath$referrerString"
   }
 
+  val eventUrl: String = servicesConfig.baseUrl("platform-analytics")
+
 }
