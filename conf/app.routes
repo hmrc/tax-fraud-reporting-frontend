@@ -206,4 +206,4 @@ POST       /:index/change-individual-select-a-country                  controlle
 GET        /:index/individual/confirm-address                     controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = false, mode: Mode = NormalMode)
 GET        /:index/individual/change-confirm-address                     controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = false, mode: Mode = CheckMode)
 GET        /:index/business/confirm-address                       controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = true, mode: Mode = NormalMode)
-  GET      /:index/business/change-confirm-address                       controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = true, mode: Mode = CheckMode)
+GET      /:index/business/change-confirm-address                       controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = true, mode: Mode = CheckMode)
