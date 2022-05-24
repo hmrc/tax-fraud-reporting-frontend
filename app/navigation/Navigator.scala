@@ -203,10 +203,11 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
 
       if (remainingSections.isEmpty) Some {
         mode match {
-          case NormalMode => val sortedSteps = checkedInfo.toSeq.sortBy(_.order)
+          case NormalMode =>
+            val sortedSteps = checkedInfo.toSeq.sortBy(_.order)
             sortedSteps.find(_.order > answer.order) match {
               case Some(nextStep) => businessInformationRoute(nextStep, index, NormalMode)
-              case None => routes.SelectConnectionBusinessController.onPageLoad(index, NormalMode)
+              case None           => routes.SelectConnectionBusinessController.onPageLoad(index, NormalMode)
             }
           case CheckMode =>
             if (!answers.isBusinessJourney)
@@ -220,7 +221,6 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
           mode match {
             case NormalMode => businessInformationRoute(_, index, mode)
             case CheckMode =>
-              routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
               businessInformationRoute(_, index, mode)
           }
         }
