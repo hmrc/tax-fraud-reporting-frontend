@@ -200,22 +200,14 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       }
       val laterSections     = BusinessInformationCheck.values dropWhile (_ != answer) drop 1 toSet
       val remainingSections = checkedInfo & laterSections filter isEmpty
-      mode match {
-        case NormalMode =>
-          val sortedSteps = checkedInfo.toSeq.sortBy(_.order)
-          sortedSteps.find(_.order > answer.order) match {
-            case Some(nextStep) => businessInformationRoute(nextStep, index, NormalMode)
-            case None           => routes.SelectConnectionBusinessController.onPageLoad(index, NormalMode)
-          }
-        case CheckMode =>
-          if (!answers.isBusinessJourney)
-            routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
-          else
-            routes.CheckYourAnswersController.onPageLoad
-      }
+
       if (remainingSections.isEmpty) Some {
         mode match {
-          case NormalMode => routes.SelectConnectionBusinessController.onPageLoad(index, mode)
+          case NormalMode => val sortedSteps = checkedInfo.toSeq.sortBy(_.order)
+            sortedSteps.find(_.order > answer.order) match {
+              case Some(nextStep) => businessInformationRoute(nextStep, index, NormalMode)
+              case None => routes.SelectConnectionBusinessController.onPageLoad(index, NormalMode)
+            }
           case CheckMode =>
             if (!answers.isBusinessJourney)
               routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
