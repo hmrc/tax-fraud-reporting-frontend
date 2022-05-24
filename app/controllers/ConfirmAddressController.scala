@@ -64,7 +64,12 @@ class ConfirmAddressController @Inject() (
                   navigator.individualInformationRoutes(request.userAnswers, index, IndividualInformation.Address, mode)
               case CheckMode =>
                 if (isBusinessDetails)
-                  routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
+                  navigator.businessInformationRoutes(
+                    request.userAnswers,
+                    index,
+                    BusinessInformationCheck.Address,
+                    mode
+                  )
                 else
                   routes.CheckYourAnswersController.onPageLoad
             }
