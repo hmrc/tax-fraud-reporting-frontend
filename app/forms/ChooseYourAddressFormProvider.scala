@@ -17,15 +17,18 @@
 package forms
 
 import javax.inject.Inject
-
 import forms.mappings.Mappings
 import play.api.data.Form
 import models.ChooseYourAddress
+import play.api.data.Forms.mapping
 
 class ChooseYourAddressFormProvider @Inject() extends Mappings {
 
   def apply(): Form[ChooseYourAddress] =
     Form(
-      "value" -> enumerable[ChooseYourAddress]("chooseYourAddress.error.required")
+      mapping("addressId" -> text("chooseYourAddress.error.required"))(ChooseYourAddress.apply)(
+        ChooseYourAddress.unapply
+      )
     )
+
 }

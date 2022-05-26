@@ -16,30 +16,10 @@
 
 package models
 
-import play.api.i18n.Messages
-import uk.gov.hmrc.govukfrontend.views.Aliases.Text
-import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
+import play.api.libs.json.Json
 
-sealed trait ChooseYourAddress
+case class ChooseYourAddress(addressId: String)
 
-object ChooseYourAddress extends Enumerable.Implicits {
-  //case class Select(addressId: String)
-
-  case object Address extends WithName("address") with ChooseYourAddress
-
-  val values: Seq[ChooseYourAddress] = Seq(
-    Address
-  )
-
-  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
-    case (value, index) =>
-      RadioItem(
-        content = Text(messages(s"chooseYourAddress.${value.toString}")),
-        value   = Some(value.toString),
-        id      = Some(s"value_$index")
-      )
-  }
-
-  implicit val enumerable: Enumerable[ChooseYourAddress] =
-    Enumerable(values.map(v => v.toString -> v): _*)
+object ChooseYourAddress {
+  implicit val format = Json.format[ChooseYourAddress]
 }

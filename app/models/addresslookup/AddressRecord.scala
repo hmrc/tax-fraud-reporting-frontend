@@ -16,15 +16,56 @@
 
 package models.addresslookup
 
-import play.api.libs.json.Json
+import com.fasterxml.jackson.annotation.JsonIgnore
+import services.Address
 
-/** Represents one address record. Arrays of these are returned from the address-lookup microservice.
-  */
-case class AddressRecord(id: String, address: Address, language: String) {
 
-  def isValid: Boolean = address.isValid
+
+case class LocalCustodian(code: Int, name: String) {
+
+  //def asV1 = v1.LocalCustodian(code, name)
 }
 
-object AddressRecord {
-  implicit val formats = Json.format[AddressRecord]
+
+/**
+  * Represents one address record. Arrays of these are returned from the address-lookup microservice.
+  */
+case class AddressRecord(
+                          id: String,
+                          uprn: Option[Long],
+                          parentUprn: Option[Long],
+                          usrn: Option[Long],
+                          organisation: Option[String],
+                          address: Address,
+                          // ISO639-1 code, e.g. 'en' for English
+                          // see https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+                          language: String,
+                          localCustodian: Option[LocalCustodian],
+                          location: Option[Seq[BigDecimal]],
+                          blpuState: Option[String],
+                          logicalState: Option[String],
+                          streetClassification: Option[String],
+                          administrativeArea: Option[String] = None,
+                          poBox: Option[String] = None) {
+
+  require(location.isEmpty || location.get.size == 2, location.get)
+
+  @JsonIgnore // needed because the name starts 'is...'
+  def isValid: Boolean = address.isValid && language.length == 2
+
+  def truncatedAddress(maxLen: Int = Address.maxLineLength): AddressRecord =
+    if (address.longestLineLength <= maxLen) this
+    else copy(address = address.truncatedAddress(maxLen))
+
+  def withoutMetadata: AddressRecord = copy(blpuState = None, logicalState = None, streetClassification = None)
+
+  //def asV1 = v1.AddressRecord(id, uprn, address.asV1, localCustodian.map(_.asV1), language)
+
+  //def locationValue: Option[Location] = location.map(loc => Location(loc.head, loc(1)))
+
+  //def blpuStateValue: Option[BLPUState] = blpuState.flatMap(v => Option(BLPUState.valueOf(v)))
+
+  //def logicalStateValue: Option[LogicalState] = logicalState.flatMap(v => Option(LogicalState.valueOf(v)))
+
+  //def streetClassificationValue: Option[StreetClassification] = streetClassification.flatMap(v => Option(StreetClassification.valueOf(v)))
 }
