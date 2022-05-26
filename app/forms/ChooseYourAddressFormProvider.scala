@@ -26,9 +26,10 @@ class ChooseYourAddressFormProvider @Inject() extends Mappings {
 
   def apply(): Form[ChooseYourAddress] =
     Form(
-      mapping("addressId" -> text("chooseYourAddress.error.required"))(ChooseYourAddress.apply)(
-        ChooseYourAddress.unapply
-      )
+      mapping(
+        "value" -> text("chooseYourAddress.error.required")
+          .verifying(regexpRestrict(Validation.validString.toString, "chooseYourAddress.error.required"))
+      )(ChooseYourAddress.apply)(ChooseYourAddress.unapply)
     )
 
 }

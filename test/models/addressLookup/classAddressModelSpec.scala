@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+/*
 package models.addressLookup
 
 import generators.PafFixtures
@@ -43,3 +44,4 @@ class classAddressModelSpec
     }
   }
 }
+ */

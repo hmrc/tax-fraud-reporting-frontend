@@ -32,7 +32,7 @@ package generators
  * limitations under the License.
  */
 
-import models.addresslookup.{AddressRecord, Country, RecordSet, Address => PafAddress}
+/*import models.addresslookup.{AddressRecord, Country, RecordSet, Address => PafAddress}
 
 trait PafFixtures {
   val exampleCountryUK = Country("UK", "United Kingdom")
@@ -78,4 +78,4 @@ trait PafFixtures {
   val newPostcodePlacePafRecordSet = RecordSet(List(otherPlacePafDifferentPostcodeAddressRecord))
 
   val twoOtherPlaceRecordSet = RecordSet(List(twoOtherPlacePafAddressRecord))
-}
+}*/
