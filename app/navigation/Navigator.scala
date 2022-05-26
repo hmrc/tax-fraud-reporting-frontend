@@ -18,9 +18,10 @@ package navigation
 
 import controllers.routes
 import models.{WhenActivityHappen, _}
-import pages._
+import pages.{ChooseYourAddressPage, FindAddressPage, _}
 import play.api.mvc.Call
 import services.ActivityTypeService
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 
 import javax.inject.{Inject, Singleton}
 import scala.language.postfixOps
@@ -43,7 +44,9 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       individualInformationRoutes(_, index, IndividualInformation.ContactDetails)
     case IndividualNationalInsuranceNumberPage(index) =>
       individualInformationRoutes(_, index, IndividualInformation.NiNumber)
-    case IndividualSelectCountryPage(index) => _ => routes.IndividualAddressController.onPageLoad(index, NormalMode)
+    case IndividualSelectCountryPage(index) => individualSelectCountryPageRoute(_, index)
+    case FindAddressPage(index) => _ => routes.ChooseYourAddressController.onPageLoad(index, NormalMode)
+    case ChooseYourAddressPage(index) => _ => routes.ConfirmAddressController.onPageLoad(index, false, NormalMode)
 
     /** END Individual journey
       * Start Business journey */
@@ -233,6 +236,13 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
           case NormalMode => routes.AddAnotherPersonController.onPageLoad(mode)
         }
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def individualSelectCountryPageRoute(answers: UserAnswers, index: Index): Call = {
+    if( answers.get(IndividualSelectCountryPage(index)).contains("gb"))
+      routes.FindAddressController.onPageLoad(index, NormalMode)
+    else
+      routes.IndividualAddressController.onPageLoad(index, NormalMode)
+  }
 
   private def whenActivityHappenRoutes(answers: UserAnswers): Call =
     answers.get(WhenActivityHappenPage).map {

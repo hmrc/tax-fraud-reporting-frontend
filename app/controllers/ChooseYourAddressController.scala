@@ -32,6 +32,7 @@ import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepository
 import services.{Address, AddressService}
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.{BusinessPart, IndividualPart}
@@ -65,26 +66,26 @@ class ChooseYourAddressController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      request.userAnswers.get(FindAddressPage) match {
+      request.userAnswers.get(FindAddressPage(index)) match {
         case None => Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
         case Some(value) => addressLookUp(value) map {
-          case ResultsList(addresses) => Ok(view(form, mode, Proposals(Some(addresses))))
+          case ResultsList(addresses) => Ok(view(form, index, mode, Proposals(Some(addresses))))
           case _ => Redirect(routes.JourneyRecoveryController.onPageLoad())
         }
       }
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(index:Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, Proposals(Option.empty)))),
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, Proposals(Option.empty)))),
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(ChooseYourAddressPage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(ChooseYourAddressPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(ChooseYourAddressPage, mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(ChooseYourAddressPage(index), mode, updatedAnswers))
       )
   }
 

@@ -16,12 +16,6 @@
 
 package pages
 
-import models.ChooseYourAddress
-import play.api.libs.json.JsPath
+import models.{ChooseYourAddress, Index}
 
-case object ChooseYourAddressPage extends QuestionPage[ChooseYourAddress] {
-
-  override def path: JsPath = JsPath \ toString
-
-  override def toString: String = "chooseYourAddress"
-}
+final case class ChooseYourAddressPage(index: Index) extends NominalsQuestionPage[ChooseYourAddress]("chooseYourAddress")

@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, Index, UserAnswers}
 import pages.ChooseYourAddressPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -28,8 +28,8 @@ import viewmodels.implicits._
 
 object ChooseYourAddressSummary  {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ChooseYourAddressPage).map {
+  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(ChooseYourAddressPage(Index(index))).map {
       answer =>
 
         val value = ValueViewModel(
@@ -42,7 +42,7 @@ object ChooseYourAddressSummary  {
           key     = "chooseYourAddress.checkYourAnswersLabel",
           value   = value,
           actions = Seq(
-            ActionItemViewModel("site.change", routes.ChooseYourAddressController.onPageLoad(CheckMode).url)
+            ActionItemViewModel("site.change", routes.ChooseYourAddressController.onPageLoad(Index(index), CheckMode).url)
               .withVisuallyHiddenText(messages("chooseYourAddress.change.hidden"))
           )
         )

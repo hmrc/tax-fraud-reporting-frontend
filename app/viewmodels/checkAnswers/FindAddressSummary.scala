@@ -17,7 +17,7 @@
 package viewmodels.checkAnswers
 
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.{CheckMode, Index, Mode, UserAnswers}
 import pages.FindAddressPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
@@ -28,8 +28,8 @@ import viewmodels.implicits._
 
 object FindAddressSummary {
 
-  def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(FindAddressPage).map {
+  def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
+    answers.get(FindAddressPage(Index(index))).map {
       answer =>
         val value = List(Some(answer.Postcode), answer.Property)
           .flatten.map(HtmlFormat.escape(_).toString)
@@ -39,7 +39,7 @@ object FindAddressSummary {
           key = "findAddress.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent(value)),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.FindAddressController.onPageLoad(CheckMode).url)
+            ActionItemViewModel("site.change", routes.FindAddressController.onPageLoad(Index(index), CheckMode).url)
               .withVisuallyHiddenText(messages("findAddress.change.hidden"))
           )
         )
