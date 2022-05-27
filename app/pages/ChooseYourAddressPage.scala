@@ -16,12 +16,7 @@
 
 package pages
 
+import models.Index
 import models.addresslookup.ProposedAddress
-import play.api.libs.json.JsPath
 
-case object ChooseYourAddressPage extends QuestionPage[Seq[ProposedAddress]] {
-
-  override def path: JsPath = JsPath \ toString
-
-  override def toString: String = "chooseYourAddress"
-}
+final case class ChooseYourAddressPage(index: Index) extends NominalsQuestionPage[Seq[ProposedAddress]] ("chooseYourAddress")

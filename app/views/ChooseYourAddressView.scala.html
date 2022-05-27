@@ -51,7 +51,7 @@
                         RadioItem(
                             content = HtmlContent(p.toDescription),
                             value = Some(p.addressId),
-                            id = if (idx == 0) Some("addressId") else Some(s"addressId-$idx"),
+                            id = if (idx == 0) Some("value_0") else Some(s"value_$idx"),
                             checked = form(s"${p.addressId}").value.isDefined)
                         }
                     case None ⇒ Seq.empty

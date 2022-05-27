@@ -32,6 +32,7 @@ import play.api.libs.json.{Format, Json, __}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepository
 import services.{Address, AddressService}
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.{BusinessPart, IndividualPart}
@@ -73,10 +74,10 @@ class ChooseYourAddressController @Inject() (
           addressLookUp(value) map {
             case ResultsList(addresses) =>
               sessionRepository.set(
-                request.userAnswers.set(ChooseYourAddressPage, addresses)
+                request.userAnswers.set(ChooseYourAddressPage(index), addresses)
                   getOrElse (throw new Exception(s"Address is not saved in cache"))
               )
-              Ok(view(form, mode, Proposals(Some(addresses))))
+              Ok(view(form, index, mode, Proposals(Some(addresses))))
 
             case _ => Redirect(routes.JourneyRecoveryController.onPageLoad())
           }
@@ -86,9 +87,9 @@ class ChooseYourAddressController @Inject() (
   def onSubmit(index:Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
           form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, Proposals(request.userAnswers.get(ChooseYourAddressPage))))),
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, Proposals(request.userAnswers.get(ChooseYourAddressPage(index)))))),
         value =>
-          request.userAnswers.get(ChooseYourAddressPage) match {
+          request.userAnswers.get(ChooseYourAddressPage(index)) match {
             case Some(addressList) =>  addressList.find(_.addressId == value.addressId)  match {
               case Some(address) =>
               /*  for {
@@ -96,10 +97,10 @@ class ChooseYourAddressController @Inject() (
                   updatedAnswers <- Future.fromTry(request.userAnswers.set(, value))
                   _              <- sessionRepository.set(updatedAnswers)
                 } yield Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers))*/
-                Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers)))
-              case None => Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers)))
+                Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage(index), mode, request.userAnswers)))
+              case None => Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage(index), mode, request.userAnswers)))
             }
-              Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers)))
+              Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage(index), mode, request.userAnswers)))
           }
       )
   }
