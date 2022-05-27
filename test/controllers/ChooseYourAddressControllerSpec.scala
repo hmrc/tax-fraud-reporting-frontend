@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.ChooseYourAddressFormProvider
-import models.{NormalMode, ChooseYourAddress, UserAnswers}
+import models.{ChooseYourAddress, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -40,7 +40,7 @@ class ChooseYourAddressControllerSpec extends SpecBase {
   lazy val chooseYourAddressRoute = routes.ChooseYourAddressController.onPageLoad(NormalMode).url
 
   val formProvider = new ChooseYourAddressFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "ChooseYourAddress Controller" - {
 
@@ -62,7 +62,8 @@ class ChooseYourAddressControllerSpec extends SpecBase {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ChooseYourAddressPage, ChooseYourAddress.values.head).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(ChooseYourAddressPage, ChooseYourAddress.values.head).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -74,7 +75,10 @@ class ChooseYourAddressControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ChooseYourAddress.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(ChooseYourAddress.values.head), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

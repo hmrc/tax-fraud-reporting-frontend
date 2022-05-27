@@ -21,23 +21,19 @@ import com.google.inject.ImplementedBy
 import config.Service
 import models.addresslookup.{AddressLookup, AddressRecord, Country, LocalCustodian, ProposedAddress}
 import play.api.Configuration
-import play.api.libs.json.{Format, Json}
 import uk.gov.hmrc.http.HttpReads.Implicits._
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpResponse}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpClient}
 
 import java.util.regex.Pattern
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
-import services.AddressReputationFormats._
 
 import scala.util.Try
 
 @ImplementedBy(classOf[AddressLookupService])
 trait AddressService {
 
-  def lookup(postcode: String, filter: Option[String] = None)(implicit
-    hc: HeaderCarrier
-  ): Future[Seq[ProposedAddress]]
+  def lookup(postcode: String, filter: Option[String] = None)(implicit hc: HeaderCarrier): Future[Seq[ProposedAddress]]
 
 }
 
@@ -155,35 +151,4 @@ object Address {
     } else s
   }
 
-}
-
-object AddressReputationFormats {
-  import play.api.libs.functional.syntax._
-  import play.api.libs.json.{JsPath, Reads}
-
-  implicit val format0: Format[Country]        = Json.format[Country]
-  implicit val format1: Format[LocalCustodian] = Json.format[LocalCustodian]
-  implicit val format2: Format[Address]        = Json.format[Address]
-
-  implicit val addressRecordReads: Reads[AddressRecord] = (
-    (JsPath \ "id").read[String] and
-      (JsPath \ "uprn").readNullable[Long] and
-      (JsPath \ "parentUprn").readNullable[Long] and
-      (JsPath \ "usrn").readNullable[Long] and
-      (JsPath \ "organisation").readNullable[String] and
-      (JsPath \ "address").read[Address] and
-      (JsPath \ "language").read[String] and
-      (JsPath \ "localCustodian").readNullable[LocalCustodian] and
-      (JsPath \ "location").readNullable[Seq[BigDecimal]] and
-      (JsPath \ "blpuState").readNullable[String] and
-      (JsPath \ "logicalState").readNullable[String] and
-      (JsPath \ "streetClassification").readNullable[String] and
-      (JsPath \ "administrativeArea").readNullable[String] and
-      (JsPath \ "poBox").readNullable[String]
-  )(AddressRecord.apply _)
-
-  implicit val format3: Format[AddressRecord] = Format(addressRecordReads, Json.writes[AddressRecord])
-
-  // implicit val format4: Format[International] = Json.format[International]
-  // implicit val nonUkAddressRecordReads: Reads[NonUkAddressRecord] = Json.reads[NonUkAddressRecord]
 }

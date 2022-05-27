@@ -28,11 +28,10 @@ import navigation.Navigator
 import pages.{BusinessAddressPage, BusinessSelectCountryPage, ChooseYourAddressPage, FindAddressPage}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.libs.json.Json
+import play.api.libs.json.{Format, Json, __}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepository
 import services.{Address, AddressService}
-import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.{BusinessPart, IndividualPart}
@@ -70,31 +69,47 @@ class ChooseYourAddressController @Inject() (
     implicit request =>
       request.userAnswers.get(FindAddressPage(index)) match {
         case None => Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
-        case Some(value) => addressLookUp(value) map {
-          case ResultsList(addresses) => Ok(view(form, index, mode, Proposals(Some(addresses))))
-          case _ => Redirect(routes.JourneyRecoveryController.onPageLoad())
-        }
+        case Some(value) =>
+          addressLookUp(value) map {
+            case ResultsList(addresses) =>
+              sessionRepository.set(
+                request.userAnswers.set(ChooseYourAddressPage, addresses)
+                  getOrElse (throw new Exception(s"Address is not saved in cache"))
+              )
+              Ok(view(form, mode, Proposals(Some(addresses))))
+
+            case _ => Redirect(routes.JourneyRecoveryController.onPageLoad())
+          }
       }
   }
 
   def onSubmit(index:Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, Proposals(Option.empty)))),
+          form.bindFromRequest().fold(
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, Proposals(request.userAnswers.get(ChooseYourAddressPage))))),
         value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(ChooseYourAddressPage(index), value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(ChooseYourAddressPage(index), mode, updatedAnswers))
+          request.userAnswers.get(ChooseYourAddressPage) match {
+            case Some(addressList) =>  addressList.find(_.addressId == value.addressId)  match {
+              case Some(address) =>
+              /*  for {
+                  //TODO for confirmation page
+                  updatedAnswers <- Future.fromTry(request.userAnswers.set(, value))
+                  _              <- sessionRepository.set(updatedAnswers)
+                } yield Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers))*/
+                Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers)))
+              case None => Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers)))
+            }
+              Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers)))
+          }
       )
   }
 
-   def addressLookUp(value: FindAddress)(implicit hc: HeaderCarrier): Future[ResultsCount] =
+  def addressLookUp(value: FindAddress)(implicit hc: HeaderCarrier): Future[ResultsCount] =
     addressService.lookup(value.Postcode, value.Property) flatMap {
       case noneFound if noneFound.isEmpty =>
-        if (value.Property.isDefined) {
+        if (value.Property.isDefined)
           addressLookUp(value.copy(Property = None))
-        } else {
+        else {
           //Future.successful(NoResults)
           val cannedComplexAddresses = List(
             cannedAddress(5000L, List("Flat 1", "74 Comeragh Road"), "ZZ11 1ZZ"),
@@ -103,35 +118,45 @@ class ChooseYourAddressController @Inject() (
             cannedAddress(8000L, List("Flat 2", "74 Comeragh Road"), "ZZ11 1ZZ"),
             cannedAddress(9000L, List("Flat B", "78 Comeragh Road"), "ZZ11 1ZZ"),
             cannedAddress(10000L, List("72a", "Comeragh Road"), "ZZ11 1ZZ"),
-            cannedAddress(11000L, List("Flat 1", "The Curtains Up", "Comeragh Road"), "ZZ11 1ZZ"))
-
-
+            cannedAddress(11000L, List("Flat 1", "The Curtains Up", "Comeragh Road"), "ZZ11 1ZZ")
+          )
 
           Future.successful(ResultsList(toProposals(cannedComplexAddresses)))
         }
       case displayProposals =>
         //Future.successful(ResultsList(displayProposals))
 
-         val cannedComplexAddresses = List(
+        val cannedComplexAddresses = List(
           cannedAddress(5000L, List("Flat 1", "74 Comeragh Road"), "ZZ11 1ZZ"),
           cannedAddress(6000L, List("Flat 2", "The Curtains Up", "Comeragh Road"), "ZZ11 1ZZ"),
           cannedAddress(7000L, List("Flat 1", "70 Comeragh Road"), "ZZ11 1ZZ"),
           cannedAddress(8000L, List("Flat 2", "74 Comeragh Road"), "ZZ11 1ZZ"),
           cannedAddress(9000L, List("Flat B", "78 Comeragh Road"), "ZZ11 1ZZ"),
           cannedAddress(10000L, List("72a", "Comeragh Road"), "ZZ11 1ZZ"),
-          cannedAddress(11000L, List("Flat 1", "The Curtains Up", "Comeragh Road"), "ZZ11 1ZZ"))
+          cannedAddress(11000L, List("Flat 1", "The Curtains Up", "Comeragh Road"), "ZZ11 1ZZ")
+        )
 
-
-
-      Future.successful(ResultsList(toProposals(cannedComplexAddresses)))
+        Future.successful(ResultsList(toProposals(cannedComplexAddresses)))
 
     }
 
   def cannedAddress(uprn: Long, lines: List[String], postCode: String, organisation: Option[String] = None) =
-    AddressRecord(uprn.toString, Some(uprn), None, None, organisation, Address(lines, "some-town", postCode, Some(Countries.England),
-      Country("GB", "United Kingdom")), "en", Some(LocalCustodian(123, "Tyne & Wear")), None, None, None, None)
+    AddressRecord(
+      uprn.toString,
+      Some(uprn),
+      None,
+      None,
+      organisation,
+      Address(lines, "some-town", postCode, Some(Countries.England), Country("GB", "United Kingdom")),
+      "en",
+      Some(LocalCustodian(123, "Tyne & Wear")),
+      None,
+      None,
+      None,
+      None
+    )
 
-  private def toProposals(found: List[AddressRecord]): Seq[ProposedAddress] = {
+  private def toProposals(found: List[AddressRecord]): Seq[ProposedAddress] =
     found.map { addr =>
       ProposedAddress(
         addr.id,
@@ -145,9 +170,6 @@ class ChooseYourAddressController @Inject() (
         addr.address.country
       )
     }
-  }
-
-
 
 }
 
