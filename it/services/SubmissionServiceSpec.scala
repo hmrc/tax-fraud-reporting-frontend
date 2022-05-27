@@ -202,7 +202,7 @@ class SubmissionServiceSpec
                     )
                   ),
                   address = Some(
-                    Address(
+                    models.backend.Address(
                       addressLine1 = "123 Example Street",
                       addressLine2 = None,
                       addressLine3 = None,
@@ -223,7 +223,7 @@ class SubmissionServiceSpec
                   businessName = Some("business name"),
                   businessType = Some("business type"),
                   address = Some(
-                    Address(
+                    models.backend.Address(
                       addressLine1 = "business line 1",
                       addressLine2 = Some("business line 2"),
                       addressLine3 = Some("business line 3"),
@@ -292,7 +292,7 @@ class SubmissionServiceSpec
                   businessName = Some("business name"),
                   businessType = Some("business type"),
                   address = Some(
-                    Address(
+                    models.backend.Address(
                       addressLine1 = "business line 1",
                       addressLine2 = Some("business line 2"),
                       addressLine3 = Some("business line 3"),

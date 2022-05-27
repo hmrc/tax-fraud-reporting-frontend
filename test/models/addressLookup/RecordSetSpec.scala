@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package models.addressLookup
+/*package models.addressLookup
 
 import generators.PafFixtures
 import models.addresslookup.RecordSet
@@ -47,4 +47,4 @@ class RecordSetSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyChe
       result mustBe oneAndTwoOtherPlacePafRecordSet
     }
   }
-}
+}*/

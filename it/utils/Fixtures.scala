@@ -1,3 +1,4 @@
+/*
 package utils
 
 import models.addresslookup.{AddressRecord, Country, RecordSet, Address => PafAddress}
@@ -68,4 +69,4 @@ trait PafFixtures {
   val twoOtherPlaceRecordSet = RecordSet(
     List(twoOtherPlacePafAddressRecord)
   )
-}
+}*/

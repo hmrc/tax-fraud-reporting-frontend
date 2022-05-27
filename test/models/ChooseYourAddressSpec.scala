@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+/*
+
 package models
 
 import org.scalacheck.Arbitrary.arbitrary
@@ -34,7 +36,6 @@ class ChooseYourAddressSpec extends AnyFreeSpec with Matchers with ScalaCheckPro
 
       forAll(gen) {
         chooseYourAddress =>
-
           JsString(chooseYourAddress.toString).validate[ChooseYourAddress].asOpt.value mustEqual chooseYourAddress
       }
     }
@@ -45,7 +46,6 @@ class ChooseYourAddressSpec extends AnyFreeSpec with Matchers with ScalaCheckPro
 
       forAll(gen) {
         invalidValue =>
-
           JsString(invalidValue).validate[ChooseYourAddress] mustEqual JsError("error.invalid")
       }
     }
@@ -56,9 +56,9 @@ class ChooseYourAddressSpec extends AnyFreeSpec with Matchers with ScalaCheckPro
 
       forAll(gen) {
         chooseYourAddress =>
-
           Json.toJson(chooseYourAddress) mustEqual JsString(chooseYourAddress.toString)
       }
     }
   }
 }
+ */

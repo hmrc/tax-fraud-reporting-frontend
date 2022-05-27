@@ -26,20 +26,9 @@ class ChooseYourAddressFormProviderSpec extends OptionFieldBehaviours {
 
   ".value" - {
 
-    val fieldName = "value"
+    val fieldName   = "value"
     val requiredKey = "chooseYourAddress.error.required"
 
-    behave like optionsField[ChooseYourAddress](
-      form,
-      fieldName,
-      validValues  = ChooseYourAddress.values,
-      invalidError = FormError(fieldName, "error.invalid")
-    )
-
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
   }
 }

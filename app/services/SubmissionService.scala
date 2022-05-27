@@ -171,10 +171,10 @@ class SubmissionService @Inject() (httpClient: HttpClient, configuration: Config
       case whenActivityHappen => Some(messages(s"whenActivityHappen.$whenActivityHappen"))
     }
 
-  private def getAddress(address: Option[Address]): Option[Address] =
+  private def getAddress(address: Option[backend.Address]): Option[backend.Address] =
     address map (
       address =>
-        Address(
+        backend.Address(
           sanitiseString(address.addressLine1),
           address.addressLine2 map sanitiseString,
           address.addressLine3 map sanitiseString,

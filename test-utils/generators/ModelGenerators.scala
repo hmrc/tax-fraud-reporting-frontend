@@ -24,7 +24,9 @@ trait ModelGenerators {
 
   implicit lazy val arbitraryChooseYourAddress: Arbitrary[ChooseYourAddress] =
     Arbitrary {
-      Gen.oneOf(ChooseYourAddress.values.toSeq)
+      for {
+        addressId <- arbitrary[String]
+      } yield ChooseYourAddress(addressId)
     }
 
   implicit lazy val arbitraryFindAddress: Arbitrary[FindAddress] =

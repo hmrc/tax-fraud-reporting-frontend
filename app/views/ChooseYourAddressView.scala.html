@@ -14,6 +14,8 @@
  * limitations under the License.
  *@
 
+@import controllers.Proposals
+
 @this(
     layout: templates.Layout,
     formHelper: FormWithCSRF,
@@ -22,7 +24,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, proposals: Proposals)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("chooseYourAddress.title"))) {
 
@@ -41,7 +43,16 @@
             RadiosViewModel(
                 field  = form("value"),
                 legend = LegendViewModel(messages("chooseYourAddress.heading")).withCssClass("govuk-visually-hidden"),
-                items  = ChooseYourAddress.options
+                items  = proposals.proposals match {
+                    case Some(ps) ⇒ ps.zipWithIndex.map { case (p, idx) ⇒
+                        RadioItem(
+                            content = HtmlContent(p.toDescription),
+                            value = Some(p.addressId),
+                            id = if (idx == 0) Some("addressId") else Some(s"addressId-$idx"),
+                            checked = form(s"${p.addressId}").value.isDefined)
+                        }
+                    case None ⇒ Seq.empty
+                    }
             )
         )
 
