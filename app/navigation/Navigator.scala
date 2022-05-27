@@ -46,8 +46,9 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case IndividualSelectCountryPage(index) => individualSelectCountryPageRoute(_, index)
     case BusinessSelectCountryPage(index)  => businessSelectCountryPageRoute(_, index)
     case FindAddressPage(index) => _ => routes.ChooseYourAddressController.onPageLoad(index, NormalMode)
-    //case BusinessFindAddressPage(index) => _ => routes.ChooseYourAddressController.onPageLoad(index, NormalMode)
+    case BusinessFindAddressPage(index) => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, NormalMode)
     case ChooseYourAddressPage(index) => _ => routes.ConfirmAddressController.onPageLoad(index, false, NormalMode)
+    case BusinessChooseYourAddressPage(index) => _ => routes.ConfirmAddressController.onPageLoad(index, true, NormalMode)
 
     /** END Individual journey
       * Start Business journey */

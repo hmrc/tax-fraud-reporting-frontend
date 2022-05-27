@@ -20,13 +20,11 @@ import controllers.actions._
 import controllers.countOfResults.{NoResults, ResultsCount, ResultsList}
 import forms.{AddressFormProvider, ChooseYourAddressFormProvider}
 import models.addresslookup.{AddressRecord, Countries, Country, LocalCustodian, ProposedAddress}
-import models.requests.DataRequest
 
 import javax.inject.Inject
 import models.{AddressSansCountry, ChooseYourAddress, FindAddress, Index, Mode}
 import navigation.Navigator
 import pages.{BusinessAddressPage, BusinessSelectCountryPage, ChooseYourAddressPage, FindAddressPage}
-import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.json.{Format, Json, __}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}

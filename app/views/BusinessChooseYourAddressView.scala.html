@@ -1,0 +1,65 @@
+@*
+ * Copyright 2022 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import controllers.Proposals
+
+@this(
+    layout: templates.Layout,
+    formHelper: FormWithCSRF,
+    govukErrorSummary: GovukErrorSummary,
+    govukRadios: GovukRadios,
+    govukButton: GovukButton
+)
+
+@(form: Form[_], index: Index, mode: Mode, proposals: Proposals)(implicit request: Request[_], messages: Messages)
+
+@layout(pageTitle = title(form, messages("businessChooseYourAddress.title"))) {
+
+    @formHelper(action = routes.BusinessChooseYourAddressController.onSubmit(index, mode), 'autoComplete -> "off") {
+
+        @if(form.errors.nonEmpty) {
+            @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
+        }
+
+        <h1 class="govuk-heading-xl">@messages("businessChooseYourAddress.heading")</h1>
+
+        <p>
+            <a class="govuk-link" href="@routes.BusinessAddressController.onPageLoad(index, mode)">@messages("findAddress.manually")</a>
+        </p>
+
+        @govukRadios(
+            RadiosViewModel(
+                field  = form("value"),
+                legend = LegendViewModel(messages("businessChooseYourAddress.heading")).withCssClass("govuk-visually-hidden"),
+                items  = proposals.proposals match {
+                    case Some(ps) ⇒ ps.zipWithIndex.map { case (p, idx) ⇒
+                        RadioItem(
+                            content = HtmlContent(p.toDescription),
+                            value = Some(p.addressId),
+                            id = if (idx == 0) Some("value_0") else Some(s"value_$idx"),
+                            checked = form(s"${p.addressId}").value.isDefined)
+                        }
+                    case None ⇒ Seq.empty
+                    }
+            )
+        )
+
+        @govukButton(
+            ButtonViewModel(messages("site.continue"))
+                .withAttribute("id" -> "continue-button")
+        )
+    }
+}

@@ -1241,3 +1241,11 @@ businessFindAddress.checkYourAnswersLabel = businessFindAddress
 businessFindAddress.error.required = Enter businessFindAddress
 businessFindAddress.error.length = BusinessFindAddress must be 100 characters or less
 businessFindAddress.change.hidden = BusinessFindAddress
+
+businessChooseYourAddress.title = Choose your address
+businessChooseYourAddress.heading = Choose your address
+businessChooseYourAddress.yes = Yes
+businessChooseYourAddress.no = No
+businessChooseYourAddress.checkYourAnswersLabel = Choose your address
+businessChooseYourAddress.error.required = Select businessChooseYourAddress
+businessChooseYourAddress.change.hidden = BusinessChooseYourAddress
