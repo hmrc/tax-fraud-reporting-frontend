@@ -21,7 +21,6 @@ import models.{WhenActivityHappen, _}
 import pages.{ChooseYourAddressPage, FindAddressPage, _}
 import play.api.mvc.Call
 import services.ActivityTypeService
-import uk.gov.hmrc.hmrcfrontend.controllers.routes
 
 import javax.inject.{Inject, Singleton}
 import scala.language.postfixOps
@@ -45,7 +44,9 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case IndividualNationalInsuranceNumberPage(index) =>
       individualInformationRoutes(_, index, IndividualInformation.NiNumber)
     case IndividualSelectCountryPage(index) => individualSelectCountryPageRoute(_, index)
+    case BusinessSelectCountryPage(index)  => businessSelectCountryPageRoute(_, index)
     case FindAddressPage(index) => _ => routes.ChooseYourAddressController.onPageLoad(index, NormalMode)
+    //case BusinessFindAddressPage(index) => _ => routes.ChooseYourAddressController.onPageLoad(index, NormalMode)
     case ChooseYourAddressPage(index) => _ => routes.ConfirmAddressController.onPageLoad(index, false, NormalMode)
 
     /** END Individual journey
@@ -242,6 +243,13 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       routes.FindAddressController.onPageLoad(index, NormalMode)
     else
       routes.IndividualAddressController.onPageLoad(index, NormalMode)
+  }
+
+  private def businessSelectCountryPageRoute(answers: UserAnswers, index: Index): Call = {
+    if( answers.get(BusinessSelectCountryPage(index)).contains("gb"))
+      routes.BusinessFindAddressController.onPageLoad(index, NormalMode)
+    else
+      routes.BusinessAddressController.onPageLoad(index, NormalMode)
   }
 
   private def whenActivityHappenRoutes(answers: UserAnswers): Call =
