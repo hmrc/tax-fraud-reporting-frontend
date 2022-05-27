@@ -28,7 +28,7 @@ import navigation.Navigator
 import pages.{BusinessAddressPage, BusinessSelectCountryPage, ChooseYourAddressPage, FindAddressPage}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.{Format, Json, __}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepository
 import services.{Address, AddressService}
@@ -88,11 +88,19 @@ class ChooseYourAddressController @Inject() (
           form.bindFromRequest().fold(
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, Proposals(request.userAnswers.get(ChooseYourAddressPage))))),
         value =>
-    /*      for {
-            //updatedAnswers <- Future.fromTry(request.userAnswers.set(ChooseYourAddressPage, value))
-          //  _              <- sessionRepository.set(updatedAnswers)
-          } yield */
-            Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers)))
+          request.userAnswers.get(ChooseYourAddressPage) match {
+            case Some(addressList) =>  addressList.find(_.addressId == value.addressId)  match {
+              case Some(address) =>
+              /*  for {
+                  //TODO for confirmation page
+                  updatedAnswers <- Future.fromTry(request.userAnswers.set(, value))
+                  _              <- sessionRepository.set(updatedAnswers)
+                } yield Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers))*/
+                Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers)))
+              case None => Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers)))
+            }
+              Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers)))
+          }
       )
   }
 
