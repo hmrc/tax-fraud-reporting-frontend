@@ -28,4 +28,5 @@ class BusinessFindAddressFormProvider @Inject() extends Mappings {
       "value" -> text("businessFindAddress.error.required")
         .verifying(maxLength(100, "businessFindAddress.error.length"))
     )
+
 }

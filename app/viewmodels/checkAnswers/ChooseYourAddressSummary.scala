@@ -37,7 +37,10 @@ object ChooseYourAddressSummary {
           key = "chooseYourAddress.checkYourAnswersLabel",
           value = value,
           actions = Seq(
-            ActionItemViewModel("site.change", routes.ChooseYourAddressController.onPageLoad(Index(index), CheckMode).url)
+            ActionItemViewModel(
+              "site.change",
+              routes.ChooseYourAddressController.onPageLoad(Index(index), CheckMode).url
+            )
               .withVisuallyHiddenText(messages("chooseYourAddress.change.hidden"))
           )
         )

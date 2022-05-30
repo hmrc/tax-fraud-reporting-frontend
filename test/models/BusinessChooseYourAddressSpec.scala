@@ -34,8 +34,9 @@ class BusinessChooseYourAddressSpec extends AnyFreeSpec with Matchers with Scala
 
       forAll(gen) {
         businessChooseYourAddress =>
-
-          JsString(businessChooseYourAddress.toString).validate[BusinessChooseYourAddress].asOpt.value mustEqual businessChooseYourAddress
+          JsString(businessChooseYourAddress.toString).validate[
+            BusinessChooseYourAddress
+          ].asOpt.value mustEqual businessChooseYourAddress
       }
     }
 
@@ -45,7 +46,6 @@ class BusinessChooseYourAddressSpec extends AnyFreeSpec with Matchers with Scala
 
       forAll(gen) {
         invalidValue =>
-
           JsString(invalidValue).validate[BusinessChooseYourAddress] mustEqual JsError("error.invalid")
       }
     }
@@ -56,7 +56,6 @@ class BusinessChooseYourAddressSpec extends AnyFreeSpec with Matchers with Scala
 
       forAll(gen) {
         businessChooseYourAddress =>
-
           Json.toJson(businessChooseYourAddress) mustEqual JsString(businessChooseYourAddress.toString)
       }
     }

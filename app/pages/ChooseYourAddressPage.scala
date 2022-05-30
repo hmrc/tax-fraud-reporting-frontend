@@ -19,4 +19,5 @@ package pages
 import models.Index
 import models.addresslookup.ProposedAddress
 
-final case class ChooseYourAddressPage(index: Index) extends NominalsQuestionPage[Seq[ProposedAddress]] ("chooseYourAddress")
+final case class ChooseYourAddressPage(index: Index)
+    extends NominalsQuestionPage[Seq[ProposedAddress]]("chooseYourAddress")

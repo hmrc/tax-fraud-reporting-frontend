@@ -26,7 +26,7 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object BusinessFindAddressSummary  {
+object BusinessFindAddressSummary {
 
   def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
     answers.get(BusinessFindAddressPage(Index(index))).map {
@@ -36,12 +36,16 @@ object BusinessFindAddressSummary  {
           .mkString("<br/>")
 
         SummaryListRowViewModel(
-          key     = "businessFindAddress.checkYourAnswersLabel",
+          key = "businessFindAddress.checkYourAnswersLabel",
           value = ValueViewModel(HtmlContent(value)),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.BusinessFindAddressController.onPageLoad(Index(index), CheckMode).url)
+            ActionItemViewModel(
+              "site.change",
+              routes.BusinessFindAddressController.onPageLoad(Index(index), CheckMode).url
+            )
               .withVisuallyHiddenText(messages("businessFindAddress.change.hidden"))
           )
         )
     }
+
 }

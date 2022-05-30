@@ -24,7 +24,9 @@ trait ModelGenerators {
 
   implicit lazy val arbitraryBusinessChooseYourAddress: Arbitrary[BusinessChooseYourAddress] =
     Arbitrary {
-      Gen.oneOf(BusinessChooseYourAddress.values.toSeq)
+      for {
+        addressId <- arbitrary[String]
+      } yield ChooseYourAddress(addressId)
     }
 
   implicit lazy val arbitraryChooseYourAddress: Arbitrary[ChooseYourAddress] =

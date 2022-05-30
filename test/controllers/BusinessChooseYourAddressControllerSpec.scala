@@ -41,7 +41,7 @@ class BusinessChooseYourAddressControllerSpec extends SpecBase {
   lazy val businessChooseYourAddressRoute = routes.BusinessChooseYourAddressController.onPageLoad(NormalMode).url
 
   val formProvider = new BusinessChooseYourAddressFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   "BusinessChooseYourAddress Controller" - {
 
@@ -63,7 +63,8 @@ class BusinessChooseYourAddressControllerSpec extends SpecBase {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(BusinessChooseYourAddressPage, BusinessChooseYourAddress.values.head).success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(BusinessChooseYourAddressPage, BusinessChooseYourAddress).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -75,7 +76,10 @@ class BusinessChooseYourAddressControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(BusinessChooseYourAddress.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(BusinessChooseYourAddress.values.head), NormalMode)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 

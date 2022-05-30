@@ -31,17 +31,18 @@ import views.html.BusinessFindAddressView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class BusinessFindAddressController @Inject()(
-                                        override val messagesApi: MessagesApi,
-                                        sessionRepository: SessionRepository,
-                                        navigator: Navigator,
-                                        identify: IdentifierAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formProvider: FindAddressFormProvider,
-                                        val controllerComponents: MessagesControllerComponents,
-                                        view: BusinessFindAddressView
-                                    )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class BusinessFindAddressController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  navigator: Navigator,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: FindAddressFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: BusinessFindAddressView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()
 
@@ -49,7 +50,7 @@ class BusinessFindAddressController @Inject()(
     implicit request =>
       val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
       val preparedForm = request.userAnswers.get(BusinessFindAddressPage(index)) match {
-        case None => form
+        case None        => form
         case Some(value) => form.fill(value)
       }
 
@@ -60,9 +61,7 @@ class BusinessFindAddressController @Inject()(
     implicit request =>
       val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
       form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, index, mode, isBusinessDetails))),
-
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, isBusinessDetails))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessFindAddressPage(index), value))
@@ -70,4 +69,5 @@ class BusinessFindAddressController @Inject()(
           } yield Redirect(navigator.nextPage(BusinessFindAddressPage(index), mode, updatedAnswers))
       )
   }
+
 }

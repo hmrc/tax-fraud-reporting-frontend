@@ -25,10 +25,11 @@ import javax.inject.Inject
 
 class BusinessChooseYourAddressFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[BusinessChooseYourAddress] =  Form(
+  def apply(): Form[BusinessChooseYourAddress] = Form(
     mapping(
       "value" -> text("chooseYourAddress.error.required")
         .verifying(regexpRestrict(Validation.validString.toString, "chooseYourAddress.error.required"))
     )(BusinessChooseYourAddress.apply)(BusinessChooseYourAddress.unapply)
   )
+
 }

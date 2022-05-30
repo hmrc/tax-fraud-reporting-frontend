@@ -20,7 +20,7 @@ import controllers.actions._
 import forms.BusinessChooseYourAddressFormProvider
 import controllers.businessCountOfResults.{NoResults, ResultsCount, ResultsList}
 import models.{AddressSansCountry, ChooseYourAddress, FindAddress, Index, Mode}
-import models.addresslookup.{AddressRecord, Countries, Country, LocalCustodian, ProposedAddress}
+import models.addresslookup.{AddressRecord, Countries, Country, ProposedAddress}
 
 import javax.inject.Inject
 import services.{Address, AddressService}
@@ -47,18 +47,19 @@ object businessCountOfResults {
 
 }
 
-class BusinessChooseYourAddressController @Inject()(
-                                       override val messagesApi: MessagesApi,
-                                       sessionRepository: SessionRepository,
-                                       navigator: Navigator,
-                                       identify: IdentifierAction,
-                                       getData: DataRetrievalAction,
-                                       requireData: DataRequiredAction,
-                                       formProvider: BusinessChooseYourAddressFormProvider,
-                                       val controllerComponents: MessagesControllerComponents,
-                                       view: BusinessChooseYourAddressView,
-                                       addressService: AddressService
-                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class BusinessChooseYourAddressController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  navigator: Navigator,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: BusinessChooseYourAddressFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: BusinessChooseYourAddressView,
+  addressService: AddressService
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()
 
@@ -80,9 +81,8 @@ class BusinessChooseYourAddressController @Inject()(
       }
   }
 
-  def onSubmit(index:Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
       form.bindFromRequest().fold(
         /*formWithErrors =>
           Future.successful(BadRequest(view(formWithErrors, mode))),
@@ -93,101 +93,119 @@ class BusinessChooseYourAddressController @Inject()(
             _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(BusinessChooseYourAddressPage, mode, updatedAnswers))
       )*/
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, Proposals(request.userAnswers.get(BusinessChooseYourAddressPage(index)))))),
+        formWithErrors =>
+          Future.successful(
+            BadRequest(
+              view(
+                formWithErrors,
+                index,
+                mode,
+                Proposals(request.userAnswers.get(BusinessChooseYourAddressPage(index)))
+              )
+            )
+          ),
         value =>
           request.userAnswers.get(BusinessChooseYourAddressPage(index)) match {
-            case Some(addressList) =>  addressList.find(_.addressId == value.addressId)  match {
-              case Some(address) =>
-                /*  for {
+            case Some(addressList) =>
+              addressList.find(_.addressId == value.addressId) match {
+                case Some(address) =>
+                  /*  for {
                     //TODO for confirmation page
                     updatedAnswers <- Future.fromTry(request.userAnswers.set(, value))
                     _              <- sessionRepository.set(updatedAnswers)
                   } yield Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers))*/
-                Future.successful(Redirect(navigator.nextPage(BusinessChooseYourAddressPage(index), mode, request.userAnswers)))
-              case None => Future.successful(Redirect(navigator.nextPage(BusinessChooseYourAddressPage(index), mode, request.userAnswers)))
-            }
-              Future.successful(Redirect(navigator.nextPage(BusinessChooseYourAddressPage(index), mode, request.userAnswers)))
+                  Future.successful(
+                    Redirect(navigator.nextPage(BusinessChooseYourAddressPage(index), mode, request.userAnswers))
+                  )
+                case None =>
+                  Future.successful(
+                    Redirect(navigator.nextPage(BusinessChooseYourAddressPage(index), mode, request.userAnswers))
+                  )
+              }
+              Future.successful(
+                Redirect(navigator.nextPage(BusinessChooseYourAddressPage(index), mode, request.userAnswers))
+              )
           }
       )
   }
-      def addressLookUp(value: FindAddress)(implicit hc: HeaderCarrier): Future[ResultsCount] =
-        addressService.lookup(value.Postcode, value.Property) flatMap {
-          case noneFound if noneFound.isEmpty =>
-            if (value.Property.isDefined)
-              addressLookUp(value.copy(Property = None))
-            else {
-              //Future.successful(NoResults)
-              val cannedComplexAddresses = List(
-                cannedAddress(5000L, List("Flat 1", "74 Comeragh Road"), "ZZ11 1ZZ"),
-                cannedAddress(6000L, List("Flat 2", "The Curtains Up", "Comeragh Road"), "ZZ11 1ZZ"),
-                cannedAddress(7000L, List("Flat 1", "70 Comeragh Road"), "ZZ11 1ZZ"),
-                cannedAddress(8000L, List("Flat 2", "74 Comeragh Road"), "ZZ11 1ZZ"),
-                cannedAddress(9000L, List("Flat B", "78 Comeragh Road"), "ZZ11 1ZZ"),
-                cannedAddress(10000L, List("72a", "Comeragh Road"), "ZZ11 1ZZ"),
-                cannedAddress(11000L, List("Flat 1", "The Curtains Up", "Comeragh Road"), "ZZ11 1ZZ")
-              )
 
-              Future.successful(ResultsList(toProposals(cannedComplexAddresses)))
-            }
-          case displayProposals =>
-            //Future.successful(ResultsList(displayProposals))
+  def addressLookUp(value: FindAddress)(implicit hc: HeaderCarrier): Future[ResultsCount] =
+    addressService.lookup(value.Postcode, value.Property) flatMap {
+      case noneFound if noneFound.isEmpty =>
+        if (value.Property.isDefined)
+          addressLookUp(value.copy(Property = None))
+        else {
+          //Future.successful(NoResults)
+          val cannedComplexAddresses = List(
+            cannedAddress(5000L, List("Flat 1", "74 Comeragh Road"), "ZZ11 1ZZ"),
+            cannedAddress(6000L, List("Flat 2", "The Curtains Up", "Comeragh Road"), "ZZ11 1ZZ"),
+            cannedAddress(7000L, List("Flat 1", "70 Comeragh Road"), "ZZ11 1ZZ"),
+            cannedAddress(8000L, List("Flat 2", "74 Comeragh Road"), "ZZ11 1ZZ"),
+            cannedAddress(9000L, List("Flat B", "78 Comeragh Road"), "ZZ11 1ZZ"),
+            cannedAddress(10000L, List("72a", "Comeragh Road"), "ZZ11 1ZZ"),
+            cannedAddress(11000L, List("Flat 1", "The Curtains Up", "Comeragh Road"), "ZZ11 1ZZ")
+          )
 
-            val cannedComplexAddresses = List(
-              cannedAddress(5000L, List("Flat 1", "74 Comeragh Road"), "ZZ11 1ZZ"),
-              cannedAddress(6000L, List("Flat 2", "The Curtains Up", "Comeragh Road"), "ZZ11 1ZZ"),
-              cannedAddress(7000L, List("Flat 1", "70 Comeragh Road"), "ZZ11 1ZZ"),
-              cannedAddress(8000L, List("Flat 2", "74 Comeragh Road"), "ZZ11 1ZZ"),
-              cannedAddress(9000L, List("Flat B", "78 Comeragh Road"), "ZZ11 1ZZ"),
-              cannedAddress(10000L, List("72a", "Comeragh Road"), "ZZ11 1ZZ"),
-              cannedAddress(11000L, List("Flat 1", "The Curtains Up", "Comeragh Road"), "ZZ11 1ZZ")
-            )
-
-            Future.successful(ResultsList(toProposals(cannedComplexAddresses)))
-
+          Future.successful(ResultsList(toProposals(cannedComplexAddresses)))
         }
+      case displayProposals =>
+        //Future.successful(ResultsList(displayProposals))
 
-      def cannedAddress(uprn: Long, lines: List[String], postCode: String, organisation: Option[String] = None) =
-        AddressRecord(
-          uprn.toString,
-          Some(uprn),
-          None,
-          None,
-          organisation,
-          Address(lines, "some-town", postCode, Some(Countries.England), Country("GB", "United Kingdom")),
-          "en",
-          Some(LocalCustodian(123, "Tyne & Wear")),
-          None,
-          None,
-          None,
-          None
+        val cannedComplexAddresses = List(
+          cannedAddress(5000L, List("Flat 1", "74 Comeragh Road"), "ZZ11 1ZZ"),
+          cannedAddress(6000L, List("Flat 2", "The Curtains Up", "Comeragh Road"), "ZZ11 1ZZ"),
+          cannedAddress(7000L, List("Flat 1", "70 Comeragh Road"), "ZZ11 1ZZ"),
+          cannedAddress(8000L, List("Flat 2", "74 Comeragh Road"), "ZZ11 1ZZ"),
+          cannedAddress(9000L, List("Flat B", "78 Comeragh Road"), "ZZ11 1ZZ"),
+          cannedAddress(10000L, List("72a", "Comeragh Road"), "ZZ11 1ZZ"),
+          cannedAddress(11000L, List("Flat 1", "The Curtains Up", "Comeragh Road"), "ZZ11 1ZZ")
         )
 
-      private def toProposals(found: List[AddressRecord]): Seq[ProposedAddress] =
-        found.map { addr =>
-          ProposedAddress(
-            addr.id,
-            uprn = addr.uprn,
-            parentUprn = addr.parentUprn,
-            usrn = addr.usrn,
-            organisation = addr.organisation,
-            addr.address.postcode,
-            addr.address.town,
-            addr.address.lines,
-            addr.address.country
-          )
-        }
+        Future.successful(ResultsList(toProposals(cannedComplexAddresses)))
 
-  }
+    }
 
-  case class BusinessProposals(proposals: Option[Seq[ProposedAddress]]) {
+  def cannedAddress(uprn: Long, lines: List[String], postCode: String, organisation: Option[String] = None) =
+    AddressRecord(
+      uprn.toString,
+      Some(uprn),
+      None,
+      None,
+      organisation,
+      Address(lines, "some-town", postCode, Some(Countries.England), Country("GB", "United Kingdom")),
+      "en",
+      None,
+      None,
+      None,
+      None
+    )
 
-    def toHtmlOptions: Seq[(String, String)] =
-      proposals
-        .map { props =>
-          props.map { addr =>
-            (addr.addressId, addr.toDescription)
-          }.sorted
-        }
-        .getOrElse(Seq.empty)
+  private def toProposals(found: List[AddressRecord]): Seq[ProposedAddress] =
+    found.map { addr =>
+      ProposedAddress(
+        addr.id,
+        uprn = addr.uprn,
+        parentUprn = addr.parentUprn,
+        usrn = addr.usrn,
+        organisation = addr.organisation,
+        addr.address.postcode,
+        addr.address.town,
+        addr.address.lines,
+        addr.address.country
+      )
+    }
 
-  }
+}
+
+case class BusinessProposals(proposals: Option[Seq[ProposedAddress]]) {
+
+  def toHtmlOptions: Seq[(String, String)] =
+    proposals
+      .map { props =>
+        props.map { addr =>
+          (addr.addressId, addr.toDescription)
+        }.sorted
+      }
+      .getOrElse(Seq.empty)
+
+}

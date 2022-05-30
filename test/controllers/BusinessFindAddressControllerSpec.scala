@@ -39,7 +39,7 @@ class BusinessFindAddressControllerSpec extends SpecBase {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new BusinessFindAddressFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
   lazy val businessFindAddressRoute = routes.BusinessFindAddressController.onPageLoad(NormalMode).url
 

@@ -19,4 +19,3 @@ package pages
 import models.{FindAddress, Index}
 
 final case class BusinessFindAddressPage(index: Index) extends NominalsQuestionPage[FindAddress]("businessFindAddress")
-

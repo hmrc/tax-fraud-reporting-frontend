@@ -22,8 +22,8 @@ import play.api.data.FormError
 class BusinessFindAddressFormProviderSpec extends StringFieldBehaviours {
 
   val requiredKey = "businessFindAddress.error.required"
-  val lengthKey = "businessFindAddress.error.length"
-  val maxLength = 100
+  val lengthKey   = "businessFindAddress.error.length"
+  val maxLength   = 100
 
   val form = new BusinessFindAddressFormProvider()()
 
@@ -31,11 +31,7 @@ class BusinessFindAddressFormProviderSpec extends StringFieldBehaviours {
 
     val fieldName = "value"
 
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
+    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
 
     behave like fieldWithMaxLength(
       form,
@@ -44,10 +40,6 @@ class BusinessFindAddressFormProviderSpec extends StringFieldBehaviours {
       lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
     )
 
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
   }
 }

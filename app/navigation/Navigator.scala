@@ -44,11 +44,12 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case IndividualNationalInsuranceNumberPage(index) =>
       individualInformationRoutes(_, index, IndividualInformation.NiNumber)
     case IndividualSelectCountryPage(index) => individualSelectCountryPageRoute(_, index)
-    case BusinessSelectCountryPage(index)  => businessSelectCountryPageRoute(_, index)
-    case FindAddressPage(index) => _ => routes.ChooseYourAddressController.onPageLoad(index, NormalMode)
-    case BusinessFindAddressPage(index) => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, NormalMode)
-    case ChooseYourAddressPage(index) => _ => routes.ConfirmAddressController.onPageLoad(index, false, NormalMode)
-    case BusinessChooseYourAddressPage(index) => _ => routes.ConfirmAddressController.onPageLoad(index, true, NormalMode)
+    case BusinessSelectCountryPage(index)   => businessSelectCountryPageRoute(_, index)
+    case FindAddressPage(index)             => _ => routes.ChooseYourAddressController.onPageLoad(index, NormalMode)
+    case BusinessFindAddressPage(index)     => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, NormalMode)
+    case ChooseYourAddressPage(index)       => _ => routes.ConfirmAddressController.onPageLoad(index, false, NormalMode)
+    case BusinessChooseYourAddressPage(index) =>
+      _ => routes.ConfirmAddressController.onPageLoad(index, true, NormalMode)
 
     /** END Individual journey
       * Start Business journey */
@@ -239,19 +240,17 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
         }
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def individualSelectCountryPageRoute(answers: UserAnswers, index: Index): Call = {
-    if( answers.get(IndividualSelectCountryPage(index)).contains("gb"))
+  private def individualSelectCountryPageRoute(answers: UserAnswers, index: Index): Call =
+    if (answers.get(IndividualSelectCountryPage(index)).contains("gb"))
       routes.FindAddressController.onPageLoad(index, NormalMode)
     else
       routes.IndividualAddressController.onPageLoad(index, NormalMode)
-  }
 
-  private def businessSelectCountryPageRoute(answers: UserAnswers, index: Index): Call = {
-    if( answers.get(BusinessSelectCountryPage(index)).contains("gb"))
+  private def businessSelectCountryPageRoute(answers: UserAnswers, index: Index): Call =
+    if (answers.get(BusinessSelectCountryPage(index)).contains("gb"))
       routes.BusinessFindAddressController.onPageLoad(index, NormalMode)
     else
       routes.BusinessAddressController.onPageLoad(index, NormalMode)
-  }
 
   private def whenActivityHappenRoutes(answers: UserAnswers): Call =
     answers.get(WhenActivityHappenPage).map {
