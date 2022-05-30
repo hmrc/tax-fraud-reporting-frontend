@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-package pages
+package models
 
-import models.Index
-import models.addresslookup.ProposedAddress
+import play.api.libs.json.Json
 
-final case class ChooseYourAddressPage(index: Index) extends NominalsQuestionPage[Seq[ProposedAddress]] ("chooseYourAddress")
+case class BusinessChooseYourAddress(addressId: String)
+
+object BusinessChooseYourAddress {
+  implicit val format = Json.format[BusinessChooseYourAddress]
+}

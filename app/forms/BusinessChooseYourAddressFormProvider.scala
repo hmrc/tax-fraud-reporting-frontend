@@ -14,9 +14,21 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.Index
-import models.addresslookup.ProposedAddress
+import forms.mappings.Mappings
+import models.BusinessChooseYourAddress
+import play.api.data.Form
+import play.api.data.Forms.mapping
 
-final case class ChooseYourAddressPage(index: Index) extends NominalsQuestionPage[Seq[ProposedAddress]] ("chooseYourAddress")
+import javax.inject.Inject
+
+class BusinessChooseYourAddressFormProvider @Inject() extends Mappings {
+
+  def apply(): Form[BusinessChooseYourAddress] =  Form(
+    mapping(
+      "value" -> text("chooseYourAddress.error.required")
+        .verifying(regexpRestrict(Validation.validString.toString, "chooseYourAddress.error.required"))
+    )(BusinessChooseYourAddress.apply)(BusinessChooseYourAddress.unapply)
+  )
+}

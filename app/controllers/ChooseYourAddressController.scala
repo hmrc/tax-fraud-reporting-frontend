@@ -17,20 +17,23 @@
 package controllers
 
 import controllers.actions._
-import controllers.countOfResults.{ResultsCount, ResultsList}
-import forms.ChooseYourAddressFormProvider
-import models.addresslookup.{AddressRecord, Countries, Country, ProposedAddress}
+import controllers.countOfResults.{NoResults, ResultsCount, ResultsList}
+import forms.{AddressFormProvider, ChooseYourAddressFormProvider}
+import models.addresslookup.{AddressRecord, Countries, Country, LocalCustodian, ProposedAddress}
 
 import javax.inject.Inject
-import models.{FindAddress, Mode}
+import models.{AddressSansCountry, ChooseYourAddress, FindAddress, Index, Mode}
 import navigation.Navigator
-import pages.{ChooseYourAddressPage, FindAddressPage}
+import pages.{BusinessAddressPage, BusinessSelectCountryPage, ChooseYourAddressPage, FindAddressPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.libs.json.{Format, Json, __}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepository
 import services.{Address, AddressService}
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import viewmodels.{BusinessPart, IndividualPart}
 import views.html.ChooseYourAddressView
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -61,46 +64,41 @@ class ChooseYourAddressController @Inject() (
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      request.userAnswers.get(FindAddressPage) match {
+      request.userAnswers.get(FindAddressPage(index)) match {
         case None => Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
         case Some(value) =>
           addressLookUp(value) map {
             case ResultsList(addresses) =>
               sessionRepository.set(
-                request.userAnswers.set(ChooseYourAddressPage, addresses)
+                request.userAnswers.set(ChooseYourAddressPage(index), addresses)
                   getOrElse (throw new Exception(s"Address is not saved in cache"))
               )
-              Ok(view(form, mode, Proposals(Some(addresses))))
+              Ok(view(form, index, mode, Proposals(Some(addresses))))
 
             case _ => Redirect(routes.JourneyRecoveryController.onPageLoad())
           }
       }
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(index:Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(
-            BadRequest(view(formWithErrors, mode, Proposals(request.userAnswers.get(ChooseYourAddressPage))))
-          ),
+          form.bindFromRequest().fold(
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, Proposals(request.userAnswers.get(ChooseYourAddressPage(index)))))),
         value =>
-          request.userAnswers.get(ChooseYourAddressPage) match {
-            case Some(addressList) =>
-              addressList.find(_.addressId == value.addressId) match {
-                case Some(address) =>
-                  /*  for {
+          request.userAnswers.get(ChooseYourAddressPage(index)) match {
+            case Some(addressList) =>  addressList.find(_.addressId == value.addressId)  match {
+              case Some(address) =>
+              /*  for {
                   //TODO for confirmation page
                   updatedAnswers <- Future.fromTry(request.userAnswers.set(, value))
                   _              <- sessionRepository.set(updatedAnswers)
                 } yield Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers))*/
-                  Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers)))
-                case None =>
-                  Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers)))
-              }
-              Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers)))
+                Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage(index), mode, request.userAnswers)))
+              case None => Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage(index), mode, request.userAnswers)))
+            }
+              Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage(index), mode, request.userAnswers)))
           }
       )
   }

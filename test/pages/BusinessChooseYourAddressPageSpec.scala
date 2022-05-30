@@ -16,7 +16,17 @@
 
 package pages
 
-import models.Index
-import models.addresslookup.ProposedAddress
+import models.BusinessChooseYourAddress
+import pages.behaviours.PageBehaviours
 
-final case class ChooseYourAddressPage(index: Index) extends NominalsQuestionPage[Seq[ProposedAddress]] ("chooseYourAddress")
+class BusinessChooseYourAddressSpec extends PageBehaviours {
+
+  "BusinessChooseYourAddressPage" - {
+
+    beRetrievable[BusinessChooseYourAddress](BusinessChooseYourAddressPage)
+
+    beSettable[BusinessChooseYourAddress](BusinessChooseYourAddressPage)
+
+    beRemovable[BusinessChooseYourAddress](BusinessChooseYourAddressPage)
+  }
+}

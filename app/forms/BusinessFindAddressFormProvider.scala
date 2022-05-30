@@ -14,9 +14,18 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.Index
-import models.addresslookup.ProposedAddress
+import javax.inject.Inject
 
-final case class ChooseYourAddressPage(index: Index) extends NominalsQuestionPage[Seq[ProposedAddress]] ("chooseYourAddress")
+import forms.mappings.Mappings
+import play.api.data.Form
+
+class BusinessFindAddressFormProvider @Inject() extends Mappings {
+
+  def apply(): Form[String] =
+    Form(
+      "value" -> text("businessFindAddress.error.required")
+        .verifying(maxLength(100, "businessFindAddress.error.length"))
+    )
+}

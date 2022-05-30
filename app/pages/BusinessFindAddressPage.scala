@@ -16,7 +16,7 @@
 
 package pages
 
-import models.Index
-import models.addresslookup.ProposedAddress
+import models.{FindAddress, Index}
 
-final case class ChooseYourAddressPage(index: Index) extends NominalsQuestionPage[Seq[ProposedAddress]] ("chooseYourAddress")
+final case class BusinessFindAddressPage(index: Index) extends NominalsQuestionPage[FindAddress]("businessFindAddress")
+

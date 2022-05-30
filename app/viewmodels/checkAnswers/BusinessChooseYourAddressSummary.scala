@@ -18,7 +18,7 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{CheckMode, Index, UserAnswers}
-import pages.ChooseYourAddressPage
+import pages.BusinessChooseYourAddressPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
@@ -26,21 +26,25 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object ChooseYourAddressSummary {
+object BusinessChooseYourAddressSummary  {
 
   def row(answers: UserAnswers, index: Int)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ChooseYourAddressPage(Index(index))).map {
+    answers.get(BusinessChooseYourAddressPage(Index(index))).map {
       answer =>
-        val value = ValueViewModel(HtmlContent(HtmlFormat.escape(messages(s"chooseYourAddress.$answer"))))
+
+        val value = ValueViewModel(
+          HtmlContent(
+            HtmlFormat.escape(messages(s"businessChooseYourAddress.$answer"))
+          )
+        )
 
         SummaryListRowViewModel(
-          key = "chooseYourAddress.checkYourAnswersLabel",
-          value = value,
+          key     = "businessChooseYourAddress.checkYourAnswersLabel",
+          value   = value,
           actions = Seq(
-            ActionItemViewModel("site.change", routes.ChooseYourAddressController.onPageLoad(Index(index), CheckMode).url)
-              .withVisuallyHiddenText(messages("chooseYourAddress.change.hidden"))
+            ActionItemViewModel("site.change", routes.BusinessChooseYourAddressController.onPageLoad(Index(index), CheckMode).url)
+              .withVisuallyHiddenText(messages("businessChooseYourAddress.change.hidden"))
           )
         )
     }
-
 }

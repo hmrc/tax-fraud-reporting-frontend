@@ -26,26 +26,24 @@
 
 @(form: Form[_], index: Index, mode: Mode, proposals: Proposals)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("chooseYourAddress.title"))) {
+@layout(pageTitle = title(form, messages("businessChooseYourAddress.title"))) {
 
-    @formHelper(action = routes.ChooseYourAddressController.onSubmit(index, mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.BusinessChooseYourAddressController.onSubmit(index, mode), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
         }
-        <span class="govuk-caption-xl">
-           <span class="govuk-visually-hidden">@messages("individual.caption.text.screen.reader")</span>
-           @messages(s"individual.${index.display}")
-        </span>
-        <h1 class="govuk-heading-xl">@messages("chooseYourAddress.heading")</h1>
+
+        <h1 class="govuk-heading-xl">@messages("businessChooseYourAddress.heading")</h1>
+
         <p>
-            <a class="govuk-link" href="@routes.IndividualAddressController.onPageLoad(index, mode)">@messages("findAddress.manually")</a>
+            <a class="govuk-link" href="@routes.BusinessAddressController.onPageLoad(index, mode)">@messages("findAddress.manually")</a>
         </p>
 
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("chooseYourAddress.heading")).withCssClass("govuk-visually-hidden"),
+                legend = LegendViewModel(messages("businessChooseYourAddress.heading")).withCssClass("govuk-visually-hidden"),
                 items  = proposals.proposals match {
                     case Some(ps) ⇒ ps.zipWithIndex.map { case (p, idx) ⇒
                         RadioItem(
