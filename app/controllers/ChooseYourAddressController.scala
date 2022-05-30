@@ -24,9 +24,9 @@ import models.addresslookup.{AddressRecord, Countries, Country, ProposedAddress}
 import javax.inject.Inject
 import models.{AddressSansCountry, ChooseYourAddress, FindAddress, Index, Mode}
 import navigation.Navigator
-import pages.{BusinessAddressPage, BusinessSelectCountryPage, ChooseYourAddressPage, FindAddressPage}
+import pages.{BusinessAddressPage, BusinessSelectCountryPage, ChooseYourAddressPage, FindAddressPage, IndividualAddressPage, IndividualSelectCountryPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.libs.json.{__, Format, Json}
+import play.api.libs.json.{Format, Json, __}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepository
 import services.{Address, AddressService}
@@ -96,20 +96,16 @@ class ChooseYourAddressController @Inject() (
             case Some(addressList) =>
               addressList.find(_.addressId == value.addressId) match {
                 case Some(address) =>
-                  /*  for {
-                  //TODO for confirmation page
-                  updatedAnswers <- Future.fromTry(request.userAnswers.set(, value))
-                  _              <- sessionRepository.set(updatedAnswers)
-                } yield Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers))*/
-                  Future.successful(
-                    Redirect(navigator.nextPage(ChooseYourAddressPage(index), mode, request.userAnswers))
-                  )
-                case None =>
-                  Future.successful(
-                    Redirect(navigator.nextPage(ChooseYourAddressPage(index), mode, request.userAnswers))
-                  )
+                    for {
+                      updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualAddressPage(index),
+                         AddressSansCountry(
+                          address.line1, address.line2, address.line3, address.town.getOrElse(""), address.postcode
+                        )))
+                      _              <- sessionRepository.set(updatedAnswers)
+                    } yield Redirect(routes.ConfirmAddressController.onPageLoad(index, false, mode))
               }
-              Future.successful(Redirect(navigator.nextPage(ChooseYourAddressPage(index), mode, request.userAnswers)))
+            case _ =>
+              Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
           }
       )
   }

@@ -46,6 +46,12 @@ case class ProposedAddress(
     organisation.fold(addressDescription)(org => s"$org, $addressDescription")
   }
 
+  def line1: String = if (lines.nonEmpty) lines.head else ""
+
+  def line2: Option[String] = if (lines.size > 1) Some(lines(1)) else Option.empty
+
+  def line3: Option[String] = if (lines.size > 2) Some(lines(2)) else Option.empty
+
 }
 
 object CountryFormat {

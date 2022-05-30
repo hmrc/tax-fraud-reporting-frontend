@@ -25,7 +25,7 @@ import models.addresslookup.{AddressRecord, Countries, Country, ProposedAddress}
 import javax.inject.Inject
 import services.{Address, AddressService}
 import navigation.Navigator
-import pages.{BusinessChooseYourAddressPage, BusinessFindAddressPage, ChooseYourAddressPage}
+import pages.{BusinessAddressPage, BusinessChooseYourAddressPage, BusinessFindAddressPage, ChooseYourAddressPage, IndividualAddressPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -84,47 +84,27 @@ class BusinessChooseYourAddressController @Inject() (
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
-        /*formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessChooseYourAddressPage, value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(BusinessChooseYourAddressPage, mode, updatedAnswers))
-      )*/
         formWithErrors =>
           Future.successful(
             BadRequest(
-              view(
-                formWithErrors,
-                index,
-                mode,
-                Proposals(request.userAnswers.get(BusinessChooseYourAddressPage(index)))
-              )
+              view(formWithErrors, index, mode, Proposals(request.userAnswers.get(ChooseYourAddressPage(index))))
             )
           ),
         value =>
-          request.userAnswers.get(BusinessChooseYourAddressPage(index)) match {
+          request.userAnswers.get(ChooseYourAddressPage(index)) match {
             case Some(addressList) =>
               addressList.find(_.addressId == value.addressId) match {
                 case Some(address) =>
-                  /*  for {
-                    //TODO for confirmation page
-                    updatedAnswers <- Future.fromTry(request.userAnswers.set(, value))
+                  for {
+                    updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessAddressPage(index),
+                      AddressSansCountry(
+                        address.line1, address.line2, address.line3, address.town.getOrElse(""), address.postcode
+                      )))
                     _              <- sessionRepository.set(updatedAnswers)
-                  } yield Redirect(navigator.nextPage(ChooseYourAddressPage, mode, request.userAnswers))*/
-                  Future.successful(
-                    Redirect(navigator.nextPage(BusinessChooseYourAddressPage(index), mode, request.userAnswers))
-                  )
-                case None =>
-                  Future.successful(
-                    Redirect(navigator.nextPage(BusinessChooseYourAddressPage(index), mode, request.userAnswers))
-                  )
+                  } yield Redirect(routes.ConfirmAddressController.onPageLoad(index, true, mode))
               }
-              Future.successful(
-                Redirect(navigator.nextPage(BusinessChooseYourAddressPage(index), mode, request.userAnswers))
-              )
+            case _ =>
+              Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
           }
       )
   }
