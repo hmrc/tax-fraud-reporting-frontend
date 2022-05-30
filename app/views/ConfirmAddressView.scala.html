@@ -56,8 +56,15 @@
 
     </div>
 
-        <a id="continue-button" href="@nextPage" role="button" class="govuk-button" data-module="govuk-button">
-            @messages("site.continue")
-        </a>
+    @if(isBusinessJourney) {
+    <a id="continue-button" href="@nextPage" role="button" class="govuk-button" data-module="govuk-button">
+        @messages("site.continue")
+    </a>
+    }
+    @if(!isBusinessJourney) {
+    <a id="continue-button" href="@nextPage" role="button" class="govuk-button" data-module="govuk-button">
+        @messages("site.continue")
+    </a>
+    }
 
 }
