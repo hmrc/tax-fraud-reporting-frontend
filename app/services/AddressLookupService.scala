@@ -86,6 +86,7 @@ class AddressLookupService @Inject() (httpClient: HttpClient, configuration: Con
         sort(numbersIn(a).zipAll(numbersIn(b), None, None).toList)
       }
     }
+    Future.successful(Seq())
   }
 
   def mkString(p: ProposedAddress) = p.lines.mkString(" ").toLowerCase()

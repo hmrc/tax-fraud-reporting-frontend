@@ -22,20 +22,13 @@ import play.api.data.FormError
 
 class BusinessChooseYourAddressFormProviderSpec extends OptionFieldBehaviours {
 
-  val form = new BusinessChooseYourAddressFormProvider()()
+  /*  val form = new BusinessChooseYourAddressFormProvider()()
 
   ".value" - {
 
     val fieldName   = "value"
     val requiredKey = "businessChooseYourAddress.error.required"
 
-    behave like optionsField[BusinessChooseYourAddress](
-      form,
-      fieldName,
-      validValues = BusinessChooseYourAddress.values,
-      invalidError = FormError(fieldName, "error.invalid")
-    )
-
     behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
-  }
+  }*/
 }

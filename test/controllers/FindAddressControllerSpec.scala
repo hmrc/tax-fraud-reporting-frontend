@@ -18,12 +18,12 @@ package controllers
 
 import base.SpecBase
 import forms.FindAddressFormProvider
-import models.{FindAddress, NormalMode, UserAnswers}
+import models.{FindAddress, Index, IndividualDateFormat, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.FindAddressPage
+import pages.{FindAddressPage, IndividualDateFormatPage}
 import play.api.inject.bind
 import play.api.libs.json.Json
 import play.api.mvc.Call
@@ -42,7 +42,7 @@ class FindAddressControllerSpec extends SpecBase {
   val formProvider = new FindAddressFormProvider()
   val form         = formProvider()
 
-  lazy val findAddressRoute = routes.FindAddressController.onPageLoad(NormalMode).url
+  lazy val findAddressRoute = routes.FindAddressController.onPageLoad(Index(0), NormalMode).url
 
   val userAnswers = UserAnswers(
     userAnswersId,
@@ -63,11 +63,14 @@ class FindAddressControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
+
+      val userAnswers =
+        UserAnswers(userAnswersId).set(FindAddressPage(Index(0)), FindAddress("EH12 9JE", Option.empty)).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -79,7 +82,7 @@ class FindAddressControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(FindAddress("value 1", Some("value 2"))), NormalMode)(
+        contentAsString(result) mustEqual view(form.fill(FindAddress("EH12 9JE", Option.empty)), Index(0), NormalMode)(
           request,
           messages(application)
         ).toString
@@ -128,7 +131,7 @@ class FindAddressControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode)(request, messages(application)).toString
       }
     }
 

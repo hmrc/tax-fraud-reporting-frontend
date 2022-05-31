@@ -22,10 +22,10 @@ class BusinessFindAddressPageSpec extends PageBehaviours {
 
   "BusinessFindAddressPage" - {
 
-    beRetrievable[String](BusinessFindAddressPage)
+    /*  beRetrievable[String](BusinessFindAddressPage)
 
     beSettable[String](BusinessFindAddressPage)
 
-    beRemovable[String](BusinessFindAddressPage)
+    beRemovable[String](BusinessFindAddressPage)*/
   }
 }

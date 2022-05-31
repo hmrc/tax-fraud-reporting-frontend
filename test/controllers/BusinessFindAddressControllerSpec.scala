@@ -17,20 +17,18 @@
 package controllers
 
 import base.SpecBase
-import forms.BusinessFindAddressFormProvider
-import models.{NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import forms.{BusinessFindAddressFormProvider, FindAddressFormProvider}
+import models.{FindAddress, Index, IndividualBusinessDetails, NormalMode, UserAnswers}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
-import pages.BusinessFindAddressPage
+import pages.{BusinessFindAddressPage, FindAddressPage, IndividualBusinessDetailsPage}
 import play.api.inject.bind
+import play.api.libs.json.Json
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import uk.gov.hmrc.hmrcfrontend.controllers.routes
-import views.html.BusinessFindAddressView
+import views.html.{BusinessFindAddressView, FindAddressView}
 
 import scala.concurrent.Future
 
@@ -38,32 +36,25 @@ class BusinessFindAddressControllerSpec extends SpecBase {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new BusinessFindAddressFormProvider()
+  val formProvider = new FindAddressFormProvider()
   val form         = formProvider()
 
-  lazy val businessFindAddressRoute = routes.BusinessFindAddressController.onPageLoad(NormalMode).url
+  lazy val businessFindAddressRoute = routes.BusinessFindAddressController.onPageLoad(Index(0), NormalMode).url
+
+  val userAnswers = UserAnswers(
+    userAnswersId,
+    Json.obj(FindAddressPage.toString -> Json.obj("Postcode" -> "value 1", "Property" -> "value 2"))
+  )
 
   "BusinessFindAddress Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
-
-      running(application) {
-        val request = FakeRequest(GET, businessFindAddressRoute)
-
-        val result = route(application, request).value
-
-        val view = application.injector.instanceOf[BusinessFindAddressView]
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
-      }
-    }
-
-    "must populate the view correctly on a GET when the question has previously been answered" in {
-
-      val userAnswers = UserAnswers(userAnswersId).set(BusinessFindAddressPage, "answer").success.value
+      val userAnswers =
+        UserAnswers(userAnswersId).set(
+          IndividualBusinessDetailsPage(Index(0)),
+          IndividualBusinessDetails.Yes
+        ).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -75,7 +66,37 @@ class BusinessFindAddressControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill("answer"), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode, isBusinessDetails = true)(
+          request,
+          messages(application)
+        ).toString
+      }
+    }
+
+    "must populate the view correctly on a GET when the question has previously been answered" in {
+
+      val userAnswers =
+        UserAnswers(userAnswersId).set(
+          BusinessFindAddressPage(Index(0)),
+          FindAddress("EH12 9JE", Option.empty)
+        ).success.value
+
+      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, businessFindAddressRoute)
+
+        val view = application.injector.instanceOf[BusinessFindAddressView]
+
+        val result = route(application, request).value
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(
+          form.fill(FindAddress("EH12 9JE", Option.empty)),
+          Index(0),
+          NormalMode,
+          isBusinessDetails = false
+        )(request, messages(application)).toString
       }
     }
 
@@ -96,7 +117,7 @@ class BusinessFindAddressControllerSpec extends SpecBase {
       running(application) {
         val request =
           FakeRequest(POST, businessFindAddressRoute)
-            .withFormUrlEncodedBody(("value", "answer"))
+            .withFormUrlEncodedBody(("Postcode", "PE5 7BW"), ("Property", "value 2"))
 
         val result = route(application, request).value
 
@@ -107,21 +128,30 @@ class BusinessFindAddressControllerSpec extends SpecBase {
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val userAnswers =
+        UserAnswers(userAnswersId).set(
+          IndividualBusinessDetailsPage(Index(0)),
+          IndividualBusinessDetails.Yes
+        ).success.value
+
+      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request =
           FakeRequest(POST, businessFindAddressRoute)
-            .withFormUrlEncodedBody(("value", ""))
+            .withFormUrlEncodedBody(("value", "invalid value"))
 
-        val boundForm = form.bind(Map("value" -> ""))
+        val boundForm = form.bind(Map("value" -> "invalid value"))
 
         val view = application.injector.instanceOf[BusinessFindAddressView]
 
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, isBusinessDetails = true)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
@@ -146,7 +176,7 @@ class BusinessFindAddressControllerSpec extends SpecBase {
       running(application) {
         val request =
           FakeRequest(POST, businessFindAddressRoute)
-            .withFormUrlEncodedBody(("value", "answer"))
+            .withFormUrlEncodedBody(("Postcode", "value 1"), ("Property", "value 2"))
 
         val result = route(application, request).value
 
@@ -155,4 +185,5 @@ class BusinessFindAddressControllerSpec extends SpecBase {
       }
     }
   }
+
 }

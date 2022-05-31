@@ -17,35 +17,22 @@
 package controllers
 
 import controllers.actions._
+import controllers.countOfResults.{NoResults, ResultsCount, ResultsList}
 import forms.BusinessChooseYourAddressFormProvider
-import controllers.businessCountOfResults.{NoResults, ResultsCount, ResultsList}
-import models.{AddressSansCountry, ChooseYourAddress, FindAddress, Index, Mode}
-import models.addresslookup.{AddressRecord, Countries, Country, ProposedAddress}
+import models.{AddressSansCountry, FindAddress, Index, Mode}
 
 import javax.inject.Inject
-import services.{Address, AddressService}
+import services.AddressService
 import navigation.Navigator
-import pages.{BusinessAddressPage, BusinessChooseYourAddressPage, BusinessFindAddressPage, ChooseYourAddressPage, IndividualAddressPage}
+import pages.{BusinessAddressPage, BusinessChooseYourAddressPage, BusinessFindAddressPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.BusinessChooseYourAddressView
-import play.api.mvc.Results.Redirect
-import uk.gov.hmrc.hmrcfrontend.controllers.routes
 
 import scala.concurrent.{ExecutionContext, Future}
-
-object businessCountOfResults {
-
-  sealed trait ResultsCount
-
-  case class ResultsList(res: Seq[ProposedAddress]) extends ResultsCount
-
-  case object NoResults extends ResultsCount
-
-}
 
 class BusinessChooseYourAddressController @Inject() (
   override val messagesApi: MessagesApi,
@@ -66,7 +53,8 @@ class BusinessChooseYourAddressController @Inject() (
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       request.userAnswers.get(BusinessFindAddressPage(index)) match {
-        case None => Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
+        case None =>
+          Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
         case Some(value) =>
           addressLookUp(value) map {
             case ResultsList(addresses) =>
@@ -87,20 +75,33 @@ class BusinessChooseYourAddressController @Inject() (
         formWithErrors =>
           Future.successful(
             BadRequest(
-              view(formWithErrors, index, mode, Proposals(request.userAnswers.get(ChooseYourAddressPage(index))))
+              view(
+                formWithErrors,
+                index,
+                mode,
+                Proposals(request.userAnswers.get(BusinessChooseYourAddressPage(index)))
+              )
             )
           ),
         value =>
-          request.userAnswers.get(ChooseYourAddressPage(index)) match {
+          request.userAnswers.get(BusinessChooseYourAddressPage(index)) match {
             case Some(addressList) =>
               addressList.find(_.addressId == value.addressId) match {
                 case Some(address) =>
                   for {
-                    updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessAddressPage(index),
-                      AddressSansCountry(
-                        address.line1, address.line2, address.line3, address.town.getOrElse(""), address.postcode
-                      )))
-                    _              <- sessionRepository.set(updatedAnswers)
+                    updatedAnswers <- Future.fromTry(
+                      request.userAnswers.set(
+                        BusinessAddressPage(index),
+                        AddressSansCountry(
+                          address.line1,
+                          address.line2,
+                          address.line3,
+                          address.town.getOrElse(""),
+                          address.postcode
+                        )
+                      )
+                    )
+                    _ <- sessionRepository.set(updatedAnswers)
                   } yield Redirect(routes.ConfirmAddressController.onPageLoad(index, true, mode))
               }
             case _ =>
@@ -114,78 +115,10 @@ class BusinessChooseYourAddressController @Inject() (
       case noneFound if noneFound.isEmpty =>
         if (value.Property.isDefined)
           addressLookUp(value.copy(Property = None))
-        else {
-          //Future.successful(NoResults)
-          val cannedComplexAddresses = List(
-            cannedAddress(5000L, List("Flat 1", "74 Comeragh Road"), "ZZ11 1ZZ"),
-            cannedAddress(6000L, List("Flat 2", "The Curtains Up", "Comeragh Road"), "ZZ11 1ZZ"),
-            cannedAddress(7000L, List("Flat 1", "70 Comeragh Road"), "ZZ11 1ZZ"),
-            cannedAddress(8000L, List("Flat 2", "74 Comeragh Road"), "ZZ11 1ZZ"),
-            cannedAddress(9000L, List("Flat B", "78 Comeragh Road"), "ZZ11 1ZZ"),
-            cannedAddress(10000L, List("72a", "Comeragh Road"), "ZZ11 1ZZ"),
-            cannedAddress(11000L, List("Flat 1", "The Curtains Up", "Comeragh Road"), "ZZ11 1ZZ")
-          )
-
-          Future.successful(ResultsList(toProposals(cannedComplexAddresses)))
-        }
+        else
+          Future.successful(NoResults)
       case displayProposals =>
-        //Future.successful(ResultsList(displayProposals))
-
-        val cannedComplexAddresses = List(
-          cannedAddress(5000L, List("Flat 1", "74 Comeragh Road"), "ZZ11 1ZZ"),
-          cannedAddress(6000L, List("Flat 2", "The Curtains Up", "Comeragh Road"), "ZZ11 1ZZ"),
-          cannedAddress(7000L, List("Flat 1", "70 Comeragh Road"), "ZZ11 1ZZ"),
-          cannedAddress(8000L, List("Flat 2", "74 Comeragh Road"), "ZZ11 1ZZ"),
-          cannedAddress(9000L, List("Flat B", "78 Comeragh Road"), "ZZ11 1ZZ"),
-          cannedAddress(10000L, List("72a", "Comeragh Road"), "ZZ11 1ZZ"),
-          cannedAddress(11000L, List("Flat 1", "The Curtains Up", "Comeragh Road"), "ZZ11 1ZZ")
-        )
-
-        Future.successful(ResultsList(toProposals(cannedComplexAddresses)))
-
+        Future.successful(ResultsList(displayProposals))
     }
-
-  def cannedAddress(uprn: Long, lines: List[String], postCode: String, organisation: Option[String] = None) =
-    AddressRecord(
-      uprn.toString,
-      Some(uprn),
-      None,
-      None,
-      organisation,
-      Address(lines, "some-town", postCode, Some(Countries.England), Country("GB", "United Kingdom")),
-      "en",
-      None,
-      None,
-      None,
-      None
-    )
-
-  private def toProposals(found: List[AddressRecord]): Seq[ProposedAddress] =
-    found.map { addr =>
-      ProposedAddress(
-        addr.id,
-        uprn = addr.uprn,
-        parentUprn = addr.parentUprn,
-        usrn = addr.usrn,
-        organisation = addr.organisation,
-        addr.address.postcode,
-        addr.address.town,
-        addr.address.lines,
-        addr.address.country
-      )
-    }
-
-}
-
-case class BusinessProposals(proposals: Option[Seq[ProposedAddress]]) {
-
-  def toHtmlOptions: Seq[(String, String)] =
-    proposals
-      .map { props =>
-        props.map { addr =>
-          (addr.addressId, addr.toDescription)
-        }.sorted
-      }
-      .getOrElse(Seq.empty)
 
 }

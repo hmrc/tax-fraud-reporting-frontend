@@ -24,39 +24,6 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
-  implicit lazy val arbitraryBusinessChooseYourAddressUserAnswersEntry
-    : Arbitrary[(BusinessChooseYourAddressPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[BusinessChooseYourAddressPage.type]
-        value <- arbitrary[BusinessChooseYourAddress].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
-  implicit lazy val arbitraryBusinessFindAddressUserAnswersEntry: Arbitrary[(BusinessFindAddressPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[BusinessFindAddressPage.type]
-        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
-      } yield (page, value)
-    }
-
-  implicit lazy val arbitraryChooseYourAddressUserAnswersEntry: Arbitrary[(ChooseYourAddressPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[ChooseYourAddressPage.type]
-        value <- arbitrary[ChooseYourAddress].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
-  implicit lazy val arbitraryFindAddressUserAnswersEntry: Arbitrary[(FindAddressPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[FindAddressPage.type]
-        value <- arbitrary[FindAddress].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
   implicit lazy val arbitraryBusinessSelectCountryUserAnswersEntry: Arbitrary[(BusinessSelectCountryPage, JsValue)] =
     Arbitrary {
       for {
@@ -288,6 +255,23 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       for {
         page  <- arbitrary[IndividualNamePage]
         value <- arbitrary[IndividualName].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryChooseYourAddressPageAnswersEntry: Arbitrary[(ChooseYourAddressPage, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ChooseYourAddressPage]
+        value <- arbitrary[ChooseYourAddressPage].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryBusinessChooseYourAddressPageAnswersEntry
+    : Arbitrary[(BusinessChooseYourAddressPage, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[BusinessChooseYourAddressPage]
+        value <- arbitrary[BusinessChooseYourAddressPage].map(Json.toJson(_))
       } yield (page, value)
     }
 

@@ -14,19 +14,29 @@
  * limitations under the License.
  */
 
-package pages
+package controllers
 
-import models.BusinessChooseYourAddress
-import pages.behaviours.PageBehaviours
+import models.addresslookup.ProposedAddress
 
-class BusinessChooseYourAddressSpec extends PageBehaviours {
+object countOfResults {
 
-  "BusinessChooseYourAddressPage" - {
+  sealed trait ResultsCount
 
-    /* beRetrievable[BusinessChooseYourAddress](BusinessChooseYourAddressPage)
+  case class ResultsList(res: Seq[ProposedAddress]) extends ResultsCount
 
-    beSettable[BusinessChooseYourAddress](BusinessChooseYourAddressPage)
+  case object NoResults extends ResultsCount
 
-    beRemovable[BusinessChooseYourAddress](BusinessChooseYourAddressPage)*/
-  }
+}
+
+case class Proposals(proposals: Option[Seq[ProposedAddress]]) {
+
+  def toHtmlOptions: Seq[(String, String)] =
+    proposals
+      .map { props =>
+        props.map { addr =>
+          (addr.addressId, addr.toDescription)
+        }.sorted
+      }
+      .getOrElse(Seq.empty)
+
 }

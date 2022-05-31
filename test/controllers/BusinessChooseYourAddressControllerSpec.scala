@@ -18,65 +18,83 @@ package controllers
 
 import base.SpecBase
 import forms.BusinessChooseYourAddressFormProvider
-import models.{BusinessChooseYourAddress, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import models.addresslookup.ProposedAddress
+import models.{FindAddress, Index, NormalMode}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
-import pages.BusinessChooseYourAddressPage
+import pages.{BusinessChooseYourAddressPage, BusinessFindAddressPage, ChooseYourAddressPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import uk.gov.hmrc.hmrcfrontend.controllers.routes
+import services.AddressService
+import uk.gov.hmrc.http.HeaderCarrier
 import views.html.BusinessChooseYourAddressView
 
 import scala.concurrent.Future
 
 class BusinessChooseYourAddressControllerSpec extends SpecBase {
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute  = Call("GET", "/report-tax-fraud/1/business/confirm-address")
+  val fromPostcode = "AA1 1AA"
 
-  lazy val businessChooseYourAddressRoute = routes.BusinessChooseYourAddressController.onPageLoad(NormalMode).url
+  lazy val businessChooseYourAddressRoute =
+    routes.BusinessChooseYourAddressController.onPageLoad(Index(0), NormalMode).url
+
+  implicit val hc = HeaderCarrier()
 
   val formProvider = new BusinessChooseYourAddressFormProvider()
   val form         = formProvider()
+
+  val proposal: Seq[ProposedAddress] = Seq(
+    ProposedAddress(
+      "GB1234567890",
+      uprn = None,
+      parentUprn = None,
+      usrn = None,
+      organisation = None,
+      "ZZ11 1ZZ",
+      lines = List("line1", "line2"),
+      town = "town"
+    )
+  )
 
   "BusinessChooseYourAddress Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val businessNameAnswers =
+        emptyUserAnswers.set(BusinessFindAddressPage(Index(0)), FindAddress(fromPostcode, Some("test"))).success.value
 
-      running(application) {
-        val request = FakeRequest(GET, businessChooseYourAddressRoute)
+      val mockAddressService = mock[AddressService]
+      when(mockAddressService.lookup(fromPostcode, Some("test"))) thenReturn Future.successful(proposal)
 
-        val result = route(application, request).value
+      val mockSessionRepository = mock[SessionRepository]
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
-        val view = application.injector.instanceOf[BusinessChooseYourAddressView]
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+      val addressServiceTest = new AddressService {
+        override def lookup(postcode: String, filter: Option[String])(implicit
+          hc: HeaderCarrier
+        ): Future[Seq[ProposedAddress]] =
+          Future.successful(proposal)
       }
-    }
 
-    "must populate the view correctly on a GET when the question has previously been answered" in {
-
-      val userAnswers =
-        UserAnswers(userAnswersId).set(BusinessChooseYourAddressPage, BusinessChooseYourAddress).success.value
-
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+      val application =
+        applicationBuilder(Some(businessNameAnswers))
+          .overrides(bind[AddressService].toInstance(addressServiceTest))
+          .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
+          .build()
 
       running(application) {
         val request = FakeRequest(GET, businessChooseYourAddressRoute)
 
-        val view = application.injector.instanceOf[BusinessChooseYourAddressView]
-
         val result = route(application, request).value
 
+        val view = application.injector.instanceOf[BusinessChooseYourAddressView]
+
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(BusinessChooseYourAddress.values.head), NormalMode)(
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode, Proposals(Some(proposal)))(
           request,
           messages(application)
         ).toString
@@ -85,12 +103,14 @@ class BusinessChooseYourAddressControllerSpec extends SpecBase {
 
     "must redirect to the next page when valid data is submitted" in {
 
+      val choseAddressAnswers = emptyUserAnswers.set(BusinessChooseYourAddressPage(Index(0)), proposal).success.value
+
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(choseAddressAnswers))
           .overrides(
             bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
@@ -99,8 +119,8 @@ class BusinessChooseYourAddressControllerSpec extends SpecBase {
 
       running(application) {
         val request =
-          FakeRequest(POST, businessChooseYourAddressRoute)
-            .withFormUrlEncodedBody(("value", BusinessChooseYourAddress.values.head.toString))
+          FakeRequest(POST, routes.BusinessChooseYourAddressController.onSubmit(Index(0), NormalMode).url)
+            .withFormUrlEncodedBody(("value", "GB1234567890"))
 
         val result = route(application, request).value
 
@@ -111,12 +131,16 @@ class BusinessChooseYourAddressControllerSpec extends SpecBase {
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val choseAddressAnswers = emptyUserAnswers.set(BusinessChooseYourAddressPage(Index(0)), proposal).success.value
+
+      val application =
+        applicationBuilder(userAnswers = Some(choseAddressAnswers))
+          .overrides(bind[Navigator].toInstance(getFakeNavigator(onwardRoute)))
+          .build()
 
       running(application) {
         val request =
-          FakeRequest(POST, businessChooseYourAddressRoute)
-            .withFormUrlEncodedBody(("value", "invalid value"))
+          FakeRequest(POST, routes.BusinessChooseYourAddressController.onSubmit(Index(0), NormalMode).url)
 
         val boundForm = form.bind(Map("value" -> "invalid value"))
 
@@ -125,7 +149,6 @@ class BusinessChooseYourAddressControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -150,7 +173,7 @@ class BusinessChooseYourAddressControllerSpec extends SpecBase {
       running(application) {
         val request =
           FakeRequest(POST, businessChooseYourAddressRoute)
-            .withFormUrlEncodedBody(("value", BusinessChooseYourAddress.values.head.toString))
+            .withFormUrlEncodedBody(("value[0]", "AddressId"))
 
         val result = route(application, request).value
 

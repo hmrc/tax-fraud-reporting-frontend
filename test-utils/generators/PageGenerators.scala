@@ -22,18 +22,6 @@ import pages._
 
 trait PageGenerators {
 
-  implicit lazy val arbitraryBusinessChooseYourAddressPage: Arbitrary[BusinessChooseYourAddressPage.type] =
-    Arbitrary(BusinessChooseYourAddressPage)
-
-  implicit lazy val arbitraryBusinessFindAddressPage: Arbitrary[BusinessFindAddressPage.type] =
-    Arbitrary(BusinessFindAddressPage)
-
-  implicit lazy val arbitraryChooseYourAddressPage: Arbitrary[ChooseYourAddressPage.type] =
-    Arbitrary(ChooseYourAddressPage)
-
-  implicit lazy val arbitraryFindAddressPage: Arbitrary[FindAddressPage.type] =
-    Arbitrary(FindAddressPage)
-
   implicit lazy val arbitraryBusinessSelectCountryPage: Arbitrary[BusinessSelectCountryPage] =
     Arbitrary(BusinessSelectCountryPage(Index(0)))
 
@@ -117,6 +105,12 @@ trait PageGenerators {
 
   implicit lazy val arbitraryIndividualNamePage: Arbitrary[IndividualNamePage] =
     Arbitrary(IndividualNamePage(Index(0)))
+
+  implicit lazy val arbitraryChooseYourAddressPage: Arbitrary[ChooseYourAddressPage] =
+    Arbitrary(ChooseYourAddressPage(Index(0)))
+
+  implicit lazy val arbitraryBusinessChooseYourAddressPage: Arbitrary[BusinessChooseYourAddressPage] =
+    Arbitrary(BusinessChooseYourAddressPage(Index(0)))
 
   implicit lazy val arbitraryIndividualInformationPage: Arbitrary[IndividualInformationPage] =
     Arbitrary(IndividualInformationPage(Index(0)))

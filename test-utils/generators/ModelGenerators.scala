@@ -22,28 +22,6 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
-  implicit lazy val arbitraryBusinessChooseYourAddress: Arbitrary[BusinessChooseYourAddress] =
-    Arbitrary {
-      for {
-        addressId <- arbitrary[String]
-      } yield ChooseYourAddress(addressId)
-    }
-
-  implicit lazy val arbitraryChooseYourAddress: Arbitrary[ChooseYourAddress] =
-    Arbitrary {
-      for {
-        addressId <- arbitrary[String]
-      } yield ChooseYourAddress(addressId)
-    }
-
-  implicit lazy val arbitraryFindAddress: Arbitrary[FindAddress] =
-    Arbitrary {
-      for {
-        Postcode <- arbitrary[String]
-        Property <- arbitrary[String]
-      } yield FindAddress(Postcode, Some(Property))
-    }
-
   implicit lazy val arbitraryActivitySourceOfInformation: Arbitrary[ActivitySourceOfInformation] =
     Arbitrary {
       Gen.oneOf(
