@@ -23,6 +23,7 @@ import navigation.Navigator
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.{BusinessPart, IndividualPart}
 import views.html.ConfirmAddressView
@@ -63,7 +64,12 @@ class ConfirmAddressController @Inject() (
                   navigator.individualInformationRoutes(request.userAnswers, index, IndividualInformation.Address, mode)
               case CheckMode =>
                 if (isBusinessDetails)
-                  routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
+                  navigator.businessInformationRoutes(
+                    request.userAnswers,
+                    index,
+                    BusinessInformationCheck.Address,
+                    mode
+                  )
                 else
                   routes.CheckYourAnswersController.onPageLoad
             }

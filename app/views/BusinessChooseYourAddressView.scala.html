@@ -24,7 +24,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], index: Index, mode: Mode, proposals: Proposals)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], index: Index, mode: Mode, proposals: Proposals, isBusinessDetails: Boolean)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("businessChooseYourAddress.title"))) {
 
@@ -32,6 +32,13 @@
 
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
+        }
+
+        @if(isBusinessDetails) {
+            <span class="govuk-caption-xl">
+                <span class="govuk-visually-hidden">@messages("individual.caption.text.screen.reader")</span>
+                @messages(s"individual.${index.display}")
+            </span>
         }
 
         <h1 class="govuk-heading-xl">@messages("businessChooseYourAddress.heading")</h1>

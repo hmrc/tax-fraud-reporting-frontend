@@ -102,8 +102,8 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case SelectConnectionBusinessPage(index) => selectConnectionBusinessCheckRoute(_, index)
     case IndividualSelectCountryPage(index)  => individualSelectCountryPageRoutes(_, index)
     case BusinessSelectCountryPage(index)    => businessSelectCountryPageRoutes(_, index)
-    case FindAddressPage(index)              => _ => routes.ChooseYourAddressController.onPageLoad(index, CheckMode)
-    case BusinessFindAddressPage(index)      => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, CheckMode)
+    case FindAddressPage(index)             => _ => routes.ChooseYourAddressController.onPageLoad(index, CheckMode)
+    case BusinessFindAddressPage(index)     => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, CheckMode)
     case p: IndexedConfirmationPage          => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
     case _                                   => _ => routes.CheckYourAnswersController.onPageLoad
   }
@@ -232,6 +232,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
               businessInformationRoute(_, index, mode)
           }
         }
+
     } getOrElse routes.JourneyRecoveryController.onPageLoad()
 
   private def addAnotherPersonRoutes(answers: UserAnswers): Call =

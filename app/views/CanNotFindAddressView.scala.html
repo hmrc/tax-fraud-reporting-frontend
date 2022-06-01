@@ -1,0 +1,41 @@
+@*
+ * Copyright 2022 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import viewmodels.{BusinessPart, JourneyPart}
+
+@this(
+        layout: templates.Layout,
+        govukButton: GovukButton
+)
+
+@(index:Index, mode: Mode)(implicit request: Request[_], messages: Messages)
+
+@layout(pageTitle = titleNoForm(messages("canNotFindAddress.title"))) {
+
+        <span class="govuk-caption-xl">
+              <span class="govuk-visually-hidden">@messages("individual.caption.text.screen.reader")</span>
+              @messages(s"individual.${index.display}")
+           </span>
+
+        <h1 class="govuk-heading-xl">@messages("canNotFindAddress.heading")</h1>
+
+        <p> <a class="govuk-link" href="@routes.IndividualAddressController.onPageLoad(index, mode)">@messages("findAddress.manually")</a> </p>
+
+        <a id="continue-button" href="@routes.FindAddressController.onPageLoad(index, mode)" role="button" class="govuk-button" data-module="govuk-button">
+            @messages("canNotFindAddress.continue")
+        </a>
+
+}
