@@ -1230,7 +1230,6 @@ findAddress.property.change.hidden = Property
 chooseYourAddress.title = Choose your address
 chooseYourAddress.heading = Choose your address
 chooseYourAddress.address = Address
-chooseYourAddress.ds = dd
 chooseYourAddress.checkYourAnswersLabel = Select an address
 chooseYourAddress.error.required = Select an address
 chooseYourAddress.change.hidden = Select an address
@@ -1244,11 +1243,9 @@ businessFindAddress.change.hidden = BusinessFindAddress
 
 businessChooseYourAddress.title = Choose your address
 businessChooseYourAddress.heading = Choose your address
-businessChooseYourAddress.yes = Yes
-businessChooseYourAddress.no = No
 businessChooseYourAddress.checkYourAnswersLabel = Choose your address
 businessChooseYourAddress.error.required = Select businessChooseYourAddress
-businessChooseYourAddress.change.hidden = BusinessChooseYourAddress
+businessChooseYourAddress.change.hidden = Choose your address
 
 canNotFindAddress.title = Postcode cannot be found
 canNotFindAddress.heading = Postcode cannot be found

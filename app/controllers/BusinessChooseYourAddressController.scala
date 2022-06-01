@@ -18,6 +18,7 @@ package controllers
 
 import controllers.actions._
 import controllers.countOfResults.{NoResults, ResultsCount, ResultsList}
+import controllers.helper.AddressLookUpHelper
 import forms.BusinessChooseYourAddressFormProvider
 import models.{AddressSansCountry, FindAddress, Index, Mode}
 
@@ -45,7 +46,8 @@ class BusinessChooseYourAddressController @Inject() (
   formProvider: BusinessChooseYourAddressFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: BusinessChooseYourAddressView,
-  addressService: AddressService
+  addressService: AddressService,
+  addressLookUpHelper: AddressLookUpHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -58,7 +60,7 @@ class BusinessChooseYourAddressController @Inject() (
         case None =>
           Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
         case Some(value) =>
-          addressLookUp(value) map {
+          addressLookUpHelper.addressLookUp(value) map {
             case ResultsList(addresses) =>
               sessionRepository.set(
                 request.userAnswers.set(BusinessChooseYourAddressPage(index), addresses)
@@ -114,16 +116,5 @@ class BusinessChooseYourAddressController @Inject() (
           }
       )
   }
-
-  def addressLookUp(value: FindAddress)(implicit hc: HeaderCarrier, messages: Messages): Future[ResultsCount] =
-    addressService.lookup(value.Postcode, value.Property) flatMap {
-      case noneFound if noneFound.isEmpty =>
-        if (value.Property.isDefined)
-          addressLookUp(value.copy(Property = None))
-        else
-          Future.successful(NoResults)
-      case displayProposals =>
-        Future.successful(ResultsList(displayProposals))
-    }
 
 }
