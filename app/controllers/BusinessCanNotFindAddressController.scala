@@ -23,20 +23,20 @@ import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.{BusinessPart, IndividualPart}
-import views.html.CanNotFindAddressView
+import views.html.BusinessCanNotFindAddressView
 
-class CanNotFindAddressController @Inject()(
+class BusinessCanNotFindAddressController @Inject()(
                                        override val messagesApi: MessagesApi,
                                        identify: IdentifierAction,
                                        getData: DataRetrievalAction,
                                        requireData: DataRequiredAction,
                                        val controllerComponents: MessagesControllerComponents,
-                                       view: CanNotFindAddressView
+                                       view: BusinessCanNotFindAddressView
                                      ) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      Ok(view(index, mode ))
+      val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
+      Ok(view(index, mode, isBusinessDetails))
   }
 }

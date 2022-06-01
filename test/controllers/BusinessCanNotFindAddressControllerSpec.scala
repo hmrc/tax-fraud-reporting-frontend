@@ -21,29 +21,29 @@ import models.{Index, NormalMode, UserAnswers}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.hmrcfrontend.controllers.routes
-import viewmodels.{BusinessPart, IndividualPart}
-import views.html.CanNotFindAddressView
+import views.html.BusinessCanNotFindAddressView
 
-class CanNotFindAddressControllerSpec extends SpecBase {
+class BusinessCanNotFindAddressControllerSpec extends SpecBase {
 
   private val userAnswers = UserAnswers(userAnswersId)
   private val answers     = emptyUserAnswers
 
-  "CanNotFindAddress Controller" - {
+  "BusinessCanNotFindAddress Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, routes.CanNotFindAddressController.onPageLoad(Index(0), NormalMode).url)
+        val request = FakeRequest(GET, routes.BusinessCanNotFindAddressController.onPageLoad(Index(0), NormalMode).url)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[CanNotFindAddressView]
+        val view = application.injector.instanceOf[BusinessCanNotFindAddressView]
+        val isBusinessJourney = userAnswers.isBusinessJourney
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(Index(0), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(Index(0), NormalMode, isBusinessJourney)(request, messages(application)).toString
       }
     }
   }

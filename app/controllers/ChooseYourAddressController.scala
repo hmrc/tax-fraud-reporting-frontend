@@ -64,7 +64,7 @@ class ChooseYourAddressController @Inject() (
               )
               Ok(view(form, index, mode, Proposals(Some(addresses))))
 
-            case NoResults => Redirect(routes.CanNotFindAddressController.onPageLoad(index))
+            case NoResults => Redirect(routes.CanNotFindAddressController.onPageLoad(index, mode))
           }
       }
   }

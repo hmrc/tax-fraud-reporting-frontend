@@ -21,16 +21,15 @@
         govukButton: GovukButton
 )
 
-@(index:Index, mode: Mode, journeyPart: JourneyPart)(implicit request: Request[_], messages: Messages)
+@(index:Index, mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("canNotFindAddress.title"))) {
 
-@if(journeyPart != BusinessPart) {
         <span class="govuk-caption-xl">
               <span class="govuk-visually-hidden">@messages("individual.caption.text.screen.reader")</span>
               @messages(s"individual.${index.display}")
            </span>
-   }
+
         <h1 class="govuk-heading-xl">@messages("canNotFindAddress.heading")</h1>
 
         <p> <a class="govuk-link" href="@routes.IndividualAddressController.onPageLoad(index, mode)">@messages("findAddress.manually")</a> </p>

@@ -19,7 +19,7 @@ package controllers
 import base.SpecBase
 import forms.BusinessChooseYourAddressFormProvider
 import models.addresslookup.ProposedAddress
-import models.{FindAddress, Index, NormalMode}
+import models.{FindAddress, Index, NormalMode, UserAnswers}
 import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
 import pages.{BusinessChooseYourAddressPage, BusinessFindAddressPage, ChooseYourAddressPage}
@@ -29,6 +29,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
 import services.AddressService
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.BusinessChooseYourAddressView
 
@@ -46,6 +47,8 @@ class BusinessChooseYourAddressControllerSpec extends SpecBase {
 
   val formProvider = new BusinessChooseYourAddressFormProvider()
   val form         = formProvider()
+  private val userAnswers = UserAnswers(userAnswersId)
+  private val answers     = emptyUserAnswers
 
   val proposal: Seq[ProposedAddress] = Seq(
     ProposedAddress(
@@ -93,8 +96,10 @@ class BusinessChooseYourAddressControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[BusinessChooseYourAddressView]
 
+        val isBusinessJourney = userAnswers.isBusinessJourney
+
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode, Proposals(Some(proposal)))(
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode, Proposals(Some(proposal)), isBusinessJourney)(
           request,
           messages(application)
         ).toString

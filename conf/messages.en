@@ -1253,3 +1253,6 @@ businessChooseYourAddress.change.hidden = BusinessChooseYourAddress
 canNotFindAddress.title = Postcode cannot be found
 canNotFindAddress.heading = Postcode cannot be found
 canNotFindAddress.continue = Try a different postcode
+
+businessCanNotFindAddress.title = Postcode cannot be found
+businessCanNotFindAddress.heading = Postcode cannot be found
