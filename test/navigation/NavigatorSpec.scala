@@ -1462,7 +1462,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             BusinessSelectCountryPage(Index(0)),
             CheckMode,
             UserAnswers("id")
-          ) mustBe routes.CheckYourAnswersController.onPageLoad
+          ) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
 
       }
@@ -1483,7 +1483,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             IndividualSelectCountryPage(Index(0)),
             CheckMode,
             UserAnswers("id")
-          ) mustBe routes.CheckYourAnswersController.onPageLoad
+          ) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
 
       }

@@ -102,6 +102,8 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case SelectConnectionBusinessPage(index) => selectConnectionBusinessCheckRoute(_, index)
     case IndividualSelectCountryPage(index)  => individualSelectCountryPageRoutes(_, index)
     case BusinessSelectCountryPage(index)    => businessSelectCountryPageRoutes(_, index)
+    case FindAddressPage(index)              => _ => routes.ChooseYourAddressController.onPageLoad(index, CheckMode)
+    case BusinessFindAddressPage(index)      => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, CheckMode)
     case p: IndexedConfirmationPage          => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
     case _                                   => _ => routes.CheckYourAnswersController.onPageLoad
   }
@@ -195,21 +197,41 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     answer: BusinessInformationCheck,
     mode: Mode = NormalMode
   ): Call =
-    answers get BusinessInformationCheckPage(index) map { checkedInfo =>
-      mode match {
-        case NormalMode =>
-          val sortedSteps = checkedInfo.toSeq.sortBy(_.order)
-          sortedSteps.find(_.order > answer.order) match {
-            case Some(nextStep) => businessInformationRoute(nextStep, index, NormalMode)
-            case None           => routes.SelectConnectionBusinessController.onPageLoad(index, NormalMode)
-          }
-        case CheckMode =>
-          if (!answers.isBusinessJourney)
-            routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
-          else
-            routes.CheckYourAnswersController.onPageLoad
+    answers get BusinessInformationCheckPage(index) flatMap { checkedInfo =>
+      import BusinessInformationCheck._
+      def isEmpty(section: BusinessInformationCheck) = section match {
+        case Name              => answers get BusinessNamePage(index) isEmpty
+        case Type              => answers get TypeBusinessPage(index) isEmpty
+        case Contact           => answers get BusinessContactDetailsPage(index) isEmpty
+        case Address           => answers get BusinessAddressPage(index) isEmpty
+        case BusinessReference => answers get ReferenceNumbersPage(index) isEmpty
       }
+      val laterSections     = BusinessInformationCheck.values dropWhile (_ != answer) drop 1 toSet
+      val remainingSections = checkedInfo & laterSections filter isEmpty
 
+      if (remainingSections.isEmpty) Some {
+        mode match {
+          case NormalMode =>
+            val sortedSteps = checkedInfo.toSeq.sortBy(_.order)
+            sortedSteps.find(_.order > answer.order) match {
+              case Some(nextStep) => businessInformationRoute(nextStep, index, NormalMode)
+              case None           => routes.SelectConnectionBusinessController.onPageLoad(index, NormalMode)
+            }
+          case CheckMode =>
+            if (!answers.isBusinessJourney)
+              routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
+            else
+              routes.CheckYourAnswersController.onPageLoad
+        }
+      }
+      else
+        BusinessInformationCheck.values find remainingSections.contains map {
+          mode match {
+            case NormalMode => businessInformationRoute(_, index, mode)
+            case CheckMode =>
+              businessInformationRoute(_, index, mode)
+          }
+        }
     } getOrElse routes.JourneyRecoveryController.onPageLoad()
 
   private def addAnotherPersonRoutes(answers: UserAnswers): Call =
@@ -324,16 +346,26 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def individualSelectCountryPageRoutes(answers: UserAnswers, index: Index): Call =
-    if (answers.get(IndividualSelectCountryPage(index)).isDefined)
-      routes.IndividualAddressController.onPageLoad(index, CheckMode)
-    else
-      routes.CheckYourAnswersController.onPageLoad
+    answers.get(IndividualSelectCountryPage(index)).map {
+      case countries =>
+        if (answers.get(IndividualSelectCountryPage(index)).contains("gb"))
+          routes.FindAddressController.onPageLoad(index, CheckMode)
+        else
+          routes.IndividualAddressController.onPageLoad(index, CheckMode)
+      case _ =>
+        routes.IndividualAddressController.onPageLoad(index, CheckMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def businessSelectCountryPageRoutes(answers: UserAnswers, index: Index): Call =
-    if (answers.get(BusinessSelectCountryPage(index)).isDefined)
-      routes.BusinessAddressController.onPageLoad(index, CheckMode)
-    else
-      routes.CheckYourAnswersController.onPageLoad
+    answers.get(BusinessSelectCountryPage(index)).map {
+      case countries =>
+        if (answers.get(BusinessSelectCountryPage(index)).contains("gb"))
+          routes.BusinessFindAddressController.onPageLoad(index, CheckMode)
+        else
+          routes.BusinessAddressController.onPageLoad(index, CheckMode)
+      case _ =>
+        routes.BusinessAddressController.onPageLoad(index, CheckMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
     case NormalMode =>

@@ -1,7 +1,9 @@
 /*
+
 package utils
 
-import models.addresslookup.{AddressRecord, Country, RecordSet, Address => PafAddress}
+import models.addresslookup.{AddressRecord, Country}
+import services.{Address => PafAddress}
 
 trait PafFixtures {
   val exampleCountryUK = Country("UK", "United Kingdom")
@@ -10,7 +12,7 @@ trait PafFixtures {
   val fakeStreetPafAddressRecord = AddressRecord(
     "GB101",
     PafAddress(
-      List("1 Fake Street", "Fake Town", "Fake City"),
+      List("1 Fake Street", "Fake Town", "Fake /**/City"),
       Some("Fake Region"),
       None,
       "AA1 1AA",
@@ -48,9 +50,9 @@ trait PafFixtures {
       exampleCountryUK
     )
 
-  val oneOtherPlacePafAddressRecord = AddressRecord("GB990091234514", oneOtherPlacePafAddress, "en")
+  //val oneOtherPlacePafAddressRecord = AddressRecord("GB990091234514", oneOtherPlacePafAddress, "en")
   val twoOtherPlacePafAddressRecord = AddressRecord("GB990091234515", twoOtherPlacePafAddress, "en")
-  val otherPlacePafDifferentPostcodeAddressRecord =
+  /*val otherPlacePafDifferentPostcodeAddressRecord =
     AddressRecord("GB990091234516", otherPlacePafDifferentPostcodeAddress, "en")
 
   val oneAndTwoOtherPlacePafRecordSet = RecordSet(
@@ -70,3 +72,4 @@ trait PafFixtures {
     List(twoOtherPlacePafAddressRecord)
   )
 }*/
+*/
