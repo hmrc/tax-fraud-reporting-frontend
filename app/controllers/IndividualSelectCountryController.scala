@@ -17,19 +17,17 @@
 package controllers
 
 import controllers.actions._
-import forms.{AddressFormProvider, IndividualSelectCountryFormProvider}
-import models.requests.DataRequest
+import forms.IndividualSelectCountryFormProvider
 
 import javax.inject.Inject
-import models.{AddressSansCountry, Index, Mode}
+import models.{Index, Mode}
 import navigation.Navigator
 import pages.IndividualSelectCountryPage
-import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.{Individual, IndividualPart}
+import viewmodels.Individual
 import views.html.IndividualSelectCountryView
 
 import scala.concurrent.{ExecutionContext, Future}

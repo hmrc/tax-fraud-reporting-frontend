@@ -18,26 +18,16 @@ package controllers
 
 import controllers.actions._
 import controllers.countOfResults.{NoResults, ResultsCount, ResultsList}
-import forms.{AddressFormProvider, ChooseYourAddressFormProvider}
-import models.addresslookup.{AddressRecord, Countries, Country, ProposedAddress}
+import forms.ChooseYourAddressFormProvider
 
 import javax.inject.Inject
-import models.{AddressSansCountry, ChooseYourAddress, FindAddress, Index, Mode}
+import models.{AddressSansCountry, FindAddress, Index, Mode}
 import navigation.Navigator
-import pages.{
-  BusinessAddressPage,
-  BusinessSelectCountryPage,
-  ChooseYourAddressPage,
-  FindAddressPage,
-  IndividualAddressPage,
-  IndividualSelectCountryPage
-}
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.libs.json.{__, Format, Json}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
+import pages.{ChooseYourAddressPage, FindAddressPage, IndividualAddressPage}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
-import services.{Address, AddressService}
-import uk.gov.hmrc.hmrcfrontend.controllers.routes
+import services.AddressService
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ChooseYourAddressView
@@ -73,7 +63,7 @@ class ChooseYourAddressController @Inject() (
               )
               Ok(view(form, index, mode, Proposals(Some(addresses))))
 
-            case _ => Redirect(routes.JourneyRecoveryController.onPageLoad())
+            case NoResults => Redirect(routes.IndexController.onPageLoad)
           }
       }
   }

@@ -58,33 +58,33 @@ class AddressLookupService @Inject() (httpClient: HttpClient, configuration: Con
       newHc,
       implicitly
     ).map { found =>
-      val results = found.map { addr =>
-        ProposedAddress(
-          addr.id,
-          addr.uprn,
-          addr.parentUprn,
-          addr.usrn,
-          addr.organisation,
-          Some(addr.address.postcode),
-          Some(addr.address.town),
-          addr.address.lines,
-          if ("UK" == addr.address.country.code) Country("GB", "United Kingdom")
-          else addr.address.country,
-          addr.poBox
-        )
-      }
+        val results = found.map { addr =>
+          ProposedAddress(
+            addr.id,
+            addr.uprn,
+            addr.parentUprn,
+            addr.usrn,
+            addr.organisation,
+            Some(addr.address.postcode),
+            Some(addr.address.town),
+            addr.address.lines,
+            if ("UK" == addr.address.country.code) Country("GB", "United Kingdom")
+            else addr.address.country,
+            addr.poBox
+          )
+        }.filterNot(a => a.country.code != "GB")
 
-      results.sortWith { (a, b) =>
-        def sort(zipped: Seq[(Option[Int], Option[Int])]): Boolean = zipped match {
-          case (Some(nA), Some(nB)) :: tail =>
-            if (nA == nB) sort(tail) else nA < nB
-          case (Some(_), None) :: _ => true
-          case (None, Some(_)) :: _ => false
-          case _                    => mkString(a) < mkString(b)
+        results.sortWith { (a, b) =>
+          def sort(zipped: Seq[(Option[Int], Option[Int])]): Boolean = zipped match {
+            case (Some(nA), Some(nB)) :: tail =>
+              if (nA == nB) sort(tail) else nA < nB
+            case (Some(_), None) :: _ => true
+            case (None, Some(_)) :: _ => false
+            case _ => mkString(a) < mkString(b)
+          }
+
+          sort(numbersIn(a).zipAll(numbersIn(b), None, None).toList)
         }
-
-        sort(numbersIn(a).zipAll(numbersIn(b), None, None).toList)
-      }
     }
   }
 

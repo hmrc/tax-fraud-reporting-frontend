@@ -25,7 +25,7 @@ import javax.inject.Inject
 import services.AddressService
 import navigation.Navigator
 import pages.{BusinessAddressPage, BusinessChooseYourAddressPage, BusinessFindAddressPage}
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.http.HeaderCarrier
@@ -64,7 +64,7 @@ class BusinessChooseYourAddressController @Inject() (
               )
               Ok(view(form, index, mode, Proposals(Some(addresses))))
 
-            case _ => Redirect(routes.JourneyRecoveryController.onPageLoad())
+            case NoResults => Redirect(routes.IndexController.onPageLoad)
           }
       }
   }
@@ -110,7 +110,7 @@ class BusinessChooseYourAddressController @Inject() (
       )
   }
 
-  def addressLookUp(value: FindAddress)(implicit hc: HeaderCarrier): Future[ResultsCount] =
+  def addressLookUp(value: FindAddress)(implicit hc: HeaderCarrier, messages: Messages): Future[ResultsCount] =
     addressService.lookup(value.Postcode, value.Property) flatMap {
       case noneFound if noneFound.isEmpty =>
         if (value.Property.isDefined)

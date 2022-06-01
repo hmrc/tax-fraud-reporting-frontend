@@ -17,7 +17,7 @@
 package controllers
 
 import controllers.actions._
-import forms.{BusinessFindAddressFormProvider, FindAddressFormProvider}
+import forms.FindAddressFormProvider
 
 import javax.inject.Inject
 import models.{Index, Mode}
