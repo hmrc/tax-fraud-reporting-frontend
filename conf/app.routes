@@ -227,3 +227,6 @@ GET        /:index/business-chooseYourAddress                        controllers
 POST       /:index/business-chooseYourAddress                        controllers.BusinessChooseYourAddressController.onSubmit(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-business-chooseYourAddress                  controllers.BusinessChooseYourAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/change-business-chooseYourAddress                  controllers.BusinessChooseYourAddressController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/individual/cannot-find-address                       controllers.CanNotFindAddressController.onPageLoad(index: Index, forBusiness: Boolean = false, mode: Mode = NormalMode)
+GET        /:index/individual/change-cannot-find-address                controllers.CanNotFindAddressController.onPageLoad(index: Index, forBusiness: Boolean = false, mode: Mode = NormalMode)

@@ -28,6 +28,7 @@ import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import services.AddressService
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ChooseYourAddressView
@@ -63,7 +64,7 @@ class ChooseYourAddressController @Inject() (
               )
               Ok(view(form, index, mode, Proposals(Some(addresses))))
 
-            case NoResults => Redirect(routes.IndexController.onPageLoad)
+            case NoResults => Redirect(routes.CanNotFindAddressController.onPageLoad(index))
           }
       }
   }

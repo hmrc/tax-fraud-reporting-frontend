@@ -1249,3 +1249,7 @@ businessChooseYourAddress.no = No
 businessChooseYourAddress.checkYourAnswersLabel = Choose your address
 businessChooseYourAddress.error.required = Select businessChooseYourAddress
 businessChooseYourAddress.change.hidden = BusinessChooseYourAddress
+
+canNotFindAddress.title = Postcode cannot be found
+canNotFindAddress.heading = Postcode cannot be found
+canNotFindAddress.continue = Try a different postcode

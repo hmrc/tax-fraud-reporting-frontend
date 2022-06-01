@@ -28,6 +28,7 @@ import pages.{BusinessAddressPage, BusinessChooseYourAddressPage, BusinessFindAd
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.BusinessChooseYourAddressView
@@ -52,6 +53,7 @@ class BusinessChooseYourAddressController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+      val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
       request.userAnswers.get(BusinessFindAddressPage(index)) match {
         case None =>
           Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
@@ -62,7 +64,7 @@ class BusinessChooseYourAddressController @Inject() (
                 request.userAnswers.set(BusinessChooseYourAddressPage(index), addresses)
                   getOrElse (throw new Exception(s"Address is not saved in cache"))
               )
-              Ok(view(form, index, mode, Proposals(Some(addresses))))
+              Ok(view(form, index, mode, Proposals(Some(addresses)), isBusinessDetails))
 
             case NoResults => Redirect(routes.IndexController.onPageLoad)
           }
@@ -71,6 +73,7 @@ class BusinessChooseYourAddressController @Inject() (
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+      val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
       form.bindFromRequest().fold(
         formWithErrors =>
           Future.successful(
@@ -79,7 +82,8 @@ class BusinessChooseYourAddressController @Inject() (
                 formWithErrors,
                 index,
                 mode,
-                Proposals(request.userAnswers.get(BusinessChooseYourAddressPage(index)))
+                Proposals(request.userAnswers.get(BusinessChooseYourAddressPage(index))),
+                isBusinessDetails
               )
             )
           ),
