@@ -94,11 +94,11 @@ final case class IndividualBusinessDetailsPage(index: Index)
     if (value exists { _ != Yes })
       userAnswers.remove(BusinessInformationCheckPage(index)).flatMap(_.remove(BusinessNamePage(index))).flatMap(
         _.remove(TypeBusinessPage(index))
-      ).flatMap(_.remove(BusinessSelectCountryPage(index))
-      ).flatMap(_.remove(BusinessFindAddressPage(index))
-      ).flatMap(_.remove(BusinessAddressPage(index))).flatMap(_.remove(BusinessContactDetailsPage(index))).flatMap(
-        _.remove(ReferenceNumbersPage(index))
-      ).flatMap(_.remove(SelectConnectionBusinessPage(index)))
+      ).flatMap(_.remove(BusinessSelectCountryPage(index))).flatMap(_.remove(BusinessFindAddressPage(index))).flatMap(
+        _.remove(BusinessAddressPage(index))
+      ).flatMap(_.remove(BusinessContactDetailsPage(index))).flatMap(_.remove(ReferenceNumbersPage(index))).flatMap(
+        _.remove(SelectConnectionBusinessPage(index))
+      )
     else super.cleanup(value, userAnswers)
 
 }
@@ -128,9 +128,11 @@ final case class ReferenceNumbersPage(index: Index) extends NominalsQuestionPage
 /** END Checked Info */
 
 final case class BusinessSelectCountryPage(index: Index) extends NominalsQuestionPage[String]("businessSelectCountry") {
+
   override def cleanup(value: Option[String], userAnswers: UserAnswers): Try[UserAnswers] =
     if (value exists { _ == "gb" }) userAnswers.remove(BusinessAddressPage(index))
     else super.cleanup(value, userAnswers)
+
 }
 
 final case class SelectConnectionBusinessPage(index: Index)

@@ -45,8 +45,8 @@ class BusinessChooseYourAddressControllerSpec extends SpecBase {
 
   implicit val hc = HeaderCarrier()
 
-  val formProvider = new BusinessChooseYourAddressFormProvider()
-  val form         = formProvider()
+  val formProvider        = new BusinessChooseYourAddressFormProvider()
+  val form                = formProvider()
   private val userAnswers = UserAnswers(userAnswersId)
   private val answers     = emptyUserAnswers
 
@@ -99,10 +99,13 @@ class BusinessChooseYourAddressControllerSpec extends SpecBase {
         val isBusinessJourney = userAnswers.isBusinessJourney
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode, Proposals(Some(proposal)), isBusinessJourney)(
-          request,
-          messages(application)
-        ).toString
+        contentAsString(result) mustEqual view(
+          form,
+          Index(0),
+          NormalMode,
+          Proposals(Some(proposal)),
+          isBusinessJourney
+        )(request, messages(application)).toString
       }
     }
 

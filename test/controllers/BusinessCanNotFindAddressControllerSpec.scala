@@ -39,11 +39,14 @@ class BusinessCanNotFindAddressControllerSpec extends SpecBase {
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[BusinessCanNotFindAddressView]
+        val view              = application.injector.instanceOf[BusinessCanNotFindAddressView]
         val isBusinessJourney = userAnswers.isBusinessJourney
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(Index(0), NormalMode, isBusinessJourney)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(Index(0), NormalMode, isBusinessJourney)(
+          request,
+          messages(application)
+        ).toString
       }
     }
   }

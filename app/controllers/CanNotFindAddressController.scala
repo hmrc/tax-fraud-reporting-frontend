@@ -26,17 +26,18 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.{BusinessPart, IndividualPart}
 import views.html.CanNotFindAddressView
 
-class CanNotFindAddressController @Inject()(
-                                       override val messagesApi: MessagesApi,
-                                       identify: IdentifierAction,
-                                       getData: DataRetrievalAction,
-                                       requireData: DataRequiredAction,
-                                       val controllerComponents: MessagesControllerComponents,
-                                       view: CanNotFindAddressView
-                                     ) extends FrontendBaseController with I18nSupport {
+class CanNotFindAddressController @Inject() (
+  override val messagesApi: MessagesApi,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  val controllerComponents: MessagesControllerComponents,
+  view: CanNotFindAddressView
+) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      Ok(view(index, mode ))
+      Ok(view(index, mode))
   }
+
 }
