@@ -17,20 +17,18 @@
 package controllers
 
 import controllers.actions._
-import controllers.countOfResults.{NoResults, ResultsCount, ResultsList}
+import controllers.countOfResults.{NoResults, ResultsList}
 import controllers.helper.AddressLookUpHelper
 import forms.ChooseYourAddressFormProvider
 
 import javax.inject.Inject
-import models.{AddressSansCountry, ChooseYourAddress, FindAddress, Index, Mode}
+import models.{AddressSansCountry, Index, Mode}
 import navigation.Navigator
 import pages.{ChooseYourAddressPage, FindAddressPage, IndividualAddressPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import services.AddressService
-import uk.gov.hmrc.hmrcfrontend.controllers.routes
-import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ChooseYourAddressView
 
