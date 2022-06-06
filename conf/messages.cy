@@ -1336,6 +1336,13 @@ findAddress.error.property.length = Rhaid i enw/rhif eich tŷ fod yn llai na 256
 findAddress.postcode.change.hidden = Postcode
 findAddress.property.change.hidden = Property
 
+businessFindAddress.title = Dod o hyd i gyfeiriad
+businessFindAddress.heading = Dod o hyd i gyfeiriad
+businessFindAddress.checkYourAnswersLabel = Dod o hyd i gyfeiriad
+businessFindAddress.error.required = Nodwch god post
+businessFindAddress.error.length = Nodwch god post go iawn, e.e. AA1 1AA
+businessFindAddress.change.hidden = Dod o hyd i gyfeiriad
+
 chooseYourAddress.title = Mae problem wedi codi
 chooseYourAddress.heading = Mae problem wedi codi
 chooseYourAddress.address = gyfeiriad

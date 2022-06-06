@@ -1218,7 +1218,7 @@ findAddress.postcode = Postcode
 findAddress.manually = Enter the address manually
 findAddress.property = Property name or number (optional)
 findAddress.property.hint = For example, The Mill, 116 or Flat 37a
-findAddress.checkYourAnswersLabel = FindAddress
+findAddress.checkYourAnswersLabel = Find your address
 findAddress.error.postcode.required = Enter Postcode
 findAddress.error.postcode.invalid = Enter a real Postcode e.g. AA1 1AA
 findAddress.error.property.required = Enter Property
@@ -1234,12 +1234,12 @@ chooseYourAddress.checkYourAnswersLabel = Select an address
 chooseYourAddress.error.required = Select an address
 chooseYourAddress.change.hidden = Select an address
 
-businessFindAddress.title = businessFindAddress
-businessFindAddress.heading = businessFindAddress
-businessFindAddress.checkYourAnswersLabel = businessFindAddress
-businessFindAddress.error.required = Enter businessFindAddress
-businessFindAddress.error.length = BusinessFindAddress must be 100 characters or less
-businessFindAddress.change.hidden = BusinessFindAddress
+businessFindAddress.title = Find your address
+businessFindAddress.heading = Find your address
+businessFindAddress.checkYourAnswersLabel = Find your address
+businessFindAddress.error.required = Enter Property
+businessFindAddress.error.length = Enter a real Postcode e.g. AA1 1AA
+businessFindAddress.change.hidden = Find your address
 
 businessChooseYourAddress.title = Choose your address
 businessChooseYourAddress.heading = Choose your address
