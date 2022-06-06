@@ -68,8 +68,7 @@ class BusinessChooseYourAddressController @Inject() (
               )
               Ok(view(form, index, mode, Proposals(Some(addresses)), isBusinessDetails))
 
-            //case NoResults => Redirect(navigator.nextPage(BusinessCanNotFindAddressController(index), mode, updatedAnswers))
-            case NoResults =>  Redirect(routes.BusinessCanNotFindAddressController.onPageLoad(index, mode))
+            case NoResults => Redirect(routes.BusinessCanNotFindAddressController.onPageLoad(index, mode))
           }
       }
   }
