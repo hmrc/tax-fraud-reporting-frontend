@@ -16,7 +16,6 @@
 
 package models.addresslookup
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import play.api.libs.json.{Format, Json}
 import services.Address
 
@@ -38,18 +37,7 @@ case class AddressRecord(
   administrativeArea: Option[String] = None,
   poBox: Option[String] = None
 ) {
-
   require(location.isEmpty || location.get.size == 2, location.get)
-
-  @JsonIgnore // needed because the name starts 'is...'
-  def isValid: Boolean = address.isValid && language.length == 2
-
-  def truncatedAddress(maxLen: Int = Address.maxLineLength): AddressRecord =
-    if (address.longestLineLength <= maxLen) this
-    else copy(address = address.truncatedAddress(maxLen))
-
-  def withoutMetadata: AddressRecord = copy(blpuState = None, logicalState = None, streetClassification = None)
-
 }
 
 object AddressRecord {

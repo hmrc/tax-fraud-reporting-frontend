@@ -127,7 +127,7 @@ class AddressLookupServiceSpec
       )
 
       val result = addressLookupService.lookup("ZZ11ZZ", None).futureValue
-      result.head.country mustBe  Country("GB", "United Kingdom")
+      result.head.country.toMap mustBe  Map("Country" -> "GB", "Name" -> "United Kingdom")
 
       server.verify(
         postRequestedFor(urlEqualTo(urlPost))

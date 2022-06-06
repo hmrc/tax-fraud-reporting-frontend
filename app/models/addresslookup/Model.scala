@@ -69,25 +69,6 @@ object ProposedAddress {
     usrn: Option[Long],
     organisation: Option[String],
     postcode: String,
-    town: String
-  ): ProposedAddress =
-    ProposedAddress(
-      addressId = addressId,
-      uprn = uprn,
-      parentUprn = parentUprn,
-      usrn = usrn,
-      organisation = organisation,
-      postcode = Some(postcode),
-      town = Some(town)
-    )
-
-  def apply(
-    addressId: String,
-    uprn: Option[Long],
-    parentUprn: Option[Long],
-    usrn: Option[Long],
-    organisation: Option[String],
-    postcode: String,
     town: String,
     lines: List[String]
   ): ProposedAddress =
@@ -100,29 +81,6 @@ object ProposedAddress {
       postcode = Some(postcode),
       town = Some(town),
       lines = lines
-    )
-
-  def apply(
-    addressId: String,
-    uprn: Option[Long],
-    parentUprn: Option[Long],
-    usrn: Option[Long],
-    organisation: Option[String],
-    postcode: String,
-    town: String,
-    lines: List[String],
-    country: Country
-  ): ProposedAddress =
-    ProposedAddress(
-      addressId = addressId,
-      uprn = uprn,
-      parentUprn = parentUprn,
-      usrn = usrn,
-      organisation = organisation,
-      postcode = Some(postcode),
-      town = Some(town),
-      lines = lines,
-      country = country
     )
 
 }

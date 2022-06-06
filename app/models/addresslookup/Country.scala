@@ -28,9 +28,6 @@ case class Country(
   // The printable name for the country, e.g. "United Kingdom"
   name: String
 ) {
-
-  // def asV1 = v1.Country(code, name)
-
   def toMap: Map[String, String] = Map("Country" -> code, "Name" -> name)
 }
 
