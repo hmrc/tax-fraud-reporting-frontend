@@ -1,5 +1,4 @@
 /*
-/*
  * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +17,7 @@
 package services
 
 import com.github.tomakehurst.wiremock.client.WireMock._
-import com.github.tomakehurst.wiremock.http.Fault
+import models.addresslookup.ProposedAddress
 import org.scalatest.{OptionValues, TryValues}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
@@ -32,8 +31,9 @@ import utils.{PafFixtures, WireMockHelper}
 
 import scala.io.Source
 
-class AddressLookupServiceSpec extends AnyFreeSpec with Matchers with WireMockHelper with ScalaFutures with IntegrationPatience with OptionValues
-  with TryValues with PafFixtures{
+class AddressLookupServiceSpec
+    extends AnyFreeSpec with Matchers with WireMockHelper with ScalaFutures with IntegrationPatience with OptionValues
+    with TryValues with PafFixtures {
 
   private def application: Application =
     new GuiceApplicationBuilder()
@@ -46,10 +46,7 @@ class AddressLookupServiceSpec extends AnyFreeSpec with Matchers with WireMockHe
 
   val urlPost = "/lookup"
 
-  val requestBody: JsObject = Json.obj(
-    "postcode" -> "ZZ11ZZ",
-    "filter" -> "2"
-  )
+  val requestBody: JsObject = Json.obj("postcode" -> "ZZ11ZZ", "filter" -> "2")
 
   val addressRecordSet: String =
     Source.fromInputStream(getClass.getResourceAsStream("/address-lookup/recordSet.json")).mkString
@@ -66,9 +63,7 @@ class AddressLookupServiceSpec extends AnyFreeSpec with Matchers with WireMockHe
 
       "return a List of addresses matching the given postcode, if any matching record exists" in {
 
-        val wholeStreetRequestBody: JsObject = Json.obj(
-          "postcode" -> "ZZ11ZZ"
-        )
+        val wholeStreetRequestBody: JsObject = Json.obj("postcode" -> "ZZ11ZZ")
 
         server.stubFor(
           post(urlEqualTo(urlPost))
@@ -76,8 +71,7 @@ class AddressLookupServiceSpec extends AnyFreeSpec with Matchers with WireMockHe
             .willReturn(ok(addressRecordSet))
         )
 
-        addressLookupService.lookup("ZZ11ZZ", None).futureValue mustBe ""
-         // AddressLookupSuccessResponse(oneAndTwoOtherPlacePafRecordSet)
+        addressLookupService.lookup("ZZ11ZZ", None).futureValue mustBe matchedAddress
 
         server.verify(
           postRequestedFor(urlEqualTo(urlPost))
@@ -86,15 +80,13 @@ class AddressLookupServiceSpec extends AnyFreeSpec with Matchers with WireMockHe
       }
 
       "return a List of addresses matching the given postcode and house number, if any matching record exists" in {
-
         server.stubFor(
           post(urlEqualTo(urlPost))
             .withRequestBody(equalToJson(requestBody.toString))
             .willReturn(ok(addressRecordSet))
         )
 
-        addressLookupService.lookup("ZZ11ZZ", Some("2")).futureValue mustBe ""
-          //AddressLookupSuccessResponse(oneAndTwoOtherPlacePafRecordSet)
+        addressLookupService.lookup("ZZ11ZZ", Some("2")).futureValue mustBe oneAndTwoOtherPlacePafRecordSet
 
       }
     }
@@ -109,7 +101,7 @@ class AddressLookupServiceSpec extends AnyFreeSpec with Matchers with WireMockHe
 
       val result = addressLookupService.lookup("ZZ11ZZ", Some("2"))
 
-      result.futureValue mustBe ""//AddressLookupSuccessResponse(twoOtherPlaceRecordSet)
+      result.futureValue mustBe twoOtherPlaceRecordSet
     }
 
     "return an empty response for the given house name/number and postcode, if matching record doesn't exist" in {
@@ -122,23 +114,7 @@ class AddressLookupServiceSpec extends AnyFreeSpec with Matchers with WireMockHe
 
       val result = addressLookupService.lookup("ZZ11ZZ", Some("2"))
 
-      result.futureValue mustBe "" //AddressLookupSuccessResponse(RecordSet(List()))
-    }
-
-    "return AddressLookupUnexpectedResponse response, when called and service returns not found" in {
-
-      server.stubFor(
-        post(urlEqualTo(urlPost))
-          .withRequestBody(equalToJson(requestBody.toString))
-          .willReturn(aResponse().withStatus(NOT_FOUND))
-      )
-
-      val result = addressLookupService.lookup("ZZ11ZZ", Some("2"))
-
-   //   result.futureValue.asInstanceOf[AddressLookupUnexpectedResponse].r.status mustBe NOT_FOUND
+      result.futureValue mustBe List()
     }
   }
-
 }
-
-*/
