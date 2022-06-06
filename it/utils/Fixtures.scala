@@ -1,6 +1,6 @@
 package utils
 
-import models.addresslookup.{Country, ProposedAddress}
+import models.addresslookup.{Countries, Country, ProposedAddress}
 
 trait PafFixtures {
   val exampleCountryUK = Country("UK", "United Kingdom")
@@ -16,7 +16,7 @@ trait PafFixtures {
       Some("AA1 1AA"),
       Some("Anytown"),
       List("2 Other Place", "Some District"),
-      Country("GB", "United Kingdom"),
+      Countries.GB,
       None
     ),
     ProposedAddress(

@@ -17,13 +17,12 @@
 package services
 
 import com.github.tomakehurst.wiremock.client.WireMock._
-import models.addresslookup.ProposedAddress
+import models.addresslookup.Country
 import org.scalatest.{OptionValues, TryValues}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import play.api.Application
-import play.api.http.Status.NOT_FOUND
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json}
 import uk.gov.hmrc.http.HeaderCarrier
@@ -116,5 +115,25 @@ class AddressLookupServiceSpec
 
       result.futureValue mustBe List()
     }
+
+    "return a List of addresses matching the given postcode, if any matching record exists and validate the country code" in {
+
+      val wholeStreetRequestBody: JsObject = Json.obj("postcode" -> "ZZ11ZZ")
+
+      server.stubFor(
+        post(urlEqualTo(urlPost))
+          .withRequestBody(equalToJson(wholeStreetRequestBody.toString))
+          .willReturn(ok(addressRecordSet))
+      )
+
+      val result = addressLookupService.lookup("ZZ11ZZ", None).futureValue
+      result.head.country mustBe  Country("GB", "United Kingdom")
+
+      server.verify(
+        postRequestedFor(urlEqualTo(urlPost))
+          .withHeader("X-Hmrc-Origin", equalTo("fraud"))
+      )
+    }
+
   }
 }
