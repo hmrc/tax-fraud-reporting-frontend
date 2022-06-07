@@ -46,8 +46,9 @@ class AddressLookupService @Inject() (httpClient: HttpClient, configuration: Con
     hc: HeaderCarrier
   ): Future[Seq[ProposedAddress]] = {
 
-    val pc                 = postcode.replaceAll(" ", "")
-    val newHc              = hc.withExtraHeaders("X-Hmrc-Origin" -> "fraud")
+    val pc = postcode.replaceAll(" ", "")
+    val newHc = HeaderCarrier(requestId = hc.requestId, sessionId = hc.sessionId)
+      .withExtraHeaders("X-Hmrc-Origin" -> "fraud")
     val addressRequestBody = AddressLookup(pc, filter)
 
     httpClient.POST[AddressLookup, List[AddressRecord]](s"$baseUrl/lookup", addressRequestBody)(
