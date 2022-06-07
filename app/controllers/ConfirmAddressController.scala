@@ -71,7 +71,7 @@ class ConfirmAddressController @Inject() (
                     mode
                   )
                 else
-                  routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
+                  routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
             }
         request.userAnswers getAddress (index, forBusiness) match {
           case Some(address) => Ok(view(index, address, isBusinessJourney, journeyPart, nextPage))

@@ -23,7 +23,7 @@ import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.SubmissionService
-import uk.gov.hmrc.hmrcfrontend.controllers.routes
+
 import views.html.SubmitYourReportView
 
 import scala.concurrent.Future

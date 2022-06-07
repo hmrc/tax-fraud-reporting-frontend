@@ -1,0 +1,68 @@
+@*
+ * Copyright 2022 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import viewmodels.InputWidth._
+
+@this(
+    layout: templates.Layout,
+    formHelper: FormWithCSRF,
+    govukErrorSummary: GovukErrorSummary,
+    govukInput: GovukInput,
+    govukButton: GovukButton
+)
+
+@(form: Form[_], index: Index, mode: Mode, isBusinessDetails: Boolean)(implicit request: Request[_], messages: Messages)
+
+@layout(pageTitle = title(form, messages("businessFindAddress.title"))) {
+
+    @formHelper(action = routes.BusinessFindAddressController.onSubmit(index, mode)) {
+
+        @if(form.errors.nonEmpty) {
+            @govukErrorSummary(ErrorSummaryViewModel(form))
+        }
+        @if(isBusinessDetails){
+        <span class="govuk-caption-xl">
+           <span class="govuk-visually-hidden">@messages("individual.caption.text.screen.reader")</span>
+           @messages(s"individual.${index.display}")
+        </span>
+        }
+        <h1 class="govuk-heading-xl">@messages("findAddress.heading")</h1>
+
+        @govukInput(
+            InputViewModel(
+                field = form("Postcode"),
+                label = LabelViewModel(messages("findAddress.postcode"))
+            )
+            .withWidth(Fixed10)
+        )
+
+        <p> <a class="govuk-link" href="@routes.BusinessAddressController.onPageLoad(index, mode)">@messages("findAddress.manually")</a> </p>
+
+        @govukInput(
+            InputViewModel(
+                field = form("Property"),
+                label = LabelViewModel(messages("findAddress.property"))
+            )
+            .withWidth(Fixed20)
+            .withHint(Hint(content = "findAddress.property.hint"))
+        )
+
+        @govukButton(
+            ButtonViewModel(messages("site.continue"))
+                .withAttribute("id" -> "continue-button")
+        )
+    }
+}

@@ -14,23 +14,12 @@
  * limitations under the License.
  */
 
-package models.addresslookup
+package models
 
 import play.api.libs.json._
 
-case class RecordSet(addresses: Seq[AddressRecord])
+case class FindAddress(Postcode: String, Property: Option[String])
 
-object RecordSet {
-
-  def fromJsonAddressLookupService(addressListAsJson: JsValue): RecordSet = {
-    val addresses: Seq[AddressRecord] = addressListAsJson.as[Seq[AddressRecord]]
-    val validAddresses                = removeInvalidAddresses(addresses)
-    RecordSet(validAddresses)
-  }
-
-  private def removeInvalidAddresses(addresses: Seq[AddressRecord]): Seq[AddressRecord] =
-    addresses.filter(_.isValid)
-
-  implicit val formats = Json.format[RecordSet]
-
+object FindAddress {
+  implicit val format = Json.format[FindAddress]
 }

@@ -21,8 +21,6 @@ import models.AddressSansCountry
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional}
 
-import scala.language.postfixOps
-
 object AddressFormProvider extends Mappings {
   private val maxLen = 255
 

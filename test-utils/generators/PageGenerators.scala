@@ -106,6 +106,12 @@ trait PageGenerators {
   implicit lazy val arbitraryIndividualNamePage: Arbitrary[IndividualNamePage] =
     Arbitrary(IndividualNamePage(Index(0)))
 
+  implicit lazy val arbitraryChooseYourAddressPage: Arbitrary[ChooseYourAddressPage] =
+    Arbitrary(ChooseYourAddressPage(Index(0)))
+
+  implicit lazy val arbitraryBusinessChooseYourAddressPage: Arbitrary[BusinessChooseYourAddressPage] =
+    Arbitrary(BusinessChooseYourAddressPage(Index(0)))
+
   implicit lazy val arbitraryIndividualInformationPage: Arbitrary[IndividualInformationPage] =
     Arbitrary(IndividualInformationPage(Index(0)))
 

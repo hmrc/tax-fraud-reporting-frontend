@@ -1211,3 +1211,45 @@ individualSelectCountry.change.hidden = Select your Country
 confirmAddress.title = Review and Confirm
 confirmAddress.heading = Review and Confirm
 confirmAddress.change-address = Change address
+
+findAddress.title = Find your address
+findAddress.heading = Find your address
+findAddress.postcode = Postcode
+findAddress.manually = Enter the address manually
+findAddress.property = Property name or number (optional)
+findAddress.property.hint = For example, The Mill, 116 or Flat 37a
+findAddress.checkYourAnswersLabel = Find your address
+findAddress.error.postcode.required = Enter Postcode
+findAddress.error.postcode.invalid = Enter a real Postcode e.g. AA1 1AA
+findAddress.error.property.required = Enter Property
+findAddress.error.postcode.length = Enter a real Postcode e.g. AA1 1AA
+findAddress.error.property.length = The house name or number needs to be fewer than 255 characters
+findAddress.postcode.change.hidden = Postcode
+findAddress.property.change.hidden = Property
+
+chooseYourAddress.title = Choose your address
+chooseYourAddress.heading = Choose your address
+chooseYourAddress.address = Address
+chooseYourAddress.checkYourAnswersLabel = Select an address
+chooseYourAddress.error.required = Select an address
+chooseYourAddress.change.hidden = Select an address
+
+businessFindAddress.title = Find your address
+businessFindAddress.heading = Find your address
+businessFindAddress.checkYourAnswersLabel = Find your address
+businessFindAddress.error.required = Enter Property
+businessFindAddress.error.length = Enter a real Postcode e.g. AA1 1AA
+businessFindAddress.change.hidden = Find your address
+
+businessChooseYourAddress.title = Choose your address
+businessChooseYourAddress.heading = Choose your address
+businessChooseYourAddress.checkYourAnswersLabel = Choose your address
+businessChooseYourAddress.error.required = Select businessChooseYourAddress
+businessChooseYourAddress.change.hidden = Choose your address
+
+canNotFindAddress.title = Postcode cannot be found
+canNotFindAddress.heading = Postcode cannot be found
+canNotFindAddress.continue = Try a different postcode
+
+businessCanNotFindAddress.title = Postcode cannot be found
+businessCanNotFindAddress.heading = Postcode cannot be found

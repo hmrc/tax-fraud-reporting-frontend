@@ -206,4 +206,30 @@ POST       /:index/change-individual-select-a-country                  controlle
 GET        /:index/individual/confirm-address                     controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = false, mode: Mode = NormalMode)
 GET        /:index/individual/change-confirm-address                     controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = false, mode: Mode = CheckMode)
 GET        /:index/business/confirm-address                       controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = true, mode: Mode = NormalMode)
-  GET      /:index/business/change-confirm-address                       controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = true, mode: Mode = CheckMode)
+GET      /:index/business/change-confirm-address                       controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = true, mode: Mode = CheckMode)
+
+GET        /:index/individual-findAddress                        controllers.FindAddressController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-findAddress                        controllers.FindAddressController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-findAddress                  controllers.FindAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-findAddress                  controllers.FindAddressController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/individual-chooseYourAddress                        controllers.ChooseYourAddressController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/individual-chooseYourAddress                        controllers.ChooseYourAddressController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-individual-chooseYourAddress                  controllers.ChooseYourAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-individual-chooseYourAddress                  controllers.ChooseYourAddressController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/business-findAddress                        controllers.BusinessFindAddressController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/business-findAddress                        controllers.BusinessFindAddressController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-business-findAddress                  controllers.BusinessFindAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-business-findAddress                  controllers.BusinessFindAddressController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/business-chooseYourAddress                        controllers.BusinessChooseYourAddressController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/business-chooseYourAddress                        controllers.BusinessChooseYourAddressController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-business-chooseYourAddress                  controllers.BusinessChooseYourAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-business-chooseYourAddress                  controllers.BusinessChooseYourAddressController.onSubmit(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/individual-cannot-find-address                       controllers.CanNotFindAddressController.onPageLoad(index: Index, mode: Mode = NormalMode)
+GET        /:index/individual-change-cannot-find-address                controllers.CanNotFindAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)
+
+GET        /:index/business-cannot-find-address                       controllers.BusinessCanNotFindAddressController.onPageLoad(index: Index, mode: Mode = NormalMode)
+GET        /:index/business-change-cannot-find-address                controllers.BusinessCanNotFindAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)

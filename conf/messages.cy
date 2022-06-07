@@ -1321,3 +1321,50 @@ individualSelectCountry.change.hidden = Dewiswch eich wlad
 confirmAddress.title = Adolygu a Chadarnhau
 confirmAddress.heading = Adolygu a Chadarnhau
 confirmAddress.change-address = Newid y cyfeiriad
+
+findAddress.title = Dod o hyd i gyfeiriad
+findAddress.heading = Dod o hyd i gyfeiriad
+findAddress.postcode = Cod post
+findAddress.manually = Nodwch y cyfeiriad â llaw
+findAddress.property = Enw neu rif yr eiddo (dewisol)
+findAddress.property.hint = Er enghraifft, Tegfan, 116 neu Fflat 37a
+findAddress.checkYourAnswersLabel = Dod o hyd i gyfeiriad
+findAddress.error.postcode.required = Nodwch god post
+findAddress.error.postcode.invalid = Nodwch god post go iawn, e.e. AA1 1AA
+findAddress.error.postcode.length = Nodwch god post go iawn, e.e. AA1 1AA
+findAddress.error.property.length = Rhaid i enw/rhif eich tŷ fod yn llai na 256 o gymeriadau
+findAddress.postcode.change.hidden = Postcode
+findAddress.property.change.hidden = Property
+
+businessFindAddress.title = Dod o hyd i gyfeiriad
+businessFindAddress.heading = Dod o hyd i gyfeiriad
+businessFindAddress.checkYourAnswersLabel = Dod o hyd i gyfeiriad
+businessFindAddress.error.required = Nodwch god post
+businessFindAddress.error.length = Nodwch god post go iawn, e.e. AA1 1AA
+businessFindAddress.change.hidden = Dod o hyd i gyfeiriad
+
+chooseYourAddress.title = Mae problem wedi codi
+chooseYourAddress.heading = Mae problem wedi codi
+chooseYourAddress.address = gyfeiriad
+chooseYourAddress.checkYourAnswersLabel = Dewiswch gyfeiriad
+chooseYourAddress.error.required = Dewiswch gyfeiriad
+chooseYourAddress.change.hidden = Mae problem wedi codi
+
+businessChooseYourAddress.title = Mae problem wedi codi
+businessChooseYourAddress.heading = Mae problem wedi codi
+businessChooseYourAddress.checkYourAnswersLabel = Dewiswch gyfeiriad
+businessChooseYourAddress.error.required = Dewiswch gyfeiriad
+businessChooseYourAddress.change.hidden = Mae problem wedi codi
+
+businessChooseYourAddress.title = Dewiswch eich cyfeiriad
+businessChooseYourAddress.heading = Dewiswch eich cyfeiriad
+businessChooseYourAddress.checkYourAnswersLabel = Dewiswch eich cyfeiriad
+businessChooseYourAddress.error.required = Dewiswch gyfeiriad
+businessChooseYourAddress.change.hidden = Dewiswch eich cyfeiriad
+
+canNotFindAddress.title = (W) Postcode cannot be found(W)
+canNotFindAddress.heading = (W) Postcode cannot be found(W)
+canNotFindAddress.continue = Rhowch gynnig ar god post gwahanol
+
+businessCanNotFindAddress.title = (W) Postcode cannot be found(W)
+businessCanNotFindAddress.heading = (W) Postcode cannot be found(W)
