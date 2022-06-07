@@ -44,7 +44,6 @@
                    @messages(s"individual.${index.display}")
             </span>
     }
-    @messages("individualSelectCountry.heading")
 }
 
 @layout(pageTitle = title(form, messages("individualSelectCountry.title"))) {
@@ -54,7 +53,7 @@
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
-        <h1 class="govuk-heading-xl">@contentHeader</h1>
+            @contentHeader
 
         @autocomplete(
             field = form("country"),
@@ -62,8 +61,8 @@
             name = "country",
             isPageHint = false,
             hint = None,
-            isPageHeading = false,
-            label = "individualSelectCountry.label",
+            isPageHeading = true,
+            label = "individualSelectCountry.heading",
             options = countries map AutocompleteOption.get(messages, "country")
         )
 
