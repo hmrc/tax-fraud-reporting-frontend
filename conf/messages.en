@@ -969,8 +969,8 @@ referenceNumbers.error.employeeRefNo.invalid =  Employee Reference Number must b
 referenceNumbers.error.corporationTax.length = Corporation Tax Unique Taxpayer Reference must be 10 digits long
 referenceNumbers.change.hidden = Business reference numbers
 
-approximateValue.title = What is the total value of the activity you are reporting?
-approximateValue.heading = What is the total value of the activity you are reporting?
+approximateValue.title = what is your estimated total value of the activity?
+approximateValue.heading = You selected ''{0}'',  what is your estimated total value of the activity?
 approximateValue.p1 = HMRC does not require an exact figure, an estimation will still be useful.
 approximateValue.suffix = £
 approximateValue.hint = Enter an estimated total value in pounds.

@@ -26,14 +26,14 @@
     details: views.html.components.details
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, whatActivityHappened: Object)(implicit request: Request[_], messages: Messages)
 
 @contentHint = {
     <p class="govuk-hint">@messages("approximateValue.p1")</p>
     <p class="govuk-hint">@messages("approximateValue.hint")</p>
 }
 
-@layout(pageTitle = title(form, messages("approximateValue.title"))) {
+@layout(pageTitle = title(form, messages("approximateValue.heading",messages(s"whenActivityHappen.$whatActivityHappened")))) {
 
     @formHelper(action = routes.ApproximateValueController.onSubmit(mode), 'autoComplete -> "off") {
 
@@ -44,7 +44,7 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("approximateValue.heading")).asPageHeading(LabelSize.ExtraLarge)
+                label = LabelViewModel(messages("approximateValue.heading", messages(s"whenActivityHappen.$whatActivityHappened")  )).asPageHeading(LabelSize.ExtraLarge)
             )
             .withHint(HintViewModel(HtmlContent(contentHint)))
             .withInputType("text")
