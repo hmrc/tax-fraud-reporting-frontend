@@ -69,7 +69,7 @@ class ApproximateValueController @Inject() (
       )
       form.bindFromRequest().fold(
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, whatActivityHappened))),
-        value =>
+        value => {
           eventDispatcher.dispatchEvent(ApproximateValueEvent(value.toString))
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(ApproximateValuePage, value))
