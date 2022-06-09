@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent, RadioButtonEvent}
 import controllers.actions._
 import forms.DateFormatFormProvider
 
@@ -40,7 +41,8 @@ class IndividualDateFormatController @Inject() (
   requireData: DataRequiredAction,
   formProvider: DateFormatFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: IndividualDateFormatView
+  view: IndividualDateFormatView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -48,6 +50,7 @@ class IndividualDateFormatController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       val preparedForm = request.userAnswers.get(IndividualDateFormatPage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -60,11 +63,13 @@ class IndividualDateFormatController @Inject() (
     implicit request =>
       form.bindFromRequest().fold(
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode))),
-        value =>
+        value => {
+          eventDispatcher.dispatchEvent(RadioButtonEvent(request.path, value.toString))
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualDateFormatPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(IndividualDateFormatPage(index), mode, updatedAnswers))
+        }
       )
   }
 

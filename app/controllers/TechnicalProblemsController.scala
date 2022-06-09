@@ -16,12 +16,16 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, InternalServerErrorEvent, PageLoadEvent}
 import controllers.actions._
+
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.TechnicalProblemsView
+
+import scala.concurrent.ExecutionContext
 
 class TechnicalProblemsController @Inject() (
   override val messagesApi: MessagesApi,
@@ -29,11 +33,14 @@ class TechnicalProblemsController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: TechnicalProblemsView
-) extends FrontendBaseController with I18nSupport {
+  view: TechnicalProblemsView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = identify {
     implicit request =>
+      eventDispatcher.dispatchEvent(InternalServerErrorEvent("Technical Error"))
       Ok(view())
   }
 

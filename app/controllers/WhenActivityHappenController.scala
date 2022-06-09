@@ -16,8 +16,10 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent, RadioButtonEvent}
 import controllers.actions._
 import forms.WhenActivityHappenFormProvider
+
 import javax.inject.Inject
 import models.Mode
 import navigation.Navigator
@@ -39,7 +41,8 @@ class WhenActivityHappenController @Inject() (
   requireData: DataRequiredAction,
   formProvider: WhenActivityHappenFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: WhenActivityHappenView
+  view: WhenActivityHappenView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -47,6 +50,7 @@ class WhenActivityHappenController @Inject() (
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       val preparedForm = request.userAnswers.get(WhenActivityHappenPage) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -59,11 +63,13 @@ class WhenActivityHappenController @Inject() (
     implicit request =>
       form.bindFromRequest().fold(
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
-        value =>
+        value => {
+          eventDispatcher.dispatchEvent(RadioButtonEvent(request.path, value.toString))
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenActivityHappenPage, value))
             _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(WhenActivityHappenPage, mode, updatedAnswers))
+        }
       )
   }
 

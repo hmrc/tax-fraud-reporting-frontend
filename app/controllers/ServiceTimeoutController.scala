@@ -16,12 +16,16 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
+
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ServiceTimeoutView
+
+import scala.concurrent.ExecutionContext
 
 class ServiceTimeoutController @Inject() (
   override val messagesApi: MessagesApi,
@@ -29,11 +33,14 @@ class ServiceTimeoutController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: ServiceTimeoutView
-) extends FrontendBaseController with I18nSupport {
+  view: ServiceTimeoutView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = identify {
     implicit request =>
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       Ok(view())
   }
 

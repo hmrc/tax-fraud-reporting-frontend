@@ -18,7 +18,6 @@ package auditing
 
 import config.FrontendAppConfig
 import play.api.Logging
-import play.api.mvc.Request
 
 import javax.inject.{Inject, Singleton}
 
@@ -31,9 +30,39 @@ class AnalyticsRequestFactory @Inject() (config: FrontendAppConfig) extends Logg
   )
 
   def internalServerError(clientId: Option[String], event: InternalServerErrorEvent): AnalyticsRequest =
-    AnalyticsRequest(clientId, Seq(Event("rks_id", s"rks_end", s"internal_technical_issue", Nil)))
+    AnalyticsRequest(clientId, Seq(Event("rkss_error", event.reason, s"rkss_error", Nil)))
 
   def activityType(clientId: Option[String], event: ActivityTypeEvent): AnalyticsRequest =
-    AnalyticsRequest(clientId, Seq(Event("rks_id", s"rks_end", s"activity_type", dimensions(event.activity))))
+    AnalyticsRequest(
+      clientId,
+      Seq(Event(s"activity_type", event.activity, s"activity_type", dimensions(event.activity)))
+    )
+
+  def radioButtonEvent(clientId: Option[String], event: RadioButtonEvent): AnalyticsRequest =
+    AnalyticsRequest(
+      clientId,
+      Seq(Event("rkss_radiobutton", event.action, s"rkss_radiobutton", dimensions(event.page)))
+    )
+
+  def checkBoxEvent(clientId: Option[String], event: RadioButtonEvent): AnalyticsRequest =
+    AnalyticsRequest(
+      clientId,
+      Seq(Event("rkss_checkbox", event.action, s"rkss_checkbox", dimensions(event.page)))
+    )
+
+  def approximateValue(clientId: Option[String], event: ApproximateValueEvent): AnalyticsRequest =
+    AnalyticsRequest(
+      clientId,
+      Seq(Event(s"approximate_value", event.action, s"approximate_value", dimensions(event.action)))
+    )
+
+  def pageLoadEvent(clientId: Option[String], event: PageLoadEvent): AnalyticsRequest =
+    AnalyticsRequest(clientId, Seq(Event(s"rkss_pageurl", event.path, s"rkss_pageurl", dimensions(event.path))))
+
+  def activityValue(clientId: Option[String], event: ActivityValueEvent): AnalyticsRequest =
+    AnalyticsRequest(
+      clientId,
+      Seq(Event(s" rkss_activityvalue", event.value, s" rkss_activityvalue", dimensions(event.value)))
+    )
 
 }

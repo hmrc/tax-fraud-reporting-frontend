@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.AuditAndAnalyticsEventDispatcher
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import forms.AddressFormProvider
 import models.requests.DataRequest
@@ -41,7 +42,8 @@ class BusinessAddressController @Inject() (
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: AddressView
+  view: AddressView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 

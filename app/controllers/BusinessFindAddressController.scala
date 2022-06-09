@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
 import forms.FindAddressFormProvider
 
@@ -40,7 +41,8 @@ class BusinessFindAddressController @Inject() (
   requireData: DataRequiredAction,
   formProvider: FindAddressFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: BusinessFindAddressView
+  view: BusinessFindAddressView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -49,6 +51,7 @@ class BusinessFindAddressController @Inject() (
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       val preparedForm = request.userAnswers.get(BusinessFindAddressPage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)

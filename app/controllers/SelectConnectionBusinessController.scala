@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent, RadioButtonEvent}
 import controllers.actions._
 import forms.SelectConnectionBusinessFormProvider
 
@@ -40,7 +41,8 @@ class SelectConnectionBusinessController @Inject() (
   requireData: DataRequiredAction,
   formProvider: SelectConnectionBusinessFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: SelectConnectionBusinessView
+  view: SelectConnectionBusinessView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -48,6 +50,7 @@ class SelectConnectionBusinessController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       val isBusinessJourney = request.userAnswers.isBusinessJourney
       val preparedForm = request.userAnswers.get(SelectConnectionBusinessPage(index)) match {
         case None        => form
@@ -62,11 +65,13 @@ class SelectConnectionBusinessController @Inject() (
       val isBusinessJourney = request.userAnswers.isBusinessJourney
       form.bindFromRequest().fold(
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, isBusinessJourney))),
-        value =>
+        value => {
+          eventDispatcher.dispatchEvent(RadioButtonEvent(request.path, value.toString))
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(SelectConnectionBusinessPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(SelectConnectionBusinessPage(index), mode, updatedAnswers))
+        }
       )
   }
 

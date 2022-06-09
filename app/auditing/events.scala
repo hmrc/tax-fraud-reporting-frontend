@@ -19,5 +19,10 @@ package auditing
 sealed trait MonitoringEvent
 
 // Internal Server Error
-case class InternalServerErrorEvent(reason: String) extends MonitoringEvent
-case class ActivityTypeEvent(activity: String)      extends MonitoringEvent
+case class InternalServerErrorEvent(reason: String)       extends MonitoringEvent
+case class ActivityTypeEvent(activity: String)            extends MonitoringEvent
+case class PageLoadEvent(path: String)                    extends MonitoringEvent
+case class RadioButtonEvent(action: String, page: String) extends MonitoringEvent
+case class CheckBoxEvent(page: String, action: String)    extends MonitoringEvent
+case class ApproximateValueEvent(action: String)          extends MonitoringEvent
+case class ActivityValueEvent(value: String)              extends MonitoringEvent
