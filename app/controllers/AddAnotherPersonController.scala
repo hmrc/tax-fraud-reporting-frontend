@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent, RadioButtonEvent}
 import controllers.actions._
 import forms.AddAnotherPersonFormProvider
 import models.Mode
@@ -37,7 +38,8 @@ class AddAnotherPersonController @Inject() (
   requireData: DataRequiredAction,
   formProvider: AddAnotherPersonFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: AddAnotherPersonView
+  view: AddAnotherPersonView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -45,6 +47,7 @@ class AddAnotherPersonController @Inject() (
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       val numberOfNominals = request.userAnswers.get(NominalsQuery).getOrElse(List.empty).length
       Ok(view(form, numberOfNominals, mode))
   }
@@ -56,10 +59,12 @@ class AddAnotherPersonController @Inject() (
           val numberOfNominals = request.userAnswers.get(NominalsQuery).getOrElse(List.empty).length
           Future.successful(BadRequest(view(formWithErrors, numberOfNominals, mode)))
         },
-        value =>
+        value => {
+          eventDispatcher.dispatchEvent(RadioButtonEvent(request.path, value.toString))
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(AddAnotherPersonPage, value))
           } yield Redirect(navigator.nextPage(AddAnotherPersonPage, mode, updatedAnswers))
+        }
       )
   }
 

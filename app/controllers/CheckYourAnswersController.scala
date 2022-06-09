@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import pages.NominalsQuery
@@ -26,18 +27,23 @@ import viewmodels.checkAnswers._
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 
+import scala.concurrent.ExecutionContext
+
 class CheckYourAnswersController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: CheckYourAnswersView
-) extends FrontendBaseController with I18nSupport {
+  view: CheckYourAnswersView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   // scalastyle:off
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       val answers           = request.userAnswers
       val isBusinessJourney = request.userAnswers.isBusinessJourney
 

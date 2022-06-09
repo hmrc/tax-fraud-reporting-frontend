@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{ApproximateValueEvent, AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
 import forms.ApproximateValueFormProvider
 import models.Mode
@@ -39,7 +40,8 @@ class ApproximateValueController @Inject() (
   requireData: DataRequiredAction,
   formProvider: ApproximateValueFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: ApproximateValueView
+  view: ApproximateValueView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -47,6 +49,7 @@ class ApproximateValueController @Inject() (
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       val preparedForm = request.userAnswers.get(ApproximateValuePage) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -59,11 +62,13 @@ class ApproximateValueController @Inject() (
     implicit request =>
       form.bindFromRequest().fold(
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
-        value =>
+        value => {
+          eventDispatcher.dispatchEvent(ApproximateValueEvent(value.toString))
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(ApproximateValuePage, value))
             _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(ApproximateValuePage, mode, updatedAnswers))
+        }
       )
   }
 

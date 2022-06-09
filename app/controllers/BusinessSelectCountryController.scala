@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import forms.IndividualSelectCountryFormProvider
 import models.{Index, Mode}
@@ -40,7 +41,8 @@ class BusinessSelectCountryController @Inject() (
   requireData: DataRequiredAction,
   formProvider: IndividualSelectCountryFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: IndividualSelectCountryView
+  view: IndividualSelectCountryView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -49,6 +51,7 @@ class BusinessSelectCountryController @Inject() (
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val countryJourney = if (request.userAnswers.isBusinessJourney) Business else Individual(true)
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       val preparedForm = request.userAnswers.get(BusinessSelectCountryPage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)

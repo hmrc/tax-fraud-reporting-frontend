@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
 import models.{BusinessInformationCheck, CheckMode, Index, IndividualInformation, Mode, NormalMode}
 import navigation.Navigator
@@ -37,13 +38,15 @@ class ConfirmAddressController @Inject() (
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: ConfirmAddressView,
-  navigator: Navigator
+  navigator: Navigator,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
   def onPageLoad(index: Index, forBusiness: Boolean, mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireData) {
       implicit request =>
+        eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
         val isBusinessJourney = request.userAnswers.isBusinessJourney
         val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
         val journeyPart       = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)

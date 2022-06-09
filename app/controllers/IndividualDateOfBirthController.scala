@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
 import forms.IndividualDateOfBirthFormProvider
 import models.{Index, Mode}
@@ -41,7 +42,8 @@ class IndividualDateOfBirthController @Inject() (
   requireData: DataRequiredAction,
   formProvider: IndividualDateOfBirthFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: IndividualDateOfBirthView
+  view: IndividualDateOfBirthView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -49,6 +51,7 @@ class IndividualDateOfBirthController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       val preparedForm = request.userAnswers.get(IndividualDateOfBirthPage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)

@@ -16,8 +16,10 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent, RadioButtonEvent}
 import controllers.actions._
 import forms.IndividualBusinessDetailsFormProvider
+
 import javax.inject.Inject
 import models.{Index, Mode}
 import navigation.Navigator
@@ -39,7 +41,8 @@ class IndividualBusinessDetailsController @Inject() (
   requireData: DataRequiredAction,
   formProvider: IndividualBusinessDetailsFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: IndividualBusinessDetailsView
+  view: IndividualBusinessDetailsView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -47,6 +50,7 @@ class IndividualBusinessDetailsController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       val preparedForm = request.userAnswers.get(IndividualBusinessDetailsPage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -59,11 +63,13 @@ class IndividualBusinessDetailsController @Inject() (
     implicit request =>
       form.bindFromRequest().fold(
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode))),
-        value =>
+        value => {
+          eventDispatcher.dispatchEvent(RadioButtonEvent(request.path, value.toString))
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualBusinessDetailsPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(IndividualBusinessDetailsPage(index), mode, updatedAnswers))
+        }
       )
   }
 

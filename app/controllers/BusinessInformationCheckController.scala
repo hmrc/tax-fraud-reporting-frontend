@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, CheckBoxEvent, PageLoadEvent}
 import controllers.actions._
 import forms.BusinessInformationCheckFormProvider
 import models.{Index, Mode}
@@ -39,7 +40,8 @@ class BusinessInformationCheckController @Inject() (
   requireData: DataRequiredAction,
   formProvider: BusinessInformationCheckFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: BusinessInformationCheckView
+  view: BusinessInformationCheckView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -48,6 +50,7 @@ class BusinessInformationCheckController @Inject() (
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val isBusinessJourney = request.userAnswers.isBusinessJourney
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       val preparedForm = request.userAnswers.get(BusinessInformationCheckPage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -61,11 +64,13 @@ class BusinessInformationCheckController @Inject() (
       val isBusinessJourney = request.userAnswers.isBusinessJourney
       form.bindFromRequest().fold(
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, isBusinessJourney))),
-        value =>
+        value => {
+          eventDispatcher.dispatchEvent(CheckBoxEvent(request.path, value.mkString(" ")))
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessInformationCheckPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(BusinessInformationCheckPage(index), mode, updatedAnswers))
+        }
       )
   }
 
