@@ -21,12 +21,13 @@ import forms.ApproximateValueFormProvider
 import models.{NormalMode, UserAnswers}
 import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import pages.ApproximateValuePage
+import pages.{ApproximateValuePage, WhenActivityHappenPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import views.html.ApproximateValueView
 
 import scala.concurrent.Future
@@ -35,6 +36,8 @@ class ApproximateValueControllerSpec extends SpecBase {
 
   private val formProvider = new ApproximateValueFormProvider()
   private val form         = formProvider()
+  private val userAnswers = UserAnswers(userAnswersId)
+  val whatActivityHappened = userAnswers.get(WhenActivityHappenPage).getOrElse("overFiveYears")
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -56,7 +59,7 @@ class ApproximateValueControllerSpec extends SpecBase {
         val view = application.injector.instanceOf[ApproximateValueView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, whatActivityHappened)(request, messages(application)).toString
       }
     }
 
@@ -74,7 +77,7 @@ class ApproximateValueControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, whatActivityHappened)(
           request,
           messages(application)
         ).toString
@@ -123,7 +126,7 @@ class ApproximateValueControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, whatActivityHappened)(request, messages(application)).toString
       }
     }
 
@@ -143,7 +146,7 @@ class ApproximateValueControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, whatActivityHappened)(request, messages(application)).toString
       }
     }
 
@@ -163,7 +166,7 @@ class ApproximateValueControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, whatActivityHappened)(request, messages(application)).toString
       }
     }
 
@@ -183,7 +186,7 @@ class ApproximateValueControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, whatActivityHappened)(request, messages(application)).toString
       }
     }
 
