@@ -45,10 +45,7 @@ class AnalyticsRequestFactory @Inject() (config: FrontendAppConfig) extends Logg
     )
 
   def checkBoxEvent(clientId: Option[String], event: CheckBoxEvent): AnalyticsRequest =
-    AnalyticsRequest(
-      clientId,
-      Seq(Event("rkss_checkbox", event.action, s"rkss_checkbox", dimensions(event.page)))
-    )
+    AnalyticsRequest(clientId, Seq(Event("rkss_checkbox", event.action, s"rkss_checkbox", dimensions(event.page))))
 
   def approximateValue(clientId: Option[String], event: ApproximateValueEvent): AnalyticsRequest =
     AnalyticsRequest(

@@ -18,15 +18,17 @@ package controllers
 
 import base.SpecBase
 import forms.ApproximateValueFormProvider
-import models.{NormalMode, UserAnswers}
+import models.WhenActivityHappen.OverFiveYears
+import models.{NormalMode, UserAnswers, WhenActivityHappen}
 import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import pages.ApproximateValuePage
+import pages.{ApproximateValuePage, WhenActivityHappenPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
+import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import views.html.ApproximateValueView
 
 import scala.concurrent.Future
@@ -46,8 +48,8 @@ class ApproximateValueControllerSpec extends SpecBase {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
-
+      val userAnswers = UserAnswers(userAnswersId).set(WhenActivityHappenPage, OverFiveYears).success.value
+      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
       running(application) {
         val request = FakeRequest(GET, approximateValueRoute)
 
@@ -56,14 +58,14 @@ class ApproximateValueControllerSpec extends SpecBase {
         val view = application.injector.instanceOf[ApproximateValueView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, OverFiveYears)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ApproximateValuePage, validAnswer).success.value
-
+      val approxValue = UserAnswers(userAnswersId).set(ApproximateValuePage, validAnswer).success.value
+      val userAnswers = approxValue.set(WhenActivityHappenPage, OverFiveYears).success.value
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
@@ -74,7 +76,7 @@ class ApproximateValueControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(
+        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode, OverFiveYears)(
           request,
           messages(application)
         ).toString
@@ -83,12 +85,13 @@ class ApproximateValueControllerSpec extends SpecBase {
 
     "must redirect to the next page when valid data is submitted" in {
 
+      val userAnswers           = UserAnswers(userAnswersId).set(WhenActivityHappenPage, OverFiveYears).success.value
       val mockSessionRepository = mock[SessionRepository]
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(userAnswers))
           .overrides(
             bind[Navigator].toInstance(getFakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
@@ -109,7 +112,8 @@ class ApproximateValueControllerSpec extends SpecBase {
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val userAnswers = UserAnswers(userAnswersId).set(WhenActivityHappenPage, OverFiveYears).success.value
+      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request =
@@ -123,13 +127,17 @@ class ApproximateValueControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, OverFiveYears)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
     "must return a Bad Request and errors when blank data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val userAnswers = UserAnswers(userAnswersId).set(WhenActivityHappenPage, OverFiveYears).success.value
+      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request =
@@ -143,13 +151,17 @@ class ApproximateValueControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, OverFiveYears)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
     "must return a Bad Request and errors when non numeric data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val userAnswers = UserAnswers(userAnswersId).set(WhenActivityHappenPage, OverFiveYears).success.value
+      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request =
@@ -163,13 +175,17 @@ class ApproximateValueControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, OverFiveYears)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
     "must return a Bad Request and errors when not whole number is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val userAnswers = UserAnswers(userAnswersId).set(WhenActivityHappenPage, OverFiveYears).success.value
+      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request =
@@ -183,7 +199,10 @@ class ApproximateValueControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, OverFiveYears)(
+          request,
+          messages(application)
+        ).toString
       }
     }
 
