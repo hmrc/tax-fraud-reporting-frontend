@@ -22,7 +22,7 @@ sealed trait MonitoringEvent
 case class InternalServerErrorEvent(reason: String)       extends MonitoringEvent
 case class ActivityTypeEvent(activity: String)            extends MonitoringEvent
 case class PageLoadEvent(path: String)                    extends MonitoringEvent
-case class RadioButtonEvent(action: String, page: String) extends MonitoringEvent
-case class CheckBoxEvent(action: String, page: String)    extends MonitoringEvent
+case class RadioButtonEvent(path: String, value: String) extends MonitoringEvent
+case class CheckBoxEvent(path: String, value: String)    extends MonitoringEvent
 case class ApproximateValueEvent(action: String)          extends MonitoringEvent
 case class ActivityValueEvent(value: String)              extends MonitoringEvent
