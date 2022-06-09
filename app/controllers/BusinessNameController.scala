@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
 import forms.BusinessNameFormProvider
 import models.{Index, Mode}
@@ -39,7 +40,8 @@ class BusinessNameController @Inject() (
   requireData: DataRequiredAction,
   formProvider: BusinessNameFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: BusinessNameView
+  view: BusinessNameView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -48,6 +50,7 @@ class BusinessNameController @Inject() (
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val isBusinessJourney = request.userAnswers.isBusinessJourney
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       val preparedForm = request.userAnswers.get(BusinessNamePage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)

@@ -31,7 +31,13 @@ class AnalyticsEventHandler @Inject() (connector: AnalyticsConnector, factory: A
     event: MonitoringEvent
   )(implicit request: Request[_], hc: HeaderCarrier, ec: ExecutionContext): Unit =
     event match {
-      case e: ActivityTypeEvent => sendEvent(e, factory.activityType)
+      case e: ActivityTypeEvent        => sendEvent(e, factory.activityType)
+      case e: RadioButtonEvent         => sendEvent(e, factory.radioButtonEvent)
+      case e: CheckBoxEvent            => sendEvent(e, factory.checkBoxEvent)
+      case e: ApproximateValueEvent    => sendEvent(e, factory.approximateValue)
+      case e: PageLoadEvent            => sendEvent(e, factory.pageLoadEvent)
+      case e: ActivityValueEvent       => sendEvent(e, factory.activityValue)
+      case e: InternalServerErrorEvent => sendEvent(e, factory.internalServerError)
     }
 
   private def clientId(implicit request: Request[_]): Option[String] = request.cookies.get("_ga").map(_.value)

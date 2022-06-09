@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
 import forms.IndividualAgeFormProvider
 
@@ -40,7 +41,8 @@ class IndividualAgeController @Inject() (
   requireData: DataRequiredAction,
   formProvider: IndividualAgeFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: IndividualAgeView
+  view: IndividualAgeView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -48,6 +50,7 @@ class IndividualAgeController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       val preparedForm = request.userAnswers.get(IndividualAgePage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)

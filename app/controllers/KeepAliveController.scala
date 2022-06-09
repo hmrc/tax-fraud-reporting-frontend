@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions.{DataRetrievalAction, IdentifierAction}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -28,12 +29,14 @@ class KeepAliveController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
-  sessionRepository: SessionRepository
+  sessionRepository: SessionRepository,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController {
 
   def keepAlive: Action[AnyContent] = (identify andThen getData).async {
     implicit request =>
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       request.userAnswers
         .map {
           answers =>

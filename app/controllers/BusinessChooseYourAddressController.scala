@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
 import controllers.countOfResults.{NoResults, ResultsList}
 import controllers.helper.AddressLookUpHelper
@@ -45,7 +46,8 @@ class BusinessChooseYourAddressController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   view: BusinessChooseYourAddressView,
   addressService: AddressService,
-  addressLookUpHelper: AddressLookUpHelper
+  addressLookUpHelper: AddressLookUpHelper,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -54,6 +56,7 @@ class BusinessChooseYourAddressController @Inject() (
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       request.userAnswers.get(BusinessFindAddressPage(index)) match {
         case None =>
           Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))

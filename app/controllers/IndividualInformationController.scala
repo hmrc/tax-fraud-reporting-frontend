@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, CheckBoxEvent, PageLoadEvent}
 import controllers.actions._
 import forms.IndividualInformationFormProvider
 
@@ -40,7 +41,8 @@ class IndividualInformationController @Inject() (
   requireData: DataRequiredAction,
   formProvider: IndividualInformationFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: IndividualInformationView
+  view: IndividualInformationView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -48,6 +50,7 @@ class IndividualInformationController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       val preparedForm = request.userAnswers.get(IndividualInformationPage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -60,11 +63,13 @@ class IndividualInformationController @Inject() (
     implicit request =>
       form.bindFromRequest().fold(
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode))),
-        value =>
+        value => {
+          eventDispatcher.dispatchEvent(CheckBoxEvent(request.path, value.mkString(" ")))
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualInformationPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(IndividualInformationPage(index), mode, updatedAnswers))
+        }
       )
   }
 

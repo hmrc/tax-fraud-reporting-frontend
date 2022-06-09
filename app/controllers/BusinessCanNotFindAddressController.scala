@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
 import models.{Index, Mode}
 
@@ -25,18 +26,23 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.BusinessCanNotFindAddressView
 
+import scala.concurrent.ExecutionContext
+
 class BusinessCanNotFindAddressController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
-  view: BusinessCanNotFindAddressView
-) extends FrontendBaseController with I18nSupport {
+  view: BusinessCanNotFindAddressView,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       Ok(view(index, mode, isBusinessDetails))
   }
 

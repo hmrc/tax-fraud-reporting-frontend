@@ -16,7 +16,7 @@
 
 package controllers
 
-import auditing.{ActivityTypeEvent, AuditAndAnalyticsEventDispatcher, EventDispatcher}
+import auditing.{ActivityTypeEvent, AuditAndAnalyticsEventDispatcher, EventDispatcher, PageLoadEvent}
 import controllers.actions._
 import forms.ActivityTypeFormProvider
 
@@ -50,7 +50,7 @@ class ActivityTypeController @Inject() (
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData) {
     implicit request =>
       val userAnswers = request.userAnswers getOrElse UserAnswers(request.userId)
-
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       val preparedForm = userAnswers get ActivityTypePage match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -65,7 +65,7 @@ class ActivityTypeController @Inject() (
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
         value => {
           val userAnswers = request.userAnswers getOrElse UserAnswers(request.userId)
-          eventDispatcher.dispatchEvent(ActivityTypeEvent(ActivityTypePage))
+          eventDispatcher.dispatchEvent(ActivityTypeEvent(value))
           for {
             updatedAnswers <- Future.fromTry(userAnswers.set(ActivityTypePage, value))
             _              <- sessionRepository.set(updatedAnswers)

@@ -16,6 +16,7 @@
 
 package controllers
 
+import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import models.{Index, IndividualBusinessDetails, Mode}
@@ -28,6 +29,8 @@ import viewmodels.checkAnswers._
 import viewmodels.govuk.summarylist._
 import views.html.IndividualCheckYourAnswersView
 
+import scala.concurrent.ExecutionContext
+
 class IndividualCheckYourAnswersController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
@@ -35,13 +38,15 @@ class IndividualCheckYourAnswersController @Inject() (
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: IndividualCheckYourAnswersView,
-  navigator: Navigator
-) extends FrontendBaseController with I18nSupport {
+  navigator: Navigator,
+  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val answers = request.userAnswers
-
+      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       val individualDetails =
         SummaryListViewModel(
           Seq(
