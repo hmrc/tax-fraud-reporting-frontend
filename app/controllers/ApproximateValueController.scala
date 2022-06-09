@@ -18,7 +18,7 @@ package controllers
 
 import controllers.actions._
 import forms.ApproximateValueFormProvider
-import models.Mode
+import models.{Mode, UserAnswers}
 import navigation.Navigator
 import pages.{ApproximateValuePage, WhenActivityHappenPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -47,7 +47,9 @@ class ApproximateValueController @Inject() (
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      val whatActivityHappened = request.userAnswers.get(WhenActivityHappenPage).getOrElse("overFiveYears")
+      val whatActivityHappened = request.userAnswers.get(WhenActivityHappenPage).getOrElse(
+        throw new Exception(s"activity duration is not saved in cache")
+      )
       val preparedForm = request.userAnswers.get(ApproximateValuePage) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -58,7 +60,9 @@ class ApproximateValueController @Inject() (
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      val whatActivityHappened = request.userAnswers.get(WhenActivityHappenPage).getOrElse("overFiveYears")
+      val whatActivityHappened = request.userAnswers.get(WhenActivityHappenPage).getOrElse(
+        throw new Exception(s"activity duration is not saved in cache")
+      )
       form.bindFromRequest().fold(
         formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, whatActivityHappened))),
         value =>
