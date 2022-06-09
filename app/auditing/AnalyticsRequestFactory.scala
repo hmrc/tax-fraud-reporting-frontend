@@ -44,7 +44,7 @@ class AnalyticsRequestFactory @Inject() (config: FrontendAppConfig) extends Logg
       Seq(Event("rkss_radiobutton", event.action, s"rkss_radiobutton", dimensions(event.page)))
     )
 
-  def checkBoxEvent(clientId: Option[String], event: RadioButtonEvent): AnalyticsRequest =
+  def checkBoxEvent(clientId: Option[String], event: CheckBoxEvent): AnalyticsRequest =
     AnalyticsRequest(
       clientId,
       Seq(Event("rkss_checkbox", event.action, s"rkss_checkbox", dimensions(event.page)))

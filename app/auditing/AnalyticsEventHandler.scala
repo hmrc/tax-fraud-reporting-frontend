@@ -33,7 +33,7 @@ class AnalyticsEventHandler @Inject() (connector: AnalyticsConnector, factory: A
     event match {
       case e: ActivityTypeEvent        => sendEvent(e, factory.activityType)
       case e: RadioButtonEvent         => sendEvent(e, factory.radioButtonEvent)
-      case e: CheckBoxEvent         => sendEvent(e, factory.checkBoxEvent)
+      case e: CheckBoxEvent            => sendEvent(e, factory.checkBoxEvent)
       case e: ApproximateValueEvent    => sendEvent(e, factory.approximateValue)
       case e: PageLoadEvent            => sendEvent(e, factory.pageLoadEvent)
       case e: ActivityValueEvent       => sendEvent(e, factory.activityValue)
