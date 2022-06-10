@@ -1084,7 +1084,7 @@ referenceNumbers.cya.ern = ERN
 referenceNumbers.cya.cturn = CTUTR
 
 approximateValue.title = Beth yw cyfanswm gwerth y gweithgaredd?
-approximateValue.heading = (W)You selected(W) ''{0}'', Beth yw cyfanswm gwerth y gweithgaredd?
+approximateValue.heading = Gwnaethoch ddewis ''{0}'', beth yw cyfanswm gwerth amcangyfrifedig y gweithgaredd?
 approximateValue.p1 = Nid oes angen union ffigur ar CThEM, bydd amcangyfrif yn dal i fod yn ddefnyddiol.
 approximateValue.hint = Nodwch y cyfanswm gwerth bras, mewn punnoedd.
 approximateValue.suffix = £
@@ -1140,8 +1140,8 @@ whenActivityHappen.overFiveYears = Dros 5 mlynedd
 whenActivityHappen.betweenOneAndFive = Rhwng 1 flwyddyn a 5 mlynedd
 whenActivityHappen.betweenSixMonthAndOneYear= Rhwng 6 mis ac 1 flwyddyn
 whenActivityHappen.withinSixMonth = Yn ystod y 6 mis diwethaf
-whenActivityHappen.onlyOneOccasion = Gweithgaredd hyn unwaith
-whenActivityHappen.notHappen = Digwyddodd gweithgaredd eto
+whenActivityHappen.onlyOneOccasion = Digwyddodd y gweithgaredd unwaith
+whenActivityHappen.notHappen = Nid yw’r gweithgaredd wedi digwydd eto
 whenActivityHappen.doNotKnow = Nid wyf yn gwybod
 whenActivityHappen.checkYourAnswersLabel = Hyd y gweithgaredd
 whenActivityHappen.error.required = Dewiswch pryd dechreuodd y gweithgaredd rydych yn rhoi gwybod amdano
@@ -1363,9 +1363,9 @@ businessChooseYourAddress.checkYourAnswersLabel = Dewiswch eich cyfeiriad
 businessChooseYourAddress.error.required = Dewiswch gyfeiriad
 businessChooseYourAddress.change.hidden = Dewiswch eich cyfeiriad
 
-canNotFindAddress.title = (W) Postcode cannot be found(W)
-canNotFindAddress.heading = (W) Postcode cannot be found(W)
+canNotFindAddress.title = Ni ellir dod o hyd i’r cod post
+canNotFindAddress.heading = Ni ellir dod o hyd i’r cod post
 canNotFindAddress.continue = Rhowch gynnig ar god post gwahanol
 
-businessCanNotFindAddress.title = (W) Postcode cannot be found(W)
-businessCanNotFindAddress.heading = (W) Postcode cannot be found(W)
+businessCanNotFindAddress.title = Ni ellir dod o hyd i’r cod post
+businessCanNotFindAddress.heading = Ni ellir dod o hyd i’r cod post
