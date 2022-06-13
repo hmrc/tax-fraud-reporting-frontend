@@ -92,7 +92,7 @@ class BusinessChooseYourAddressController @Inject() (
           ),
         value =>
           request.userAnswers.get(BusinessChooseYourAddressPage(index)) match {
-            case Some(addressList) if addressList.nonEmpty =>
+            case Some(addressList) =>
               addressList.find(_.addressId == value.addressId) match {
                 case Some(address) =>
                   for {
