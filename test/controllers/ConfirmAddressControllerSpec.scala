@@ -17,12 +17,9 @@
 package controllers
 
 import base.SpecBase
-import models.{CheckMode, Index, NormalMode, UserAnswers}
+import models.{Index, NormalMode, UserAnswers}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.hmrcfrontend.controllers.routes
-import viewmodels.{BusinessPart, IndividualPart}
-import views.html.ConfirmAddressView
 
 class ConfirmAddressControllerSpec extends SpecBase {
 
@@ -40,13 +37,11 @@ class ConfirmAddressControllerSpec extends SpecBase {
       running(application) {
 
         val isBusinessJourney = userAnswers.isBusinessJourney
-        val journeyPart       = if (isBusinessJourney) BusinessPart else IndividualPart(true)
 
         val request =
           FakeRequest(GET, routes.ConfirmAddressController.onPageLoad(Index(0), isBusinessJourney, NormalMode).url)
 
         val result = route(application, request).value
-        val view   = application.injector.instanceOf[ConfirmAddressView]
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual routes.IndividualAddressController.onPageLoad(Index(0), NormalMode).url
       }

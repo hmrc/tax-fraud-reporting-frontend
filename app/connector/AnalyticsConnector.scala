@@ -17,11 +17,11 @@
 package connector
 
 import akka.Done
-import auditing.{AnalyticsRequest, DimensionValue, Event}
+//import auditing.AnalyticsRequest
 import config.FrontendAppConfig
 import play.api.Logging
-import play.api.libs.json.Json
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpResponse}
+import auditing._
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -30,13 +30,9 @@ import scala.concurrent.{ExecutionContext, Future}
 class AnalyticsConnector @Inject() (appConfig: FrontendAppConfig, http: HttpClient) extends Logging {
   def serviceUrl: String = appConfig.eventUrl
 
-  private implicit val dimensionWrites = Json.writes[DimensionValue]
-  private implicit val eventWrites     = Json.writes[Event]
-  private implicit val analyticsWrites = Json.writes[AnalyticsRequest]
-
   def sendEvent(request: AnalyticsRequest)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Done] = {
     val url = s"$serviceUrl/platform-analytics/event"
-    http.POST(url, request).map(_ => Done)
+    http.POST[AnalyticsRequest, HttpResponse](url, request).map(_ => Done)
       .recover {
         case _: Throwable =>
           logger.error(s"Couldn't send analytics event $request")

@@ -92,7 +92,7 @@ class BusinessChooseYourAddressController @Inject() (
           ),
         value =>
           request.userAnswers.get(BusinessChooseYourAddressPage(index)) match {
-            case Some(addressList) =>
+            case Some(addressList) if addressList.nonEmpty =>
               addressList.find(_.addressId == value.addressId) match {
                 case Some(address) =>
                   for {
@@ -110,6 +110,7 @@ class BusinessChooseYourAddressController @Inject() (
                     )
                     _ <- sessionRepository.set(updatedAnswers)
                   } yield Redirect(routes.ConfirmAddressController.onPageLoad(index, true, mode))
+                case None => Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
               }
             case _ =>
               Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))

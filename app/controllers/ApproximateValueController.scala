@@ -19,7 +19,7 @@ package controllers
 import auditing.{ApproximateValueEvent, AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
 import forms.ApproximateValueFormProvider
-import models.{Mode, UserAnswers}
+import models.Mode
 import navigation.Navigator
 import pages.{ApproximateValuePage, WhenActivityHappenPage}
 import play.api.i18n.{I18nSupport, MessagesApi}

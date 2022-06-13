@@ -20,13 +20,11 @@ import base.SpecBase
 import models.{Index, NormalMode, UserAnswers}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import views.html.BusinessCanNotFindAddressView
 
 class BusinessCanNotFindAddressControllerSpec extends SpecBase {
 
   private val userAnswers = UserAnswers(userAnswersId)
-  private val answers     = emptyUserAnswers
 
   "BusinessCanNotFindAddress Controller" - {
 

@@ -18,19 +18,16 @@ package controllers
 
 import base.SpecBase
 import forms.FindAddressFormProvider
-import models.{FindAddress, Index, IndividualDateFormat, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import models.{FindAddress, Index, NormalMode, UserAnswers}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
-import pages.{FindAddressPage, IndividualDateFormatPage}
+import pages.FindAddressPage
 import play.api.inject.bind
 import play.api.libs.json.Json
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import views.html.FindAddressView
 
 import scala.concurrent.Future

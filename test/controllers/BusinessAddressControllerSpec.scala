@@ -21,11 +21,10 @@ import auditing.AuditAndAnalyticsEventDispatcher
 import controllers.actions.{DataRequiredActionImpl, DataRetrievalActionImpl, SessionIdentifierAction}
 import models.backend.Address
 import models.requests.DataRequest
-import models.{AddressSansCountry, Index, NormalMode, UserAnswers}
+import models.{Index, NormalMode, UserAnswers}
 import navigation.Navigator
 import org.mockito.ArgumentMatchers.{any, anyString}
 import org.mockito.MockitoSugar
-import org.scalacheck.Gen.const
 import org.scalatest.Assertion
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.flatspec.AnyFlatSpec

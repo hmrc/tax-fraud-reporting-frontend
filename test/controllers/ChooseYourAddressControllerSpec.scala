@@ -17,20 +17,18 @@
 package controllers
 
 import base.SpecBase
-import forms.{BusinessChooseYourAddressFormProvider, ChooseYourAddressFormProvider}
+import forms.ChooseYourAddressFormProvider
 import models.addresslookup.ProposedAddress
-import models.{ChooseYourAddress, FindAddress, Index, NormalMode, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
+import models.{FindAddress, Index, NormalMode}
+import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
-import pages.{BusinessFindAddressPage, ChooseYourAddressPage, FindAddressPage}
+import pages.{ChooseYourAddressPage, FindAddressPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import services.{AddressLookupService, AddressService}
+import services.AddressService
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.ChooseYourAddressView
 
@@ -143,10 +141,6 @@ class ChooseYourAddressControllerSpec extends SpecBase {
       running(application) {
         val request =
           FakeRequest(POST, routes.ChooseYourAddressController.onSubmit(Index(0), NormalMode).url)
-
-        val boundForm = form.bind(Map("value" -> "invalid value"))
-
-        val view = application.injector.instanceOf[ChooseYourAddressView]
 
         val result = route(application, request).value
 
