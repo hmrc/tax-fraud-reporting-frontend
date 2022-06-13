@@ -17,11 +17,10 @@
 package connector
 
 import akka.Done
-//import auditing.AnalyticsRequest
+import auditing.AnalyticsRequest
 import config.FrontendAppConfig
 import play.api.Logging
 import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpResponse}
-import auditing._
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
