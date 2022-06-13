@@ -110,6 +110,7 @@ class BusinessChooseYourAddressController @Inject() (
                     )
                     _ <- sessionRepository.set(updatedAnswers)
                   } yield Redirect(routes.ConfirmAddressController.onPageLoad(index, true, mode))
+                case None => Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
               }
             case _ =>
               Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))

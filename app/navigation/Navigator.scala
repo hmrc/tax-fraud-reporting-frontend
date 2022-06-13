@@ -59,7 +59,6 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case BusinessContactDetailsPage(index)   => businessInformationRoutes(_, index, BusinessInformationCheck.Contact)
     case BusinessInformationCheckPage(index) => businessInformationRoutes(_, index, NormalMode)
     case BusinessAddressPage(index)          => businessInformationRoutes(_, index, BusinessInformationCheck.Address)
-    case BusinessSelectCountryPage(index)    => _ => routes.BusinessAddressController.onPageLoad(index, NormalMode)
     case SelectConnectionBusinessPage(_)     => selectConnectionBusinessRoutes
 
     /** END Business journey */
@@ -348,24 +347,20 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
 
   private def individualSelectCountryPageRoutes(answers: UserAnswers, index: Index): Call =
     answers.get(IndividualSelectCountryPage(index)).map {
-      case countries =>
+      case _ =>
         if (answers.get(IndividualSelectCountryPage(index)).contains("gb"))
           routes.FindAddressController.onPageLoad(index, CheckMode)
         else
           routes.IndividualAddressController.onPageLoad(index, CheckMode)
-      case _ =>
-        routes.IndividualAddressController.onPageLoad(index, CheckMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def businessSelectCountryPageRoutes(answers: UserAnswers, index: Index): Call =
     answers.get(BusinessSelectCountryPage(index)).map {
-      case countries =>
+      case _ =>
         if (answers.get(BusinessSelectCountryPage(index)).contains("gb"))
           routes.BusinessFindAddressController.onPageLoad(index, CheckMode)
         else
           routes.BusinessAddressController.onPageLoad(index, CheckMode)
-      case _ =>
-        routes.BusinessAddressController.onPageLoad(index, CheckMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {

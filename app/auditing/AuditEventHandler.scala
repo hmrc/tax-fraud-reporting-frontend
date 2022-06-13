@@ -17,7 +17,7 @@
 package auditing
 
 import config.FrontendAppConfig
-import play.api.i18n.{Lang, LangImplicits, MessagesApi}
+import play.api.i18n.{LangImplicits, MessagesApi}
 import play.api.mvc.Request
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.AuditExtensions
@@ -65,8 +65,8 @@ private[auditing] class AuditEventFactory(config: FrontendAppConfig)(implicit ov
     event: MonitoringEvent,
     additionalDetail: Map[String, String]
   )(implicit request: Request[_], hc: HeaderCarrier) = {
-    val carrier: AuditHeaderCarrier = AuditExtensions.auditHeaderCarrier(hc)
-
+    val carrier: AuditHeaderCarrier =
+      AuditExtensions.auditHeaderCarrier(HeaderCarrier(requestId = hc.requestId, sessionId = hc.sessionId))
     val commonDetail = carrier.toAuditDetails(
       "application" -> "RISKana - application"
       //required Headers can be added - as per the request

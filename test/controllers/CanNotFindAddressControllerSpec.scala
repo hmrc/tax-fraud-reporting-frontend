@@ -17,17 +17,12 @@
 package controllers
 
 import base.SpecBase
-import models.{Index, NormalMode, UserAnswers}
+import models.{Index, NormalMode}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.hmrcfrontend.controllers.routes
-import viewmodels.{BusinessPart, IndividualPart}
 import views.html.CanNotFindAddressView
 
 class CanNotFindAddressControllerSpec extends SpecBase {
-
-  private val userAnswers = UserAnswers(userAnswersId)
-  private val answers     = emptyUserAnswers
 
   "CanNotFindAddress Controller" - {
 

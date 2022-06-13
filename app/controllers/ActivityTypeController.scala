@@ -16,7 +16,7 @@
 
 package controllers
 
-import auditing.{ActivityTypeEvent, AuditAndAnalyticsEventDispatcher, EventDispatcher, PageLoadEvent}
+import auditing.{ActivityTypeEvent, AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
 import forms.ActivityTypeFormProvider
 

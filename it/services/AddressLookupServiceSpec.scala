@@ -17,7 +17,6 @@
 package services
 
 import com.github.tomakehurst.wiremock.client.WireMock._
-import models.addresslookup.Country
 import org.scalatest.{OptionValues, TryValues}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.freespec.AnyFreeSpec

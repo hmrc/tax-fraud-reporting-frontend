@@ -19,7 +19,7 @@ package controllers
 import base.SpecBase
 import forms.ApproximateValueFormProvider
 import models.WhenActivityHappen.OverFiveYears
-import models.{NormalMode, UserAnswers, WhenActivityHappen}
+import models.{NormalMode, UserAnswers}
 import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
 import pages.{ApproximateValuePage, WhenActivityHappenPage}
@@ -28,7 +28,6 @@ import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import uk.gov.hmrc.hmrcfrontend.controllers.routes
 import views.html.ApproximateValueView
 
 import scala.concurrent.Future

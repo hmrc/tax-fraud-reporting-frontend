@@ -29,34 +29,25 @@ class AnalyticsRequestFactory @Inject() (config: FrontendAppConfig) extends Logg
     DimensionValue(1, value)
   )
 
-  def internalServerError(clientId: Option[String], event: InternalServerErrorEvent): AnalyticsRequest =
-    AnalyticsRequest(clientId, Seq(Event("rkss_error", event.reason, s"rkss_error", Nil)))
+  def internalServerError(event: InternalServerErrorEvent): Seq[Event] =
+    Seq(Event("rkss_error", event.reason, s"rkss_error", Nil))
 
-  def activityType(clientId: Option[String], event: ActivityTypeEvent): AnalyticsRequest =
-    AnalyticsRequest(
-      clientId,
-      Seq(Event(s"activity_type", event.activity, s"activity_type", dimensions(event.activity)))
-    )
+  def activityType(event: ActivityTypeEvent): Seq[Event] =
+    Seq(Event(s"activity_type", event.activity, s"activity_type", dimensions(event.activity)))
 
-  def radioButtonEvent(clientId: Option[String], event: RadioButtonEvent): AnalyticsRequest =
-    AnalyticsRequest(clientId, Seq(Event(event.path, event.value, s"rkss_radiobutton", dimensions(event.value))))
+  def radioButtonEvent(event: RadioButtonEvent): Seq[Event] =
+    Seq(Event("rkss_radiobutton", event.path, s"rkss_radiobutton", dimensions(event.value)))
 
-  def checkBoxEvent(clientId: Option[String], event: CheckBoxEvent): AnalyticsRequest =
-    AnalyticsRequest(clientId, Seq(Event(event.path, event.value, s"rkss_checkbox", dimensions(event.value))))
+  def checkBoxEvent(event: CheckBoxEvent): Seq[Event] =
+    Seq(Event("rkss_checkbox", event.path, s"rkss_checkbox", dimensions(event.value)))
 
-  def approximateValue(clientId: Option[String], event: ApproximateValueEvent): AnalyticsRequest =
-    AnalyticsRequest(
-      clientId,
-      Seq(Event(s"approximate_value", event.action, s"approximate_value", dimensions(event.action)))
-    )
+  def approximateValue(event: ApproximateValueEvent): Seq[Event] =
+    Seq(Event(s"approximate_value", event.action, s"approximate_value", dimensions(event.action)))
 
-  def pageLoadEvent(clientId: Option[String], event: PageLoadEvent): AnalyticsRequest =
-    AnalyticsRequest(clientId, Seq(Event(s"rkss_pageurl", event.path, s"rkss_pageurl", dimensions(event.path))))
+  def pageLoadEvent(event: PageLoadEvent): Seq[Event] =
+    Seq(Event(s"rkss_pageurl", event.path, s"rkss_pageurl", dimensions(event.path)))
 
-  def activityValue(clientId: Option[String], event: ActivityValueEvent): AnalyticsRequest =
-    AnalyticsRequest(
-      clientId,
-      Seq(Event(s" rkss_activityvalue", event.value, s" rkss_activityvalue", dimensions(event.value)))
-    )
+  def activityValue(event: ActivityValueEvent): Seq[Event] =
+    Seq(Event(s" rkss_activityvalue", event.value, s" rkss_activityvalue", dimensions(event.value)))
 
 }

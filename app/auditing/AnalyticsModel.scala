@@ -16,8 +16,22 @@
 
 package auditing
 
+import play.api.libs.json.{Json, OFormat}
+
 case class DimensionValue(index: Int, value: String)
 
 case class Event(category: String, action: String, label: String, dimensions: Seq[DimensionValue])
 
 case class AnalyticsRequest(gaClientId: Option[String], events: Seq[Event])
+
+object DimensionValue {
+  implicit val format: OFormat[DimensionValue] = Json.format
+}
+
+object Event {
+  implicit val format: OFormat[Event] = Json.format
+}
+
+object AnalyticsRequest {
+  implicit val format: OFormat[AnalyticsRequest] = Json.format
+}

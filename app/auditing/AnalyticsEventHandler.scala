@@ -21,6 +21,7 @@ import play.api.mvc.Request
 import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.{Inject, Singleton}
+import scala.collection.Seq
 import scala.concurrent.ExecutionContext
 
 @Singleton
@@ -31,25 +32,20 @@ class AnalyticsEventHandler @Inject() (connector: AnalyticsConnector, factory: A
     event: MonitoringEvent
   )(implicit request: Request[_], hc: HeaderCarrier, ec: ExecutionContext): Unit =
     event match {
-      case e: ActivityTypeEvent        => sendEvent(e, factory.activityType)
-      case e: RadioButtonEvent         => sendEvent(e, factory.radioButtonEvent)
-      case e: CheckBoxEvent            => sendEvent(e, factory.checkBoxEvent)
-      case e: ApproximateValueEvent    => sendEvent(e, factory.approximateValue)
-      case e: PageLoadEvent            => sendEvent(e, factory.pageLoadEvent)
-      case e: ActivityValueEvent       => sendEvent(e, factory.activityValue)
-      case e: InternalServerErrorEvent => sendEvent(e, factory.internalServerError)
+      case e: ActivityTypeEvent        => sendEvent(factory.activityType(e))
+      case e: RadioButtonEvent         => sendEvent(factory.radioButtonEvent(e))
+      case e: CheckBoxEvent            => sendEvent(factory.checkBoxEvent(e))
+      case e: ApproximateValueEvent    => sendEvent(factory.approximateValue(e))
+      case e: PageLoadEvent            => sendEvent(factory.pageLoadEvent(e))
+      case e: ActivityValueEvent       => sendEvent(factory.activityValue(e))
+      case e: InternalServerErrorEvent => sendEvent(factory.internalServerError(e))
     }
 
   private def clientId(implicit request: Request[_]): Option[String] = request.cookies.get("_ga").map(_.value)
 
-  private def sendEvent[E <: MonitoringEvent](event: E, reqCreator: (Option[String], E) => AnalyticsRequest)(implicit
-    request: Request[_],
-    hc: HeaderCarrier,
-    ec: ExecutionContext
-  ): Unit = {
-    val analyticsRequest = reqCreator(clientId, event)
-    if (analyticsRequest.events.nonEmpty)
-      connector.sendEvent(analyticsRequest)
-  }
+  private def sendEvent(
+    events: Seq[Event]
+  )(implicit request: Request[_], hc: HeaderCarrier, ec: ExecutionContext): Unit =
+    connector.sendEvent(AnalyticsRequest(clientId, events))
 
 }

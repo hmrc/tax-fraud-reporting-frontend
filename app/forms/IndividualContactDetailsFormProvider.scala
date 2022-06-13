@@ -27,7 +27,7 @@ class IndividualContactDetailsFormProvider @Inject() extends Mappings {
 
   private val errorPrefix = "individualContactDetails.error"
 
-  private def field(key: String, isOptional: Boolean = false) = {
+  private def field(key: String, isOptional: Boolean) = {
     def errorMsg(problem: String) = s"$errorPrefix.$key.$problem"
 
     val textMapping = if (isOptional) text() else text(errorMsg("required"))

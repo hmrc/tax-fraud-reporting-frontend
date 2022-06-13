@@ -16,7 +16,7 @@
 
 package controllers
 
-import auditing.{AuditAndAnalyticsEventDispatcher, InternalServerErrorEvent, PageLoadEvent}
+import auditing.{AuditAndAnalyticsEventDispatcher, InternalServerErrorEvent}
 import controllers.actions._
 
 import javax.inject.Inject
