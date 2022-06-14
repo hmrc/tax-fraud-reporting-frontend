@@ -36,9 +36,6 @@ trait BackLinkFluency {
     def withCssClass(newClass: String): BackLink =
       backLink copy (classes = s"${backLink.classes} $newClass")
 
-    def withAttribute(attribute: (String, String)): BackLink =
-      backLink copy (attributes = backLink.attributes + attribute)
-
   }
 
 }

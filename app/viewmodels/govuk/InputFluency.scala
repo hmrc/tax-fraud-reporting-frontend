@@ -51,9 +51,6 @@ trait InputFluency {
         .withInputType("numeric")
         .withPattern("[0-9]*")
 
-    def withId(id: String): Input =
-      input copy (id = id)
-
     def withInputType(inputType: String): Input =
       input copy (inputType = inputType)
 
@@ -71,9 +68,6 @@ trait InputFluency {
 
     def withCssClass(newClass: String): Input =
       input copy (classes = s"${input.classes} $newClass")
-
-    def withAutocomplete(value: String): Input =
-      input copy (autocomplete = Some(value))
 
     def withPattern(pattern: String): Input =
       input copy (pattern = Some(pattern))

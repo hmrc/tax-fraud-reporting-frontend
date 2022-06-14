@@ -41,11 +41,11 @@ trait LabelFluency {
     def withCssClass(className: String): Label =
       label copy (classes = s"${label.classes} $className")
 
-    def withAttribute(attribute: (String, String)): Label =
-      label copy (attributes = label.attributes + attribute)
+    /*def withAttribute(attribute: (String, String)): Label =
+      label copy (attributes = label.attributes + attribute)*/
 
-    def forAttr(attr: String): Label =
-      label copy (forAttr = Some(attr))
+    /*def forAttr(attr: String): Label =
+      label copy (forAttr = Some(attr))*/
 
   }
 

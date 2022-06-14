@@ -40,9 +40,6 @@ trait FieldsetFluency {
     def withCssClass(newClass: String): Fieldset =
       fieldset copy (classes = s"${fieldset.classes} $newClass")
 
-    def withRole(role: String): Fieldset =
-      fieldset copy (role = Some(role))
-
     def withAttribute(attribute: (String, String)): Fieldset =
       fieldset copy (attributes = fieldset.attributes + attribute)
 

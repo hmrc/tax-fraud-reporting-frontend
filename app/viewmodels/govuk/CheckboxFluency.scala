@@ -18,12 +18,10 @@ package viewmodels.govuk
 
 import play.api.data.Form
 import play.api.i18n.Messages
-import play.twirl.api.Html
 import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.{CheckboxItem, Checkboxes}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Content
 import uk.gov.hmrc.govukfrontend.views.viewmodels.fieldset.{Fieldset, Legend}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
-import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
 import viewmodels.ErrorMessageAwareness
 
 object checkbox extends CheckboxFluency
@@ -71,20 +69,8 @@ trait CheckboxFluency {
 
   implicit class FluentCheckboxItem(item: CheckboxItem) {
 
-    def withLabel(label: Label): CheckboxItem =
-      item copy (label = Some(label))
-
     def withHint(hint: Hint): CheckboxItem =
       item copy (hint = Some(hint))
-
-    def withConditionalHtml(html: Html): CheckboxItem =
-      item copy (conditionalHtml = Some(html))
-
-    def disabled(): CheckboxItem =
-      item copy (disabled = true)
-
-    def withAttribute(attribute: (String, String)): CheckboxItem =
-      item copy (attributes = item.attributes + attribute)
 
   }
 

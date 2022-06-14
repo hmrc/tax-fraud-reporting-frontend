@@ -18,10 +18,10 @@ package navigation
 
 import base.SpecBase
 import controllers.routes
-import pages._
 import models._
 import org.scalacheck.Gen
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
+import pages._
 import services.ActivityTypeService
 
 import scala.language.postfixOps
@@ -1179,6 +1179,18 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
       }
     }
 
+    "must go from business select country page if select 'gb' " - {
+
+      "to the find address page if the user has selected 'gb' " in {
+        val answers = UserAnswers("id").set(BusinessSelectCountryPage(Index(0)), "gb").success.value
+        navigator.nextPage(
+          BusinessSelectCountryPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.BusinessFindAddressController.onPageLoad(Index(0), NormalMode)
+      }
+    }
+
     "in Check mode" - {
 
       "must go from a page that doesn't exist in the edit route map to CheckYourAnswers" in {
@@ -1449,12 +1461,21 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
       "must go from the business select country page" - {
 
         "to the check your answers page when select country" in {
-          val answers = UserAnswers("id").set(BusinessSelectCountryPage(Index(0)), "foobar").success.value
+          val answers = UserAnswers("id").set(BusinessSelectCountryPage(Index(0)), "country").success.value
           navigator.nextPage(
             BusinessSelectCountryPage(Index(0)),
             CheckMode,
             answers
           ) mustBe routes.BusinessAddressController.onPageLoad(Index(0), CheckMode)
+        }
+
+        "to the check your answers page when selected country is gb" in {
+          val answers = UserAnswers("id").set(BusinessSelectCountryPage(Index(0)), "gb").success.value
+          navigator.nextPage(
+            BusinessSelectCountryPage(Index(0)),
+            CheckMode,
+            answers
+          ) mustBe routes.BusinessFindAddressController.onPageLoad(Index(0), CheckMode)
         }
 
         "to the journey recovery controller if there is no activity type set" in {
@@ -1476,6 +1497,15 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             CheckMode,
             answers
           ) mustBe routes.IndividualAddressController.onPageLoad(Index(0), CheckMode)
+        }
+
+        "to the individual select country page if the user has selected 'gb'" in {
+          val answers = UserAnswers("id").set(IndividualSelectCountryPage(Index(0)), "gb").success.value
+          navigator.nextPage(
+            IndividualSelectCountryPage(Index(0)),
+            CheckMode,
+            answers
+          ) mustBe routes.FindAddressController.onPageLoad(Index(0), CheckMode)
         }
 
         "to the journey recovery controller if there is no activity type set" in {

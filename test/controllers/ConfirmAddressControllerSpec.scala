@@ -17,14 +17,13 @@
 package controllers
 
 import base.SpecBase
-import models.{Index, NormalMode, UserAnswers}
+import models.{Index, NormalMode}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
 class ConfirmAddressControllerSpec extends SpecBase {
 
-  private val userAnswers = UserAnswers(userAnswersId)
-  private val answers     = emptyUserAnswers
+  private val answers = emptyUserAnswers
 
   private lazy val confirmAddressRoute = routes.ConfirmAddressController.onPageLoad(Index(0), true, NormalMode).url
 
@@ -36,10 +35,8 @@ class ConfirmAddressControllerSpec extends SpecBase {
 
       running(application) {
 
-        val isBusinessJourney = userAnswers.isBusinessJourney
-
         val request =
-          FakeRequest(GET, routes.ConfirmAddressController.onPageLoad(Index(0), isBusinessJourney, NormalMode).url)
+          FakeRequest(GET, confirmAddressRoute)
 
         val result = route(application, request).value
         status(result) mustEqual SEE_OTHER

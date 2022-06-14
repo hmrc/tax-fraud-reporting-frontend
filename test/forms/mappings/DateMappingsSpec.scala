@@ -24,10 +24,22 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.data.{Form, FormError}
-import play.api.i18n.Messages
+import play.api.i18n.{Messages, MessagesApi}
+import play.api.mvc.AnyContentAsEmpty
+import play.api.test.CSRFTokenHelper.CSRFFRequestHeader
+import play.api.test.FakeRequest
+import play.api.test.Helpers.baseApplicationBuilder.injector
 
-class DateMappingsSpec(implicit messages: Messages)
+class DateMappingsSpec
     extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with Generators with OptionValues with Mappings {
+
+  def messagesApi = injector.instanceOf[MessagesApi]
+
+  lazy val fakeRequest: FakeRequest[AnyContentAsEmpty.type] =
+    FakeRequest("", "").withCSRFToken
+      .asInstanceOf[FakeRequest[AnyContentAsEmpty.type]]
+
+  implicit val messages: Messages = messagesApi.preferred(fakeRequest)
 
   val form = Form(
     "value" -> localDate(
