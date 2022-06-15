@@ -17,34 +17,26 @@
 package controllers
 
 import base.SpecBase
-import config.FrontendAppConfig
 import models.UserAnswers
-import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import views.html.ReportSubmittedView
+import play.api.i18n.Lang
+import play.api.test.Helpers.running
 
-class ReportSubmittedControllerSpec extends SpecBase {
+class LanguageSwitchControllerSpec extends SpecBase {
 
   private val userAnswers = UserAnswers(userAnswersId)
 
-  "ReportSubmitted Controller" - {
+  "LanguageSwitch Controller" - {
 
-    "must return OK and the correct view for a GET" in {
-      val isProvideContact = userAnswers.isProvideContact
+    "fallbackURL and languageMap must be correct" in {
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val appConfig = application.injector.instanceOf[FrontendAppConfig]
-        val request   = FakeRequest(GET, routes.ReportSubmittedController.onPageLoad().url)
-
-        val result = route(application, request).value
-
-        val view = application.injector.instanceOf[ReportSubmittedView]
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(appConfig, isProvideContact)(request, messages(application)).toString
+        val controller = application.injector.instanceOf[LanguageSwitchController]
+        controller.fallbackURL mustBe routes.IndexController.onPageLoad.url
+        controller.languageMap mustBe Map("en" -> Lang("en"), "cy" -> Lang("cy"))
       }
     }
   }
+
 }

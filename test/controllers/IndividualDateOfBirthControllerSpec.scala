@@ -23,20 +23,30 @@ import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
 import pages.IndividualDateOfBirthPage
 import play.api.data.Form
-import play.api.i18n.Messages
+import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
+import play.api.test.CSRFTokenHelper.CSRFFRequestHeader
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import play.api.test.Helpers.baseApplicationBuilder.injector
 import repositories.SessionRepository
 import views.html.IndividualDateOfBirthView
 
 import java.time.{LocalDate, ZoneOffset}
 import scala.concurrent.Future
 
-class IndividualDateOfBirthControllerSpec(implicit messages: Messages) extends SpecBase {
+class IndividualDateOfBirthControllerSpec extends SpecBase {
+
+  def messagesApi = injector.instanceOf[MessagesApi]
 
   val formProvider = new IndividualDateOfBirthFormProvider()
+
+  lazy val fakeRequest: FakeRequest[AnyContentAsEmpty.type] =
+    FakeRequest("", "").withCSRFToken
+      .asInstanceOf[FakeRequest[AnyContentAsEmpty.type]]
+
+  implicit val messages: Messages = messagesApi.preferred(fakeRequest)
 
   private def form(implicit messages: Messages): Form[LocalDate] = formProvider()
 
