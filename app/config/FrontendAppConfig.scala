@@ -45,13 +45,6 @@ class FrontendAppConfig @Inject() (servicesConfig: ServicesConfig, configuration
   def contactFeedbackUrl(implicit request: RequestHeader): String =
     s"$contactHost/contact/beta-feedback-unauthenticated??service=$contactFormServiceIdentifier&backUrl=${SafeRedirectUrl(host + request.uri).encodedUrl}"
 
-  val loginUrl: String         = configuration.get[String]("urls.login")
-  val loginContinueUrl: String = configuration.get[String]("urls.loginContinue")
-  val signOutUrl: String       = configuration.get[String]("urls.signOut")
-
-  private val exitSurveyBaseUrl: String = configuration.get[Service]("microservice.services.feedback-frontend").baseUrl
-  val exitSurveyUrl: String             = s"$exitSurveyBaseUrl/feedback/tax-fraud-reporting-frontend"
-
   val languageTranslationEnabled: Boolean =
     configuration.get[Boolean]("features.welsh-translation")
 
