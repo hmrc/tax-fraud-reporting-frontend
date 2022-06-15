@@ -24,6 +24,7 @@ import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpResponse}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
+import uk.gov.hmrc.http.HttpReads.Implicits._
 
 @Singleton
 class AnalyticsConnector @Inject() (appConfig: FrontendAppConfig, http: HttpClient) extends Logging {

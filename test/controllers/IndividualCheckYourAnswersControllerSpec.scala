@@ -82,6 +82,8 @@ class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryList
           ReferenceNumbers(Some("vatRegistration"), Some("employeeRefNo"), Some("corporationTax"))
         ).success.value
         .set(SelectConnectionBusinessPage(Index(0)), SelectConnectionBusiness.Accountant).success.value
+        .set(IndividualSelectCountryPage(Index(0)), "United Kingdom").success.value
+        .set(BusinessSelectCountryPage(Index(0)), "Scotland").success.value
 
       val application = applicationBuilder(userAnswers = Some(answers))
         .overrides(inject.bind[Navigator].toInstance(getFakeNavigator(onwardRoute))).build()
@@ -99,6 +101,7 @@ class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryList
             IndividualDateFormatSummary.row(answers, 0, NormalMode)(messages(application)),
             IndividualDateOfBirthSummary.row(answers, 0, NormalMode)(messages(application)),
             IndividualAgeSummary.row(answers, 0, NormalMode)(messages(application)),
+            IndividualSelectCountrySummary.row(answers, 0, NormalMode)(messages(application)),
             IndividualAddressSummary.row(answers, 0, NormalMode)(messages(application)),
             IndividualContactDetailsSummary.row(answers, 0, NormalMode)(messages(application)),
             IndividualNationalInsuranceNumberSummary.row(answers, 0, NormalMode)(messages(application)),
@@ -111,6 +114,7 @@ class IndividualCheckYourAnswersControllerSpec extends SpecBase with SummaryList
           Seq(
             BusinessNameSummary.row(answers, 0, NormalMode)(messages(application)),
             TypeBusinessSummary.row(answers, 0, NormalMode)(messages(application)),
+            BusinessSelectCountrySummary.row(answers, 0, NormalMode)(messages(application)),
             BusinessAddressSummary.row(answers, 0, NormalMode)(messages(application)),
             BusinessContactDetailsSummary.row(answers, 0, NormalMode)(messages(application)),
             ReferenceNumbersSummary.row(answers, 0, NormalMode)(messages(application)),

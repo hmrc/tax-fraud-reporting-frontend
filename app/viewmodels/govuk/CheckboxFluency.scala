@@ -52,9 +52,6 @@ trait CheckboxFluency {
 
   implicit class FluentCheckboxes(checkboxes: Checkboxes) {
 
-    def describedBy(value: String): Checkboxes =
-      checkboxes copy (describedBy = Some(value))
-
     def withHint(hint: Hint): Checkboxes =
       checkboxes copy (hint = Some(hint))
 
@@ -64,13 +61,6 @@ trait CheckboxFluency {
 
     def apply(content: Content, fieldId: String, index: Int, value: String): CheckboxItem =
       CheckboxItem(content = content, id = Some(s"${fieldId}_$index"), name = Some(s"$fieldId[$index]"), value = value)
-
-  }
-
-  implicit class FluentCheckboxItem(item: CheckboxItem) {
-
-    def withHint(hint: Hint): CheckboxItem =
-      item copy (hint = Some(hint))
 
   }
 

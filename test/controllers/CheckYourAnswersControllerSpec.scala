@@ -33,6 +33,8 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
 
     "must return OK and the correct view for a GET" in {
 
+      val approxVal = 1000
+
       val answers = emptyUserAnswers
         .set(BusinessNamePage(Index(0)), "name").success.value
         .set(TypeBusinessPage(Index(0)), "businessType").success.value
@@ -67,6 +69,19 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency {
         .set(IndividualConnectionPage(Index(0)), IndividualConnection.Partner).success.value
         .set(IndividualBusinessDetailsPage(Index(0)), IndividualBusinessDetails.Yes).success.value
         .set(ProvideContactDetailsPage, ProvideContactDetails.Yes).success.value
+        .set(
+          YourContactDetailsPage,
+          YourContactDetails("FirstName", "LastName", "Tel", Some("Email"), Some("MemorableWord"))
+        ).success.value
+        .set(WhenActivityHappenPage, WhenActivityHappen.OverFiveYears).success.value
+        .set(SupportingDocumentPage, SupportingDocument.Yes).success.value
+        .set(HowManyPeopleKnowPage, HowManyPeopleKnow.MoreThanTenIndividuals).success.value
+        .set(DocumentationDescriptionPage, "documentation").success.value
+        .set(DescriptionActivityPage, "description").success.value
+        .set(ApproximateValuePage, BigDecimal(approxVal)).success.value
+        .set(ActivityTypePage, "activityType").success.value
+        .set(ActivityTimePeriodPage, ActivityTimePeriod.NextWeek).success.value
+        .set(ActivitySourceOfInformationPage, ActivitySourceOfInformation.ObservedTheActivity).success.value
 
       val isBusinessJourney = answers.isBusinessJourney
 
