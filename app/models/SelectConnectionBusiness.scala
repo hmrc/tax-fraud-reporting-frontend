@@ -20,7 +20,7 @@ import play.api.libs.json._
 
 sealed trait SelectConnectionBusiness
 
-object SelectConnectionBusiness extends Enumerable.Implicits {
+object SelectConnectionBusiness {
 
   case object Accountant                extends WithName("accountant") with SelectConnectionBusiness
   case object Auditor                   extends WithName("auditor") with SelectConnectionBusiness
