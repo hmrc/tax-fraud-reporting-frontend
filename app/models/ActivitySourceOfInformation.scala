@@ -20,7 +20,7 @@ import play.api.libs.json._
 
 sealed trait ActivitySourceOfInformation
 
-object ActivitySourceOfInformation extends Enumerable.Implicits {
+object ActivitySourceOfInformation {
 
   case object ReportedIndividuals       extends WithName("reportedIndividuals") with ActivitySourceOfInformation
   case object InformationInLocalArea    extends WithName("informationInLocalArea") with ActivitySourceOfInformation

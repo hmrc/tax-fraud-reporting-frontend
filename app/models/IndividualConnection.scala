@@ -51,15 +51,6 @@ object IndividualConnection extends {
     BusinessCompetitor
   )
 
-//  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
-//    case (value, index) =>
-//      RadioItem(
-//        content = Text(messages(s"individualConnection.${value.toString}")),
-//        value   = Some(value.toString),
-//        id      = Some(s"value_$index")
-//      )
-//  }
-
   implicit lazy val writes: Writes[IndividualConnection] = Writes {
     case Other(value) => Json.obj("type" -> "other", "value" -> value)
     case other        => Json.obj("type" -> other.toString)
