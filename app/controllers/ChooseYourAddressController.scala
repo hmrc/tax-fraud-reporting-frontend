@@ -16,17 +16,16 @@
 
 package controllers
 
-import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
 import controllers.countOfResults.{NoResults, ResultsList}
-import controllers.helper.AddressLookUpHelper
+import controllers.helper.{AddressLookUpHelper, EventHelper}
 import forms.ChooseYourAddressFormProvider
 
 import javax.inject.Inject
 import models.{AddressSansCountry, Index, Mode}
 import navigation.Navigator
 import pages.{ChooseYourAddressPage, FindAddressPage, IndividualAddressPage}
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import services.AddressService
@@ -47,7 +46,7 @@ class ChooseYourAddressController @Inject() (
   view: ChooseYourAddressView,
   addressService: AddressService,
   addressLookUpHelper: AddressLookUpHelper,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+  val eventHelper: EventHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -55,7 +54,7 @@ class ChooseYourAddressController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
+       eventHelper.pageLoadEvent(request.path)
       request.userAnswers.get(FindAddressPage(index)) match {
         case None => Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
         case Some(value) =>
@@ -75,12 +74,14 @@ class ChooseYourAddressController @Inject() (
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
-        formWithErrors =>
+        formWithErrors => {
+          eventHelper.formErrorEvent(request.path, messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message))
           Future.successful(
             BadRequest(
               view(formWithErrors, index, mode, Proposals(request.userAnswers.get(ChooseYourAddressPage(index))))
             )
-          ),
+          )
+        },
         value =>
           request.userAnswers.get(ChooseYourAddressPage(index)) match {
             case Some(addressList) =>

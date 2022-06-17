@@ -16,13 +16,13 @@
 
 package controllers
 
-import auditing.{AuditAndAnalyticsEventDispatcher, CheckBoxEvent, PageLoadEvent}
 import controllers.actions._
+import controllers.helper.EventHelper
 import forms.BusinessInformationCheckFormProvider
 import models.{Index, Mode}
 import navigation.Navigator
 import pages.BusinessInformationCheckPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -41,7 +41,7 @@ class BusinessInformationCheckController @Inject() (
   formProvider: BusinessInformationCheckFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: BusinessInformationCheckView,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+  val eventHelper: EventHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -50,7 +50,7 @@ class BusinessInformationCheckController @Inject() (
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val isBusinessJourney = request.userAnswers.isBusinessJourney
-      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
+       eventHelper.pageLoadEvent(request.path)
       val preparedForm = request.userAnswers.get(BusinessInformationCheckPage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -63,9 +63,12 @@ class BusinessInformationCheckController @Inject() (
     implicit request =>
       val isBusinessJourney = request.userAnswers.isBusinessJourney
       form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, isBusinessJourney))),
+        formWithErrors => {
+          eventHelper.formErrorEvent(request.path, messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message))
+          Future.successful(BadRequest(view(formWithErrors, index, mode, isBusinessJourney)))
+        },
         value => {
-          eventDispatcher.dispatchEvent(CheckBoxEvent(request.path, value.mkString(" ")))
+          eventHelper.checkBoxEvent(request.path, value.mkString(" "))
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessInformationCheckPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)

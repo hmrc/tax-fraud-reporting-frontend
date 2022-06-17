@@ -16,15 +16,15 @@
 
 package controllers
 
-import auditing.AuditAndAnalyticsEventDispatcher
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
+import controllers.helper.EventHelper
 import forms.AddressFormProvider
 import models.requests.DataRequest
 import models.{AddressSansCountry, Index, Mode}
 import navigation.Navigator
 import pages.{BusinessAddressPage, BusinessSelectCountryPage}
 import play.api.data.Form
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -43,12 +43,13 @@ class BusinessAddressController @Inject() (
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: AddressView,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+  val eventHelper: EventHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+      eventHelper.pageLoadEvent(request.path)
       withCountry(
         index,
         mode,
@@ -73,8 +74,10 @@ class BusinessAddressController @Inject() (
         mode,
         (countryCode, form) =>
           form.bindFromRequest().fold(
-            formWithErrors =>
-              Future.successful(BadRequest(view(formWithErrors, countryCode, index, mode, journeyPart))),
+            formWithErrors => {
+              eventHelper.formErrorEvent(request.path, messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message))
+              Future.successful(BadRequest(view(formWithErrors, countryCode, index, mode, journeyPart)))
+            },
             address =>
               for {
                 updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessAddressPage(index), address))

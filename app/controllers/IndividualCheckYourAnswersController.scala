@@ -16,9 +16,9 @@
 
 package controllers
 
-import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
+import controllers.helper.EventHelper
 import models.{Index, IndividualBusinessDetails, Mode}
 import navigation.Navigator
 import pages.{IndividualBusinessDetailsPage, IndividualCheckYourAnswersPage}
@@ -39,14 +39,14 @@ class IndividualCheckYourAnswersController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   view: IndividualCheckYourAnswersView,
   navigator: Navigator,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+  val eventHelper: EventHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val answers = request.userAnswers
-      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
+       eventHelper.pageLoadEvent(request.path)
       val individualDetails =
         SummaryListViewModel(
           Seq(

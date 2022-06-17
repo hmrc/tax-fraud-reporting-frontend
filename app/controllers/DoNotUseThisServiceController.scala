@@ -16,8 +16,8 @@
 
 package controllers
 
-import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
+import controllers.helper.EventHelper
 import pages.ActivityTypePage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -26,7 +26,6 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.DoNotUseThisServiceView
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
 class DoNotUseThisServiceController @Inject() (
   override val messagesApi: MessagesApi,
@@ -36,13 +35,12 @@ class DoNotUseThisServiceController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   view: DoNotUseThisServiceView,
   activityTypeService: ActivityTypeService,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
-)(implicit ec: ExecutionContext)
-    extends FrontendBaseController with I18nSupport {
+  val eventHelper: EventHelper
+) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
+      eventHelper.pageLoadEvent(request.path)
       request.userAnswers get ActivityTypePage flatMap activityTypeService.getDepartmentFor match {
         case Some(department) => Ok(view(department))
         case None             => Redirect(routes.JourneyRecoveryController.onPageLoad())

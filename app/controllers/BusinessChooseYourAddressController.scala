@@ -16,10 +16,9 @@
 
 package controllers
 
-import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
 import controllers.countOfResults.{NoResults, ResultsList}
-import controllers.helper.AddressLookUpHelper
+import controllers.helper.{AddressLookUpHelper, EventHelper}
 import forms.BusinessChooseYourAddressFormProvider
 import models.{AddressSansCountry, Index, Mode}
 
@@ -27,7 +26,7 @@ import javax.inject.Inject
 import services.AddressService
 import navigation.Navigator
 import pages.{BusinessAddressPage, BusinessChooseYourAddressPage, BusinessFindAddressPage}
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -47,7 +46,7 @@ class BusinessChooseYourAddressController @Inject() (
   view: BusinessChooseYourAddressView,
   addressService: AddressService,
   addressLookUpHelper: AddressLookUpHelper,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+  val eventHelper: EventHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -56,7 +55,7 @@ class BusinessChooseYourAddressController @Inject() (
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
-      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
+       eventHelper.pageLoadEvent(request.path)
       request.userAnswers.get(BusinessFindAddressPage(index)) match {
         case None =>
           Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
@@ -78,7 +77,8 @@ class BusinessChooseYourAddressController @Inject() (
     implicit request =>
       val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
       form.bindFromRequest().fold(
-        formWithErrors =>
+        formWithErrors => {
+         eventHelper.formErrorEvent(request.path, messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message))
           Future.successful(
             BadRequest(
               view(
@@ -89,7 +89,8 @@ class BusinessChooseYourAddressController @Inject() (
                 isBusinessDetails
               )
             )
-          ),
+          )
+        },
         value =>
           request.userAnswers.get(BusinessChooseYourAddressPage(index)) match {
             case Some(addressList) =>

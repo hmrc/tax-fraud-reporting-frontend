@@ -16,8 +16,8 @@
 
 package controllers
 
-import auditing.{AuditAndAnalyticsEventDispatcher, InternalServerErrorEvent}
 import controllers.actions._
+import controllers.helper.EventHelper
 
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -34,13 +34,13 @@ class TechnicalProblemsController @Inject() (
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: TechnicalProblemsView,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+  val eventHelper: EventHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = identify {
     implicit request =>
-      eventDispatcher.dispatchEvent(InternalServerErrorEvent("Technical Error"))
+      eventHelper.internalServerErrorEvent("Technical Error")
       Ok(view())
   }
 

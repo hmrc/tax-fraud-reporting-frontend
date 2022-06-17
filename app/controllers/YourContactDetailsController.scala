@@ -16,15 +16,15 @@
 
 package controllers
 
-import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
+import controllers.helper.EventHelper
 import forms.YourContactDetailsFormProvider
 
 import javax.inject.Inject
 import models.Mode
 import navigation.Navigator
 import pages.YourContactDetailsPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -42,7 +42,7 @@ class YourContactDetailsController @Inject() (
   formProvider: YourContactDetailsFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: YourContactDetailsView,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+  val eventHelper: EventHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -50,7 +50,7 @@ class YourContactDetailsController @Inject() (
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
+       eventHelper.pageLoadEvent(request.path)
       val preparedForm = request.userAnswers.get(YourContactDetailsPage) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -62,7 +62,10 @@ class YourContactDetailsController @Inject() (
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+        formWithErrors => {
+          eventHelper.formErrorEvent(request.path, messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message))
+          Future.successful(BadRequest(view(formWithErrors, mode)))
+        },
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(YourContactDetailsPage, value))

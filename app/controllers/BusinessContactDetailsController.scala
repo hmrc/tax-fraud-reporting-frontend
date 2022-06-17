@@ -16,15 +16,15 @@
 
 package controllers
 
-import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
+import controllers.helper.EventHelper
 import forms.BusinessContactDetailsFormProvider
 
 import javax.inject.Inject
 import models.{Index, Mode}
 import navigation.Navigator
 import pages.BusinessContactDetailsPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -42,7 +42,7 @@ class BusinessContactDetailsController @Inject() (
   formProvider: BusinessContactDetailsFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: BusinessContactDetailsView,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+  val eventHelper: EventHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -51,7 +51,7 @@ class BusinessContactDetailsController @Inject() (
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val isBusinessJourney = request.userAnswers.isBusinessJourney
-      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
+       eventHelper.pageLoadEvent(request.path)
       val preparedForm = request.userAnswers.get(BusinessContactDetailsPage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -64,7 +64,10 @@ class BusinessContactDetailsController @Inject() (
     implicit request =>
       val isBusinessJourney = request.userAnswers.isBusinessJourney
       form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, isBusinessJourney))),
+        formWithErrors => {
+          eventHelper.formErrorEvent(request.path, messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message))
+          Future.successful(BadRequest(view(formWithErrors, index, mode, isBusinessJourney)))
+        },
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessContactDetailsPage(index), value))

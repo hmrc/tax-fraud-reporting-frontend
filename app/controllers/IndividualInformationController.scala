@@ -16,15 +16,15 @@
 
 package controllers
 
-import auditing.{AuditAndAnalyticsEventDispatcher, CheckBoxEvent, PageLoadEvent}
 import controllers.actions._
+import controllers.helper.EventHelper
 import forms.IndividualInformationFormProvider
 
 import javax.inject.Inject
 import models.{Index, Mode}
 import navigation.Navigator
 import pages.IndividualInformationPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -42,7 +42,7 @@ class IndividualInformationController @Inject() (
   formProvider: IndividualInformationFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: IndividualInformationView,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+  val eventHelper: EventHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -50,7 +50,7 @@ class IndividualInformationController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
+       eventHelper.pageLoadEvent(request.path)
       val preparedForm = request.userAnswers.get(IndividualInformationPage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -62,9 +62,12 @@ class IndividualInformationController @Inject() (
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode))),
+        formWithErrors => {
+          eventHelper.formErrorEvent(request.path, messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message))
+          Future.successful(BadRequest(view(formWithErrors, index, mode)))
+        },
         value => {
-          eventDispatcher.dispatchEvent(CheckBoxEvent(request.path, value.mkString(" ")))
+          eventHelper.checkBoxEvent(request.path, value.mkString(" "))
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualInformationPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
