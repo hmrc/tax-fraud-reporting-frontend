@@ -49,7 +49,7 @@ class IndividualAddressController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-       eventHelper.pageLoadEvent(request.path)
+      eventHelper.pageLoadEvent(request.path)
       withCountry(
         index,
         mode,
@@ -73,7 +73,10 @@ class IndividualAddressController @Inject() (
         (countryCode, form) =>
           form.bindFromRequest().fold(
             formWithErrors => {
-              eventHelper.formErrorEvent(request.path, messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message))
+              eventHelper.formErrorEvent(
+                request.path,
+                messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+              )
               Future.successful(BadRequest(view(formWithErrors, countryCode, index, mode, IndividualPart(false))))
             },
             address =>

@@ -25,8 +25,6 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.TechnicalProblemsView
 
-import scala.concurrent.ExecutionContext
-
 class TechnicalProblemsController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
@@ -35,8 +33,7 @@ class TechnicalProblemsController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   view: TechnicalProblemsView,
   val eventHelper: EventHelper
-)(implicit ec: ExecutionContext)
-    extends FrontendBaseController with I18nSupport {
+) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = identify {
     implicit request =>

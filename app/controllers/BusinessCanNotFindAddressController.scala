@@ -26,8 +26,6 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.BusinessCanNotFindAddressView
 
-import scala.concurrent.ExecutionContext
-
 class BusinessCanNotFindAddressController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
@@ -36,13 +34,12 @@ class BusinessCanNotFindAddressController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   view: BusinessCanNotFindAddressView,
   val eventHelper: EventHelper
-)(implicit ec: ExecutionContext)
-    extends FrontendBaseController with I18nSupport {
+) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
-       eventHelper.pageLoadEvent(request.path)
+      eventHelper.pageLoadEvent(request.path)
       Ok(view(index, mode, isBusinessDetails))
   }
 

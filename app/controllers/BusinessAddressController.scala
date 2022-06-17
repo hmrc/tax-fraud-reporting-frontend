@@ -75,7 +75,10 @@ class BusinessAddressController @Inject() (
         (countryCode, form) =>
           form.bindFromRequest().fold(
             formWithErrors => {
-              eventHelper.formErrorEvent(request.path, messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message))
+              eventHelper.formErrorEvent(
+                request.path,
+                messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+              )
               Future.successful(BadRequest(view(formWithErrors, countryCode, index, mode, journeyPart)))
             },
             address =>

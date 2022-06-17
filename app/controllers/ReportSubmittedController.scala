@@ -44,7 +44,7 @@ class ReportSubmittedController @Inject() (
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-       eventHelper.pageLoadEvent(request.path)
+      eventHelper.pageLoadEvent(request.path)
       val isProvideContact = request.userAnswers.isProvideContact
       sessionRepository
         .clear(request.userId)

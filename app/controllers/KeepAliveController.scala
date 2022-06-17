@@ -36,7 +36,7 @@ class KeepAliveController @Inject() (
 
   def keepAlive: Action[AnyContent] = (identify andThen getData).async {
     implicit request =>
-       eventHelper.pageLoadEvent(request.path)
+      eventHelper.pageLoadEvent(request.path)
       request.userAnswers
         .map {
           answers =>

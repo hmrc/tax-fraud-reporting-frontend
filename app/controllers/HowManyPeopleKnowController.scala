@@ -50,7 +50,7 @@ class HowManyPeopleKnowController @Inject() (
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-       eventHelper.pageLoadEvent(request.path)
+      eventHelper.pageLoadEvent(request.path)
       val preparedForm = request.userAnswers.get(HowManyPeopleKnowPage) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -63,11 +63,14 @@ class HowManyPeopleKnowController @Inject() (
     implicit request =>
       form.bindFromRequest().fold(
         formWithErrors => {
-          eventHelper.formErrorEvent(request.path, messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message))
+          eventHelper.formErrorEvent(
+            request.path,
+            messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+          )
           Future.successful(BadRequest(view(formWithErrors, mode)))
         },
         value => {
-           eventHelper.radioButtonEvent(request.path, value.toString)
+          eventHelper.radioButtonEvent(request.path, value.toString)
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(HowManyPeopleKnowPage, value))
             _              <- sessionRepository.set(updatedAnswers)

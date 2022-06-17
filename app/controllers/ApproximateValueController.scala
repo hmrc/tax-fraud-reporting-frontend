@@ -49,7 +49,7 @@ class ApproximateValueController @Inject() (
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-       eventHelper.pageLoadEvent(request.path)
+      eventHelper.pageLoadEvent(request.path)
       val whatActivityHappened = request.userAnswers.get(WhenActivityHappenPage).getOrElse(
         throw new Exception(s"activity duration is not saved in cache")
       )
@@ -68,7 +68,10 @@ class ApproximateValueController @Inject() (
       )
       form.bindFromRequest().fold(
         formWithErrors => {
-          eventHelper.formErrorEvent(request.path, messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message))
+          eventHelper.formErrorEvent(
+            request.path,
+            messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+          )
           Future.successful(BadRequest(view(formWithErrors, mode, whatActivityHappened)))
         },
         value => {

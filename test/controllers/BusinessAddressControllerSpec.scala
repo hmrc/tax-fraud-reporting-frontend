@@ -19,6 +19,7 @@ package controllers
 import akka.actor.ActorSystem
 import auditing.AuditAndAnalyticsEventDispatcher
 import controllers.actions.{DataRequiredActionImpl, DataRetrievalActionImpl, SessionIdentifierAction}
+import controllers.helper.EventHelper
 import models.backend.Address
 import models.requests.DataRequest
 import models.{Index, NormalMode, UserAnswers}
@@ -52,9 +53,9 @@ import scala.concurrent.{ExecutionContext, ExecutionContextExecutor, Future}
 
 class BusinessAddressControllerSpec extends AnyFlatSpec with MockitoSugar with ScalaFutures {
 
-  private val mockAddressView  = mock[AddressView]
-  private val testHtml         = "testHtml"
-  private val mockEventHandler = mock[AuditAndAnalyticsEventDispatcher]
+  private val mockAddressView = mock[AddressView]
+  private val testHtml        = "testHtml"
+  private val mockEventHelper = mock[EventHelper]
   when {
     mockAddressView.apply(any(), any(), any(), any(), any())(any(), any())
   } thenReturn Html(testHtml)
@@ -85,7 +86,7 @@ class BusinessAddressControllerSpec extends AnyFlatSpec with MockitoSugar with S
       new DataRequiredActionImpl(),
       mcc,
       mockAddressView,
-      mockEventHandler
+      mockEventHelper
     )
 
     test(userAnswers, businessAddressController)

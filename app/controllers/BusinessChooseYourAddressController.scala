@@ -55,7 +55,7 @@ class BusinessChooseYourAddressController @Inject() (
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
-       eventHelper.pageLoadEvent(request.path)
+      eventHelper.pageLoadEvent(request.path)
       request.userAnswers.get(BusinessFindAddressPage(index)) match {
         case None =>
           Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
@@ -78,7 +78,10 @@ class BusinessChooseYourAddressController @Inject() (
       val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
       form.bindFromRequest().fold(
         formWithErrors => {
-         eventHelper.formErrorEvent(request.path, messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message))
+          eventHelper.formErrorEvent(
+            request.path,
+            messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+          )
           Future.successful(
             BadRequest(
               view(

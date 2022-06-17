@@ -50,7 +50,7 @@ class ActivityTypeController @Inject() (
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData) {
     implicit request =>
       val userAnswers = request.userAnswers getOrElse UserAnswers(request.userId)
-       eventHelper.pageLoadEvent(request.path)
+      eventHelper.pageLoadEvent(request.path)
       val preparedForm = userAnswers get ActivityTypePage match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -63,7 +63,10 @@ class ActivityTypeController @Inject() (
     implicit request =>
       form.bindFromRequest().fold(
         formWithErrors => {
-         eventHelper.formErrorEvent(request.path, messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message))
+          eventHelper.formErrorEvent(
+            request.path,
+            messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+          )
           Future.successful(BadRequest(view(formWithErrors, mode)))
         },
         value => {

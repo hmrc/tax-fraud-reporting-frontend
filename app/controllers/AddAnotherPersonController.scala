@@ -47,7 +47,7 @@ class AddAnotherPersonController @Inject() (
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-       eventHelper.pageLoadEvent(request.path)
+      eventHelper.pageLoadEvent(request.path)
       val numberOfNominals = request.userAnswers.get(NominalsQuery).getOrElse(List.empty).length
       Ok(view(form, numberOfNominals, mode))
   }
@@ -56,12 +56,15 @@ class AddAnotherPersonController @Inject() (
     implicit request =>
       form.bindFromRequest().fold(
         formWithErrors => {
-         eventHelper.formErrorEvent(request.path, messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message))
+          eventHelper.formErrorEvent(
+            request.path,
+            messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+          )
           val numberOfNominals = request.userAnswers.get(NominalsQuery).getOrElse(List.empty).length
           Future.successful(BadRequest(view(formWithErrors, numberOfNominals, mode)))
         },
         value => {
-           eventHelper.radioButtonEvent(request.path, value.toString)
+          eventHelper.radioButtonEvent(request.path, value.toString)
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(AddAnotherPersonPage, value))
           } yield Redirect(navigator.nextPage(AddAnotherPersonPage, mode, updatedAnswers))

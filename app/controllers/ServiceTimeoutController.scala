@@ -25,7 +25,6 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ServiceTimeoutView
 
-
 class ServiceTimeoutController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,

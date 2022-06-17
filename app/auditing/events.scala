@@ -26,4 +26,4 @@ case class RadioButtonEvent(path: String, value: String) extends MonitoringEvent
 case class CheckBoxEvent(path: String, value: String)    extends MonitoringEvent
 case class ApproximateValueEvent(action: String)         extends MonitoringEvent
 case class ActivityValueEvent(value: String)             extends MonitoringEvent
-case class FormErrorEvent(path: String, error: String)    extends MonitoringEvent
+case class FormErrorEvent(path: String, error: String)   extends MonitoringEvent

@@ -50,7 +50,7 @@ class ReferenceNumbersController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-       eventHelper.pageLoadEvent(request.path)
+      eventHelper.pageLoadEvent(request.path)
       val isBusinessJourney = request.userAnswers.isBusinessJourney
       val preparedForm = request.userAnswers.get(ReferenceNumbersPage(index)) match {
         case None        => form
@@ -65,7 +65,10 @@ class ReferenceNumbersController @Inject() (
       val isBusinessJourney = request.userAnswers.isBusinessJourney
       form.bindFromRequest().fold(
         formWithErrors => {
-          eventHelper.formErrorEvent(request.path, messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message))
+          eventHelper.formErrorEvent(
+            request.path,
+            messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+          )
           Future.successful(BadRequest(view(formWithErrors, index, mode, isBusinessJourney)))
         },
         value =>

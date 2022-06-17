@@ -51,7 +51,7 @@ class BusinessSelectCountryController @Inject() (
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val countryJourney = if (request.userAnswers.isBusinessJourney) Business else Individual(true)
-       eventHelper.pageLoadEvent(request.path)
+      eventHelper.pageLoadEvent(request.path)
       val preparedForm = request.userAnswers.get(BusinessSelectCountryPage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -65,7 +65,10 @@ class BusinessSelectCountryController @Inject() (
       val countryJourney = if (request.userAnswers.isBusinessJourney) Business else Individual(true)
       form.bindFromRequest().fold(
         formWithErrors => {
-          eventHelper.formErrorEvent(request.path, messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message))
+          eventHelper.formErrorEvent(
+            request.path,
+            messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+          )
           Future.successful(BadRequest(view(formWithErrors, index, mode, countryJourney)))
         },
         value =>

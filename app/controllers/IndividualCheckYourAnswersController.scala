@@ -29,8 +29,6 @@ import viewmodels.checkAnswers._
 import viewmodels.govuk.summarylist._
 import views.html.IndividualCheckYourAnswersView
 
-import scala.concurrent.ExecutionContext
-
 class IndividualCheckYourAnswersController @Inject() (
   override val messagesApi: MessagesApi,
   identify: IdentifierAction,
@@ -40,13 +38,12 @@ class IndividualCheckYourAnswersController @Inject() (
   view: IndividualCheckYourAnswersView,
   navigator: Navigator,
   val eventHelper: EventHelper
-)(implicit ec: ExecutionContext)
-    extends FrontendBaseController with I18nSupport {
+) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val answers = request.userAnswers
-       eventHelper.pageLoadEvent(request.path)
+      eventHelper.pageLoadEvent(request.path)
       val individualDetails =
         SummaryListViewModel(
           Seq(
