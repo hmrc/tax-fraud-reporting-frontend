@@ -16,8 +16,8 @@
 
 package controllers
 
-import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions.IdentifierAction
+import controllers.helper.EventHelper
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -27,22 +27,20 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.{JourneyRecoveryContinueView, JourneyRecoveryStartAgainView}
 
 import javax.inject.Inject
-import scala.concurrent.ExecutionContext
 
 class JourneyRecoveryController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   identify: IdentifierAction,
   continueView: JourneyRecoveryContinueView,
   startAgainView: JourneyRecoveryStartAgainView,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
-)(implicit ec: ExecutionContext)
-    extends FrontendBaseController with I18nSupport with Logging {
+  val eventHelper: EventHelper
+) extends FrontendBaseController with I18nSupport with Logging {
 
   def onPageLoad(continueUrl: Option[RedirectUrl] = None): Action[AnyContent] = identify {
     implicit request =>
       val safeUrl: Option[String] = continueUrl.flatMap {
         unsafeUrl =>
-          eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
+          eventHelper.pageLoadEvent(request.path)
           unsafeUrl.getEither(OnlyRelative) match {
             case Right(safeUrl) =>
               Some(safeUrl.url)

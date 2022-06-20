@@ -16,14 +16,14 @@
 
 package controllers
 
-import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
+import controllers.helper.EventHelper
 import forms.IndividualDateOfBirthFormProvider
 import models.{Index, Mode}
 import navigation.Navigator
 import pages.IndividualDateOfBirthPage
 import play.api.data.Form
-import play.api.i18n.{I18nSupport, Messages, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -43,7 +43,7 @@ class IndividualDateOfBirthController @Inject() (
   formProvider: IndividualDateOfBirthFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: IndividualDateOfBirthView,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+  val eventHelper: EventHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -51,7 +51,7 @@ class IndividualDateOfBirthController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
+      eventHelper.pageLoadEvent(request.path)
       val preparedForm = request.userAnswers.get(IndividualDateOfBirthPage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -63,7 +63,13 @@ class IndividualDateOfBirthController @Inject() (
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode))),
+        formWithErrors => {
+          eventHelper.formErrorEvent(
+            request.path,
+            messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+          )
+          Future.successful(BadRequest(view(formWithErrors, index, mode)))
+        },
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualDateOfBirthPage(index), value))

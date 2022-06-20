@@ -16,15 +16,15 @@
 
 package controllers
 
-import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent, RadioButtonEvent}
 import controllers.actions._
+import controllers.helper.EventHelper
 import forms.IndividualBusinessDetailsFormProvider
 
 import javax.inject.Inject
 import models.{Index, Mode}
 import navigation.Navigator
 import pages.IndividualBusinessDetailsPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -42,7 +42,7 @@ class IndividualBusinessDetailsController @Inject() (
   formProvider: IndividualBusinessDetailsFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: IndividualBusinessDetailsView,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+  val eventHelper: EventHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -50,7 +50,7 @@ class IndividualBusinessDetailsController @Inject() (
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
+      eventHelper.pageLoadEvent(request.path)
       val preparedForm = request.userAnswers.get(IndividualBusinessDetailsPage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -62,9 +62,15 @@ class IndividualBusinessDetailsController @Inject() (
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode))),
+        formWithErrors => {
+          eventHelper.formErrorEvent(
+            request.path,
+            messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+          )
+          Future.successful(BadRequest(view(formWithErrors, index, mode)))
+        },
         value => {
-          eventDispatcher.dispatchEvent(RadioButtonEvent(request.path, value.toString))
+          eventHelper.radioButtonEvent(request.path, value.toString)
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualBusinessDetailsPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)

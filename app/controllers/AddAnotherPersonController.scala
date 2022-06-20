@@ -16,13 +16,13 @@
 
 package controllers
 
-import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent, RadioButtonEvent}
 import controllers.actions._
+import controllers.helper.EventHelper
 import forms.AddAnotherPersonFormProvider
 import models.Mode
 import navigation.Navigator
 import pages.{AddAnotherPersonPage, NominalsQuery}
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.AddAnotherPersonView
@@ -39,7 +39,7 @@ class AddAnotherPersonController @Inject() (
   formProvider: AddAnotherPersonFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: AddAnotherPersonView,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+  val eventHelper: EventHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -47,7 +47,7 @@ class AddAnotherPersonController @Inject() (
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
+      eventHelper.pageLoadEvent(request.path)
       val numberOfNominals = request.userAnswers.get(NominalsQuery).getOrElse(List.empty).length
       Ok(view(form, numberOfNominals, mode))
   }
@@ -56,11 +56,15 @@ class AddAnotherPersonController @Inject() (
     implicit request =>
       form.bindFromRequest().fold(
         formWithErrors => {
+          eventHelper.formErrorEvent(
+            request.path,
+            messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+          )
           val numberOfNominals = request.userAnswers.get(NominalsQuery).getOrElse(List.empty).length
           Future.successful(BadRequest(view(formWithErrors, numberOfNominals, mode)))
         },
         value => {
-          eventDispatcher.dispatchEvent(RadioButtonEvent(request.path, value.toString))
+          eventHelper.radioButtonEvent(request.path, value.toString)
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(AddAnotherPersonPage, value))
           } yield Redirect(navigator.nextPage(AddAnotherPersonPage, mode, updatedAnswers))

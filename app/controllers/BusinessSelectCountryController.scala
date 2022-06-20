@@ -16,13 +16,13 @@
 
 package controllers
 
-import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
+import controllers.helper.EventHelper
 import forms.IndividualSelectCountryFormProvider
 import models.{Index, Mode}
 import navigation.Navigator
 import pages.BusinessSelectCountryPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -42,7 +42,7 @@ class BusinessSelectCountryController @Inject() (
   formProvider: IndividualSelectCountryFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: IndividualSelectCountryView,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+  val eventHelper: EventHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -51,7 +51,7 @@ class BusinessSelectCountryController @Inject() (
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val countryJourney = if (request.userAnswers.isBusinessJourney) Business else Individual(true)
-      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
+      eventHelper.pageLoadEvent(request.path)
       val preparedForm = request.userAnswers.get(BusinessSelectCountryPage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -64,7 +64,13 @@ class BusinessSelectCountryController @Inject() (
     implicit request =>
       val countryJourney = if (request.userAnswers.isBusinessJourney) Business else Individual(true)
       form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, index, mode, countryJourney))),
+        formWithErrors => {
+          eventHelper.formErrorEvent(
+            request.path,
+            messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+          )
+          Future.successful(BadRequest(view(formWithErrors, index, mode, countryJourney)))
+        },
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessSelectCountryPage(index), value))

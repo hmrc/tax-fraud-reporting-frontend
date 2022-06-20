@@ -16,8 +16,8 @@
 
 package controllers
 
-import auditing.{AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
+import controllers.helper.EventHelper
 
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -36,13 +36,13 @@ class SubmitYourReportController @Inject() (
   val controllerComponents: MessagesControllerComponents,
   view: SubmitYourReportView,
   submissionService: SubmissionService,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+  val eventHelper: EventHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
+      eventHelper.pageLoadEvent(request.path)
       Ok(view())
   }
 

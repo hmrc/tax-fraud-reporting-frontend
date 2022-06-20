@@ -16,13 +16,13 @@
 
 package controllers
 
-import auditing.{ApproximateValueEvent, AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
+import controllers.helper.EventHelper
 import forms.ApproximateValueFormProvider
 import models.Mode
 import navigation.Navigator
 import pages.{ApproximateValuePage, WhenActivityHappenPage}
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -41,7 +41,7 @@ class ApproximateValueController @Inject() (
   formProvider: ApproximateValueFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: ApproximateValueView,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+  val eventHelper: EventHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -49,11 +49,10 @@ class ApproximateValueController @Inject() (
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
+      eventHelper.pageLoadEvent(request.path)
       val whatActivityHappened = request.userAnswers.get(WhenActivityHappenPage).getOrElse(
         throw new Exception(s"activity duration is not saved in cache")
       )
-      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
       val preparedForm = request.userAnswers.get(ApproximateValuePage) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -68,9 +67,15 @@ class ApproximateValueController @Inject() (
         throw new Exception(s"activity duration is not saved in cache")
       )
       form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode, whatActivityHappened))),
+        formWithErrors => {
+          eventHelper.formErrorEvent(
+            request.path,
+            messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+          )
+          Future.successful(BadRequest(view(formWithErrors, mode, whatActivityHappened)))
+        },
         value => {
-          eventDispatcher.dispatchEvent(ApproximateValueEvent(value.toString))
+          eventHelper.approximateValueEvent(value.toString)
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(ApproximateValuePage, value))
             _              <- sessionRepository.set(updatedAnswers)

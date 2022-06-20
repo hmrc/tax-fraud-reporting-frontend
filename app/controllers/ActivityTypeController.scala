@@ -16,15 +16,15 @@
 
 package controllers
 
-import auditing.{ActivityTypeEvent, AuditAndAnalyticsEventDispatcher, PageLoadEvent}
 import controllers.actions._
+import controllers.helper.EventHelper
 import forms.ActivityTypeFormProvider
 
 import javax.inject.Inject
 import models.{Mode, UserAnswers}
 import navigation.Navigator
 import pages.ActivityTypePage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -41,7 +41,7 @@ class ActivityTypeController @Inject() (
   formProvider: ActivityTypeFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: ActivityTypeView,
-  val eventDispatcher: AuditAndAnalyticsEventDispatcher
+  val eventHelper: EventHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -50,7 +50,7 @@ class ActivityTypeController @Inject() (
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData) {
     implicit request =>
       val userAnswers = request.userAnswers getOrElse UserAnswers(request.userId)
-      eventDispatcher.dispatchEvent(PageLoadEvent(request.path))
+      eventHelper.pageLoadEvent(request.path)
       val preparedForm = userAnswers get ActivityTypePage match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -62,10 +62,16 @@ class ActivityTypeController @Inject() (
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData).async {
     implicit request =>
       form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+        formWithErrors => {
+          eventHelper.formErrorEvent(
+            request.path,
+            messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+          )
+          Future.successful(BadRequest(view(formWithErrors, mode)))
+        },
         value => {
           val userAnswers = request.userAnswers getOrElse UserAnswers(request.userId)
-          eventDispatcher.dispatchEvent(ActivityTypeEvent(value))
+          eventHelper.activityTypeEvent(value)
           for {
             updatedAnswers <- Future.fromTry(userAnswers.set(ActivityTypePage, value))
             _              <- sessionRepository.set(updatedAnswers)
