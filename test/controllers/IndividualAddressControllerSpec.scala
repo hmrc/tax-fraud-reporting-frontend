@@ -17,7 +17,6 @@
 package controllers
 
 import akka.actor.ActorSystem
-import auditing.AuditAndAnalyticsEventDispatcher
 import controllers.actions.{DataRequiredActionImpl, DataRetrievalActionImpl, SessionIdentifierAction}
 import controllers.helper.EventHelper
 import models.backend.Address
