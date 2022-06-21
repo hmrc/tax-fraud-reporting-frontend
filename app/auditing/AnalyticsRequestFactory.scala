@@ -51,6 +51,6 @@ class AnalyticsRequestFactory @Inject() (config: FrontendAppConfig) extends Logg
     Seq(Event(s" rkss_activityvalue", event.value, s" rkss_activityvalue", dimensions(event.value)))
 
   def formError(event: FormErrorEvent): Seq[Event] =
-    Seq(Event("rkss_error", event.path, s"rkss_error", dimensions(event.error)))
+    Seq(Event(event.path, event.error, s"rkss_error", dimensions(event.error)))
 
 }
