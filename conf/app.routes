@@ -229,3 +229,8 @@ GET        /:index/individual-change-cannot-find-address                controll
 
 GET        /:index/business-cannot-find-address                       controllers.BusinessCanNotFindAddressController.onPageLoad(index: Index, mode: Mode = NormalMode)
 GET        /:index/business-change-cannot-find-address                controllers.BusinessCanNotFindAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)
+
+GET        /did-you-mean-zero                         controllers.ZeroValidationController.onPageLoad(mode: Mode = NormalMode)
+POST       /did-you-mean-zero                         controllers.ZeroValidationController.onSubmit(mode: Mode = NormalMode)
+GET        /change-did-you-mean-zero                  controllers.ZeroValidationController.onPageLoad(mode: Mode = CheckMode)
+POST       /change-did-you-mean-zero                  controllers.ZeroValidationController.onSubmit(mode: Mode = CheckMode)

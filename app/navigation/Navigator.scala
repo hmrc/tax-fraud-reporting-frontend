@@ -67,7 +67,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case IndividualCheckYourAnswersPage(_)    => _ => routes.AddAnotherPersonController.onPageLoad(NormalMode)
     case IndividualConfirmRemovePage(_)       => individualConfirmRemoveRoutes
     case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index, NormalMode)
-    case ApproximateValuePage                 => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+    case ApproximateValuePage                 => approximateValueRoutes
     case WhenActivityHappenPage               => whenActivityHappenRoutes
     case ActivityTimePeriodPage               => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
     case IndividualConnectionPage(index) =>
@@ -80,7 +80,8 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case ActivitySourceOfInformationPage => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
     case DocumentationDescriptionPage =>
       _ => routes.CheckYourAnswersController.onPageLoad
-    case _ => _ => routes.IndexController.onPageLoad
+    case ZeroValidationPage => zeroValidationRoutes
+    case _                  => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
@@ -280,6 +281,18 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
         routes.ActivityTimePeriodController.onPageLoad(NormalMode)
       case _ =>
         routes.ApproximateValueController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def approximateValueRoutes(answers: UserAnswers): Call =
+    if (answers.get(ApproximateValuePage).contains(0))
+      routes.ZeroValidationController.onPageLoad(NormalMode)
+    else
+      routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+
+  private def zeroValidationRoutes(answers: UserAnswers): Call =
+    answers.get(ZeroValidationPage).map {
+      case true  => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+      case false => routes.ApproximateValueController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def supportingDocumentRoutes(answers: UserAnswers): Call =
