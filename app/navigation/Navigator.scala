@@ -283,12 +283,11 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
         routes.ApproximateValueController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def approximateValueRoutes(answers: UserAnswers): Call = {
+  private def approximateValueRoutes(answers: UserAnswers): Call =
     if (answers.get(ApproximateValuePage).get.equals(0))
       routes.ZeroValidationController.onPageLoad(NormalMode)
     else
       routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
-  }
 
   private def zeroValidationRoutes(answers: UserAnswers): Call =
     answers.get(ZeroValidationPage).map {
