@@ -39,8 +39,8 @@ error.date.month_blank = Nodwch fis
 error.date.month_invalid = Rhowch fis cywir gan ddefnyddio’r rhifau 1 i 12
 error.date.year_blank = Nodwch flwyddyn
 error.date.year_invalid = Rhowch flwyddyn gywir
-error.integer     = (W) Give an answer in whole numbers (W)
-error.non_numeric = (W) Give a value using only numbers (W)
+error.integer     = Rhowch ateb mewn rhifau cyfan
+error.non_numeric = Rhowch werth gan ddefnyddio rhifau yn unig
 error.number = Nodwch rif dilys
 error.required = Rhowch ateb
 error.length = Rhaid i'r mewnbwn hwn fod yn 255 nod neu lai.
@@ -1369,3 +1369,8 @@ canNotFindAddress.continue = Rhowch gynnig ar god post gwahanol
 
 businessCanNotFindAddress.title = Ni ellir dod o hyd i’r cod post
 businessCanNotFindAddress.heading = Ni ellir dod o hyd i’r cod post
+
+zeroValidation.title = (W) Are you sure the value of the activity if £0 (W)
+zeroValidation.heading = (W) Are you sure the value of the activity if £0 (W)
+zeroValidation.hint = (W) If you do not know the value please provide your best estimate as this is still useful. (W)
+zeroValidation.error.required = (W) If no selection made: Select yes if £0 was the correct value entered (W)

@@ -1254,3 +1254,8 @@ canNotFindAddress.continue = Try a different postcode
 
 businessCanNotFindAddress.title = Postcode cannot be found
 businessCanNotFindAddress.heading = Postcode cannot be found
+
+zeroValidation.title = Are you sure there is no value for the activity?
+zeroValidation.heading = Are you sure there is no value for the activity?
+zeroValidation.hint = If you do not know the exact value, you can just give us your best guess.
+zeroValidation.error.required =  Select yes if you are sure there is no value for the activity

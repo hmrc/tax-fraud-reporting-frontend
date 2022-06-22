@@ -67,7 +67,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case IndividualCheckYourAnswersPage(_)    => _ => routes.AddAnotherPersonController.onPageLoad(NormalMode)
     case IndividualConfirmRemovePage(_)       => individualConfirmRemoveRoutes
     case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index, NormalMode)
-    case ApproximateValuePage                 => _ => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+    case ApproximateValuePage                 => approximateValueRoutes
     case WhenActivityHappenPage               => whenActivityHappenRoutes
     case ActivityTimePeriodPage               => _ => routes.ApproximateValueController.onPageLoad(NormalMode)
     case IndividualConnectionPage(index) =>
@@ -80,7 +80,8 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case ActivitySourceOfInformationPage => _ => routes.WhenActivityHappenController.onPageLoad(NormalMode)
     case DocumentationDescriptionPage =>
       _ => routes.CheckYourAnswersController.onPageLoad
-    case _ => _ => routes.IndexController.onPageLoad
+    case ZeroValidationPage => zeroValidationRoutes
+    case _                  => _ => routes.IndexController.onPageLoad
   }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
@@ -103,6 +104,8 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case BusinessSelectCountryPage(index)    => businessSelectCountryPageRoutes(_, index)
     case FindAddressPage(index)              => _ => routes.ChooseYourAddressController.onPageLoad(index, CheckMode)
     case BusinessFindAddressPage(index)      => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, CheckMode)
+    case ApproximateValuePage                => approximateValueCheckRoutes
+    case ZeroValidationPage                  => zeroValidationCheckRoutes
     case p: IndexedConfirmationPage          => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
     case _                                   => _ => routes.CheckYourAnswersController.onPageLoad
   }
@@ -282,6 +285,18 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
         routes.ApproximateValueController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
+  private def approximateValueRoutes(answers: UserAnswers): Call =
+    if (answers.get(ApproximateValuePage).get.equals(0))
+      routes.ZeroValidationController.onPageLoad(NormalMode)
+    else
+      routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+
+  private def zeroValidationRoutes(answers: UserAnswers): Call =
+    answers.get(ZeroValidationPage).map {
+      case true  => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
+      case false => routes.ApproximateValueController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
   private def supportingDocumentRoutes(answers: UserAnswers): Call =
     answers.get(SupportingDocumentPage).map {
       case SupportingDocument.Yes =>
@@ -313,6 +328,18 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
     else
       routes.AddAnotherPersonController.onPageLoad(NormalMode)
+
+  private def approximateValueCheckRoutes(answers: UserAnswers): Call =
+    if (answers.get(ApproximateValuePage).get.equals(0))
+      routes.ZeroValidationController.onPageLoad(CheckMode)
+    else
+      routes.CheckYourAnswersController.onPageLoad
+
+  private def zeroValidationCheckRoutes(answers: UserAnswers): Call =
+    answers.get(ZeroValidationPage).map {
+      case true  => routes.CheckYourAnswersController.onPageLoad
+      case false => routes.ApproximateValueController.onPageLoad(CheckMode)
+    }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
 
   private def selectConnectionBusinessCheckRoute(answers: UserAnswers, index: Index): Call =
     if (answers.isBusinessJourney)
