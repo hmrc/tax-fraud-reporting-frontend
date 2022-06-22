@@ -1414,6 +1414,52 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
       }
 
+      "must go from approximate total value page" - {
+
+        "to the are you sure the value of the activity if £0 page if add zero for the approximate value" in {
+          val answers = UserAnswers("id").set(ApproximateValuePage, BigDecimal(0)).success.value
+          navigator.nextPage(
+            ApproximateValuePage,
+            CheckMode,
+            answers
+          ) mustBe routes.ZeroValidationController.onPageLoad(CheckMode)
+        }
+
+        "to the check your answer page when approximate value >0" in {
+          val answers = UserAnswers("id").set(ApproximateValuePage, BigDecimal(45000)).success.value
+          navigator.nextPage(
+            ApproximateValuePage,
+            CheckMode,
+            answers
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+      }
+
+      "must go from Are you sure the value of the activity if £0 page" - {
+
+        "must go from Are you sure the value of the activity if £0 page when the user selects no" in {
+          val answers = emptyUserAnswers.set(ZeroValidationPage, false).success.value
+          navigator.nextPage(
+            ZeroValidationPage,
+            CheckMode,
+            answers
+          ) mustBe routes.ApproximateValueController.onPageLoad(CheckMode)
+        }
+        "must go from Are you sure the value of the activity if >0 page when the user selects no" in {
+          val answers = emptyUserAnswers.set(ZeroValidationPage, true).success.value
+          navigator.nextPage(ZeroValidationPage, CheckMode, answers) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+        "to the journey recovery page when the user has no selection" in {
+          navigator.nextPage(
+            ZeroValidationPage,
+            CheckMode,
+            emptyUserAnswers
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+      }
+
       "must go to individual information check page of the individual after successful update from" - {
 
         def assertNavigationToIndividualCheckAnswersPage(currentPage: IndexedConfirmationPage) = {

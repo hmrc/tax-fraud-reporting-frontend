@@ -104,6 +104,8 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case BusinessSelectCountryPage(index)    => businessSelectCountryPageRoutes(_, index)
     case FindAddressPage(index)              => _ => routes.ChooseYourAddressController.onPageLoad(index, CheckMode)
     case BusinessFindAddressPage(index)      => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, CheckMode)
+    case ApproximateValuePage                => approximateValueCheckRoutes
+    case ZeroValidationPage                  => zeroValidationCheckRoutes
     case p: IndexedConfirmationPage          => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
     case _                                   => _ => routes.CheckYourAnswersController.onPageLoad
   }
@@ -326,6 +328,18 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       routes.ActivitySourceOfInformationController.onPageLoad(NormalMode)
     else
       routes.AddAnotherPersonController.onPageLoad(NormalMode)
+
+  private def approximateValueCheckRoutes(answers: UserAnswers): Call =
+    if (answers.get(ApproximateValuePage).get.equals(0))
+      routes.ZeroValidationController.onPageLoad(CheckMode)
+    else
+      routes.CheckYourAnswersController.onPageLoad
+
+  private def zeroValidationCheckRoutes(answers: UserAnswers): Call =
+    answers.get(ZeroValidationPage).map {
+      case true  => routes.CheckYourAnswersController.onPageLoad
+      case false => routes.ApproximateValueController.onPageLoad(CheckMode)
+    }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
 
   private def selectConnectionBusinessCheckRoute(answers: UserAnswers, index: Index): Call =
     if (answers.isBusinessJourney)
