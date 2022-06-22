@@ -1258,6 +1258,4 @@ businessCanNotFindAddress.heading = Postcode cannot be found
 zeroValidation.title = Are you sure there is no value for the activity?
 zeroValidation.heading = Are you sure there is no value for the activity?
 zeroValidation.hint = If you do not know the exact value, you can just give us your best guess.
-zeroValidation.checkYourAnswersLabel = zeroValidation
 zeroValidation.error.required =  Select yes if you are sure there is no value for the activity
-zeroValidation.change.hidden = ZeroValidation

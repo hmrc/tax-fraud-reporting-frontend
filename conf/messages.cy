@@ -1373,6 +1373,4 @@ businessCanNotFindAddress.heading = Ni ellir dod o hyd i’r cod post
 zeroValidation.title = (W) Are you sure the value of the activity if £0 (W)
 zeroValidation.heading = (W) Are you sure the value of the activity if £0 (W)
 zeroValidation.hint = (W) If you do not know the value please provide your best estimate as this is still useful. (W)
-zeroValidation.checkYourAnswersLabel = (W) zeroValidation (W)
 zeroValidation.error.required = (W) If no selection made: Select yes if £0 was the correct value entered (W)
-zeroValidation.change.hidden = (W) ZeroValidation (W)
