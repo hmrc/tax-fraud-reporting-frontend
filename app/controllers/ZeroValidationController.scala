@@ -17,12 +17,14 @@
 package controllers
 
 import controllers.actions._
+import controllers.helper.EventHelper
 import forms.ZeroValidationFormProvider
+
 import javax.inject.Inject
 import models.Mode
 import navigation.Navigator
 import pages.ZeroValidationPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -39,7 +41,8 @@ class ZeroValidationController @Inject() (
   requireData: DataRequiredAction,
   formProvider: ZeroValidationFormProvider,
   val controllerComponents: MessagesControllerComponents,
-  view: ZeroValidationView
+  view: ZeroValidationView,
+  val eventHelper: EventHelper
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
@@ -47,6 +50,7 @@ class ZeroValidationController @Inject() (
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      eventHelper.pageLoadEvent(request.path)
       val preparedForm = request.userAnswers.get(ZeroValidationPage) match {
         case None        => form
         case Some(value) => form.fill(value)
@@ -58,7 +62,13 @@ class ZeroValidationController @Inject() (
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
-        formWithErrors => Future.successful(BadRequest(view(formWithErrors, mode))),
+        formWithErrors => {
+          eventHelper.formErrorEvent(
+            request.path,
+            messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+          )
+          Future.successful(BadRequest(view(formWithErrors, mode)))
+        },
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(ZeroValidationPage, value))
