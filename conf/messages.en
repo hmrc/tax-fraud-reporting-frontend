@@ -1259,3 +1259,9 @@ zeroValidation.title = Are you sure there is no value for the activity?
 zeroValidation.heading = Are you sure there is no value for the activity?
 zeroValidation.hint = If you do not know the exact value, you can just give us your best guess.
 zeroValidation.error.required =  Select yes if you are sure there is no value for the activity
+
+businessConfirmAddress.title = Is this address correct?
+businessConfirmAddress.heading = Is this address correct?
+businessConfirmAddress.checkYourAnswersLabel = Is this address correct?
+businessConfirmAddress.error.required = Select yes if businessConfirmAddress
+businessConfirmAddress.change.hidden = BusinessConfirmAddress

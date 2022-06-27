@@ -49,7 +49,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case BusinessFindAddressPage(index)     => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, NormalMode)
     case ChooseYourAddressPage(index)       => _ => routes.ConfirmAddressController.onPageLoad(index, false, NormalMode)
     case BusinessChooseYourAddressPage(index) =>
-      _ => routes.ConfirmAddressController.onPageLoad(index, true, NormalMode)
+      _ => routes.BusinessConfirmAddressController.onPageLoad(index, NormalMode)
 
     /** END Individual journey
       * Start Business journey */

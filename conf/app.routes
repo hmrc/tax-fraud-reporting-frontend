@@ -234,3 +234,8 @@ GET        /did-you-mean-zero                         controllers.ZeroValidation
 POST       /did-you-mean-zero                         controllers.ZeroValidationController.onSubmit(mode: Mode = NormalMode)
 GET        /change-did-you-mean-zero                  controllers.ZeroValidationController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-did-you-mean-zero                  controllers.ZeroValidationController.onSubmit(mode: Mode = CheckMode)
+
+GET        /:index/business-confirm-address                        controllers.BusinessConfirmAddressController.onPageLoad(index: Index, mode: Mode = NormalMode)
+POST       /:index/business-confirm-address                        controllers.BusinessConfirmAddressController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/change-business-confirm-address                  controllers.BusinessConfirmAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)
+POST       /:index/change-business-confirm-address                  controllers.BusinessConfirmAddressController.onSubmit(index: Index, mode: Mode = CheckMode)
