@@ -16,11 +16,19 @@
 
 package pages
 
+import models.UserAnswers
 import play.api.libs.json.JsPath
+
+import scala.util.Try
 
 case object ApproximateValuePage extends QuestionPage[BigDecimal] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "approximateValue"
+
+  override def cleanup(value: Option[BigDecimal], userAnswers: UserAnswers): Try[UserAnswers] =
+    if (value exists { _ == 0 }) userAnswers.remove(ZeroValidationPage)
+    else super.cleanup(value, userAnswers)
+
 }
