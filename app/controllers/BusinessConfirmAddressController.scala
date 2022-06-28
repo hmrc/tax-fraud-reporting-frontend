@@ -46,7 +46,7 @@ class BusinessConfirmAddressController @Inject()(
 
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
+      val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
       val preparedForm = request.userAnswers.get(BusinessConfirmAddressPage(index)) match {
         case None => form
         case Some(value) => form.fill(value)
@@ -59,7 +59,7 @@ class BusinessConfirmAddressController @Inject()(
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
+      val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
       form.bindFromRequest().fold(
         formWithErrors =>
       request.userAnswers getAddress(index, forBusiness = true) match {

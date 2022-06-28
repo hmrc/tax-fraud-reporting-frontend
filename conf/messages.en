@@ -1209,9 +1209,11 @@ individualSelectCountry.checkYourAnswersLabel = Country
 individualSelectCountry.error.required = Please select a country from the list.
 individualSelectCountry.change.hidden = Select your country
 
-confirmAddress.title = Review and confirm
-confirmAddress.heading = Review and confirm
+confirmAddress.title = Is this address correct?
+confirmAddress.heading = Is this address correct?
 confirmAddress.change-address = Change address
+confirmAddress.error.required = Select yes if this address is correct
+confirmAddress.change.hidden = Is this address correct?
 
 findAddress.title = Find your address
 findAddress.heading = Find your address
@@ -1263,5 +1265,5 @@ zeroValidation.error.required =  Select yes if you are sure there is no value fo
 businessConfirmAddress.title = Is this address correct?
 businessConfirmAddress.heading = Is this address correct?
 businessConfirmAddress.checkYourAnswersLabel = Is this address correct?
-businessConfirmAddress.error.required = Select yes if businessConfirmAddress
-businessConfirmAddress.change.hidden = BusinessConfirmAddress
+businessConfirmAddress.error.required = Select yes if this address is correct
+businessConfirmAddress.change.hidden = Is this address correct?

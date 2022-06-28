@@ -1319,9 +1319,11 @@ individualSelectCountry.checkYourAnswersLabel = Dewiswch eich wlad
 individualSelectCountry.error.required = Dewiswch wlad o'r rhestr.
 individualSelectCountry.change.hidden = Dewiswch eich wlad
 
-confirmAddress.title = Adolygu a chadarnhau
-confirmAddress.heading = Adolygu a chadarnhau
+confirmAddress.title = (W) Is this address correct? (W)
+confirmAddress.heading = (W) Is this address correct? (W)
 confirmAddress.change-address = Newid y cyfeiriad
+confirmAddress.error.required = (W) Select yes if this address is correct (W)
+confirmAddress.change.hidden = (W) Is this address correct? (W)
 
 findAddress.title = Dod o hyd i gyfeiriad
 findAddress.heading = Dod o hyd i gyfeiriad

@@ -17,15 +17,26 @@
 @import models.backend.Address
 @import play.api.Configuration
 @import viewmodels.{BusinessPart, JourneyPart}
+@import config.FrontendAppConfig
+@import controllers.routes._
 
 @this(
         layout: templates.Layout,
+        formHelper: FormWithCSRF,
+        govukErrorSummary: GovukErrorSummary,
+        govukRadios: GovukRadios,
         govukButton: GovukButton
 )
 
-@(index:Index, address: Address, isBusinessJourney: Boolean, journeyPart: JourneyPart, nextPage: Call)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], index:Index, mode: Mode, address: Address, isBusinessJourney: Boolean, journeyPart: JourneyPart)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("confirmAddress.title"))) {
+
+    @formHelper(action = routes.ConfirmAddressController.onSubmit(index, true, mode), 'autoComplete -> "off") {
+
+        @if(form.errors.nonEmpty) {
+        @govukErrorSummary(ErrorSummaryViewModel(form))
+        }
 
     @if(journeyPart != BusinessPart) {
     <span class="govuk-caption-xl">
@@ -55,15 +66,19 @@
         <div class="govuk-body-l" id="country">@messages(s"country.${address.country}.text")</div>
 
     </div>
-        @if(isBusinessJourney) {
-            <a id="continue-button" href="@nextPage" role="button" class="govuk-button" data-module="govuk-button">
-                @messages("site.continue")
-            </a>
-        }
-        @if(!isBusinessJourney) {
-            <a id="continue-button" href="@nextPage" role="button" class="govuk-button" data-module="govuk-button">
-                @messages("site.continue")
-            </a>
-        }
+
+
+        @govukRadios(
+            RadiosViewModel.yesNo(
+            field = form("value"),
+            legend = LegendViewModel(messages("businessConfirmAddress.heading")).asPageHeading().withCssClass("govuk-visually-hidden")
+            )
+        )
+
+        @govukButton(
+            ButtonViewModel(messages("site.continue"))
+            .withAttribute("id" -> "continue-button")
+        )
+    }
 
 }

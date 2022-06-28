@@ -18,26 +18,34 @@ package controllers
 
 import controllers.actions._
 import controllers.helper.EventHelper
+import forms.ConfirmAddressFormProvider
 import models.{BusinessInformationCheck, CheckMode, Index, IndividualInformation, Mode, NormalMode}
 import navigation.Navigator
-
-import javax.inject.Inject
+import pages.{BusinessConfirmAddressPage, ConfirmAddressPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.{BusinessPart, IndividualPart}
 import views.html.ConfirmAddressView
 
+import javax.inject.Inject
+import scala.concurrent.{ExecutionContext, Future}
+
 class ConfirmAddressController @Inject() (
   override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: ConfirmAddressView,
+  formProvider: ConfirmAddressFormProvider,
   navigator: Navigator,
   val eventHelper: EventHelper
-) extends FrontendBaseController with I18nSupport {
+) (implicit ec: ExecutionContext)  extends FrontendBaseController with I18nSupport {
+
+  val form = formProvider()
 
   def onPageLoad(index: Index, forBusiness: Boolean, mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireData) {
@@ -46,6 +54,10 @@ class ConfirmAddressController @Inject() (
         val isBusinessJourney = request.userAnswers.isBusinessJourney
         val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
         val journeyPart       = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
+        val preparedForm = request.userAnswers.get(BusinessConfirmAddressPage(index)) match {
+          case None => form
+          case Some(value) => form.fill(value)
+        }
         val nextPage =
           if (isBusinessJourney)
             navigator.businessInformationRoutes(request.userAnswers, index, BusinessInformationCheck.Address, mode)
@@ -73,9 +85,55 @@ class ConfirmAddressController @Inject() (
                   routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
             }
         request.userAnswers getAddress (index, forBusiness) match {
-          case Some(address) => Ok(view(index, address, isBusinessJourney, journeyPart, nextPage))
+          case Some(address) => Ok(view(preparedForm, index, mode, address, isBusinessJourney, journeyPart))
           case None          => Redirect(routes.IndividualAddressController.onPageLoad(index, NormalMode))
         }
     }
+
+  def onSubmit(index: Index, forBusiness: Boolean, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+    implicit request =>
+      val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
+      val isBusinessJourney = request.userAnswers.isBusinessJourney
+      val journeyPart       = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
+      val nextPage =
+        if (isBusinessJourney)
+          navigator.businessInformationRoutes(request.userAnswers, index, BusinessInformationCheck.Address, mode)
+        else
+          mode match {
+            case NormalMode =>
+              if (isBusinessDetails)
+                navigator.businessInformationRoutes(
+                  request.userAnswers,
+                  index,
+                  BusinessInformationCheck.Address,
+                  mode
+                )
+              else
+                navigator.individualInformationRoutes(request.userAnswers, index, IndividualInformation.Address, mode)
+            case CheckMode =>
+              if (isBusinessDetails)
+                navigator.businessInformationRoutes(
+                  request.userAnswers,
+                  index,
+                  BusinessInformationCheck.Address,
+                  mode
+                )
+              else
+                routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
+          }
+      form.bindFromRequest().fold(
+        formWithErrors =>
+          request.userAnswers getAddress(index, forBusiness) match {
+            case Some(address) =>
+              Future.successful(BadRequest(view(formWithErrors, index, mode, address, isBusinessJourney, journeyPart)))
+            case None => Future.successful(Redirect(routes.BusinessAddressController.onPageLoad(index, NormalMode)))
+          },
+        value =>
+          for {
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(ConfirmAddressPage(index), value))
+            _              <- sessionRepository.set(updatedAnswers)
+          } yield Redirect(navigator.nextPage(ConfirmAddressPage(index), mode, updatedAnswers))
+      )
+  }
 
 }

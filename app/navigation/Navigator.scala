@@ -48,6 +48,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case FindAddressPage(index)             => _ => routes.ChooseYourAddressController.onPageLoad(index, NormalMode)
     case BusinessFindAddressPage(index)     => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, NormalMode)
     case ChooseYourAddressPage(index)       => _ => routes.ConfirmAddressController.onPageLoad(index, false, NormalMode)
+    case ConfirmAddressPage(index) => confirmAddressRoute(_, index, NormalMode)
     case BusinessChooseYourAddressPage(index) =>
       _ => routes.BusinessConfirmAddressController.onPageLoad(index, NormalMode)
 
@@ -106,6 +107,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case BusinessFindAddressPage(index)      => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, CheckMode)
     case ApproximateValuePage                => approximateValueCheckRoutes
     case ZeroValidationPage                  => zeroValidationCheckRoutes
+    case ConfirmAddressPage(index) => confirmAddressRoutes(_, index, CheckMode)
     case p: IndexedConfirmationPage          => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
     case _                                   => _ => routes.CheckYourAnswersController.onPageLoad
   }
@@ -291,6 +293,46 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     else
       routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
 
+  private def confirmAddressRoute(answers: UserAnswers, index: Index, mode: Mode): Call =
+    answers.get(ConfirmAddressPage(index)).map {
+      case true =>
+          if (answers.isBusinessJourney)
+             businessInformationRoutes(answers, index, BusinessInformationCheck.Address, mode)
+          else
+            mode match {
+              case NormalMode =>
+                if (answers.isBusinessDetails(index))
+                  businessInformationRoutes(
+                    answers,
+                    index,
+                    BusinessInformationCheck.Address,
+                    mode
+                  )
+                else
+                  individualInformationRoutes(answers, index, IndividualInformation.Address, mode)
+              case CheckMode =>
+                if (answers.isBusinessDetails(index))
+                  businessInformationRoutes(
+                    answers,
+                    index,
+                    BusinessInformationCheck.Address,
+                    mode
+                  )
+                else {
+                    routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
+                }
+            }
+      case false =>
+        if(answers.isBusinessJourney)
+          routes.BusinessAddressController.onPageLoad(index, mode)
+        else {
+          if(answers.isBusinessDetails(index))
+            routes.BusinessAddressController.onPageLoad(index, mode)
+            else
+            routes.IndividualAddressController.onPageLoad(index,mode)
+        }
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
   private def zeroValidationRoutes(answers: UserAnswers): Call =
     answers.get(ZeroValidationPage).map {
       case true  => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
@@ -334,6 +376,23 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       routes.ZeroValidationController.onPageLoad(CheckMode)
     else
       routes.CheckYourAnswersController.onPageLoad
+
+  private def confirmAddressRoutes(answers: UserAnswers, index: Index, mode: Mode): Call =
+    answers.get(ConfirmAddressPage(index)).map {
+      case true =>
+        if(answers.isBusinessJourney)
+        routes.CheckYourAnswersController.onPageLoad
+        else
+          routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
+      case false =>
+        if(answers.isBusinessJourney)
+          routes.BusinessAddressController.onPageLoad(index, CheckMode)
+        else
+          if(answers.isBusinessDetails(index))
+            routes.BusinessAddressController.onPageLoad(index, mode)
+          else
+            routes.IndividualAddressController.onPageLoad(index, CheckMode)
+    }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
 
   private def zeroValidationCheckRoutes(answers: UserAnswers): Call =
     answers.get(ZeroValidationPage).map {

@@ -14,9 +14,17 @@
  * limitations under the License.
  */
 
-package pages
+package forms
 
-import models.Index
+import forms.mappings.Mappings
+import play.api.data.Form
 
-final case class BusinessConfirmAddressPage(index: Index) extends NominalsQuestionPage [Boolean] ("businessConfirmAddress")
+import javax.inject.Inject
 
+class ConfirmAddressFormProvider @Inject() extends Mappings {
+
+  def apply(): Form[Boolean] =
+    Form(
+      "value" -> boolean("confirmAddress.error.required")
+    )
+}
