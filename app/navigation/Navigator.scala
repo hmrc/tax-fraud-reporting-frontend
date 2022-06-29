@@ -115,14 +115,16 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
   }
 
   private val updateIndividualMode: Page => UserAnswers => Call = {
-    case IndividualDateFormatPage(index)      => individualDateFormatPageUpdateRoutes(_, index)
-    case IndividualCheckYourAnswersPage(index)  => _ => routes.AddAnotherPersonController.onPageLoad(NormalMode)
-    case IndividualSelectCountryPage(index)  => individualSelectCountryPageRoutes(_, index, UpdateIndividualMode)
-    case FindAddressPage(index)             => _ => routes.ChooseYourAddressController.onPageLoad(index, UpdateIndividualMode)
-    case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index, UpdateIndividualMode)
-    case BusinessInformationCheckPage(index)  => businessInformationRoutes(_, index, UpdateIndividualMode)
-    case BusinessNamePage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Name, UpdateIndividualMode)
-    case TypeBusinessPage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Type, UpdateIndividualMode)
+    case IndividualDateFormatPage(index)       => individualDateFormatPageUpdateRoutes(_, index)
+    case IndividualCheckYourAnswersPage(index) => _ => routes.AddAnotherPersonController.onPageLoad(NormalMode)
+    case IndividualSelectCountryPage(index)    => individualSelectCountryPageRoutes(_, index, UpdateIndividualMode)
+    case FindAddressPage(index)                => _ => routes.ChooseYourAddressController.onPageLoad(index, UpdateIndividualMode)
+    case IndividualBusinessDetailsPage(index)  => individualBusinessDetailsRoutes(_, index, UpdateIndividualMode)
+    case BusinessInformationCheckPage(index)   => businessInformationRoutes(_, index, UpdateIndividualMode)
+    case BusinessNamePage(index) =>
+      businessInformationRoutes(_, index, BusinessInformationCheck.Name, UpdateIndividualMode)
+    case TypeBusinessPage(index) =>
+      businessInformationRoutes(_, index, BusinessInformationCheck.Type, UpdateIndividualMode)
     case ReferenceNumbersPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference, UpdateIndividualMode)
     case BusinessContactDetailsPage(index) =>
@@ -133,8 +135,10 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case IndividualSelectCountryPage(index)  => individualSelectCountryPageRoutes(_, index, UpdateIndividualMode)
     case BusinessSelectCountryPage(index)    => businessSelectCountryPageRoutes(_, index, UpdateIndividualMode)
     case FindAddressPage(index)              => _ => routes.ChooseYourAddressController.onPageLoad(index, UpdateIndividualMode)
-    case BusinessFindAddressPage(index)      => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, UpdateIndividualMode)
-    case p: IndexedConfirmationPage => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, UpdateIndividualMode)
+    case BusinessFindAddressPage(index) =>
+      _ => routes.BusinessChooseYourAddressController.onPageLoad(index, UpdateIndividualMode)
+    case p: IndexedConfirmationPage =>
+      _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, UpdateIndividualMode)
     //routes.AddAnotherPersonController.onPageLoad(NormalMode)
   }
 
@@ -151,7 +155,6 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
         else
           routes.IndividualAgeController.onPageLoad(index, UpdateIndividualMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
-
 
   private def individualInformationRoute(answer: IndividualInformation, index: Index, mode: Mode): Call =
     answer match {
@@ -190,7 +193,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       else
         IndividualInformation.values find remainingSections.contains map {
           mode match {
-            case NormalMode| UpdateIndividualMode => individualInformationRoute(_, index, mode)
+            case NormalMode | UpdateIndividualMode => individualInformationRoute(_, index, mode)
             case CheckMode =>
               routes.CheckYourAnswersController.onPageLoad
               individualInformationRoute(_, index, mode)
@@ -306,7 +309,8 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
         mode match {
           case CheckMode  => routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
           case NormalMode => routes.AddAnotherPersonController.onPageLoad(mode)
-          case UpdateIndividualMode  => routes.IndividualCheckYourAnswersController.onPageLoad(index, UpdateIndividualMode)
+          case UpdateIndividualMode =>
+            routes.IndividualCheckYourAnswersController.onPageLoad(index, UpdateIndividualMode)
         }
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
@@ -486,7 +490,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
         routes.CheckYourAnswersController.onPageLoad
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def individualSelectCountryPageRoutes(answers: UserAnswers, index: Index, mode : Mode): Call =
+  private def individualSelectCountryPageRoutes(answers: UserAnswers, index: Index, mode: Mode): Call =
     answers.get(IndividualSelectCountryPage(index)).map {
       case _ =>
         if (answers.get(IndividualSelectCountryPage(index)).contains("gb"))
