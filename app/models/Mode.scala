@@ -22,6 +22,7 @@ sealed trait Mode
 
 case object CheckMode  extends Mode
 case object NormalMode extends Mode
+case object UpdateIndividualMode extends Mode // This mode is used to track individual pages - /add-another-individual
 
 object Mode {
 
