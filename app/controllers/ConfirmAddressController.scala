@@ -43,7 +43,8 @@ class ConfirmAddressController @Inject() (
   formProvider: ConfirmAddressFormProvider,
   navigator: Navigator,
   val eventHelper: EventHelper
-) (implicit ec: ExecutionContext)  extends FrontendBaseController with I18nSupport {
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()
 
@@ -52,7 +53,7 @@ class ConfirmAddressController @Inject() (
       implicit request =>
         eventHelper.pageLoadEvent(request.path)
         val preparedForm = request.userAnswers.get(ConfirmAddressPage(index)) match {
-          case None => form
+          case None        => form
           case Some(value) => form.fill(value)
         }
 
@@ -64,10 +65,9 @@ class ConfirmAddressController @Inject() (
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
       form.bindFromRequest().fold(
         formWithErrors =>
-          request.userAnswers getAddress(index, forBusiness= false) match {
+          request.userAnswers getAddress (index, forBusiness = false) match {
             case Some(address) =>
               Future.successful(BadRequest(view(formWithErrors, index, mode, address, IndividualPart(false))))
             case None => Future.successful(Redirect(routes.BusinessAddressController.onPageLoad(index, NormalMode)))

@@ -48,8 +48,8 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case FindAddressPage(index)             => _ => routes.ChooseYourAddressController.onPageLoad(index, NormalMode)
     case BusinessFindAddressPage(index)     => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, NormalMode)
     case ChooseYourAddressPage(index)       => _ => routes.ConfirmAddressController.onPageLoad(index, NormalMode)
-    case ConfirmAddressPage(index) => confirmAddressRoute(_, index, NormalMode)
-    case BusinessConfirmAddressPage(index) => businessConfirmAddressRoute(_, index, NormalMode)
+    case ConfirmAddressPage(index)          => confirmAddressRoute(_, index, NormalMode)
+    case BusinessConfirmAddressPage(index)  => businessConfirmAddressRoute(_, index, NormalMode)
     case BusinessChooseYourAddressPage(index) =>
       _ => routes.BusinessConfirmAddressController.onPageLoad(index, NormalMode)
 
@@ -301,27 +301,17 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
         mode match {
           case NormalMode =>
             if (answers.isBusinessDetails(index))
-              businessInformationRoutes(
-                answers,
-                index,
-                BusinessInformationCheck.Address,
-                mode
-              )
+              businessInformationRoutes(answers, index, BusinessInformationCheck.Address, mode)
             else
               individualInformationRoutes(answers, index, IndividualInformation.Address, mode)
           case CheckMode =>
             if (answers.isBusinessDetails(index))
-              businessInformationRoutes(
-                answers,
-                index,
-                BusinessInformationCheck.Address,
-                mode
-              )
+              businessInformationRoutes(answers, index, BusinessInformationCheck.Address, mode)
             else
               routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
         }
       case false =>
-            routes.IndividualAddressController.onPageLoad(index, NormalMode)
+        routes.IndividualAddressController.onPageLoad(index, NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def businessConfirmAddressRoute(answers: UserAnswers, index: Index, mode: Mode): Call =
@@ -380,22 +370,12 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     answers.get(ConfirmAddressPage(index)).map {
       case true =>
         if (answers.isBusinessDetails(index))
-          businessInformationRoutes(
-            answers,
-            index,
-            BusinessInformationCheck.Address,
-            CheckMode
-          )
-          else
-        routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
+          businessInformationRoutes(answers, index, BusinessInformationCheck.Address, CheckMode)
+        else
+          routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
       case false =>
         if (answers.isBusinessDetails(index))
-          businessInformationRoutes(
-            answers,
-            index,
-            BusinessInformationCheck.Address,
-            CheckMode
-          )
+          businessInformationRoutes(answers, index, BusinessInformationCheck.Address, CheckMode)
         else
           routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
     }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
@@ -404,14 +384,9 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     answers.get(BusinessConfirmAddressPage(index)).map {
       case true =>
         if (answers.isBusinessDetails(index))
-          businessInformationRoutes(
-            answers,
-            index,
-            BusinessInformationCheck.Address,
-            CheckMode
-          )
+          businessInformationRoutes(answers, index, BusinessInformationCheck.Address, CheckMode)
         else
-      routes.CheckYourAnswersController.onPageLoad
+          routes.CheckYourAnswersController.onPageLoad
       case false =>
         routes.BusinessAddressController.onPageLoad(index, CheckMode)
     }.getOrElse(routes.CheckYourAnswersController.onPageLoad)

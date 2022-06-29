@@ -16,16 +16,17 @@
 
 package pages
 
+import models.Index
 import pages.behaviours.PageBehaviours
 
 class BusinessConfirmAddressPageSpec extends PageBehaviours {
 
   "BusinessConfirmAddressPage" - {
 
-    beRetrievable[Boolean](BusinessConfirmAddressPage)
+    beRetrievable[Boolean](BusinessConfirmAddressPage(Index(0)))
 
-    beSettable[Boolean](BusinessConfirmAddressPage)
+    beSettable[Boolean](BusinessConfirmAddressPage(Index(0)))
 
-    beRemovable[Boolean](BusinessConfirmAddressPage)
+    beRemovable[Boolean](BusinessConfirmAddressPage(Index(0)))
   }
 }

@@ -24,7 +24,6 @@ import play.api.data.Form
 class BusinessConfirmAddressFormProvider @Inject() extends Mappings {
 
   def apply(): Form[Boolean] =
-    Form(
-      "value" -> boolean("businessConfirmAddress.error.required")
-    )
+    Form("value" -> boolean("businessConfirmAddress.error.required"))
+
 }

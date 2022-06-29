@@ -120,7 +120,8 @@ final case class BusinessAddressPage(index: Index) extends NominalsQuestionPage[
 
 final case class ConfirmAddressPage(index: Index) extends NominalsQuestionPage[Boolean]("confirmAddress")
 
-final case class BusinessConfirmAddressPage(index: Index) extends NominalsQuestionPage [Boolean] ("businessConfirmAddress")
+final case class BusinessConfirmAddressPage(index: Index)
+    extends NominalsQuestionPage[Boolean]("businessConfirmAddress")
 
 final case class BusinessContactDetailsPage(index: Index)
     extends NominalsQuestionPage[BusinessContactDetails]("businessContactDetails")

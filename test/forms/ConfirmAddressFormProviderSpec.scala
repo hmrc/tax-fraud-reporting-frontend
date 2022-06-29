@@ -19,12 +19,12 @@ package forms
 import forms.behaviours.BooleanFieldBehaviours
 import play.api.data.FormError
 
-class BusinessConfirmAddressFormProviderSpec extends BooleanFieldBehaviours {
+class ConfirmAddressFormProviderSpec extends BooleanFieldBehaviours {
 
-  val requiredKey = "businessConfirmAddress.error.required"
+  val requiredKey = "confirmAddress.error.required"
   val invalidKey  = "error.boolean"
 
-  val form = new BusinessConfirmAddressFormProvider()()
+  val form = new ConfirmAddressFormProvider()()
 
   ".value" - {
 
@@ -34,4 +34,5 @@ class BusinessConfirmAddressFormProviderSpec extends BooleanFieldBehaviours {
 
     behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
   }
+
 }

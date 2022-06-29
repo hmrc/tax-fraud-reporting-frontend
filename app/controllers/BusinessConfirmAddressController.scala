@@ -31,50 +31,52 @@ import views.html.BusinessConfirmAddressView
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class BusinessConfirmAddressController @Inject()(
-                                         override val messagesApi: MessagesApi,
-                                         sessionRepository: SessionRepository,
-                                         navigator: Navigator,
-                                         identify: IdentifierAction,
-                                         getData: DataRetrievalAction,
-                                         requireData: DataRequiredAction,
-                                         formProvider: BusinessConfirmAddressFormProvider,
-                                         val controllerComponents: MessagesControllerComponents,
-                                         view: BusinessConfirmAddressView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class BusinessConfirmAddressController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  navigator: Navigator,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction,
+  formProvider: BusinessConfirmAddressFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: BusinessConfirmAddressView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()
 
-  def onPageLoad(index: Index, forBusiness: Boolean, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
-    implicit request =>
+  def onPageLoad(index: Index, forBusiness: Boolean, mode: Mode): Action[AnyContent] =
+    (identify andThen getData andThen requireData) {
+      implicit request =>
+        val journeyPart = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
+        val preparedForm = request.userAnswers.get(BusinessConfirmAddressPage(index)) match {
+          case None        => form
+          case Some(value) => form.fill(value)
+        }
+        request.userAnswers getAddress (index, forBusiness) match {
+          case Some(address) => Ok(view(preparedForm, index, mode, address, journeyPart))
+          case None          => Redirect(routes.BusinessAddressController.onPageLoad(index, NormalMode))
+        }
+    }
 
-      val journeyPart = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
-      val preparedForm = request.userAnswers.get(BusinessConfirmAddressPage(index)) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-      request.userAnswers getAddress(index, forBusiness) match {
-        case Some(address) => Ok(view(preparedForm, index, mode, address, journeyPart))
-        case None => Redirect(routes.BusinessAddressController.onPageLoad(index, NormalMode))
-      }
-  }
+  def onSubmit(index: Index, forBusiness: Boolean, mode: Mode): Action[AnyContent] =
+    (identify andThen getData andThen requireData).async {
+      implicit request =>
+        val journeyPart = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
+        form.bindFromRequest().fold(
+          formWithErrors =>
+            request.userAnswers getAddress (index, forBusiness) match {
+              case Some(address) =>
+                Future.successful(BadRequest(view(formWithErrors, index, mode, address, journeyPart)))
+              case None => Future.successful(Redirect(routes.BusinessAddressController.onPageLoad(index, NormalMode)))
+            },
+          value =>
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessConfirmAddressPage(index), value))
+              _              <- sessionRepository.set(updatedAnswers)
+            } yield Redirect(navigator.nextPage(BusinessConfirmAddressPage(index), mode, updatedAnswers))
+        )
+    }
 
-  def onSubmit(index: Index, forBusiness: Boolean, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
-    implicit request =>
-
-      val journeyPart = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
-      form.bindFromRequest().fold(
-        formWithErrors =>
-      request.userAnswers getAddress(index, forBusiness) match {
-        case Some(address) =>
-          Future.successful(BadRequest(view(formWithErrors, index, mode, address, journeyPart)))
-        case None => Future.successful(Redirect(routes.BusinessAddressController.onPageLoad(index, NormalMode)))
-      },
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessConfirmAddressPage(index), value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(BusinessConfirmAddressPage(index), mode, updatedAnswers))
-      )
-  }
 }

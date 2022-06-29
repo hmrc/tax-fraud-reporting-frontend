@@ -14,24 +14,18 @@
  * limitations under the License.
  */
 
-package forms
+package pages
 
-import forms.behaviours.BooleanFieldBehaviours
-import play.api.data.FormError
+import models.Index
+import pages.behaviours.PageBehaviours
 
-class BusinessConfirmAddressFormProviderSpec extends BooleanFieldBehaviours {
+class ConfirmAddressPageSpec extends PageBehaviours {
 
-  val requiredKey = "businessConfirmAddress.error.required"
-  val invalidKey  = "error.boolean"
+  "BusinessConfirmAddressPage" - {
 
-  val form = new BusinessConfirmAddressFormProvider()()
-
-  ".value" - {
-
-    val fieldName = "value"
-
-    behave like booleanField(form, fieldName, invalidError = FormError(fieldName, invalidKey))
-
-    behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
+    beRetrievable[Boolean](ConfirmAddressPage(Index(0)))
+    beSettable[Boolean](ConfirmAddressPage(Index(0)))
+    beRemovable[Boolean](ConfirmAddressPage(Index(0)))
   }
+
 }

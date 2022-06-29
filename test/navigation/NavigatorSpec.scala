@@ -19,6 +19,7 @@ package navigation
 import base.SpecBase
 import controllers.routes
 import models._
+import models.addresslookup.ProposedAddress
 import org.scalacheck.Gen
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import pages._
@@ -1215,6 +1216,70 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
     "must go from business select country page if select 'gb' " - {
 
+      "to the choose your address when you enter correct postcode" in {
+        val answers =
+          UserAnswers("id").set(FindAddressPage(Index(0)), FindAddress("EH12 9JE", Option.empty)).success.value
+        navigator.nextPage(
+          FindAddressPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.ChooseYourAddressController.onPageLoad(Index(0), NormalMode)
+      }
+
+      "to the business journey, choose your address when you enter correct postcode" in {
+        val answers =
+          UserAnswers("id").set(BusinessFindAddressPage(Index(0)), FindAddress("EH12 9JE", Option.empty)).success.value
+        navigator.nextPage(
+          BusinessFindAddressPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.BusinessChooseYourAddressController.onPageLoad(Index(0), NormalMode)
+      }
+
+      "to the confirm your address when you choose your address" in {
+        val proposal: Seq[ProposedAddress] = Seq(
+          ProposedAddress(
+            "GB1234567890",
+            uprn = None,
+            parentUprn = None,
+            usrn = None,
+            organisation = None,
+            "ZZ11 1ZZ",
+            lines = List("line1", "line2"),
+            town = "town"
+          )
+        )
+        val answers =
+          UserAnswers("id").set(ChooseYourAddressPage(Index(0)), proposal).success.value
+        navigator.nextPage(
+          ChooseYourAddressPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.ConfirmAddressController.onPageLoad(Index(0), NormalMode)
+      }
+
+      "to the business confirm your address when you choose your address" in {
+        val proposal: Seq[ProposedAddress] = Seq(
+          ProposedAddress(
+            "GB1234567890",
+            uprn = None,
+            parentUprn = None,
+            usrn = None,
+            organisation = None,
+            "ZZ11 1ZZ",
+            lines = List("line1", "line2"),
+            town = "town"
+          )
+        )
+        val answers =
+          UserAnswers("id").set(BusinessChooseYourAddressPage(Index(0)), proposal).success.value
+        navigator.nextPage(
+          BusinessChooseYourAddressPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.BusinessConfirmAddressController.onPageLoad(Index(0), NormalMode)
+      }
+
       "to the find address page if the user has selected 'gb' " in {
         val answers = UserAnswers("id").set(BusinessSelectCountryPage(Index(0)), "gb").success.value
         navigator.nextPage(
@@ -1223,6 +1288,73 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           answers
         ) mustBe routes.BusinessFindAddressController.onPageLoad(Index(0), NormalMode)
       }
+    }
+
+    "must go from business confirm address page" - {
+
+      "to the continue the journey if select yes" in {
+        val answers = emptyUserAnswers.set(BusinessConfirmAddressPage(Index(0)), true).success.value
+        navigator.nextPage(
+          BusinessConfirmAddressPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe navigator.businessInformationRoutes(answers, Index(0), BusinessInformationCheck.Address, NormalMode)
+      }
+
+      "to the business address page if you select no" in {
+        val answers = emptyUserAnswers.set(BusinessConfirmAddressPage(Index(0)), false).success.value
+        navigator.nextPage(
+          BusinessConfirmAddressPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.BusinessAddressController.onPageLoad(Index(0), NormalMode)
+      }
+
+      "to the journey recovery page when the user has no selection" in {
+        navigator.nextPage(
+          BusinessConfirmAddressPage(Index(0)),
+          NormalMode,
+          emptyUserAnswers
+        ) mustBe routes.JourneyRecoveryController.onPageLoad()
+      }
+
+    }
+
+    "must go from individual confirm address page" - {
+
+      "to the continue the individual journey if select yes" in {
+        val answers = emptyUserAnswers.set(ConfirmAddressPage(Index(0)), true).success.value
+        if (answers.isBusinessDetails(Index(0)))
+          navigator.nextPage(
+            ConfirmAddressPage(Index(0)),
+            NormalMode,
+            answers
+          ) mustBe navigator.businessInformationRoutes(answers, Index(0), BusinessInformationCheck.Address, NormalMode)
+        else
+          navigator.nextPage(
+            ConfirmAddressPage(Index(0)),
+            NormalMode,
+            answers
+          ) mustBe navigator.individualInformationRoutes(answers, Index(0), IndividualInformation.Address, NormalMode)
+      }
+
+      "to the individual address page if you select no" in {
+        val answers = emptyUserAnswers.set(ConfirmAddressPage(Index(0)), false).success.value
+        navigator.nextPage(
+          ConfirmAddressPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.IndividualAddressController.onPageLoad(Index(0), NormalMode)
+      }
+
+      "to the journey recovery page when the user has no selection" in {
+        navigator.nextPage(
+          ConfirmAddressPage(Index(0)),
+          NormalMode,
+          emptyUserAnswers
+        ) mustBe routes.JourneyRecoveryController.onPageLoad()
+      }
+
     }
 
     "in Check mode" - {
@@ -1558,12 +1690,75 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           ) mustBe routes.BusinessFindAddressController.onPageLoad(Index(0), CheckMode)
         }
 
+        "to the find your address page if the user has enter correct postcode" in {
+          val answers = UserAnswers("id").set(
+            BusinessFindAddressPage(Index(0)),
+            FindAddress("EH12 9JE", Option.empty)
+          ).success.value
+          navigator.nextPage(
+            BusinessFindAddressPage(Index(0)),
+            CheckMode,
+            answers
+          ) mustBe routes.BusinessChooseYourAddressController.onPageLoad(Index(0), CheckMode)
+        }
+
         "to the journey recovery controller if there is no activity type set" in {
           navigator.nextPage(
             BusinessSelectCountryPage(Index(0)),
             CheckMode,
             UserAnswers("id")
           ) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+
+      }
+
+      "must go from cya individual confirm address page" - {
+
+        "to the cya page if select yes" in {
+          val answers = emptyUserAnswers.set(ConfirmAddressPage(Index(0)), true).success.value
+          if (answers.isBusinessDetails(Index(0)))
+            navigator.nextPage(
+              ConfirmAddressPage(Index(0)),
+              CheckMode,
+              answers
+            ) mustBe navigator.businessInformationRoutes(answers, Index(0), BusinessInformationCheck.Address, CheckMode)
+          else
+            navigator.nextPage(
+              ConfirmAddressPage(Index(0)),
+              CheckMode,
+              answers
+            ) mustBe routes.IndividualCheckYourAnswersController.onPageLoad(Index(0), CheckMode)
+        }
+
+        "to the individual address page in check mode if you select no" in {
+          val answers = emptyUserAnswers.set(ConfirmAddressPage(Index(0)), false).success.value
+          navigator.nextPage(
+            ConfirmAddressPage(Index(0)),
+            CheckMode,
+            answers
+          ) mustBe routes.IndividualCheckYourAnswersController.onPageLoad(Index(0), CheckMode)
+        }
+
+      }
+
+      "must go from cya business confirm address page" - {
+
+        "to the cya page if select yes" in {
+          val answers = emptyUserAnswers.set(BusinessConfirmAddressPage(Index(0)), true).success.value
+          navigator.nextPage(
+            BusinessConfirmAddressPage(Index(0)),
+            CheckMode,
+            answers
+          ) mustBe routes.CheckYourAnswersController.onPageLoad
+        }
+
+        "to the business address page in check mode if you select no" in {
+          val answers = emptyUserAnswers.set(BusinessConfirmAddressPage(Index(0)), false).success.value
+          navigator.nextPage(
+            BusinessConfirmAddressPage(Index(0)),
+            CheckMode,
+            answers
+          ) mustBe routes.BusinessAddressController.onPageLoad(Index(0), CheckMode)
         }
 
       }
@@ -1577,6 +1772,16 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             CheckMode,
             answers
           ) mustBe routes.IndividualAddressController.onPageLoad(Index(0), CheckMode)
+        }
+
+        "to the individual find your address page if the user has enter correct postcode" in {
+          val answers =
+            UserAnswers("id").set(FindAddressPage(Index(0)), FindAddress("EH12 9JE", Option.empty)).success.value
+          navigator.nextPage(
+            FindAddressPage(Index(0)),
+            CheckMode,
+            answers
+          ) mustBe routes.ChooseYourAddressController.onPageLoad(Index(0), CheckMode)
         }
 
         "to the individual select country page if the user has selected 'gb'" in {
@@ -1598,25 +1803,52 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
       }
 
-      "to the connection page if there are no following options selected" in {
-        forAll(businessInformationCheckGen) { businesslInformationAnswer =>
-          val followingAnswers = Set(
-            BusinessInformationCheck.Name,
-            BusinessInformationCheck.Type,
-            BusinessInformationCheck.Address,
-            BusinessInformationCheck.Contact,
-            BusinessInformationCheck.BusinessReference
-          )
-          val answer      = businesslInformationAnswer -- followingAnswers
-          val userAnswers = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
-          navigator.nextPage(
-            BusinessNamePage(Index(0)),
-            CheckMode,
-            userAnswers
-          ) mustBe routes.IndividualCheckYourAnswersController.onPageLoad(Index(0), CheckMode)
-        }
+      "to the continue the journey if select yes" in {
+        val answers = emptyUserAnswers.set(BusinessConfirmAddressPage(Index(0)), true).success.value
+        navigator.nextPage(
+          BusinessConfirmAddressPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe navigator.businessInformationRoutes(answers, Index(0), BusinessInformationCheck.Address, NormalMode)
+      }
+
+      "to the business address page if you select no" in {
+        val answers = emptyUserAnswers.set(BusinessConfirmAddressPage(Index(0)), false).success.value
+        navigator.nextPage(
+          BusinessConfirmAddressPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.BusinessAddressController.onPageLoad(Index(0), NormalMode)
+      }
+
+      "to the journey recovery page when the user has no selection" in {
+        navigator.nextPage(
+          BusinessConfirmAddressPage(Index(0)),
+          NormalMode,
+          emptyUserAnswers
+        ) mustBe routes.JourneyRecoveryController.onPageLoad()
       }
 
     }
+
+    "to the connection page if there are no following options selected" in {
+      forAll(businessInformationCheckGen) { businesslInformationAnswer =>
+        val followingAnswers = Set(
+          BusinessInformationCheck.Name,
+          BusinessInformationCheck.Type,
+          BusinessInformationCheck.Address,
+          BusinessInformationCheck.Contact,
+          BusinessInformationCheck.BusinessReference
+        )
+        val answer      = businesslInformationAnswer -- followingAnswers
+        val userAnswers = UserAnswers("id").set(BusinessInformationCheckPage(Index(0)), answer).success.value
+        navigator.nextPage(
+          BusinessNamePage(Index(0)),
+          CheckMode,
+          userAnswers
+        ) mustBe routes.IndividualCheckYourAnswersController.onPageLoad(Index(0), CheckMode)
+      }
+    }
+
   }
 }

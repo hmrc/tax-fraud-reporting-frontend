@@ -24,7 +24,6 @@ import javax.inject.Inject
 class ConfirmAddressFormProvider @Inject() extends Mappings {
 
   def apply(): Form[Boolean] =
-    Form(
-      "value" -> boolean("confirmAddress.error.required")
-    )
+    Form("value" -> boolean("confirmAddress.error.required"))
+
 }

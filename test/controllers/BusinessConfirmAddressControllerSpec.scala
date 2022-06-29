@@ -18,27 +18,31 @@ package controllers
 
 import base.SpecBase
 import forms.BusinessConfirmAddressFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{Index, NormalMode, UserAnswers}
 import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
 import pages.BusinessConfirmAddressPage
 import play.api.inject.bind
 import play.api.mvc.Call
+import play.api.mvc.Results.Redirect
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
+import viewmodels.{BusinessPart, IndividualPart}
 import views.html.BusinessConfirmAddressView
 
 import scala.concurrent.Future
 
 class BusinessConfirmAddressControllerSpec extends SpecBase {
 
+  val userAnswers = UserAnswers(userAnswersId)
+
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new BusinessConfirmAddressFormProvider()
-  val form = formProvider()
+  val form         = formProvider()
 
-  lazy val businessConfirmAddressRoute = routes.BusinessConfirmAddressController.onPageLoad(NormalMode).url
+  lazy val businessConfirmAddressRoute = routes.BusinessConfirmAddressController.onPageLoad(Index(0), NormalMode).url
 
   "BusinessConfirmAddress Controller" - {
 
@@ -53,14 +57,24 @@ class BusinessConfirmAddressControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[BusinessConfirmAddressView]
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        val journeyPart = if (userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
+        UserAnswers(userAnswersId) getAddress (Index(0), forBusiness = true) match {
+          case Some(address) =>
+            status(result) mustEqual OK
+            contentAsString(result) mustEqual view(form, Index(0), NormalMode, address, journeyPart)(
+              request,
+              messages(application)
+            ).toString
+          case None =>
+            Future.successful(Redirect(routes.BusinessAddressController.onPageLoad(Index(0), NormalMode)))
+        }
+
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(BusinessConfirmAddressPage, true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(BusinessConfirmAddressPage(Index(0)), true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -69,10 +83,18 @@ class BusinessConfirmAddressControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[BusinessConfirmAddressView]
 
-        val result = route(application, request).value
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+        val result      = route(application, request).value
+        val journeyPart = if (userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
+        UserAnswers(userAnswersId) getAddress (Index(0), forBusiness = true) match {
+          case Some(address) =>
+            status(result) mustEqual OK
+            contentAsString(result) mustEqual view(form.fill(true), Index(0), NormalMode, address, journeyPart)(
+              request,
+              messages(application)
+            ).toString
+          case None =>
+            Future.successful(Redirect(routes.BusinessAddressController.onPageLoad(Index(0), NormalMode)))
+        }
       }
     }
 
@@ -115,10 +137,18 @@ class BusinessConfirmAddressControllerSpec extends SpecBase {
 
         val view = application.injector.instanceOf[BusinessConfirmAddressView]
 
-        val result = route(application, request).value
-
-        status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        val result      = route(application, request).value
+        val journeyPart = if (userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
+        UserAnswers(userAnswersId) getAddress (Index(0), forBusiness = true) match {
+          case Some(address) =>
+            status(result) mustEqual BAD_REQUEST
+            contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, address, journeyPart)(
+              request,
+              messages(application)
+            ).toString
+          case None =>
+            Future.successful(Redirect(routes.BusinessAddressController.onPageLoad(Index(0), NormalMode)))
+        }
       }
     }
 
