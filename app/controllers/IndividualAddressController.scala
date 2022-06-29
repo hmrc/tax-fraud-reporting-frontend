@@ -83,7 +83,7 @@ class IndividualAddressController @Inject() (
               for {
                 updatedAnswers <- Future.fromTry(request.userAnswers.set(IndividualAddressPage(index), address))
                 _              <- sessionRepository.set(updatedAnswers)
-              } yield Redirect(routes.ConfirmAddressController.onPageLoad(index, false, mode))
+              } yield Redirect(routes.ConfirmAddressController.onPageLoad(index, mode))
           )
       )
   }

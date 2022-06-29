@@ -28,7 +28,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], index:Index, mode: Mode, address: Address)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], index:Index, mode: Mode, address: Address, journeyPart: JourneyPart)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("businessConfirmAddress.title"))) {
 
@@ -37,6 +37,14 @@
         @if(form.errors.nonEmpty) {
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
+
+        @if(journeyPart != BusinessPart) {
+            <span class="govuk-caption-xl">
+               <span class="govuk-visually-hidden">@messages("individual.caption.text.screen.reader")</span>
+               @messages(s"individual.${index.display}")
+            </span>
+        }
+
         <h1 class="govuk-heading-xl"> Is this address correct?</h1>
         <div id="address">
 

@@ -28,11 +28,11 @@
         govukButton: GovukButton
 )
 
-@(form: Form[_], index:Index, mode: Mode, address: Address, isBusinessJourney: Boolean, journeyPart: JourneyPart)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], index:Index, mode: Mode, address: Address, journeyPart: JourneyPart)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("confirmAddress.title"))) {
 
-    @formHelper(action = routes.ConfirmAddressController.onSubmit(index, true, mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.ConfirmAddressController.onSubmit(index, mode), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
         @govukErrorSummary(ErrorSummaryViewModel(form))

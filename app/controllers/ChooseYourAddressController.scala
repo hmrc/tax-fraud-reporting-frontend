@@ -104,7 +104,7 @@ class ChooseYourAddressController @Inject() (
                       )
                     )
                     _ <- sessionRepository.set(updatedAnswers)
-                  } yield Redirect(routes.ConfirmAddressController.onPageLoad(index, false, mode))
+                  } yield Redirect(routes.ConfirmAddressController.onPageLoad(index, mode))
                 case None => Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
               }
             case _ =>

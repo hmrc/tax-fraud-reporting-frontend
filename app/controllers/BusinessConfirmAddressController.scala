@@ -25,6 +25,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import viewmodels.{BusinessPart, IndividualPart}
 import views.html.BusinessConfirmAddressView
 
 import javax.inject.Inject
@@ -44,27 +45,29 @@ class BusinessConfirmAddressController @Inject()(
 
   val form = formProvider()
 
-  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(index: Index, forBusiness: Boolean, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
+
+      val journeyPart = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
       val preparedForm = request.userAnswers.get(BusinessConfirmAddressPage(index)) match {
         case None => form
         case Some(value) => form.fill(value)
       }
-      request.userAnswers getAddress(index, forBusiness = true) match {
-        case Some(address) => Ok(view(preparedForm, index, mode, address))
+      request.userAnswers getAddress(index, forBusiness) match {
+        case Some(address) => Ok(view(preparedForm, index, mode, address, journeyPart))
         case None => Redirect(routes.BusinessAddressController.onPageLoad(index, NormalMode))
       }
   }
 
-  def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(index: Index, forBusiness: Boolean, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
+
+      val journeyPart = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
       form.bindFromRequest().fold(
         formWithErrors =>
-      request.userAnswers getAddress(index, forBusiness = true) match {
+      request.userAnswers getAddress(index, forBusiness) match {
         case Some(address) =>
-          Future.successful(BadRequest(view(formWithErrors, index, mode, address)))
+          Future.successful(BadRequest(view(formWithErrors, index, mode, address, journeyPart)))
         case None => Future.successful(Redirect(routes.BusinessAddressController.onPageLoad(index, NormalMode)))
       },
         value =>

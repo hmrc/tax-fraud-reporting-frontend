@@ -85,7 +85,7 @@ class BusinessAddressController @Inject() (
               for {
                 updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessAddressPage(index), address))
                 _              <- sessionRepository set updatedAnswers
-              } yield Redirect(routes.ConfirmAddressController.onPageLoad(index, true, mode))
+              } yield Redirect(routes.BusinessConfirmAddressController.onPageLoad(index, mode))
           )
       )
   }
