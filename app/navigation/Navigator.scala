@@ -103,7 +103,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       businessInformationRoutes(_, index, BusinessInformationCheck.Address, CheckMode)
     case SelectConnectionBusinessPage(index) => selectConnectionBusinessCheckRoute(_, index)
     case IndividualSelectCountryPage(index)  => individualSelectCountryPageRoutes(_, index, CheckMode)
-    case BusinessSelectCountryPage(index)    => businessSelectCountryPageRoutes(_, index)
+    case BusinessSelectCountryPage(index)    => businessSelectCountryPageRoutes(_, index, CheckMode)
     case FindAddressPage(index)              => _ => routes.ChooseYourAddressController.onPageLoad(index, CheckMode)
     case BusinessFindAddressPage(index)      => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, CheckMode)
     case ApproximateValuePage                => approximateValueCheckRoutes
@@ -119,6 +119,21 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case IndividualCheckYourAnswersPage(index)  => _ => routes.AddAnotherPersonController.onPageLoad(NormalMode)
     case IndividualSelectCountryPage(index)  => individualSelectCountryPageRoutes(_, index, UpdateIndividualMode)
     case FindAddressPage(index)             => _ => routes.ChooseYourAddressController.onPageLoad(index, UpdateIndividualMode)
+    case IndividualBusinessDetailsPage(index) => individualBusinessDetailsRoutes(_, index, UpdateIndividualMode)
+    case BusinessInformationCheckPage(index)  => businessInformationRoutes(_, index, UpdateIndividualMode)
+    case BusinessNamePage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Name, UpdateIndividualMode)
+    case TypeBusinessPage(index)              => businessInformationRoutes(_, index, BusinessInformationCheck.Type, UpdateIndividualMode)
+    case ReferenceNumbersPage(index) =>
+      businessInformationRoutes(_, index, BusinessInformationCheck.BusinessReference, UpdateIndividualMode)
+    case BusinessContactDetailsPage(index) =>
+      businessInformationRoutes(_, index, BusinessInformationCheck.Contact, UpdateIndividualMode)
+    case BusinessAddressPage(index) =>
+      businessInformationRoutes(_, index, BusinessInformationCheck.Address, UpdateIndividualMode)
+    case SelectConnectionBusinessPage(index) => selectConnectionBusinessCheckRoute(_, index)
+    case IndividualSelectCountryPage(index)  => individualSelectCountryPageRoutes(_, index, UpdateIndividualMode)
+    case BusinessSelectCountryPage(index)    => businessSelectCountryPageRoutes(_, index, UpdateIndividualMode)
+    case FindAddressPage(index)              => _ => routes.ChooseYourAddressController.onPageLoad(index, UpdateIndividualMode)
+    case BusinessFindAddressPage(index)      => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, UpdateIndividualMode)
     case p: IndexedConfirmationPage => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, UpdateIndividualMode)
     //routes.AddAnotherPersonController.onPageLoad(NormalMode)
   }
@@ -248,7 +263,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
               case Some(nextStep) => businessInformationRoute(nextStep, index, NormalMode)
               case None           => routes.SelectConnectionBusinessController.onPageLoad(index, NormalMode)
             }
-          case CheckMode =>
+          case CheckMode | UpdateIndividualMode =>
             if (!answers.isBusinessJourney)
               routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
             else
@@ -291,6 +306,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
         mode match {
           case CheckMode  => routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
           case NormalMode => routes.AddAnotherPersonController.onPageLoad(mode)
+          case UpdateIndividualMode  => routes.IndividualCheckYourAnswersController.onPageLoad(index, UpdateIndividualMode)
         }
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
@@ -479,13 +495,13 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
           routes.IndividualAddressController.onPageLoad(index, mode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def businessSelectCountryPageRoutes(answers: UserAnswers, index: Index): Call =
+  private def businessSelectCountryPageRoutes(answers: UserAnswers, index: Index, mode: Mode): Call =
     answers.get(BusinessSelectCountryPage(index)).map {
       case _ =>
         if (answers.get(BusinessSelectCountryPage(index)).contains("gb"))
-          routes.BusinessFindAddressController.onPageLoad(index, CheckMode)
+          routes.BusinessFindAddressController.onPageLoad(index, mode)
         else
-          routes.BusinessAddressController.onPageLoad(index, CheckMode)
+          routes.BusinessAddressController.onPageLoad(index, mode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call = mode match {
