@@ -277,7 +277,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
         BusinessInformationCheck.values find remainingSections.contains map {
           mode match {
             case NormalMode => businessInformationRoute(_, index, mode)
-            case CheckMode =>
+            case CheckMode | UpdateIndividualMode =>
               businessInformationRoute(_, index, mode)
           }
         }
