@@ -42,7 +42,7 @@ error.date.year_invalid = Give a correct year
 error.integer = Give an answer in whole numbers
 error.non_numeric = Give a value using only numbers
 error.number = Please enter a valid number
-error.required = Please enter a value
+error.required = Enter the type of activity you are reporting to HMRC
 error.length = This input must be 255 characters or fewer.
 error.summary.title = There is a problem
 
@@ -307,7 +307,7 @@ country.zw.text = Zimbabwe
 index.title = What you need to know
 index.header = What you need to know
 index.h2.heading1 = HMRC takes your security seriously, do not:
-index.h2.heading2 = HMRC values the information you will provide:
+index.h2.heading2 = HMRC values the information you provide:
 index.p1 = HMRC is unable to investigate issues related to police, Border Force or other government departments.
 index.p2 = By continuing, you understand that:
 index.list.item1 = try to find out more about the fraud or activity
@@ -345,7 +345,7 @@ unauthorised.heading = You can’t access this service with this account
 
 activityType.title = What type of activity are you reporting to HMRC?
 activityType.heading = What type of activity are you reporting to HMRC?
-activityType.hint = Enter keywords related to the activity to suggest relevant categories or select an activity from the list.
+activityType.hint = Use keywords related to activity to suggest categories.
 activityType.checkYourAnswersLabel = Activity type
 activityType.error.required = Enter the type of activity.
 activityType.change.hidden = Activity Type
@@ -906,7 +906,7 @@ businessInformationCheck.contact = Business contact details
 businessInformationCheck.businessReference = Business reference numbers
 businessInformationCheck.businessReference.hint = For example VAT number or Employee Reference Number.
 businessInformationCheck.checkYourAnswersLabel = What do you know about the business?
-businessInformationCheck.error.required = Select or enter the information you know about the business.
+businessInformationCheck.error.required = Select what you know about the business.
 businessInformationCheck.change.hidden = BusinessInformationCheck
 
 businessName.title = What is the business''s name?
@@ -928,8 +928,8 @@ typeBusiness.title = What type of business is it?
 typeBusiness.heading = What type of business is it?
 typeBusiness.hint = For example builder, hairdresser or restaurant.
 typeBusiness.checkYourAnswersLabel = Business trade
-typeBusiness.error.required = Enter what type of business it is
-typeBusiness.error.length =  The type of business must be {0} characters or fewer.
+typeBusiness.error.required = Enter the business type
+typeBusiness.error.length =  The type of business must be {0} characters or fewer
 typeBusiness.change.hidden = Business trade
 
 selectConnectionBusiness.title = How do you know the business?
@@ -948,7 +948,7 @@ selectConnectionBusiness.treasure = Treasurer
 selectConnectionBusiness.other = Other
 selectConnectionBusiness.otherValue = Enter how you know the business
 selectConnectionBusiness.checkYourAnswersLabel = How you know the business
-selectConnectionBusiness.error.required = Select or enter how you know the business.
+selectConnectionBusiness.error.required = Select how you know the business.
 selectConnectionBusiness.error.otherValue.required = Select or enter how you know the business.
 selectConnectionBusiness.error.otherValue.maxLength = How you know the business must be {0} characters or fewer
 selectConnectionBusiness.change.hidden = How you know the business
@@ -1202,12 +1202,18 @@ betaBanner.service.text = This is a new service
 
 individual.caption.text.screen.reader = This is about
 
-individualSelectCountry.title = Select your country
-individualSelectCountry.heading = Select your country
-individualSelectCountry.label = Select country
+individualSelectCountry.title = What country is the individual based?
+individualSelectCountry.heading = What country is the individual based?
+individualSelectCountry.label = What country is the individual based?
 individualSelectCountry.checkYourAnswersLabel = Country
-individualSelectCountry.error.required = Please select a country from the list.
-individualSelectCountry.change.hidden = Select your country
+individualSelectCountry.error.required = Enter the individual''s country of residence
+individualSelectCountry.change.hidden = What country is the individual based?
+
+businessSelectCountry.title = What country is the business based?
+businessSelectCountry.heading = What country is the business based?
+businessSelectCountry.label = What country is the business based?
+businessSelectCountry.error.required = Enter the country where the business is based
+businessSelectCountry.change.hidden = What country is the business based?
 
 confirmAddress.title = Review and confirm
 confirmAddress.heading = Review and confirm

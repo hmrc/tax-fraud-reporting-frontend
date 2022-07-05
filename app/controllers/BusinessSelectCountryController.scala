@@ -18,7 +18,7 @@ package controllers
 
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import controllers.helper.EventHelper
-import forms.IndividualSelectCountryFormProvider
+import forms.BusinessSelectCountryFormProvider
 import models.{Index, Mode}
 import navigation.Navigator
 import pages.BusinessSelectCountryPage
@@ -39,7 +39,7 @@ class BusinessSelectCountryController @Inject() (
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
-  formProvider: IndividualSelectCountryFormProvider,
+  formProvider: BusinessSelectCountryFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: IndividualSelectCountryView,
   val eventHelper: EventHelper
@@ -51,25 +51,27 @@ class BusinessSelectCountryController @Inject() (
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       val countryJourney = if (request.userAnswers.isBusinessJourney) Business else Individual(true)
+      val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
       eventHelper.pageLoadEvent(request.path)
       val preparedForm = request.userAnswers.get(BusinessSelectCountryPage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, index, mode, countryJourney))
+      Ok(view(preparedForm, index, mode, countryJourney, isBusinessDetails))
   }
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       val countryJourney = if (request.userAnswers.isBusinessJourney) Business else Individual(true)
+      val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
       form.bindFromRequest().fold(
         formWithErrors => {
           eventHelper.formErrorEvent(
             request.path,
             messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
           )
-          Future.successful(BadRequest(view(formWithErrors, index, mode, countryJourney)))
+          Future.successful(BadRequest(view(formWithErrors, index, mode, countryJourney, isBusinessDetails)))
         },
         value =>
           for {
