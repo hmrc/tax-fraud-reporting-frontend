@@ -311,7 +311,10 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
               routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
         }
       case false =>
-        routes.IndividualAddressController.onPageLoad(index, NormalMode)
+        if (answers.get(IndividualSelectCountryPage(index)).contains("gb"))
+          routes.ChooseYourAddressController.onPageLoad(index, NormalMode)
+        else
+          routes.IndividualAddressController.onPageLoad(index, NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def businessConfirmAddressRoute(answers: UserAnswers, index: Index, mode: Mode): Call =
@@ -319,7 +322,10 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       case true =>
         businessInformationRoutes(answers, index, BusinessInformationCheck.Address, NormalMode)
       case false =>
-        routes.BusinessAddressController.onPageLoad(index, NormalMode)
+        if (answers.get(BusinessSelectCountryPage(index)).contains("gb"))
+          routes.BusinessChooseYourAddressController.onPageLoad(index, NormalMode)
+        else
+          routes.BusinessAddressController.onPageLoad(index, NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def zeroValidationRoutes(answers: UserAnswers): Call =
@@ -388,7 +394,10 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
         else
           routes.CheckYourAnswersController.onPageLoad
       case false =>
-        routes.BusinessAddressController.onPageLoad(index, CheckMode)
+        if (answers.get(BusinessSelectCountryPage(index)).contains("gb"))
+          routes.BusinessChooseYourAddressController.onPageLoad(index, CheckMode)
+        else
+          routes.BusinessAddressController.onPageLoad(index, CheckMode)
     }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
 
   private def zeroValidationCheckRoutes(answers: UserAnswers): Call =
