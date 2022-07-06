@@ -1370,7 +1370,7 @@ canNotFindAddress.continue = Rhowch gynnig ar god post gwahanol
 businessCanNotFindAddress.title = Ni ellir dod o hyd i’r cod post
 businessCanNotFindAddress.heading = Ni ellir dod o hyd i’r cod post
 
-zeroValidation.title = (W) Are you sure the value of the activity if £0 (W)
-zeroValidation.heading = (W) Are you sure the value of the activity if £0 (W)
-zeroValidation.hint = (W) If you do not know the value please provide your best estimate as this is still useful. (W)
-zeroValidation.error.required = (W) If no selection made: Select yes if £0 was the correct value entered (W)
+zeroValidation.title = A ydych yn siŵr nad oes gwerth i’r gweithgaredd?
+zeroValidation.heading = A ydych yn siŵr nad oes gwerth i’r gweithgaredd?
+zeroValidation.hint = Os nad ydych yn gwybod yr union werth, gallwch roi’ch amcangyfrif gorau i ni.
+zeroValidation.error.required = Dewiswch ‘Iawn’ os ydych yn siŵr nad oes gwerth i’r gweithgaredd
