@@ -49,7 +49,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case BusinessFindAddressPage(index)     => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, NormalMode)
     case ChooseYourAddressPage(index)       => _ => routes.ConfirmAddressController.onPageLoad(index, NormalMode)
     case ConfirmAddressPage(index)          => confirmAddressNormalModeRoute(_, index, NormalMode)
-    case BusinessConfirmAddressPage(index)  => businessConfirmAddressRoute(_, index, NormalMode)
+    case BusinessConfirmAddressPage(index)  => businessConfirmAddressNormalModeRoute(_, index, NormalMode)
     case BusinessChooseYourAddressPage(index) =>
       _ => routes.BusinessConfirmAddressController.onPageLoad(index, NormalMode)
 
@@ -109,7 +109,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case ApproximateValuePage                => approximateValueCheckRoutes
     case ZeroValidationPage                  => zeroValidationCheckRoutes
     case ConfirmAddressPage(index)           => confirmAddressCheckModeRoutes(_, index, CheckMode)
-    case BusinessConfirmAddressPage(index)   => businessConfirmAddressRoutes(_, index, CheckMode)
+    case BusinessConfirmAddressPage(index)   => businessConfirmAddressCheckModeRoutes(_, index, CheckMode)
     case p: IndexedConfirmationPage          => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
     case _                                   => _ => routes.CheckYourAnswersController.onPageLoad
   }
@@ -317,7 +317,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
           routes.IndividualAddressController.onPageLoad(index, NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
-  private def businessConfirmAddressRoute(answers: UserAnswers, index: Index, mode: Mode): Call =
+  private def businessConfirmAddressNormalModeRoute(answers: UserAnswers, index: Index, mode: Mode): Call =
     answers.get(BusinessConfirmAddressPage(index)).map {
       case true =>
         businessInformationRoutes(answers, index, BusinessInformationCheck.Address, mode)
@@ -394,7 +394,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
           routes.IndividualAddressController.onPageLoad(index, mode)
     }.getOrElse(routes.IndividualCheckYourAnswersController.onPageLoad(index, mode))
 
-  private def businessConfirmAddressRoutes(answers: UserAnswers, index: Index, mode: Mode): Call =
+  private def businessConfirmAddressCheckModeRoutes(answers: UserAnswers, index: Index, mode: Mode): Call =
     answers.get(BusinessConfirmAddressPage(index)).map {
       case true =>
         if (answers.isBusinessDetails(index))
