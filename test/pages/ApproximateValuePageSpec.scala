@@ -16,6 +16,7 @@
 
 package pages
 
+import models.UserAnswers
 import pages.behaviours.PageBehaviours
 
 class ApproximateValuePageSpec extends PageBehaviours {
@@ -27,5 +28,11 @@ class ApproximateValuePageSpec extends PageBehaviours {
     beSettable[BigDecimal](ApproximateValuePage)
 
     beRemovable[BigDecimal](ApproximateValuePage)
+  }
+
+  "must remove approximate value when the user selects no" in {
+    val answers        = UserAnswers("id").set(ApproximateValuePage, BigDecimal(0)).success.value
+    val updatedAnswers = answers.set(ZeroValidationPage, false).success.value
+    updatedAnswers.get(ZeroValidationPage) mustBe defined
   }
 }
