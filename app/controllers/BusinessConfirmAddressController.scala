@@ -17,11 +17,12 @@
 package controllers
 
 import controllers.actions._
+import controllers.helper.EventHelper
 import forms.BusinessConfirmAddressFormProvider
 import models.{Index, Mode, NormalMode}
 import navigation.Navigator
 import pages.BusinessConfirmAddressPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -40,6 +41,7 @@ class BusinessConfirmAddressController @Inject() (
   requireData: DataRequiredAction,
   formProvider: BusinessConfirmAddressFormProvider,
   val controllerComponents: MessagesControllerComponents,
+  val eventHelper: EventHelper,
   view: BusinessConfirmAddressView
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
@@ -49,6 +51,7 @@ class BusinessConfirmAddressController @Inject() (
   def onPageLoad(index: Index, forBusiness: Boolean, mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireData) {
       implicit request =>
+        eventHelper.pageLoadEvent(request.path)
         val journeyPart = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
         val preparedForm = request.userAnswers.get(BusinessConfirmAddressPage(index)) match {
           case None        => form
@@ -65,12 +68,17 @@ class BusinessConfirmAddressController @Inject() (
       implicit request =>
         val journeyPart = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
         form.bindFromRequest().fold(
-          formWithErrors =>
-            request.userAnswers getAddress (index, forBusiness) match {
+          formWithErrors => {
+            eventHelper.formErrorEvent(
+              request.path,
+              messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+            )
+            request.userAnswers getAddress(index, forBusiness) match {
               case Some(address) =>
                 Future.successful(BadRequest(view(formWithErrors, index, mode, address, journeyPart)))
               case None => Future.successful(Redirect(routes.BusinessAddressController.onPageLoad(index, NormalMode)))
-            },
+            }
+          },
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(BusinessConfirmAddressPage(index), value))

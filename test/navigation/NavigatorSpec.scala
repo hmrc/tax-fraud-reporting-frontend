@@ -1200,6 +1200,15 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
           answers
         ) mustBe routes.IndividualAddressController.onPageLoad(Index(0), NormalMode)
       }
+
+      "to the individual select country page if the user has selected gb" in {
+        val answers = UserAnswers("id").set(IndividualSelectCountryPage(Index(0)), "gb").success.value
+        navigator.nextPage(
+          IndividualSelectCountryPage(Index(0)),
+          NormalMode,
+          answers
+        ) mustBe routes.FindAddressController.onPageLoad(Index(0), NormalMode)
+      }
     }
 
     "must go from the business select country page" - {
@@ -1736,7 +1745,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             ConfirmAddressPage(Index(0)),
             CheckMode,
             answers
-          ) mustBe routes.IndividualCheckYourAnswersController.onPageLoad(Index(0), CheckMode)
+          ) mustBe routes.IndividualAddressController.onPageLoad(Index(0), CheckMode)
         }
 
       }
@@ -1772,6 +1781,15 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
             CheckMode,
             answers
           ) mustBe routes.IndividualAddressController.onPageLoad(Index(0), CheckMode)
+        }
+
+        "to the individual select country page if the user has selected gb" in {
+          val answers = UserAnswers("id").set(IndividualSelectCountryPage(Index(0)), "gb").success.value
+          navigator.nextPage(
+            IndividualSelectCountryPage(Index(0)),
+            CheckMode,
+            answers
+          ) mustBe routes.FindAddressController.onPageLoad(Index(0), CheckMode)
         }
 
         "to the individual find your address page if the user has enter correct postcode" in {

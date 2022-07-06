@@ -18,7 +18,7 @@ package navigation
 
 import controllers.routes
 import models.{WhenActivityHappen, _}
-import pages.{ChooseYourAddressPage, FindAddressPage, _}
+import pages._
 import play.api.mvc.Call
 import services.ActivityTypeService
 
@@ -384,7 +384,15 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
           businessInformationRoutes(answers, index, BusinessInformationCheck.Address, CheckMode)
         else
           routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
-    }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
+        if (!answers.isBusinessDetails(index))
+          individualInformationRoutes(answers, index, IndividualInformation.Address, CheckMode)
+        else
+          routes.IndividualAddressController.onPageLoad(index, CheckMode)
+        if (answers.get(IndividualSelectCountryPage(index)).contains("gb"))
+          routes.ChooseYourAddressController.onPageLoad(index, CheckMode)
+        else
+          routes.IndividualAddressController.onPageLoad(index, CheckMode)
+    }.getOrElse(routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode))
 
   private def businessConfirmAddressRoutes(answers: UserAnswers, index: Index, mode: Mode): Call =
     answers.get(BusinessConfirmAddressPage(index)).map {

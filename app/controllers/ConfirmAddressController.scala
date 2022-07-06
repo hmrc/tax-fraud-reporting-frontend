@@ -22,7 +22,7 @@ import forms.ConfirmAddressFormProvider
 import models.{Index, Mode, NormalMode}
 import navigation.Navigator
 import pages.ConfirmAddressPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Lang, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -66,12 +66,17 @@ class ConfirmAddressController @Inject() (
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       form.bindFromRequest().fold(
-        formWithErrors =>
-          request.userAnswers getAddress (index, forBusiness = false) match {
+        formWithErrors => {
+          eventHelper.formErrorEvent(
+            request.path,
+            messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+          )
+          request.userAnswers getAddress(index, forBusiness = false) match {
             case Some(address) =>
               Future.successful(BadRequest(view(formWithErrors, index, mode, address, IndividualPart(false))))
             case None => Future.successful(Redirect(routes.BusinessAddressController.onPageLoad(index, NormalMode)))
-          },
+          }
+        },
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(ConfirmAddressPage(index), value))
