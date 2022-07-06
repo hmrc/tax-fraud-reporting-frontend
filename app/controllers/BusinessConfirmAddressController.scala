@@ -73,7 +73,7 @@ class BusinessConfirmAddressController @Inject() (
               request.path,
               messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
             )
-            request.userAnswers getAddress(index, forBusiness) match {
+            request.userAnswers getAddress (index, forBusiness) match {
               case Some(address) =>
                 Future.successful(BadRequest(view(formWithErrors, index, mode, address, journeyPart)))
               case None => Future.successful(Redirect(routes.BusinessAddressController.onPageLoad(index, NormalMode)))
