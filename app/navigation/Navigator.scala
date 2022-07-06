@@ -18,7 +18,7 @@ package navigation
 
 import controllers.routes
 import models.{WhenActivityHappen, _}
-import pages.{ChooseYourAddressPage, FindAddressPage, _}
+import pages._
 import play.api.mvc.Call
 import services.ActivityTypeService
 
@@ -47,9 +47,11 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case BusinessSelectCountryPage(index)   => businessSelectCountryPageRoute(_, index)
     case FindAddressPage(index)             => _ => routes.ChooseYourAddressController.onPageLoad(index, NormalMode)
     case BusinessFindAddressPage(index)     => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, NormalMode)
-    case ChooseYourAddressPage(index)       => _ => routes.ConfirmAddressController.onPageLoad(index, false, NormalMode)
+    case ChooseYourAddressPage(index)       => _ => routes.ConfirmAddressController.onPageLoad(index, NormalMode)
+    case ConfirmAddressPage(index)          => confirmAddressNormalModeRoute(_, index, NormalMode)
+    case BusinessConfirmAddressPage(index)  => businessConfirmAddressNormalModeRoute(_, index, NormalMode)
     case BusinessChooseYourAddressPage(index) =>
-      _ => routes.ConfirmAddressController.onPageLoad(index, true, NormalMode)
+      _ => routes.BusinessConfirmAddressController.onPageLoad(index, NormalMode)
 
     /** END Individual journey
       * Start Business journey */
@@ -106,6 +108,8 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case BusinessFindAddressPage(index)      => _ => routes.BusinessChooseYourAddressController.onPageLoad(index, CheckMode)
     case ApproximateValuePage                => approximateValueCheckRoutes
     case ZeroValidationPage                  => zeroValidationCheckRoutes
+    case ConfirmAddressPage(index)           => confirmAddressCheckModeRoutes(_, index, CheckMode)
+    case BusinessConfirmAddressPage(index)   => businessConfirmAddressCheckModeRoutes(_, index, CheckMode)
     case p: IndexedConfirmationPage          => _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, CheckMode)
     case _                                   => _ => routes.CheckYourAnswersController.onPageLoad
   }
@@ -291,6 +295,39 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     else
       routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
 
+  private def confirmAddressNormalModeRoute(answers: UserAnswers, index: Index, mode: Mode): Call =
+    answers.get(ConfirmAddressPage(index)).map {
+      case true =>
+        mode match {
+          case NormalMode =>
+            if (answers.isBusinessDetails(index))
+              businessInformationRoutes(answers, index, BusinessInformationCheck.Address, mode)
+            else
+              individualInformationRoutes(answers, index, IndividualInformation.Address, mode)
+          case CheckMode =>
+            if (answers.isBusinessDetails(index))
+              businessInformationRoutes(answers, index, BusinessInformationCheck.Address, mode)
+            else
+              routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
+        }
+      case false =>
+        if (answers.get(IndividualSelectCountryPage(index)).contains("gb"))
+          routes.ChooseYourAddressController.onPageLoad(index, NormalMode)
+        else
+          routes.IndividualAddressController.onPageLoad(index, NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def businessConfirmAddressNormalModeRoute(answers: UserAnswers, index: Index, mode: Mode): Call =
+    answers.get(BusinessConfirmAddressPage(index)).map {
+      case true =>
+        businessInformationRoutes(answers, index, BusinessInformationCheck.Address, mode)
+      case false =>
+        if (answers.get(BusinessSelectCountryPage(index)).contains("gb"))
+          routes.BusinessChooseYourAddressController.onPageLoad(index, mode)
+        else
+          routes.BusinessAddressController.onPageLoad(index, mode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
   private def zeroValidationRoutes(answers: UserAnswers): Call =
     answers.get(ZeroValidationPage).map {
       case true  => routes.HowManyPeopleKnowController.onPageLoad(NormalMode)
@@ -334,6 +371,42 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       routes.ZeroValidationController.onPageLoad(CheckMode)
     else
       routes.CheckYourAnswersController.onPageLoad
+
+  private def confirmAddressCheckModeRoutes(answers: UserAnswers, index: Index, mode: Mode): Call =
+    answers.get(ConfirmAddressPage(index)).map {
+      case true =>
+        if (answers.isBusinessDetails(index))
+          businessInformationRoutes(answers, index, BusinessInformationCheck.Address, mode)
+        else
+          routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
+      case false =>
+        if (answers.isBusinessDetails(index))
+          businessInformationRoutes(answers, index, BusinessInformationCheck.Address, mode)
+        else
+          routes.IndividualCheckYourAnswersController.onPageLoad(index, mode)
+        if (!answers.isBusinessDetails(index))
+          individualInformationRoutes(answers, index, IndividualInformation.Address, mode)
+        else
+          routes.IndividualAddressController.onPageLoad(index, mode)
+        if (answers.get(IndividualSelectCountryPage(index)).contains("gb"))
+          routes.ChooseYourAddressController.onPageLoad(index, mode)
+        else
+          routes.IndividualAddressController.onPageLoad(index, mode)
+    }.getOrElse(routes.IndividualCheckYourAnswersController.onPageLoad(index, mode))
+
+  private def businessConfirmAddressCheckModeRoutes(answers: UserAnswers, index: Index, mode: Mode): Call =
+    answers.get(BusinessConfirmAddressPage(index)).map {
+      case true =>
+        if (answers.isBusinessDetails(index))
+          businessInformationRoutes(answers, index, BusinessInformationCheck.Address, mode)
+        else
+          routes.CheckYourAnswersController.onPageLoad
+      case false =>
+        if (answers.get(BusinessSelectCountryPage(index)).contains("gb"))
+          routes.BusinessChooseYourAddressController.onPageLoad(index, mode)
+        else
+          routes.BusinessAddressController.onPageLoad(index, mode)
+    }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
 
   private def zeroValidationCheckRoutes(answers: UserAnswers): Call =
     answers.get(ZeroValidationPage).map {

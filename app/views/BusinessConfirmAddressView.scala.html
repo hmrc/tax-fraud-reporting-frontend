@@ -21,34 +21,32 @@
 @import controllers.routes._
 
 @this(
-        layout: templates.Layout,
-        formHelper: FormWithCSRF,
-        govukErrorSummary: GovukErrorSummary,
-        govukRadios: GovukRadios,
-        govukButton: GovukButton
+    layout: templates.Layout,
+    formHelper: FormWithCSRF,
+    govukErrorSummary: GovukErrorSummary,
+    govukRadios: GovukRadios,
+    govukButton: GovukButton
 )
 
 @(form: Form[_], index:Index, mode: Mode, address: Address, journeyPart: JourneyPart)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("confirmAddress.title"))) {
+@layout(pageTitle = title(form, messages("businessConfirmAddress.title"))) {
 
-    @formHelper(action = routes.ConfirmAddressController.onSubmit(index, mode), 'autoComplete -> "off") {
+    @formHelper(action = routes.BusinessConfirmAddressController.onSubmit(index, mode), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
-        @govukErrorSummary(ErrorSummaryViewModel(form))
+            @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-    @if(journeyPart != BusinessPart) {
-    <span class="govuk-caption-xl">
+        @if(journeyPart != BusinessPart) {
+            <span class="govuk-caption-xl">
                <span class="govuk-visually-hidden">@messages("individual.caption.text.screen.reader")</span>
                @messages(s"individual.${index.display}")
             </span>
-    }
+        }
 
-    <h1 class="govuk-heading-xl">@messages("confirmAddress.heading")</h1>
-
-
-    <div id="address">
+        <h1 class="govuk-heading-xl">@messages("businessConfirmAddress.heading")</h1>
+        <div id="address">
 
         <span class="govuk-body-l"  id="line1">@address.addressLine1</span><br>
         @for( line2 <- address.addressLine2){
@@ -67,18 +65,16 @@
 
     </div>
 
-
         @govukRadios(
             RadiosViewModel.yesNo(
-            field = form("value"),
-            legend = LegendViewModel(messages("businessConfirmAddress.heading")).asPageHeading().withCssClass("govuk-visually-hidden")
+                field = form("value"),
+                legend = LegendViewModel(messages("businessConfirmAddress.heading")).asPageHeading().withCssClass("govuk-visually-hidden")
             )
         )
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))
-            .withAttribute("id" -> "continue-button")
+                .withAttribute("id" -> "continue-button")
         )
     }
-
 }

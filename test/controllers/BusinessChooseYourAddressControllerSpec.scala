@@ -36,7 +36,7 @@ import scala.concurrent.Future
 
 class BusinessChooseYourAddressControllerSpec extends SpecBase {
 
-  def onwardRoute  = Call("GET", "/report-tax-fraud/1/business/confirm-address")
+  def onwardRoute  = Call("GET", "/report-tax-fraud/1/business-confirm-address")
   val fromPostcode = "AA1 1AA"
 
   lazy val businessChooseYourAddressRoute =

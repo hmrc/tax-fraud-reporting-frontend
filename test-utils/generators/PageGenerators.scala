@@ -22,6 +22,12 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryBusinessConfirmAddressPage: Arbitrary[BusinessConfirmAddressPage] =
+    Arbitrary(BusinessConfirmAddressPage(Index(0)))
+
+  implicit lazy val arbitraryConfirmAddressPage: Arbitrary[ConfirmAddressPage] =
+    Arbitrary(ConfirmAddressPage(Index(0)))
+
   implicit lazy val arbitraryZeroValidationPage: Arbitrary[ZeroValidationPage.type] =
     Arbitrary(ZeroValidationPage)
 
