@@ -42,7 +42,7 @@ error.date.year_invalid = Rhowch flwyddyn gywir
 error.integer     = Rhowch ateb mewn rhifau cyfan
 error.non_numeric = Rhowch werth gan ddefnyddio rhifau yn unig
 error.number = Nodwch rif dilys
-error.required = Rhowch ateb
+error.required = Nodwch y math o weithgaredd rydych yn rhoi gwybod i CThEM amdano
 error.length = Rhaid i'r mewnbwn hwn fod yn 255 nod neu lai.
 error.summary.title = Mae problem wedi codi
 
@@ -335,7 +335,7 @@ journeyRecovery.closed = Ffôn ar gau ar benwythnosau a gwyliau banc.
 
 activityType.title = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
 activityType.heading = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
-activityType.hint = Nodwch eiriau allweddol sy’n gysylltiedig â’r gweithgaredd i awgrymu categorïau perthnasol neu dewiswch weithgaredd o'r rhestr.
+activityType.hint = Defnyddiwch eiriau allweddol sy’n gysylltiedig â’r gweithgaredd er mwyn awgrymu categorïau.
 activityType.checkYourAnswersLabel = Math o weithgaredd
 activityType.error.required = Nodwch y math o weithgaredd.
 activityType.change.hidden = Math o weithgaredd
@@ -729,7 +729,6 @@ activityType.synonym.distill        = Distyllu
 activityType.synonym.fake           = Ffug
 activityType.title = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
 activityType.heading = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
-activityType.hint = Nodwch eiriau allweddol sy’n gysylltiedig â’r gweithgaredd i awgrymu categorïau perthnasol neu dewiswch weithgaredd o'r rhestr.
 activityType.checkYourAnswersLabel = Math o weithgaredd
 activityType.error.required = Nodwch y math o weithgaredd.
 activityType.change.hidden = Math o weithgaredd
@@ -867,23 +866,27 @@ activityType.synonym.compostable   = compostadwy
 individualOrBusiness.title = A ydych yn rhoi gwybod am unigolyn neu fusnes?
 individualOrBusiness.heading = A ydych yn rhoi gwybod am unigolyn neu fusnes?
 individualOrBusiness.individual = Unigolyn
-individualOrBusiness.individual.hint = Gallwch roi gwybod am hyd at 5 o unigolion sy'n ymwneud â'r gweithgaredd ac ychwanegu manylion busnes ar gyfer pob person os yw'n briodol.
+individualOrBusiness.individual.hint = Gallwch roi gwybod am hyd at 5 unigolyn yn y gweithgaredd ac ychwanegu manylion busnes ar gyfer pob unigolyn.
 individualOrBusiness.business = Busnes
 individualOrBusiness.business.hint = Gallwch roi gwybod am gwmni.
 individualOrBusiness.checkYourAnswersLabel = A ydych yn rhoi gwybod am unigolyn neu fusnes
 individualOrBusiness.error.required = Dewiswch a ydych yn rhoi gwybod am unigolyn neu fusnes.
 individualOrBusiness.change.hidden = A ydych yn rhoi gwybod am unigolyn neu fusnes
 
-doNotUseThisService.title = Ni ddylech ddefnyddio’r gwasanaeth hwn i roi gwybod am y gweithgaredd hwn
-doNotUseThisService.heading = Ni ddylech ddefnyddio’r gwasanaeth hwn i roi gwybod am y gweithgaredd hwn
-doNotUseThisService.p1.activity-related-to-drugs = Nid yw CThEM yn gallu ymchwilio i’r gweithgaredd hwn.
-doNotUseThisService.p2.activity-related-to-drugs = Dylech roi gwybod i’r heddlu am weithgaredd sy’n ymwneud â chyffuriau. Ffoniwch 999 os yw’n argyfwng, neu 101 os nad yw’n fater brys.
-doNotUseThisService.p1.smuggling = Nid yw CThEM yn gallu ymchwilio i’r gweithgaredd hwn.
-doNotUseThisService.p2.smuggling = Dylech <a class="govuk-link" href="https://www.gov.uk/report-smuggling">roi gwybod i’r Swyddfa Gartref</a>.
-doNotUseThisService.p1.benefit-and-universal-credit = Ni all CThEM ymchwilio i unrhyw dwyll budd-daliadau ar wahân i dwyll Budd-dal Plant neu Gredyd Treth.
-doNotUseThisService.p2.benefit-and-universal-credit = Dylech roi gwybod i''r Adran Gwaith a Phensiynau <a class="govuk-link" href="https://www.gov.uk/report-benefit-fraud">am bob twyll budd-dal arall.</a>
-doNotUseThisService.p1.human-trafficking = Nid yw CThEM yn gallu ymchwilio i’r gweithgaredd hwn.
-doNotUseThisService.p2.human-trafficking = Dylech roi gwybod i’r heddlu am fasnachu pobl. Ffoniwch 999 os yw’n argyfwng, neu 101 os nad yw’n fater brys.
+doNotUseThisService.title = Ni allwch ddefnyddio’r gwasanaeth hwn i roi gwybod am y gweithgaredd hwn.
+doNotUseThisService.heading = Ni allwch ddefnyddio’r gwasanaeth hwn i roi gwybod am y gweithgaredd hwn.
+doNotUseThisService.p1.activity-related-to-drugs = Ni all CThEM ymchwilio i unrhyw weithgaredd sy’n gysylltiedig â chyffuriau.
+doNotUseThisService.p2.activity-related-to-drugs = Dylech ffonio’r heddlu i roi gwybod am weithgaredd sy’n gysylltiedig â chyffuriau. Gallwch wneud y canlynol:
+doNotUseThisService.list1 = Ffonio 999 neu 112 os yw’n argyfwng
+doNotUseThisService.list2 = Ffonio 101 os nad yw’n argyfwng
+doNotUseThisService.p1.smuggling = Mae’r Swyddfa Gartref yn gyfrifol am droseddau wrth y ffin a rheolaethau tollau ar gyfer pobl a nwyddau sy’n dod i mewn i’r DU.
+doNotUseThisService.p2.smuggling = Dylech <a class="govuk-link" target="_blank" href="https://www.gov.uk/report-smuggling">roi gwybod i’r Swyddfa Gartref am smyglo (yn agor tab newydd)</a>.
+doNotUseThisService.p1.benefit-and-universal-credit = Ni all CThEM ymchwilio i unrhyw dwyll budd-daliadau ar wahân i Fudd-dal Plant neu gredydau treth.
+doNotUseThisService.p2.benefit-and-universal-credit = Dylech <a class="govuk-link" target="_blank" class="govuk-link" href="https://www.gov.uk/report-benefit-fraud">roi gwybod i’r Adran Gwaith a Phensiynau am bob twyll arall o ran budd-daliadau (yn agor tab newydd)</a>.
+doNotUseThisService.p1.human-trafficking = Ni all CThEM ymchwilio i fasnachu pobl.
+doNotUseThisService.p2.human-trafficking = Dylech ffonio’r heddlu i roi gwybod am fasnachu pobl. Gallwch wneud y canlynol:
+doNotUseThisService.p3.human-trafficking = Ffonio 999 neu 112 os yw’n argyfwng
+doNotUseThisService.p4.human-trafficking = Ffonio 101 os nad yw’n argyfwng
 doNotUseThisService.p1.immigration-border-crime = Nid yw CThEM yn gallu ymchwilio i’r gweithgaredd hwn.
 doNotUseThisService.p2.immigration-border-crime = Dylech <a class="govuk-link" href="https://www.gov.uk/report-immigration-crime"> roi gwybod i’r Swyddfa Gartref am fewnfudo neu droseddau wrth y ffin.</a>
 
