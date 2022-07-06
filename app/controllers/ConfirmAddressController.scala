@@ -18,64 +18,71 @@ package controllers
 
 import controllers.actions._
 import controllers.helper.EventHelper
-import models.{BusinessInformationCheck, CheckMode, Index, IndividualInformation, Mode, NormalMode}
+import forms.ConfirmAddressFormProvider
+import models.{Index, Mode, NormalMode}
 import navigation.Navigator
+import pages.ConfirmAddressPage
+import play.api.i18n.{I18nSupport, Lang, MessagesApi}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepository
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import viewmodels.IndividualPart
+import views.html.ConfirmAddressView
 
 import javax.inject.Inject
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import viewmodels.{BusinessPart, IndividualPart}
-import views.html.ConfirmAddressView
+import scala.concurrent.{ExecutionContext, Future}
 
 class ConfirmAddressController @Inject() (
   override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
   identify: IdentifierAction,
   getData: DataRetrievalAction,
   requireData: DataRequiredAction,
   val controllerComponents: MessagesControllerComponents,
   view: ConfirmAddressView,
+  formProvider: ConfirmAddressFormProvider,
   navigator: Navigator,
   val eventHelper: EventHelper
-) extends FrontendBaseController with I18nSupport {
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad(index: Index, forBusiness: Boolean, mode: Mode): Action[AnyContent] =
+  val form = formProvider()
+
+  def onPageLoad(index: Index, mode: Mode): Action[AnyContent] =
     (identify andThen getData andThen requireData) {
       implicit request =>
         eventHelper.pageLoadEvent(request.path)
-        val isBusinessJourney = request.userAnswers.isBusinessJourney
-        val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
-        val journeyPart       = if (request.userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
-        val nextPage =
-          if (isBusinessJourney)
-            navigator.businessInformationRoutes(request.userAnswers, index, BusinessInformationCheck.Address, mode)
-          else
-            mode match {
-              case NormalMode =>
-                if (isBusinessDetails)
-                  navigator.businessInformationRoutes(
-                    request.userAnswers,
-                    index,
-                    BusinessInformationCheck.Address,
-                    mode
-                  )
-                else
-                  navigator.individualInformationRoutes(request.userAnswers, index, IndividualInformation.Address, mode)
-              case CheckMode =>
-                if (isBusinessDetails)
-                  navigator.businessInformationRoutes(
-                    request.userAnswers,
-                    index,
-                    BusinessInformationCheck.Address,
-                    mode
-                  )
-                else
-                  routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
-            }
-        request.userAnswers getAddress (index, forBusiness) match {
-          case Some(address) => Ok(view(index, address, isBusinessJourney, journeyPart, nextPage))
+        val preparedForm = request.userAnswers.get(ConfirmAddressPage(index)) match {
+          case None        => form
+          case Some(value) => form.fill(value)
+        }
+
+        request.userAnswers getAddress (index, forBusiness = false) match {
+          case Some(address) => Ok(view(preparedForm, index, mode, address, IndividualPart(false)))
           case None          => Redirect(routes.IndividualAddressController.onPageLoad(index, NormalMode))
         }
     }
+
+  def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+    implicit request =>
+      form.bindFromRequest().fold(
+        formWithErrors => {
+          eventHelper.formErrorEvent(
+            request.path,
+            messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
+          )
+          request.userAnswers getAddress (index, forBusiness = false) match {
+            case Some(address) =>
+              Future.successful(BadRequest(view(formWithErrors, index, mode, address, IndividualPart(false))))
+            case None => Future.successful(Redirect(routes.BusinessAddressController.onPageLoad(index, NormalMode)))
+          }
+        },
+        value =>
+          for {
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(ConfirmAddressPage(index), value))
+            _              <- sessionRepository.set(updatedAnswers)
+          } yield Redirect(navigator.nextPage(ConfirmAddressPage(index), mode, updatedAnswers))
+      )
+  }
 
 }

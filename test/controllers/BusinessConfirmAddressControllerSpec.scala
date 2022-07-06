@@ -17,11 +17,11 @@
 package controllers
 
 import base.SpecBase
-import forms.ConfirmAddressFormProvider
+import forms.BusinessConfirmAddressFormProvider
 import models.{Index, NormalMode, UserAnswers}
 import navigation.Navigator
 import org.mockito.ArgumentMatchers.any
-import pages.ConfirmAddressPage
+import pages.BusinessConfirmAddressPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.mvc.Results.Redirect
@@ -29,37 +29,36 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
 import viewmodels.{BusinessPart, IndividualPart}
-import views.html.ConfirmAddressView
+import views.html.BusinessConfirmAddressView
 
 import scala.concurrent.Future
 
-class ConfirmAddressControllerSpec extends SpecBase {
+class BusinessConfirmAddressControllerSpec extends SpecBase {
+
+  val userAnswers = UserAnswers(userAnswersId)
 
   def onwardRoute = Call("GET", "/foo")
 
-  private val answers = emptyUserAnswers
-  val userAnswers     = UserAnswers(userAnswersId)
-
-  val formProvider = new ConfirmAddressFormProvider()
+  val formProvider = new BusinessConfirmAddressFormProvider()
   val form         = formProvider()
 
-  private lazy val confirmAddressRoute = routes.ConfirmAddressController.onPageLoad(Index(0), NormalMode).url
+  lazy val businessConfirmAddressRoute = routes.BusinessConfirmAddressController.onPageLoad(Index(0), NormalMode).url
 
-  "ConfirmAddress Controller" - {
+  "BusinessConfirmAddress Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, confirmAddressRoute)
+        val request = FakeRequest(GET, businessConfirmAddressRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[ConfirmAddressView]
+        val view = application.injector.instanceOf[BusinessConfirmAddressView]
 
-        val journeyPart = if (userAnswers.isBusinessJourney) BusinessPart else IndividualPart(false)
-        UserAnswers(userAnswersId) getAddress (Index(0), forBusiness = false) match {
+        val journeyPart = if (userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
+        UserAnswers(userAnswersId) getAddress (Index(0), forBusiness = true) match {
           case Some(address) =>
             status(result) mustEqual OK
             contentAsString(result) mustEqual view(form, Index(0), NormalMode, address, journeyPart)(
@@ -67,7 +66,7 @@ class ConfirmAddressControllerSpec extends SpecBase {
               messages(application)
             ).toString
           case None =>
-            Future.successful(Redirect(routes.IndividualAddressController.onPageLoad(Index(0), NormalMode)))
+            Future.successful(Redirect(routes.BusinessAddressController.onPageLoad(Index(0), NormalMode)))
         }
 
       }
@@ -75,18 +74,18 @@ class ConfirmAddressControllerSpec extends SpecBase {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ConfirmAddressPage(Index(0)), true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(BusinessConfirmAddressPage(Index(0)), true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, confirmAddressRoute)
+        val request = FakeRequest(GET, businessConfirmAddressRoute)
 
-        val view = application.injector.instanceOf[ConfirmAddressView]
+        val view = application.injector.instanceOf[BusinessConfirmAddressView]
 
         val result      = route(application, request).value
-        val journeyPart = if (userAnswers.isBusinessJourney) BusinessPart else IndividualPart(false)
-        UserAnswers(userAnswersId) getAddress (Index(0), forBusiness = false) match {
+        val journeyPart = if (userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
+        UserAnswers(userAnswersId) getAddress (Index(0), forBusiness = true) match {
           case Some(address) =>
             status(result) mustEqual OK
             contentAsString(result) mustEqual view(form.fill(true), Index(0), NormalMode, address, journeyPart)(
@@ -94,7 +93,7 @@ class ConfirmAddressControllerSpec extends SpecBase {
               messages(application)
             ).toString
           case None =>
-            Future.successful(Redirect(routes.IndividualAddressController.onPageLoad(Index(0), NormalMode)))
+            Future.successful(Redirect(routes.BusinessAddressController.onPageLoad(Index(0), NormalMode)))
         }
       }
     }
@@ -115,7 +114,7 @@ class ConfirmAddressControllerSpec extends SpecBase {
 
       running(application) {
         val request =
-          FakeRequest(POST, confirmAddressRoute)
+          FakeRequest(POST, businessConfirmAddressRoute)
             .withFormUrlEncodedBody(("value", "true"))
 
         val result = route(application, request).value
@@ -125,37 +124,22 @@ class ConfirmAddressControllerSpec extends SpecBase {
       }
     }
 
-    "must return other from individual journey and the correct view for a GET" in {
-
-      val application = applicationBuilder(userAnswers = Some(answers)).build()
-
-      running(application) {
-
-        val request =
-          FakeRequest(GET, confirmAddressRoute)
-
-        val result = route(application, request).value
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual routes.IndividualAddressController.onPageLoad(Index(0), NormalMode).url
-      }
-    }
-
     "must return a Bad Request and errors when invalid data is submitted" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
         val request =
-          FakeRequest(POST, confirmAddressRoute)
+          FakeRequest(POST, businessConfirmAddressRoute)
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[ConfirmAddressView]
+        val view = application.injector.instanceOf[BusinessConfirmAddressView]
 
         val result      = route(application, request).value
-        val journeyPart = if (userAnswers.isBusinessJourney) BusinessPart else IndividualPart(false)
-        UserAnswers(userAnswersId) getAddress (Index(0), forBusiness = false) match {
+        val journeyPart = if (userAnswers.isBusinessJourney) BusinessPart else IndividualPart(true)
+        UserAnswers(userAnswersId) getAddress (Index(0), forBusiness = true) match {
           case Some(address) =>
             status(result) mustEqual BAD_REQUEST
             contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, address, journeyPart)(
@@ -163,7 +147,7 @@ class ConfirmAddressControllerSpec extends SpecBase {
               messages(application)
             ).toString
           case None =>
-            Future.successful(Redirect(routes.IndividualAddressController.onPageLoad(Index(0), NormalMode)))
+            Future.successful(Redirect(routes.BusinessAddressController.onPageLoad(Index(0), NormalMode)))
         }
       }
     }
@@ -173,7 +157,7 @@ class ConfirmAddressControllerSpec extends SpecBase {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, confirmAddressRoute)
+        val request = FakeRequest(GET, businessConfirmAddressRoute)
 
         val result = route(application, request).value
 
@@ -182,5 +166,20 @@ class ConfirmAddressControllerSpec extends SpecBase {
       }
     }
 
+    "must redirect to Journey Recovery for a POST if no existing data is found" in {
+
+      val application = applicationBuilder(userAnswers = None).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, businessConfirmAddressRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
   }
 }

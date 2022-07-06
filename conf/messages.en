@@ -1219,9 +1219,11 @@ businessSelectCountry.label = What country is the business based?
 businessSelectCountry.error.required = Enter the country where the business is based
 businessSelectCountry.change.hidden = What country is the business based?
 
-confirmAddress.title = Review and confirm
-confirmAddress.heading = Review and confirm
+confirmAddress.title = Is this address correct?
+confirmAddress.heading = Is this address correct?
 confirmAddress.change-address = Change address
+confirmAddress.error.required = Select yes if this address is correct
+confirmAddress.change.hidden = Is this address correct?
 
 findAddress.title = Find your address
 findAddress.heading = Find your address
@@ -1269,3 +1271,9 @@ zeroValidation.title = Are you sure there is no value for the activity?
 zeroValidation.heading = Are you sure there is no value for the activity?
 zeroValidation.hint = If you do not know the exact value, you can just give us your best guess.
 zeroValidation.error.required =  Select yes if you are sure there is no value for the activity
+
+businessConfirmAddress.title = Is this address correct?
+businessConfirmAddress.heading = Is this address correct?
+businessConfirmAddress.checkYourAnswersLabel = Is this address correct?
+businessConfirmAddress.error.required = Select yes if this address is correct
+businessConfirmAddress.change.hidden = Is this address correct?
