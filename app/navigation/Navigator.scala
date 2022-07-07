@@ -132,8 +132,9 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case BusinessAddressPage(index) =>
       businessInformationRoutes(_, index, BusinessInformationCheck.Address, UpdateIndividualMode)
     case SelectConnectionBusinessPage(index) => selectConnectionBusinessCheckRoute(_, index)
-    case IndividualSelectCountryPage(index)  => individualSelectCountryPageRoutes(_, index, UpdateIndividualMode)
     case BusinessSelectCountryPage(index)    => businessSelectCountryPageRoutes(_, index, UpdateIndividualMode)
+    case ConfirmAddressPage(index)           => confirmAddressCheckModeRoutes(_, index, UpdateIndividualMode)
+    case BusinessConfirmAddressPage(index)   => businessConfirmAddressCheckModeRoutes(_, index, UpdateIndividualMode)
     case FindAddressPage(index)              => _ => routes.ChooseYourAddressController.onPageLoad(index, UpdateIndividualMode)
     case BusinessFindAddressPage(index) =>
       _ => routes.BusinessChooseYourAddressController.onPageLoad(index, UpdateIndividualMode)
@@ -349,7 +350,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
               businessInformationRoutes(answers, index, BusinessInformationCheck.Address, mode)
             else
               individualInformationRoutes(answers, index, IndividualInformation.Address, mode)
-          case CheckMode =>
+          case CheckMode | UpdateIndividualMode =>
             if (answers.isBusinessDetails(index))
               businessInformationRoutes(answers, index, BusinessInformationCheck.Address, mode)
             else

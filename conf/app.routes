@@ -251,18 +251,6 @@ GET        /:index/update-individual-select-a-country                  controlle
 POST       /:index/update-individual-select-a-country                  controllers.IndividualSelectCountryController.onSubmit(index: Index, mode: Mode = UpdateIndividualMode)
 
 
-GET        /:index/individual/confirm-address                     controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = false, mode: Mode = NormalMode)
-GET        /:index/individual/change-confirm-address                     controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = false, mode: Mode = CheckMode)
-GET        /:index/individual/update-address                     controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = false, mode: Mode = UpdateIndividualMode)
-GET        /:index/individual/update-confirm-address                     controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = false, mode: Mode = UpdateIndividualMode)
-
-GET        /:index/business/confirm-address                       controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = true, mode: Mode = NormalMode)
-GET      /:index/business/change-confirm-address                       controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = true, mode: Mode = CheckMode)
-GET        /:index/business/update-confirm-address                       controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = true, mode: Mode = UpdateIndividualMode)
-GET      /:index/business/update-change-confirm-address                       controllers.ConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = true, mode: Mode = UpdateIndividualMode)
-
-
-
 GET        /:index/individual-findAddress                        controllers.FindAddressController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/individual-findAddress                        controllers.FindAddressController.onSubmit(index: Index, mode: Mode = NormalMode)
 GET        /:index/change-individual-findAddress                  controllers.FindAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)
@@ -307,10 +295,14 @@ POST       /change-did-you-mean-zero                  controllers.ZeroValidation
 
 GET        /:index/individual-confirm-address                     controllers.ConfirmAddressController.onPageLoad(index: Index, mode: Mode = NormalMode)
 POST       /:index/individual-confirm-address                     controllers.ConfirmAddressController.onSubmit(index: Index, mode: Mode = NormalMode)
+GET        /:index/individual-update-confirm-address                     controllers.ConfirmAddressController.onPageLoad(index: Index, mode: Mode = UpdateIndividualMode)
+POST       /:index/individual-update-confirm-address                     controllers.ConfirmAddressController.onSubmit(index: Index, mode: Mode = UpdateIndividualMode)
 GET        /:index/individual-change-confirm-address              controllers.ConfirmAddressController.onPageLoad(index: Index, mode: Mode = CheckMode)
 POST       /:index/individual-change-confirm-address              controllers.ConfirmAddressController.onSubmit(index: Index, mode: Mode = CheckMode)
 
 GET        /:index/business-confirm-address                        controllers.BusinessConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = true, mode: Mode = NormalMode)
 POST       /:index/business-confirm-address                        controllers.BusinessConfirmAddressController.onSubmit(index: Index, forBusiness: Boolean = true, mode: Mode = NormalMode)
+GET        /:index/business-update-address                        controllers.BusinessConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = true, mode: Mode = UpdateIndividualMode)
+POST       /:index/business-update-address                        controllers.BusinessConfirmAddressController.onSubmit(index: Index, forBusiness: Boolean = true, mode: Mode = UpdateIndividualMode)
 GET        /:index/change-business-confirm-address                  controllers.BusinessConfirmAddressController.onPageLoad(index: Index, forBusiness: Boolean = true, mode: Mode = CheckMode)
 POST       /:index/change-business-confirm-address                  controllers.BusinessConfirmAddressController.onSubmit(index: Index, forBusiness: Boolean = true, mode: Mode = CheckMode)
