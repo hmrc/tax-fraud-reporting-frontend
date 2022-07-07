@@ -55,7 +55,7 @@
             @listWithAction(ListWithActions(
                 items = (0 until numberOfNominals).map { id =>
                     ListWithActionsItem(name = messages(s"individual.${id + 1}"), actions = List(
-                        ListWithActionsAction(content = HtmlContent(messages("individual.change",messages(s"individual.${id + 1}"))), href = routes.IndividualCheckYourAnswersController.onPageLoad(Index(id), mode).url),
+                        ListWithActionsAction(content = HtmlContent(messages("individual.change",messages(s"individual.${id + 1}"))), href = routes.IndividualCheckYourAnswersController.onPageLoad(Index(id), UpdateIndividualMode).url),
                         ListWithActionsAction(content = HtmlContent(messages("individual.remove",messages(s"individual.${id + 1}"))), href = routes.IndividualConfirmRemoveController.onPageLoad(Index(id), mode).url))
                     )
                 }
