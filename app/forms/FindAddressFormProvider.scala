@@ -23,7 +23,7 @@ import play.api.data.Forms._
 
 import javax.inject.Inject
 
-class FindAddressFormProvider @Inject()  extends Mappings {
+class FindAddressFormProvider @Inject() extends Mappings {
 
   def apply(): Form[FindAddress] = Form(
     mapping(

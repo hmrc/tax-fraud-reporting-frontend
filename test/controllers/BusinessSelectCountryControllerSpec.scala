@@ -55,6 +55,7 @@ class BusinessSelectCountryControllerSpec extends SpecBase {
 
   private val answers           = emptyUserAnswers
   private val isBusinessJourney = answers.isBusinessJourney
+  private val isBusinessDetails = answers.isBusinessDetails(Index(0))
 
   lazy val businessSelectCountryRoute = routes.BusinessSelectCountryController.onPageLoad(Index(0), NormalMode).url
 
@@ -67,13 +68,12 @@ class BusinessSelectCountryControllerSpec extends SpecBase {
       running(application) {
         val request = FakeRequest(GET, businessSelectCountryRoute)
 
-        val isBusinessDetails = answers.isBusinessDetails(Index(0))
         val result         = route(application, request).value
         val countryJourney = if (isBusinessJourney) Business else Individual(true)
         val view           = application.injector.instanceOf[IndividualSelectCountryView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode, countryJourney, true)(
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode, countryJourney, isBusinessDetails)(
           request,
           messages(application)
         ).toString
@@ -95,10 +95,13 @@ class BusinessSelectCountryControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill("answer"), Index(0), NormalMode, countryJourney)(
-          request,
-          messages(application)
-        ).toString
+        contentAsString(result) mustEqual view(
+          form.fill("answer"),
+          Index(0),
+          NormalMode,
+          countryJourney,
+          isBusinessDetails
+        )(request, messages(application)).toString
       }
     }
 
@@ -129,7 +132,7 @@ class BusinessSelectCountryControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, countryJourney)(
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, countryJourney, isBusinessDetails)(
           request,
           messages(application)
         ).toString
@@ -152,7 +155,7 @@ class BusinessSelectCountryControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, countryJourney)(
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, countryJourney, isBusinessDetails)(
           request,
           messages(application)
         ).toString

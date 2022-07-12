@@ -24,8 +24,6 @@ import javax.inject.Inject
 class IndividualNationalInsuranceNumberFormProvider @Inject() extends Mappings {
 
   def apply(): Form[String] =
-    Form(
-      "value" -> text("individualNationalInsuranceNumber.error.required").verifying(ninoConstraint)
-    )
+    Form("value" -> text("individualNationalInsuranceNumber.error.required").verifying(ninoConstraint))
 
 }

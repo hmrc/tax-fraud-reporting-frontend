@@ -21,32 +21,31 @@ case class Outcode(area: String, district: String) {
 }
 
 object Outcode {
+
   /**
     * Performs normalisation and then checks the syntax, returning None if the string
     * cannot represent a well-formed outcode.
     */
-  def cleanupOutcode(p: String): Option[Outcode] = {
+  def cleanupOutcode(p: String): Option[Outcode] =
     if (p == null) None
     else doCleanupOutcode(p)
-  }
 
   private def doCleanupOutcode(p: String): Option[Outcode] = {
     val norm = p.trim.toUpperCase
     checkSyntax(norm)
   }
 
-  private def checkSyntax(out: String): Option[Outcode] = {
+  private def checkSyntax(out: String): Option[Outcode] =
     if (Postcode.oPattern.matcher(out).matches())
       Some(Outcode(out))
     else
       None
-  }
 
   // outcode must be already cleaned up and normalised
-  def apply(outcode: String): Outcode = {
+  def apply(outcode: String): Outcode =
     if (Character.isDigit(outcode(1)))
       Outcode(outcode.substring(0, 1), outcode.substring(1))
     else
       Outcode(outcode.substring(0, 2), outcode.substring(2))
-  }
+
 }

@@ -69,12 +69,10 @@ trait Mappings extends Formatters with Constraints {
   ): FieldMapping[BigDecimal] =
     of(currencyFormatter(requiredKey, nonNumericKey, args))
 
-  def hasInvalidChars(chars: String) = !chars.replaceAll("\\s", "").forall(_.isLetterOrDigit)
+  def hasInvalidChars(chars: String)      = !chars.replaceAll("\\s", "").forall(_.isLetterOrDigit)
   def isInvalidPostcode(postcode: String) = !Postcode.cleanupPostcode(postcode).isDefined
 
   def postcodeConstraint: Constraint[String] = Constraint[String](Some("constraints.postcode"), Seq.empty)({
-    case empty if empty.isEmpty =>
-      Invalid("findAddress.error.postcode.required")
     case chars if hasInvalidChars(chars) =>
       Invalid("findAddress.error.postcode.invalidChar")
     case postcode if isInvalidPostcode(postcode) =>
@@ -88,8 +86,6 @@ trait Mappings extends Formatters with Constraints {
   def removeWhitespace(string: String): String = string.split("\\s+").mkString
 
   def ninoConstraint: Constraint[String] = Constraint[String](Some("constraints.nino"), Seq.empty)({
-    case empty if empty.isEmpty =>
-      Invalid("individualNationalInsuranceNumber.error.required")
     case chars if hasInvalidChars(chars) =>
       Invalid("individualNationalInsuranceNumber.error.invalidCharacter")
     case nino if !isValid(removeWhitespace(nino.toUpperCase)) =>

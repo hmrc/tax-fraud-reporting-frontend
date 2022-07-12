@@ -37,6 +37,16 @@ class IndividualNationalInsuranceNumberFormProviderSpec extends StringFieldBehav
     // TODO should this be mandatory?
     behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
 
+    "must fail to bind an with empty national insurance number" in {
+      val result = fieldName -> fieldName.isEmpty
+      FormError(fieldName, "individualNationalInsuranceNumber.error.required")
+    }
+
+    "must fail to bind an invalid characters in national insurance number" in {
+      val result = form.bind(Map(fieldName -> "AB#@3456C"))(fieldName)
+      result.errors mustEqual Seq(FormError(fieldName, "individualNationalInsuranceNumber.error.invalidCharacter"))
+    }
+
     "must fail to bind an invalid national insurance number" in {
       val result = form.bind(Map(fieldName -> "abc"))(fieldName)
       result.errors mustEqual Seq(FormError(fieldName, "individualNationalInsuranceNumber.error.invalid"))

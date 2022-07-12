@@ -21,7 +21,7 @@ import org.scalacheck.Gen
 import play.api.Configuration
 import play.api.data.FormError
 
-class BusinessSelectCountryFormProviderSpec (configuration: Configuration) extends StringFieldBehaviours {
+class BusinessSelectCountryFormProviderSpec(configuration: Configuration) extends StringFieldBehaviours {
 
   val countries   = configuration.get[Seq[String]]("countries")
   val requiredKey = "businessSelectCountry.error.required"

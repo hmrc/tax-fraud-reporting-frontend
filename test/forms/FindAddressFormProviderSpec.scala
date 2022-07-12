@@ -17,20 +17,26 @@
 package forms
 
 import forms.behaviours.StringFieldBehaviours
+import forms.mappings.Mappings
 import play.api.data.FormError
 
-class FindAddressFormProviderSpec extends StringFieldBehaviours {
+class FindAddressFormProviderSpec extends StringFieldBehaviours with Mappings {
 
   val form = new FindAddressFormProvider()()
 
   ".Postcode" - {
-    val fieldName  = "Postcode"
-    val ukPostCode = "^([A-Za-z][A-Ha-hJ-Yj-y]?[0-9][A-Za-z0-9]? ?[0-9][A-Za-z]{2}|[Gg][Ii][Rr] ?0[Aa]{2})$"
+    val fieldName = "Postcode"
 
-    "must not bind an invalid option" in {
-      val result = form.bind(Map(fieldName -> "invalid-postcode"))
-      result.errors must contain(FormError("Postcode", "findAddress.error.postcode.invalid", Seq(ukPostCode)))
+    "must not bind an invalid postcode" in {
+      val result = form.bind(Map(fieldName -> "postcode"))
+      result.errors must contain(FormError("Postcode", "findAddress.error.postcode.invalid"))
     }
+
+    "must not bind an invalid character" in {
+      val result = form.bind(Map(fieldName -> "BB#$ 0BB"))
+      result.errors must contain(FormError("Postcode", "findAddress.error.postcode.invalidChar"))
+    }
+
     behave like mandatoryField(
       form,
       fieldName,

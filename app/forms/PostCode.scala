@@ -30,7 +30,6 @@ case class Postcode(area: String, district: String, sector: String, unit: String
   override lazy val toString = outcode + " " + incode
 }
 
-
 object Postcode {
   // The basic syntax of a postcode (ignores the rules on valid letter ranges because they don't matter here).
   private[forms] val oPattern = Pattern.compile("^[A-Z]{1,2}[0-9][0-9A-Z]?$")
@@ -40,40 +39,36 @@ object Postcode {
     * Performs normalisation and then checks the syntax, returning None if the string
     * cannot represent a well-formed postcode.
     */
-  def cleanupPostcode(p: String): Option[Postcode] = {
+  def cleanupPostcode(p: String): Option[Postcode] =
     if (p == null) None
     else doCleanupPostcode(p)
-  }
 
   private def doCleanupPostcode(p: String): Option[Postcode] = {
-    val norm = normalisePostcode(p)
+    val norm  = normalisePostcode(p)
     val space = norm.indexOf(' ')
     if (norm.length < 5) None
-
     else if (space < 0) {
       val incodeLength = norm.length - 3
-      val out = norm.substring(0, incodeLength)
-      val in = norm.substring(incodeLength, norm.length)
+      val out          = norm.substring(0, incodeLength)
+      val in           = norm.substring(incodeLength, norm.length)
       checkSyntax(out, in)
 
     } else {
       val out = norm.substring(0, space)
-      val in = norm.substring(space + 1)
+      val in  = norm.substring(space + 1)
       checkSyntax(out, in)
     }
   }
 
-  private def checkSyntax(out: String, in: String): Option[Postcode] = {
+  private def checkSyntax(out: String, in: String): Option[Postcode] =
     if (oPattern.matcher(out).matches() && iPattern.matcher(in).matches())
       Some(Postcode(out, in))
     else
       None
-  }
 
   /** Removes excess whitespace from a postcode string. */
-  def normalisePostcode(postcode: String): String = {
+  def normalisePostcode(postcode: String): String =
     postcode.trim.replaceAll("[ \\t]+", "").toUpperCase
-  }
 
   // p must be already cleaned up and normalised
   def apply(p: String): Postcode = {
@@ -87,7 +82,8 @@ object Postcode {
       if (Character.isDigit(outcode(1))) (outcode.substring(0, 1), outcode.substring(1))
       else (outcode.substring(0, 2), outcode.substring(2))
     val sector = incode.substring(0, 1)
-    val unit = incode.substring(1)
+    val unit   = incode.substring(1)
     new Postcode(area, district, sector, unit)
   }
+
 }

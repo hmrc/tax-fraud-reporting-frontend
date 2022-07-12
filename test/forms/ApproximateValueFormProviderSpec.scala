@@ -29,10 +29,11 @@ class ApproximateValueFormProviderSpec extends IntFieldBehaviours {
 
   ".value" - {
 
-    val fieldName    = "value"
-    val required     = "approximateValue.error.required"
-    val max12Chars   = "approximateValue.error.length"
-    val max2Decimals = "approximateValue.error.maxTwoDecimals"
+    val fieldName     = "value"
+    val required      = "approximateValue.error.required"
+    val max12Chars    = "approximateValue.error.length"
+    val max2Decimals  = "approximateValue.error.maxTwoDecimals"
+    val nonNumericKey = "approximateValue.error.nonNumeric"
 
     "must not bind an empty map" in {
       val result = form.bind(Map.empty[String, String])
@@ -40,8 +41,8 @@ class ApproximateValueFormProviderSpec extends IntFieldBehaviours {
     }
 
     "must not bind an invalid option" in {
-      val result = form.bind(Map(fieldName -> "49,000.90ab"))
-      result.errors must contain(FormError(fieldName, required))
+      val result = form.bind(Map(fieldName -> "12abc.90"))
+      result.errors must contain(FormError(fieldName, nonNumericKey))
     }
 
     "must not report errors for value with" - {

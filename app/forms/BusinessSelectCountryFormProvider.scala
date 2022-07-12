@@ -29,5 +29,4 @@ class BusinessSelectCountryFormProvider @Inject() (configuration: Configuration)
   def apply(): Form[String] =
     Form("country" -> text.verifying("businessSelectCountry.error.required", countries.contains _))
 
-
 }
