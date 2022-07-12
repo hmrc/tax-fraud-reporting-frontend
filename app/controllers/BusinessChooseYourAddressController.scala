@@ -58,7 +58,7 @@ class BusinessChooseYourAddressController @Inject() (
       eventHelper.pageLoadEvent(request.path)
       request.userAnswers.get(BusinessFindAddressPage(index)) match {
         case None =>
-          Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
+          Future.successful(Redirect(routes.BusinessAddressController.onPageLoad(index, mode)))
         case Some(value) =>
           addressLookUpHelper.addressLookUp(value) map {
             case ResultsList(addresses) =>
