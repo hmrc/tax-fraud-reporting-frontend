@@ -470,12 +470,12 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     answers.get(IndividualDateFormatPage(index)).map {
       case IndividualDateFormat.Date =>
         if (answers.get(IndividualDateOfBirthPage(index)).isDefined)
-          routes.CheckYourAnswersController.onPageLoad
+          routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
         else
           routes.IndividualDateOfBirthController.onPageLoad(index, CheckMode)
       case IndividualDateFormat.Age =>
         if (answers.get(IndividualAgePage(index)).isDefined)
-          routes.CheckYourAnswersController.onPageLoad
+          routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
         else
           routes.IndividualAgeController.onPageLoad(index, CheckMode)
     }.getOrElse(routes.CheckYourAnswersController.onPageLoad)
