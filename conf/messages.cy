@@ -877,6 +877,8 @@ doNotUseThisService.title = Ni allwch ddefnyddio’r gwasanaeth hwn i roi gwybod
 doNotUseThisService.heading = Ni allwch ddefnyddio’r gwasanaeth hwn i roi gwybod am y gweithgaredd hwn.
 doNotUseThisService.p1.activity-related-to-drugs = Ni all CThEM ymchwilio i unrhyw weithgaredd sy’n gysylltiedig â chyffuriau.
 doNotUseThisService.p2.activity-related-to-drugs = Dylech ffonio’r heddlu i roi gwybod am weithgaredd sy’n gysylltiedig â chyffuriau. Gallwch wneud y canlynol:
+doNotUseThisService.p3.activity-related-to-drugs = Ffonio 999 neu 112 os yw’n argyfwng
+doNotUseThisService.p4.activity-related-to-drugs = Ffonio 101 os nad yw’n argyfwng
 doNotUseThisService.list1 = Ffonio 999 neu 112 os yw’n argyfwng
 doNotUseThisService.list2 = Ffonio 101 os nad yw’n argyfwng
 doNotUseThisService.p1.smuggling = Mae’r Swyddfa Gartref yn gyfrifol am droseddau wrth y ffin a rheolaethau tollau ar gyfer pobl a nwyddau sy’n dod i mewn i’r DU.
@@ -887,19 +889,20 @@ doNotUseThisService.p1.human-trafficking = Ni all CThEM ymchwilio i fasnachu pob
 doNotUseThisService.p2.human-trafficking = Dylech ffonio’r heddlu i roi gwybod am fasnachu pobl. Gallwch wneud y canlynol:
 doNotUseThisService.p3.human-trafficking = Ffonio 999 neu 112 os yw’n argyfwng
 doNotUseThisService.p4.human-trafficking = Ffonio 101 os nad yw’n argyfwng
-doNotUseThisService.p1.immigration-border-crime = Nid yw CThEM yn gallu ymchwilio i’r gweithgaredd hwn.
-doNotUseThisService.p2.immigration-border-crime = Dylech <a class="govuk-link" href="https://www.gov.uk/report-immigration-crime"> roi gwybod i’r Swyddfa Gartref am fewnfudo neu droseddau wrth y ffin.</a>
+doNotUseThisService.p1.immigration-border-crime = Mae’r Swyddfa Gartref yn gyfrifol am droseddau wrth y ffin a rheolaethau tollau ar gyfer pobl a nwyddau sy’n dod i mewn i’r DU.
+doNotUseThisService.p2.immigration-border-crime = Dylech <a class="govuk-link" href="https://www.gov.uk/report-immigration-crime"> roi gwybod i’r Swyddfa Gartref am fewnfudo neu droseddau wrth y ffin  (yn agor tab newydd)</a>.
+doNotUseThisService.p1.minimum-wages = I wneud cwyn am yr Isafswm Cyflog Cenedlaethol neu hawliau cyflog a gwaith, <a class="govuk-link" target="_blank" href="https://www.gov.uk/government/publications/pay-and-work-rights-complaints">defnyddiwch y gwasanaeth ar-lein hwn (yn agor tab newydd)</a>.
 
 individualInformation.title = Beth ydych yn ei wybod am yr unigolyn?
 individualInformation.heading = Beth ydych yn ei wybod am yr unigolyn?
-individualInformation.hint = <p>Cyfeirir at yr unigolyn hwn fel {0}. <br> Gofynnir i chi roi manylion yn seiliedig ar eich dewis.<br> Nid oes disgwyl i chi gael gwybodaeth nad oes gennych eisoes.</p>
+individualInformation.hint = <p>Cyfeirir at yr unigolyn hwn fel {0}. <br> Gofynnir i chi roi manylion yn seiliedig ar eich dewis.</p><div class="govuk-hint">Dewiswch bob un sy’n berthnasol.</div>
 individualInformation.name = Enw
 individualInformation.age = Oedran (yn fras)
 individualInformation.address = Cyfeiriad cartref
 individualInformation.contact-details = Manylion cyswllt personol
 individualInformation.ni-number = Rhif Yswiriant Gwladol
 individualInformation.checkYourAnswersLabel = Beth ydych yn ei wybod am yr unigolyn
-individualInformation.error.required = Dewiswch yr wybodaeth sydd gennych am yr unigolyn.
+individualInformation.error.required = Dewiswch yr wybodaeth sydd gennych am yr unigolyn
 individualInformation.change.hidden = Beth ydych yn ei wybod am yr unigolyn
 
 individualName.title = Beth yw enw’r unigolyn?
@@ -922,14 +925,16 @@ IndividualName.change.hidden = Enw
 
 individualContactDetails.title = Beth yw manylion cyswllt yr unigolyn?
 individualContactDetails.heading = Beth yw manylion cyswllt yr unigolyn?
-individualContactDetails.hint = Nodwch gymaint ag y gallwch.
+individualContactDetails.hint = Rhowch gymaint o wybodaeth ag y gallwch.
 individualContactDetails.landlineNumber = Rhif ffôn llinell dir
 individualContactDetails.mobileNumber = Rhif ffôn symudol
 individualContactDetails.email = Cyfeiriad e-bost
-individualContactDetails.error.email.length = Mae’n rhaid i gyfeiriadau e-bost fod yn 255 o gymeriadau neu lai.
+individualContactDetails.error.email.length = Mae’n rhaid i gyfeiriadau e-bost fod yn 255 o gymeriadau neu lai
 individualContactDetails.checkYourAnswersLabel = Manylion cyswllt personol
-individualContactDetails.error.landlineNumber.invalid = Nodwch rif ffôn llinell dir, megis 01632 960 001.
-individualContactDetails.error.mobileNumber.invalid = Nodwch rif ffôn symudol, megis 07700 900 982 neu +44 7700 900 982.
+individualContactDetails.error.landlineNumber.invalid = Nodwch rif ffôn llinell dir, megis 01632 960 001
+individualContactDetails.error.landlineNumber.length = Rhaid i rif llinell dir fod yn 255 nod neu lai
+individualContactDetails.error.mobileNumber.invalid = Nodwch rif ffôn symudol, megis 07700 900 982 neu +44 7700 900 982
+individualContactDetails.error.mobileNumber.length = Rhaid i rif ffôn symudol fod yn 255 nod neu lai
 individualContactDetails.error.email.invalid = Nodwch gyfeiriad e-bost yn y fformat cywir, megis enw@enghraifft.com
 individualContactDetails.cya.landline = Rhif ffôn llinell dir
 individualContactDetails.cya.mobile = Rhif ffôn symudol
@@ -941,7 +946,8 @@ individualNationalInsuranceNumber.heading = Beth yw rhif Yswiriant Gwladol yr un
 individualNationalInsuranceNumber.hint = Er enghraifft, ‘QQ 12 34 56 C’.
 individualNationalInsuranceNumber.checkYourAnswersLabel = Rhif Yswiriant Gwladol
 individualNationalInsuranceNumber.error.required = Nodwch rif Yswiriant Gwladol yr unigolyn
-individualNationalInsuranceNumber.error.invalid = Nodwch rif Yswiriant Gwladol yr unigolyn yn y fformat cywir
+individualNationalInsuranceNumber.error.invalid = Nodwch rif Yswiriant Gwladol yr unigolyn yn y fformat cywir, fel QQ123456C
+individualNationalInsuranceNumber.error.invalidCharacter = Mae’n rhaid i rif Yswiriant Gwladol yr unigolyn gynnwys y llythrennau a i z a’r rhifau 0 i 9 yn unig
 individualNationalInsuranceNumber.change.hidden = Rhif Yswiriant Gwladol
 
 individualConnection.title = Sut ydych yn adnabod yr unigolyn?
@@ -961,20 +967,20 @@ individualConnection.customer = cwsmer
 individualConnection.businessCompetitor = cystadleuydd busnes
 individualConnection.other = Arall
 individualConnection.checkYourAnswersLabel = Sut rydych yn adnabod yr unigolyn
-individualConnection.error.required = Dewiswch sut rydych yn adnabod yr unigolyn.
+individualConnection.error.required = Dewiswch sut rydych yn adnabod yr unigolyn
 individualConnection.otherValue.hint = Nodwch sut rydych yn adnabod y unigolyn
-individualConnection.error.otherValue.required = Dewiswch sut rydych yn adnabod yr unigolyn.
-individualConnection.error.otherValue.maxLength = Mae’n rhaid i’ch esboniad ynghylch sut rydych yn adnabod yr unigolyn fod yn {0} o gymeriadau neu lai.
+individualConnection.error.otherValue.required = Dewiswch sut rydych yn adnabod yr unigolyn
+individualConnection.error.otherValue.maxLength = Mae’n rhaid i’ch esboniad ynghylch sut rydych yn adnabod yr unigolyn fod yn {0} o gymeriadau neu lai
 individualConnection.change.hidden = Sut rydych yn adnabod yr unigolyn
 
-individualBusinessDetails.title = A allwch roi manylion busnes ar gyfer yr unigolyn hwn?
-individualBusinessDetails.heading = A allwch roi manylion busnes ar gyfer yr unigolyn hwn?
+individualBusinessDetails.title = A ydych yn gwybod unrhyw rai o fanylion busnes yr unigolyn?
+individualBusinessDetails.heading = A ydych yn gwybod unrhyw rai o fanylion busnes yr unigolyn?
 individualBusinessDetails.hint = Er enghraifft, enw, cyfeiriad neu fanylion cyswllt y busnes.
 individualBusinessDetails.yes = Iawn
 individualBusinessDetails.no = Na
 individualBusinessDetails.dontKnow = Nid wyf yn gwybod
 individualBusinessDetails.checkYourAnswersLabel = Mae gan yr unigolyn fanylion busnes
-individualBusinessDetails.error.required = Dewiswch ‘Iawn’ os oes gan yr unigolyn fanylion busnes y gallwch eu darparu.
+individualBusinessDetails.error.required = Dewiswch ‘Iawn’ os ydych yn gwybod unrhyw rai o fanylion busnes yr unigolyn
 individualBusinessDetails.change.hidden = Mae gan yr unigolyn fanylion busnes
 
 dateFormat.title = Dewiswch fformat i nodi oedran yr unigolyn
@@ -982,7 +988,7 @@ dateFormat.heading = Dewiswch fformat i nodi oedran yr unigolyn
 dateFormat.date = Dyddiad geni
 dateFormat.age = Oedran Bras
 dateFormat.checkYourAnswersLabel = Fformat oedran
-dateFormat.error.required = Dewiswch fformat i nodi oedran yr unigolyn.
+dateFormat.error.required = Dewiswch sut ydych am nodi oedran yr unigolyn
 dateFormat.change.hidden = Fformat oedran
 
 individualAddress.checkYourAnswersLabel = Cyfeiriad cartref
@@ -992,36 +998,37 @@ individualDateOfBirth.title = Beth yw dyddiad geni’r unigolyn?
 individualDateOfBirth.heading = Beth yw dyddiad geni’r unigolyn?
 individualDateOfBirth.hint = Er enghraifft, 31 3 1980.
 individualDateOfBirth.checkYourAnswersLabel = Dyddiad geni
-individualDateOfBirth.error.required.all = Nodwch ddyddiad geni’r unigolyn.
+individualDateOfBirth.error.required.all = Nodwch ddyddiad geni’r unigolyn
 individualDateOfBirth.error.required.two = Mae’n rhaid i’r dyddiad geni gynnwys {0} a {1}
-individualDateOfBirth.error.required = Mae’n rhaid i’r dyddiad geni gynnwys {0}.
-individualDateOfBirth.error.invalid = Nodwch ddyddiad geni go iawn
+individualDateOfBirth.error.required = Mae’n rhaid i’r dyddiad geni gynnwys {0}
+individualDateOfBirth.error.invalid = Nodwch ddyddiad go iawn
+individualDateOfBirth.error.pastDate = Mae’n rhaid i ddyddiad geni’r unigolyn fod ar neu ar ôl 1 1 1900
 individualDateOfBirth.change.hidden = Dyddiad geni
 individualDateOfBirth.error.futureDate = Mae’n rhaid i’r dyddiad geni fod yn y gorffennol
 
-individualAge.title = Beth yw oedran bras yr unigolyn?
-individualAge.heading = Beth yw oedran bras yr unigolyn?
+individualAge.title = Beth yw oedran bras yr unigolyn, mewn blynyddoedd?
+individualAge.heading = Beth yw oedran bras yr unigolyn, mewn blynyddoedd?
 individualAge.hint = Nodwch ei oedran bras mewn blynyddoedd.
 individualAge.suffix = mlwydd oed
 individualAge.checkYourAnswersLabel = Oedran Bras
-individualAge.error.nonNumeric = Nodwch oedran bras yr unigolyn gan ddefnyddio gwerthoedd rhifol
-individualAge.error.required = Nodwch oedran bras yr unigolyn.
-individualAge.error.wholeNumber = Nodwch oedran bras yr unigolyn gan ddefnyddio gwerthoedd rhifol
-individualAge.error.outOfRange = Rhaid i''r oedran bras fod rhwng {0} a {1}
+individualAge.error.nonNumeric = Mae’n rhaid i oedran bras yr unigolyn mewn blynyddoedd gynnwys y rhifau 0 i 9 yn unig
+individualAge.error.required = Nodwch oedran bras yr unigolyn mewn blynyddoedd
+individualAge.error.wholeNumber = Mae’n rhaid i oedran bras yr unigolyn mewn blynyddoedd gynnwys y rhifau 0 i 9 yn unig
+individualAge.error.outOfRange = Mae’n rhaid i ddyddiad geni’r unigolyn fod ar neu ar ôl 1 1 1900
 individualAge.change.hidden = Oedran Bras
 
-businessInformationCheck.title = Beth ydych yn ei wybod am y busnes?
-businessInformationCheck.heading = Beth ydych yn ei wybod am y busnes?
-businessInformationCheck.hint = <p>Gofynnir i chi roi manylion yn seiliedig ar eich dewis.<br> Nid oes disgwyl i chi gael gwybodaeth nad oes gennych eisoes.</p>
+businessInformationCheck.title = Beth ydych yn ei wybod am fusnes yr unigolyn?
+businessInformationCheck.heading = Beth ydych yn ei wybod am fusnes yr unigolyn?
+businessInformationCheck.hint = <p>Nid oes angen i chi fynd ar ôl gwybodaeth nad oes gennych eisoes.</p> <div class="govuk-hint">Select all that apply.</div>
 businessInformationCheck.name = Enw’r busnes
 businessInformationCheck.type = Math o fusnes
-businessInformationCheck.type.hint = Er enghraifft, adeiladwr, siop trin gwallt neu fwyty.
+businessInformationCheck.type.hint = Er enghraifft adeiladwr, siop trin gwallt neu fwyty.
 businessInformationCheck.address = Cyfeiriad y Busnes
 businessInformationCheck.contact = Manylion cyswllt y busnes
 businessInformationCheck.businessReference = Cyfeirnodau’r busnes
-businessInformationCheck.businessReference.hint = Er enghraifft, rhif TAW neu Gyfeirnod y Cyflogwr.
-businessInformationCheck.checkYourAnswersLabel = Beth ydych yn ei wybod am y busnes?
-businessInformationCheck.error.required = Dewiswch neu nodwch yr wybodaeth sydd gennych am y busnes.
+businessInformationCheck.businessReference.hint = Er enghraifft rhif TAW neu Gyfeirnod y Cyflogwr.
+businessInformationCheck.checkYourAnswersLabel = Beth ydych yn ei wybod am fusnes yr unigolyn?
+businessInformationCheck.error.required = Dewiswch beth ydych yn ei wybod am y busnes
 businessInformationCheck.change.hidden = Beth ydych yn ei wybod am y busnes?
 
 businessName.title = Beth yw enw’r busnes?
@@ -1031,20 +1038,20 @@ businessName.error.required = Nodwch enw''r busnes.
 businessName.error.length = Mae’n rhaid i enwau busnes fod yn 255 o gymeriadau neu lai.
 businessName.change.hidden = EN’r busnes
 
-descriptionActivity.title = Rhowch ddisgrifiad cryno o’r gweithgaredd rydych yn rhoi gwybod amdano
-descriptionActivity.heading = Rhowch ddisgrifiad cryno o’r gweithgaredd rydych yn rhoi gwybod amdano
+descriptionActivity.title = Disgrifiwch y gweithgaredd rydych yn rhoi gwybod amdano
+descriptionActivity.heading = Disgrifiwch y gweithgaredd rydych yn rhoi gwybod amdano
 descriptionActivity.hint = Mae disgrifiad cryno yn caniatáu i CThEM brosesu’ch gwybodaeth yn effeithiol. Nid oes angen ailadrodd unrhyw wybodaeth rydych eisoes wedi’i rhoi.
 descriptionActivity.checkYourAnswersLabel = Disgrifiad o’r gweithgaredd
-descriptionActivity.error.required = Nodwch ddisgrifiad o’r gweithgaredd rydych yn rhoi gwybod amdano.
-descriptionActivity.error.length = Mae’n rhaid i’r disgrifiad o’r gweithgaredd fod yn 1200 o gymeriadau neu lai.
+descriptionActivity.error.required = Nodwch ddisgrifiad o’r gweithgaredd rydych yn rhoi gwybod amdano
+descriptionActivity.error.length = Mae’n rhaid i’r disgrifiad o’r gweithgaredd fod yn 1200 o gymeriadau neu lai
 descriptionActivity.change.hidden = Disgrifiad o’r gweithgaredd
 
-typeBusiness.title = Pa fath o fusnes yw hwn?
-typeBusiness.heading = Pa fath o fusnes yw hwn?
+typeBusiness.title = Pa fath o fusnes ydyw?
+typeBusiness.heading = Pa fath o fusnes ydyw?
 typeBusiness.hint = Er enghraifft, adeiladwr, siop trin gwallt neu fwyty.
 typeBusiness.checkYourAnswersLabel = Math o fusnes
 typeBusiness.error.required = Nodwch pa fath o fusnes ydyw
-typeBusiness.error.length =  Mae’n rhaid i’r math o fusnes fod yn 255 o gymeriadau neu lai.
+typeBusiness.error.length =  Mae’n rhaid i’r math o fusnes fod yn 255 o gymeriadau neu lai
 typeBusiness.change.hidden = Math o fusnes
 
 selectConnectionBusiness.title = Sut ydych yn gwybod am y busnes?
@@ -1063,8 +1070,8 @@ selectConnectionBusiness.treasure = trysorydd y busnes
 selectConnectionBusiness.other = Arall
 selectConnectionBusiness.otherValue = Nodwch sut rydych yn gwybod am y busnes
 selectConnectionBusiness.checkYourAnswersLabel = Sut rydych yn gwybod am y busnes
-selectConnectionBusiness.error.required = Dewiswch sut rydych yn adnabod y busnes.
-selectConnectionBusiness.error.otherValue.required = Dewiswch sut rydych yn adnabod y busnes.
+selectConnectionBusiness.error.required = Dewiswch sut rydych yn adnabod y busnes
+selectConnectionBusiness.error.otherValue.required = Dewiswch sut rydych yn adnabod y busnes
 selectConnectionBusiness.error.otherValue.maxLength = Mae’n rhaid i’ch esboniad ynghylch sut rydych yn adnabod y busnes fod yn 100 o gymeriadau neu lai.
 selectConnectionBusiness.change.hidden = Sut rydych yn gwybod am y busnes
 
@@ -1087,21 +1094,20 @@ referenceNumbers.cya.ern = ERN
 referenceNumbers.cya.cturn = CTUTR
 
 approximateValue.title = Beth yw cyfanswm gwerth y gweithgaredd?
-approximateValue.heading = Gwnaethoch ddewis ''{0}'', beth yw cyfanswm gwerth amcangyfrifedig y gweithgaredd?
+approximateValue.heading = ''{0}'', beth yw cyfanswm gwerth amcangyfrifedig y gweithgaredd?
 approximateValue.p1 = Nid oes angen union ffigur ar CThEM, bydd amcangyfrif yn dal i fod yn ddefnyddiol.
 approximateValue.hint = Nodwch y cyfanswm gwerth bras, mewn punnoedd.
 approximateValue.suffix = £
 approximateValue.checkYourAnswersLabel = Swm y gweithgaredd (£)
-approximateValue.error.nonNumeric = Nodwch y cyfanswm amcangyfrifedig fel gwerth rhifol.
-approximateValue.error.required = Nodwch y cyfanswm amcangyfrifedig fel gwerth rhifol.
-approximateValue.error.wholeNumber = Nodwch y cyfanswm amcangyfrifedig fel gwerth rhifol.
-approximateValue.error.maxTwoDecimals = Mae’n rhaid i’r gwerth bras fod ag uchafswm o ddau bwynt degol
-approximateValue.error.length = Mae’n rhaid i’r cyfanswm amcangyfrifedig fod yn 12 o gymeriadau neu lai.
+approximateValue.error.nonNumeric = Mae’n rhaid i gyfanswm gwerth amcangyfrifedig y gweithgaredd gynnwys y rhifau 0 i 9 a dau le degol yn unig
+approximateValue.error.required = Nodwch gyfanswm gwerth amcangyfrifedig y gweithgaredd, mewn punnoedd
+approximateValue.error.maxTwoDecimals = Rhaid i gyfanswm y gwerth fod yn uchafswm o ddau le degol
+approximateValue.error.length = Mae’n rhaid i gyfanswm y gwerth amcangyfrifedig fod yn 12 o gymeriadau neu lai
 approximateValue.change.hidden = Swm y gweithgaredd (£)
 
 businessContactDetails.title = Beth yw manylion cyswllt y busnes?
 businessContactDetails.heading = Beth yw manylion cyswllt y busnes?
-businessContactDetails.hint = Nodwch gymaint ag y gallwch.
+businessContactDetails.hint = Rhowch gymaint o wybodaeth ag y gallwch.
 businessContactDetails.landlineNumber = Rhif ffôn llinell dir
 businessContactDetails.mobileNumber = Rhif ffôn symudol
 businessContactDetails.email = Cyfeiriad e-bost
@@ -1113,17 +1119,17 @@ businessContactDetails.error.email.invalid = Nodwch gyfeiriad e-bost yn y fforma
 businessContactDetails.change.hidden = Manylion cyswllt y busnes
 
 addAnotherPerson.title = Rydych wedi ychwanegu {0} unigolyn
-addAnotherPerson.heading = A oes pobl ychwanegol yn cymryd rhan yn y gweithgaredd hwn yr hoffech roi gwybod i ni amdanynt?
+addAnotherPerson.heading = A ydych am ychwanegu unigolyn arall?
 addAnotherPerson.hint = Gallwch nodi hyd at 5 unigolyn.
 addAnotherPerson.yes = Iawn
 addAnotherPerson.no = Na
-addAnotherPerson.checkYourAnswersLabel = A oes pobl ychwanegol yn cymryd rhan yn y gweithgaredd hwn yr hoffech roi gwybod i ni amdanynt?
-addAnotherPerson.error.required = Dewiswch ‘Iawn’ os oes angen i chi ychwanegu unigolyn arall.
+addAnotherPerson.checkYourAnswersLabel = A ydych am ychwanegu unigolyn arall?
+addAnotherPerson.error.required = Dewiswch ‘Iawn’ os ydych am ychwanegu unigolyn arall
 addAnotherPerson.change.hidden = Ychwanegu Unigolyn arall
 
 individualConfirmRemove.title = A ydych yn siŵr eich bod am dynnu {0}?
 individualConfirmRemove.heading = A ydych yn siŵr eich bod am dynnu {0}?
-individualConfirmRemove.error.required = Dewiswch ‘Iawn’ os oes angen i chi dynnu’r unigolyn.
+individualConfirmRemove.error.required = Dewiswch ‘Iawn’ os oes angen i chi dynnu’r unigolyn
 
 individual.addAnother.header = Rydych wedi ychwanegu {0} unigolyn
 individual.addAnother.header.plural = Rydych wedi ychwanegu {0} unigolyn
@@ -1137,8 +1143,8 @@ individual.5 = Unigolyn E
 individual.change = Newid<span class="govuk-visually-hidden"> {0} </span>
 individual.remove = Dileu<span class="govuk-visually-hidden"> {0} </span>
 
-whenActivityHappen.title = Beth yw hyd y gweithgaredd a nodwyd?
-whenActivityHappen.heading = Beth yw hyd y gweithgaredd a nodwyd?
+whenActivityHappen.title = Am ba hyd y mae’r gweithgaredd wedi bod yn digwydd?
+whenActivityHappen.heading = Am ba hyd y mae’r gweithgaredd wedi bod yn digwydd?
 whenActivityHappen.overFiveYears = Dros 5 mlynedd
 whenActivityHappen.betweenOneAndFive = Rhwng 1 flwyddyn a 5 mlynedd
 whenActivityHappen.betweenSixMonthAndOneYear= Rhwng 6 mis ac 1 flwyddyn
@@ -1147,11 +1153,11 @@ whenActivityHappen.onlyOneOccasion = Digwyddodd y gweithgaredd unwaith
 whenActivityHappen.notHappen = Nid yw’r gweithgaredd wedi digwydd eto
 whenActivityHappen.doNotKnow = Nid wyf yn gwybod
 whenActivityHappen.checkYourAnswersLabel = Hyd y gweithgaredd
-whenActivityHappen.error.required = Dewiswch pryd dechreuodd y gweithgaredd rydych yn rhoi gwybod amdano
+whenActivityHappen.error.required = Dewiswch am ba hyd y mae’r gweithgaredd hwn wedi bod yn digwydd
 whenActivityHappen.change.hidden = Hyd y gweithgaredd
 
-activityTimePeriod.title = Pryd fydd y gweithgaredd rydych yn rhoi gwybod amdano yn debygol o ddigwydd?
-activityTimePeriod.heading = Pryd fydd y gweithgaredd rydych yn rhoi gwybod amdano yn debygol o ddigwydd?
+activityTimePeriod.title = Pryd mae’r gweithgaredd yn debygol o ddigwydd?
+activityTimePeriod.heading = Pryd mae’r gweithgaredd yn debygol o ddigwydd?
 activityTimePeriod.nextWeek = Yn ystod yr wythnos nesaf
 activityTimePeriod.threeMonths = Yn ystod y 3 mis nesaf
 activityTimePeriod.later = Yn ystod y flwyddyn nesaf neu ar ôl hynny
@@ -1169,7 +1175,7 @@ howManyPeopleKnow.sixToTenIndividuals = 6 i 10 unigolyn
 howManyPeopleKnow.moreThanTenIndividuals = Mwy na 10 unigolyn
 howManyPeopleKnow.doNotKnow = Nid wyf yn gwybod
 howManyPeopleKnow.checkYourAnswersLabel = Faint o bobl sy’n gwybod
-howManyPeopleKnow.error.required = Nodwch sawl person sy’n gwybod am y gweithgaredd neu dewiswch “Nid wyf yn gwybod”
+howManyPeopleKnow.error.required = Dewiswch faint o bobl eraill sy’n gwybod am y gweithgaredd hwn
 howManyPeopleKnow.change.hidden = Faint o bobl sy’n gwybod
 
 supportingDocument.title = A oes gennych unrhyw wybodaeth ategol?
@@ -1178,7 +1184,7 @@ supportingDocument.hint = <p>Cyfeiriwch at wybodaeth sydd gennych ar hyn o bryd 
 supportingDocument.yes = Iawn
 supportingDocument.no = Na
 supportingDocument.checkYourAnswersLabel = Gwybodaeth ategol a roddwyd
-supportingDocument.error.required = Dewiswch a oes gennych unrhyw wybodaeth ategol y gallech ei darparu pe bai CThEM yn gofyn amdani.
+supportingDocument.error.required = Dewiswch ‘Iawn’ os oes gennych unrhyw wybodaeth ategol
 supportingDocument.change.hidden = Gwybodaeth ategol a roddwyd
 
 
@@ -1206,13 +1212,13 @@ businessAddress.change.hidden = Cyfeiriad y busnes
 # END Addresses both Individual & Business
 
 
-provideContactDetails.title = A ydych am roi’ch manylion cyswllt?
-provideContactDetails.heading = A ydych am roi’ch manylion cyswllt?
+provideContactDetails.title = A ydych am roi’ch manylion cyswllt i ni?
+provideContactDetails.heading = A ydych am roi’ch manylion cyswllt i ni?
 provideContactDetails.hint = Bydd gwybodaeth bersonol yn cael ei chadw’n gyfrinachol.
 provideContactDetails.yes = Iawn, byddaf yn rhoi fy manylion cyswllt
 provideContactDetails.no = Na, rwyf am roi’r wybodaeth yn ddienw
 provideContactDetails.checkYourAnswersLabel = Manylion a roddwyd
-provideContactDetails.error.required = Dewiswch ‘Iawn’ os byddwch yn darparu’ch manylion cyswllt.
+provideContactDetails.error.required = Dewiswch ‘Iawn’ os byddwch yn darparu’ch manylion cyswllt
 provideContactDetails.change.hidden = Manylion a roddwyd
 
 yourContactDetails.title = Nodwch eich manylion cyswllt
@@ -1225,14 +1231,14 @@ yourContactDetails.email = Cyfeiriad e-bost (dewisol)
 yourContactDetails.memorableWord = Creu’ch dynodydd unigryw CThEM (dewisol)
 yourContactDetails.memorableWord.hint = Os bydd CThEM yn cysylltu â chi, byddwn yn rhoi’ch dynodydd CThEM fel y gallwch gadarnhau bod y cysylltiad gan CThEM yn un dilys. Peidiwch â chynnwys gwybodaeth bersonol yn eich dynodydd CThEM.
 yourContactDetails.checkYourAnswersLabel = eich manylion cyswllt
-yourContactDetails.error.firstName.required = Nodwch eich enw cyntaf.
-yourContactDetails.error.lastName.required = Nodwch eich enw olaf.
-yourContactDetails.error.tel.required = Nodwch eich rhif ffôn.
-yourContactDetails.error.tel.invalid = Nodwch rif ffôn, megis 01632 960 001, 07700 900 982 neu +44 808 157 0192.
+yourContactDetails.error.firstName.required = Nodwch eich enw cyntaf
+yourContactDetails.error.lastName.required = Nodwch eich enw olaf
+yourContactDetails.error.tel.required = Nodwch eich rhif ffôn
+yourContactDetails.error.tel.invalid = Nodwch rif ffôn, megis 01632 960 001, 07700 900 982 neu +44 808 157 0192
 yourContactDetails.error.email.invalid = Nodwch eich cyfeiriad e-bost yn y fformat cywir, megis enw@enghraifft.com
-yourContactDetails.error.firstName.length = Mae’n rhaid i enwau cyntaf fod yn 255 o gymeriadau neu lai.
-yourContactDetails.error.lastName.length = Mae’n rhaid i enwau olaf fod yn 255 o gymeriadau neu lai.
-yourContactDetails.error.memorableWord.length = Mae’n rhaid i’r dynodydd CThEM cofiadwy fod yn 255 o gymeriadau neu lai.
+yourContactDetails.error.firstName.length = Mae’n rhaid i enwau cyntaf fod yn 255 o gymeriadau neu lai
+yourContactDetails.error.lastName.length = Mae’n rhaid i enwau olaf fod yn 255 o gymeriadau neu lai
+yourContactDetails.error.memorableWord.length = Mae’n rhaid i’r dynodydd CThEM cofiadwy fod yn 255 o gymeriadau neu lai
 yourContactDetails.FirstName.change.hidden = Enw cyntaf
 yourContactDetails.LastName.change.hidden = Enw olaf
 yourContactDetails.uniqueIdentifier = Dynodwr CThEM cofiadwy
@@ -1253,12 +1259,12 @@ reportSubmitted.feedback.text = Wrth roi adborth am ein gwasanaeth, peidiwch â 
 reportSubmitted.feedback.url.text = Dywedwch wrthym beth yw eich barn am ein gwasanaeth.
 reportSubmitted.take.time =  (mae’n cymryd 30 eiliad)
 
-documentationDescription.title = Disgrifiwch y wybodaeth ategol a allai fod gennych
-documentationDescription.heading = Disgrifiwch y wybodaeth ategol a allai fod gennych
+documentationDescription.title = Disgrifiwch yr wybodaeth ategol
+documentationDescription.heading = Disgrifiwch yr wybodaeth ategol
 documentationDescription.hint = Ni fydd CThEM yn gofyn i chi atodi unrhyw ddogfennau i’r adroddiad hwn.
 documentationDescription.checkYourAnswersLabel = Gwybodaeth ategol disgrifiad
-documentationDescription.error.required = Nodwch ddisgrifiad o’r wybodaeth ategol sydd gennych.
-documentationDescription.error.length = Mae’n rhaid i’r disgrifiad o’r wybodaeth ategol sydd gennych fod yn 500 o gymeriadau neu lai.
+documentationDescription.error.required = Nodwch ddisgrifiad o’r wybodaeth ategol sydd gennych
+documentationDescription.error.length = Mae’n rhaid i’r disgrifiad o’r wybodaeth ategol sydd gennych fod yn 500 o gymeriadau neu lai
 documentationDescription.change.hidden = Gwybodaeth ategol disgrifiad
 
 checkYourAnswers.activityDetails = Y gweithgaredd rydych yn rhoi gwybod amdano
@@ -1294,9 +1300,9 @@ activitySourceOfInformation.byThirdPart = Cefais wybod gan drydydd parti
 activitySourceOfInformation.other = Arall
 activitySourceOfInformation.otherValue = Nodwch sut rydych yn gwybod am y wybodaeth
 activitySourceOfInformation.checkYourAnswersLabel = Sut cawsoch yr wybodaeth hon
-activitySourceOfInformation.error.required = Dewiswch neu nodwch yr wybodaeth sydd gennych am y busnes.
-activitySourceOfInformation.error.otherValue.required = Dewiswch neu nodwch yr wybodaeth sydd gennych am y busnes.
-activitySourceOfInformation.error.otherValue.maxLength = Mae’n rhaid i’ch esboniad ynghylch sut rydych yn gwybod am y wybodaeth fod yn 100 o gymeriadau neu lai.
+activitySourceOfInformation.error.required = Dewiswch sut rydych yn gwybod am y gweithgaredd rydych yn rhoi gwybod amdano
+activitySourceOfInformation.error.otherValue.required = Dewiswch sut rydych yn gwybod am y gweithgaredd rydych yn rhoi gwybod amdano
+activitySourceOfInformation.error.otherValue.maxLength = Mae’n rhaid i’ch esboniad ynghylch sut rydych yn gwybod am y wybodaeth fod yn 100 o gymeriadau neu lai
 activitySourceOfInformation.change.hidden = Sut cawsoch yr wybodaeth hon
 
 technicalProblems.title = Cael help gyda phroblem dechnegol
@@ -1315,18 +1321,30 @@ betaBanner.service.text = Gwasanaeth newydd yw hwn
 
 individual.caption.text.screen.reader = Mae hyn yn ymwneud ag
 
-individualSelectCountry.title = Dewiswch eich wlad
-individualSelectCountry.heading = Dewiswch eich wlad
+individualSelectCountry.title = Ym mha wlad y mae’r unigolyn wedi’i leoli?
+individualSelectCountry.heading = Ym mha wlad y mae’r unigolyn wedi’i leoli?
 individualSelectCountry.label = Dewiswch wlad
-individualSelectCountry.checkYourAnswersLabel = Dewiswch eich wlad
-individualSelectCountry.error.required = Dewiswch wlad o'r rhestr.
-individualSelectCountry.change.hidden = Dewiswch eich wlad
+individualSelectCountry.checkYourAnswersLabel = Ym mha wlad y mae’r unigolyn wedi’i leoli?
+individualSelectCountry.error.required = Nodwch wlad breswyl yr unigolyn
+individualSelectCountry.change.hidden = Ym mha wlad y mae’r unigolyn wedi’i leoli?
 
-confirmAddress.title = (W) Is this address correct? (W)
-confirmAddress.heading = (W) Is this address correct? (W)
+businessSelectCountry.title = Ym mha wlad y mae’r busnes wedi’i leoli?
+businessSelectCountry.heading = Ym mha wlad y mae’r busnes wedi’i leoli?
+businessSelectCountry.label = Ym mha wlad y mae’r busnes wedi’i leoli?
+businessSelectCountry.error.required = Nodwch y wlad lle mae’r busnes wedi’i leoli
+businessSelectCountry.change.hidden = Ym mha wlad y mae’r busnes wedi’i leoli?
+
+confirmAddress.title = A yw’r cyfeiriad hwn yn gywir?
+confirmAddress.heading = A yw’r cyfeiriad hwn yn gywir?
 confirmAddress.change-address = Newid y cyfeiriad
-confirmAddress.error.required = (W) Select yes if this address is correct (W)
-confirmAddress.change.hidden = (W) Is this address correct? (W)
+confirmAddress.error.required = Dewiswch ‘Iawn’ os yw’r cyfeiriad hwn yn gywir
+confirmAddress.change.hidden = A yw’r cyfeiriad hwn yn gywir?
+
+businessConfirmAddress.title = A yw’r cyfeiriad hwn yn gywir?
+businessConfirmAddress.heading = A yw’r cyfeiriad hwn yn gywir?
+businessConfirmAddress.checkYourAnswersLabel = Is this address correct?
+businessConfirmAddress.error.required = Dewiswch ‘Iawn’ os yw’r cyfeiriad hwn yn gywir
+businessConfirmAddress.change.hidden = A yw’r cyfeiriad hwn yn gywir?
 
 findAddress.title = Dod o hyd i gyfeiriad
 findAddress.heading = Dod o hyd i gyfeiriad
@@ -1335,22 +1353,25 @@ findAddress.manually = Nodwch y cyfeiriad â llaw
 findAddress.property = Enw neu rif yr eiddo (dewisol)
 findAddress.property.hint = Er enghraifft, Tegfan, 116 neu Fflat 37a
 findAddress.checkYourAnswersLabel = Dod o hyd i gyfeiriad
-findAddress.error.postcode.required = Nodwch god post
-findAddress.error.postcode.invalid = Nodwch god post go iawn, e.e. AA1 1AA
-findAddress.error.postcode.length = Nodwch god post go iawn, e.e. AA1 1AA
+findAddress.error.postcode.required = Nodwch god post yr unigolyn
+findAddress.error.postcode.invalid = Nodwch god post eich cyfeiriad yn y fformat cywir, fel AB1 1AB
+findAddress.error.postcode.invalidChar = Mae’n rhaid i god post eich cyfeiriad gynnwys y llythrennau a i z, y rhifau 0 i 9 a bwlch yn unig
 findAddress.error.property.length = Rhaid i enw/rhif eich tŷ fod yn llai na 256 o gymeriadau
 findAddress.postcode.change.hidden = Postcode
 findAddress.property.change.hidden = Property
 
+individual.findAddress.title = Beth yw cyfeiriad yr unigolyn?
+individual.findAddress.heading = Beth yw cyfeiriad yr unigolyn?
+
 businessFindAddress.title = Dod o hyd i gyfeiriad
 businessFindAddress.heading = Dod o hyd i gyfeiriad
 businessFindAddress.checkYourAnswersLabel = Dod o hyd i gyfeiriad
-businessFindAddress.error.required = Nodwch god post
-businessFindAddress.error.length = Nodwch god post go iawn, e.e. AA1 1AA
+businessFindAddress.error.required = Nodwch god post yr unigolyn
+businessFindAddress.error.length = Mae’n rhaid i god post eich cyfeiriad gynnwys y llythrennau a i z, y rhifau 0 i 9 a bwlch yn unig
 businessFindAddress.change.hidden = Dod o hyd i gyfeiriad
 
-chooseYourAddress.title = Mae problem wedi codi
-chooseYourAddress.heading = Mae problem wedi codi
+chooseYourAddress.title = Dewiswch gyfeiriad yr unigolyn
+chooseYourAddress.heading = Dewiswch gyfeiriad yr unigolyn
 chooseYourAddress.address = gyfeiriad
 chooseYourAddress.checkYourAnswersLabel = Dewiswch gyfeiriad
 chooseYourAddress.error.required = Dewiswch gyfeiriad
@@ -1379,9 +1400,3 @@ zeroValidation.title = A ydych yn siŵr nad oes gwerth i’r gweithgaredd?
 zeroValidation.heading = A ydych yn siŵr nad oes gwerth i’r gweithgaredd?
 zeroValidation.hint = Os nad ydych yn gwybod yr union werth, gallwch roi’ch amcangyfrif gorau i ni.
 zeroValidation.error.required = Dewiswch ‘Iawn’ os ydych yn siŵr nad oes gwerth i’r gweithgaredd
-
-businessConfirmAddress.title = (W) Is this address correct? (W)
-businessConfirmAddress.heading = (W) Is this address correct? (W)
-businessConfirmAddress.checkYourAnswersLabel = (W) Is this address correct? (W)
-businessConfirmAddress.error.required = (W) Select yes if this address is correct (W)
-businessConfirmAddress.change.hidden = (W) Is this address correct? (W)

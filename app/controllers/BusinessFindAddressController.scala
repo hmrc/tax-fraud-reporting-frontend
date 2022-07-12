@@ -19,8 +19,6 @@ package controllers
 import controllers.actions._
 import controllers.helper.EventHelper
 import forms.FindAddressFormProvider
-
-import javax.inject.Inject
 import models.{Index, Mode}
 import navigation.Navigator
 import pages.BusinessFindAddressPage
@@ -30,6 +28,7 @@ import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.BusinessFindAddressView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class BusinessFindAddressController @Inject() (

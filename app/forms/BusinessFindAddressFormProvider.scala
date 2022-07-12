@@ -16,17 +16,27 @@
 
 package forms
 
-import javax.inject.Inject
-
 import forms.mappings.Mappings
+import models.FindAddress
 import play.api.data.Form
+import play.api.data.Forms.{mapping, optional}
+
+import javax.inject.Inject
 
 class BusinessFindAddressFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[String] =
+  def apply(): Form[FindAddress] = Form(
+    mapping(
+      "Postcode" -> text("businessFindAddress.error.required").verifying(postcodeConstraint)
+        .verifying(maxLength(255, "businessFindAddress.error.length")),
+      "Property" -> optional(text().verifying(maxLength(255, "businessFindAddress.error.property.length")))
+    )(FindAddress.apply)(FindAddress.unapply)
+  )
+
+  /*def apply(): Form[String] =
     Form(
       "value" -> text("businessFindAddress.error.required")
         .verifying(maxLength(100, "businessFindAddress.error.length"))
-    )
+    )*/
 
 }

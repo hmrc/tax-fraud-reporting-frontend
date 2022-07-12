@@ -18,21 +18,14 @@ package forms
 
 import forms.mappings.Mappings
 import play.api.data.Form
-import uk.gov.hmrc.domain.Nino.isValid
 
 import javax.inject.Inject
 
 class IndividualNationalInsuranceNumberFormProvider @Inject() extends Mappings {
 
-  def removeWhitespace(string: String): String = string.split("\\s+").mkString
-
   def apply(): Form[String] =
     Form(
-      "value" -> text("individualNationalInsuranceNumber.error.required")
-        .verifying(
-          "individualNationalInsuranceNumber.error.invalid",
-          value => isValid(removeWhitespace(value.toUpperCase))
-        )
+      "value" -> text("individualNationalInsuranceNumber.error.required").verifying(ninoConstraint)
     )
 
 }

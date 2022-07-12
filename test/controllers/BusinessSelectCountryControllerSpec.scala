@@ -67,12 +67,13 @@ class BusinessSelectCountryControllerSpec extends SpecBase {
       running(application) {
         val request = FakeRequest(GET, businessSelectCountryRoute)
 
+        val isBusinessDetails = answers.isBusinessDetails(Index(0))
         val result         = route(application, request).value
         val countryJourney = if (isBusinessJourney) Business else Individual(true)
         val view           = application.injector.instanceOf[IndividualSelectCountryView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode, countryJourney)(
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode, countryJourney, true)(
           request,
           messages(application)
         ).toString
