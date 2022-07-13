@@ -1019,7 +1019,7 @@ individualAge.change.hidden = Oedran Bras
 
 businessInformationCheck.title = Beth ydych yn ei wybod am fusnes yr unigolyn?
 businessInformationCheck.heading = Beth ydych yn ei wybod am fusnes yr unigolyn?
-businessInformationCheck.hint = <p>Nid oes angen i chi fynd ar ôl gwybodaeth nad oes gennych eisoes.</p> <div class="govuk-hint">Select all that apply.</div>
+businessInformationCheck.hint = <p>Nid oes angen i chi fynd ar ôl gwybodaeth nad oes gennych eisoes.</p> <div class="govuk-hint">Dewiswch bob un sy’n berthnasol.</div>
 businessInformationCheck.name = Enw’r busnes
 businessInformationCheck.type = Math o fusnes
 businessInformationCheck.type.hint = Er enghraifft adeiladwr, siop trin gwallt neu fwyty.

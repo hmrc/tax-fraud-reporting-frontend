@@ -89,6 +89,8 @@ trait Constraints {
     Constraint {
       case date if date.isAfter(maximum) =>
         Invalid(errorKey, args: _*)
+      case date if date.equals(LocalDate.now()) =>
+        Invalid (errorKey, args: _*)
       case _ =>
         Valid
     }
