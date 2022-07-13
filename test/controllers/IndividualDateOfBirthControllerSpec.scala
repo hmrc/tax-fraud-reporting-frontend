@@ -52,7 +52,7 @@ class IndividualDateOfBirthControllerSpec extends SpecBase {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val validAnswer = LocalDate.now(ZoneOffset.UTC)
+  val validAnswer = LocalDate.now(ZoneOffset.UTC).minusDays(1)
 
   lazy val individualDateOfBirthRoute = routes.IndividualDateOfBirthController.onPageLoad(Index(0), NormalMode).url
 

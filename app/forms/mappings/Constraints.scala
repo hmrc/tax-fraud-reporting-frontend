@@ -18,10 +18,9 @@ package forms.mappings
 
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import org.apache.commons.validator.routines.EmailValidator
-
-import java.time.LocalDate
 import play.api.data.validation.{Constraint, Invalid, Valid}
 
+import java.time.{LocalDate, ZoneOffset}
 import scala.math.BigDecimal.RoundingMode
 import scala.util.{Success, Try}
 
@@ -89,7 +88,7 @@ trait Constraints {
     Constraint {
       case date if date.isAfter(maximum) =>
         Invalid(errorKey, args: _*)
-      case date if date.equals(LocalDate.now()) =>
+      case date if date.equals(LocalDate.now(ZoneOffset.UTC)) =>
         Invalid (errorKey, args: _*)
       case _ =>
         Valid
