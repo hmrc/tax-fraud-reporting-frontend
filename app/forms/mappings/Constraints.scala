@@ -89,7 +89,7 @@ trait Constraints {
       case date if date.isAfter(maximum) =>
         Invalid(errorKey, args: _*)
       case date if date.equals(LocalDate.now(ZoneOffset.UTC)) =>
-        Invalid (errorKey, args: _*)
+        Invalid(errorKey, args: _*)
       case _ =>
         Valid
     }
