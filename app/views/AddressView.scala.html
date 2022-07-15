@@ -84,7 +84,7 @@
 		@govukInput(
 			InputViewModel(
 				field = form("postCode"),
-				label = LabelViewModel(messages("address.postCode"))
+				label = LabelViewModel(if(countryCode=="gb"){messages("address.postCode")}else{messages("findAddress.nonUK.Postal")})
 			)
 		)
 

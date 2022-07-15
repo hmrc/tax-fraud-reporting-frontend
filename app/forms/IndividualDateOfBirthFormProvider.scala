@@ -25,6 +25,8 @@ import javax.inject.Inject
 
 class IndividualDateOfBirthFormProvider @Inject() extends Mappings {
 
+  val minDateLimit = LocalDate.parse("1900-01-01")
+
   def apply()(implicit messages: Messages): Form[LocalDate] =
     Form(
       "value" -> localDate(
@@ -33,6 +35,7 @@ class IndividualDateOfBirthFormProvider @Inject() extends Mappings {
         twoRequiredKey = "individualDateOfBirth.error.required.two",
         requiredKey = "individualDateOfBirth.error.required"
       ).verifying(maxDate(LocalDate.now(ZoneOffset.UTC), "individualDateOfBirth.error.futureDate"))
+        .verifying(minDate(minDateLimit, "individualDateOfBirth.error.pastDate", minDateLimit))
     )
 
 }

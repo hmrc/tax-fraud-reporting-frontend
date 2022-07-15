@@ -37,8 +37,10 @@ class IndividualSelectCountryControllerSpec extends SpecBase {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new IndividualSelectCountryFormProvider(mock[Configuration])
-  val form         = formProvider()
+  val formProvider              = new IndividualSelectCountryFormProvider(mock[Configuration])
+  val form                      = formProvider()
+  private val answers           = emptyUserAnswers
+  private val isBusinessDetails = answers.isBusinessDetails(Index(0))
 
   lazy val individualSelectCountryRoute = routes.IndividualSelectCountryController.onPageLoad(Index(0), NormalMode).url
 
@@ -56,7 +58,7 @@ class IndividualSelectCountryControllerSpec extends SpecBase {
         val view = application.injector.instanceOf[IndividualSelectCountryView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, Index(0), NormalMode, Individual(false))(
+        contentAsString(result) mustEqual view(form, Index(0), NormalMode, Individual(false), isBusinessDetails)(
           request,
           messages(application)
         ).toString
@@ -77,10 +79,13 @@ class IndividualSelectCountryControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill("answer"), Index(0), NormalMode, Individual(false))(
-          request,
-          messages(application)
-        ).toString
+        contentAsString(result) mustEqual view(
+          form.fill("answer"),
+          Index(0),
+          NormalMode,
+          Individual(false),
+          isBusinessDetails
+        )(request, messages(application)).toString
       }
     }
 
@@ -110,7 +115,7 @@ class IndividualSelectCountryControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, Individual(false))(
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, Individual(false), isBusinessDetails)(
           request,
           messages(application)
         ).toString
@@ -133,7 +138,7 @@ class IndividualSelectCountryControllerSpec extends SpecBase {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, Individual(false))(
+        contentAsString(result) mustEqual view(boundForm, Index(0), NormalMode, Individual(false), isBusinessDetails)(
           request,
           messages(application)
         ).toString

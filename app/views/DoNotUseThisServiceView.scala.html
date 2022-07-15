@@ -24,6 +24,24 @@
 @layout(pageTitle = titleNoForm(messages("doNotUseThisService.title"))) {
 
     <h1 class="govuk-heading-xl" data-department="@department">@messages("doNotUseThisService.heading")</h1>
-    <p>@Html(messages(s"doNotUseThisService.p1.$department"))</p>
-    <p>@Html(messages(s"doNotUseThisService.p2.$department"))</p>
+    @if(department==s"minimum-wages"){
+        <p>@Html(messages(s"doNotUseThisService.p1.$department"))</p>
+    } else {
+        <p>@Html(messages(s"doNotUseThisService.p1.$department"))</p>
+        <p>@Html(messages(s"doNotUseThisService.p2.$department"))</p>
+    }
+
+    @if(department==s"activity-related-to-drugs"){
+        <ul class="govuk-list govuk-list--bullet" >
+            <li>@Html(messages(s"doNotUseThisService.p3.$department"))</li>
+            <li>@Html(messages(s"doNotUseThisService.p4.$department"))</li>
+        </ul>
+    }
+
+    @if(department==s"human-trafficking"){
+    <ul class="govuk-list govuk-list--bullet" >
+        <li>@Html(messages(s"doNotUseThisService.p3.$department"))</li>
+        <li>@Html(messages(s"doNotUseThisService.p4.$department"))</li>
+    </ul>
+    }
 }

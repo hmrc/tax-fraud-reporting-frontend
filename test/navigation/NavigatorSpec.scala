@@ -929,18 +929,6 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
         ) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
       }
 
-      "to the add another page for the answer don't know" in {
-        val answers = UserAnswers("id").set(
-          IndividualBusinessDetailsPage(Index(0)),
-          IndividualBusinessDetails.DontKnow
-        ).success.value
-        navigator.nextPage(
-          IndividualBusinessDetailsPage(Index(0)),
-          NormalMode,
-          answers
-        ) mustBe routes.AddAnotherPersonController.onPageLoad(NormalMode)
-      }
-
       "to the journey recovery controller if there is no individual have business details set" in {
         navigator.nextPage(
           IndividualBusinessDetailsPage(Index(0)),
@@ -1646,7 +1634,7 @@ class NavigatorSpec extends SpecBase with ScalaCheckPropertyChecks {
 
         "Business details - changed to No/Don't know" in {
           import IndividualBusinessDetails._
-          forAll(Gen.oneOf(No, DontKnow)) { answer =>
+          forAll(IndividualBusinessDetails.No) { answer =>
             val answers =
               UserAnswers("id").set(IndividualBusinessDetailsPage(Index(0)), answer).success.value
             navigator.nextPage(
