@@ -1350,6 +1350,7 @@ businessConfirmAddress.change.hidden = A yw’r cyfeiriad hwn yn gywir?
 findAddress.title = Dod o hyd i gyfeiriad
 findAddress.heading = Dod o hyd i gyfeiriad
 findAddress.postcode = Cod post
+findAddress.nonUK.Postal = Cod post (dewisol)
 findAddress.manually = Nodwch y cyfeiriad â llaw
 findAddress.property = Enw neu rif yr eiddo (dewisol)
 findAddress.property.hint = Er enghraifft, Tegfan, 116 neu Fflat 37a
