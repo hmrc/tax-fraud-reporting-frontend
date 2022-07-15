@@ -135,7 +135,6 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case BusinessSelectCountryPage(index)    => businessSelectCountryPageRoutes(_, index, UpdateIndividualMode)
     case ConfirmAddressPage(index)           => confirmAddressCheckModeRoutes(_, index, UpdateIndividualMode)
     case BusinessConfirmAddressPage(index)   => businessConfirmAddressCheckModeRoutes(_, index, UpdateIndividualMode)
-    case FindAddressPage(index)              => _ => routes.ChooseYourAddressController.onPageLoad(index, UpdateIndividualMode)
     case BusinessFindAddressPage(index) =>
       _ => routes.BusinessChooseYourAddressController.onPageLoad(index, UpdateIndividualMode)
     case p: IndexedConfirmationPage =>
