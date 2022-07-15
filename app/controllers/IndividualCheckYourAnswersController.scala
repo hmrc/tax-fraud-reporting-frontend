@@ -16,7 +16,6 @@
 
 package controllers
 
-import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
 import controllers.helper.EventHelper
 import models.{Index, IndividualBusinessDetails, Mode}
@@ -28,6 +27,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import viewmodels.checkAnswers._
 import viewmodels.govuk.summarylist._
 import views.html.IndividualCheckYourAnswersView
+import javax.inject.Inject
 
 class IndividualCheckYourAnswersController @Inject() (
   override val messagesApi: MessagesApi,

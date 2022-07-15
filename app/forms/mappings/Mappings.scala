@@ -69,8 +69,8 @@ trait Mappings extends Formatters with Constraints {
   ): FieldMapping[BigDecimal] =
     of(currencyFormatter(requiredKey, nonNumericKey, args))
 
-  def hasInvalidChars(chars: String)      = !chars.replaceAll("\\s", "").forall(_.isLetterOrDigit)
-  def isInvalidPostcode(postcode: String) = !Postcode.cleanupPostcode(postcode).isDefined
+  def hasInvalidChars(chars: String): Boolean = !chars.replaceAll("\\s", "").forall(_.isLetterOrDigit)
+  def isInvalidPostcode(postcode: String): Boolean = Postcode.cleanupPostcode(postcode).isEmpty
 
   def postcodeConstraint: Constraint[String] = Constraint[String](Some("constraints.postcode"), Seq.empty)({
     case chars if hasInvalidChars(chars) =>
