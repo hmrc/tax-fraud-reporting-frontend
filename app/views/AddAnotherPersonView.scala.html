@@ -64,7 +64,6 @@
         </div>
 
         @if(numberOfNominals > 4) {
-            <div class="govuk-inset-text"><p>@messages("addAnotherPerson.reached.maximum")</p></div>
 
             <a href="@routes.ActivitySourceOfInformationController.onPageLoad(mode)" class="govuk-button" id="continue-button">
                 @messages("site.continue")

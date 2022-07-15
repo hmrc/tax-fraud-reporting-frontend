@@ -140,7 +140,6 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
       _ => routes.BusinessChooseYourAddressController.onPageLoad(index, UpdateIndividualMode)
     case p: IndexedConfirmationPage =>
       _ => routes.IndividualCheckYourAnswersController.onPageLoad(p.index, UpdateIndividualMode)
-    //routes.AddAnotherPersonController.onPageLoad(NormalMode)
   }
 
   private def individualDateFormatPageUpdateRoutes(answers: UserAnswers, index: Index): Call =

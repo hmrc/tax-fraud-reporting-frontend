@@ -17,29 +17,30 @@
 package forms
 
 import forms.behaviours.StringFieldBehaviours
+import org.scalacheck.Gen
+import play.api.Configuration
 import play.api.data.FormError
 
-class BusinessFindAddressFormProviderSpec extends StringFieldBehaviours {
+class BusinessSelectCountryFormProviderSpec(configuration: Configuration) extends StringFieldBehaviours {
 
-  val requiredKey = "businessFindAddress.error.required"
-  val lengthKey   = "businessFindAddress.error.length"
-  val maxLength   = 100
+  val countries   = configuration.get[Seq[String]]("countries")
+  val requiredKey = "businessSelectCountry.error.required"
 
-  val form = new BusinessFindAddressFormProvider()()
+  val form = new BusinessSelectCountryFormProvider(Configuration.apply())()
 
   ".value" - {
 
     val fieldName = "value"
 
-    behave like fieldThatBindsValidData(form, fieldName, stringsWithMaxLength(maxLength))
-
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
+    behave like fieldThatBindsValidData(form, fieldName, Gen.oneOf("country", "gb"))
 
     behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
+
+    "must fail to bind an business country name" in {
+      val result = form.bind(Map(fieldName -> "abc"))(fieldName)
+      result.errors mustEqual Seq(FormError(fieldName, "businessSelectCountry.error.required"))
+    }
+
   }
+
 }

@@ -52,23 +52,25 @@ class IndividualSelectCountryController @Inject() (
   def onPageLoad(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       eventHelper.pageLoadEvent(request.path)
+      val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
       val preparedForm = request.userAnswers.get(IndividualSelectCountryPage(index)) match {
         case None        => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, index, mode, Individual(false)))
+      Ok(view(preparedForm, index, mode, Individual(false), isBusinessDetails))
   }
 
   def onSubmit(index: Index, mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+      val isBusinessDetails = request.userAnswers.isBusinessDetails(index)
       form.bindFromRequest().fold(
         formWithErrors => {
           eventHelper.formErrorEvent(
             request.path,
             messagesApi.preferred(List(Lang("en")))(formWithErrors.errors.head.message)
           )
-          Future.successful(BadRequest(view(formWithErrors, index, mode, Individual(false))))
+          Future.successful(BadRequest(view(formWithErrors, index, mode, Individual(false), isBusinessDetails)))
         },
         country =>
           for {

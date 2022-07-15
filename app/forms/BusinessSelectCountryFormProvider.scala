@@ -16,17 +16,17 @@
 
 package forms
 
+import play.api.Configuration
+import play.api.data.Form
+import play.api.data.Forms.text
+
 import javax.inject.Inject
 
-import forms.mappings.Mappings
-import play.api.data.Form
+class BusinessSelectCountryFormProvider @Inject() (configuration: Configuration) {
 
-class BusinessFindAddressFormProvider @Inject() extends Mappings {
+  private val countries = configuration.get[Seq[String]]("countries")
 
   def apply(): Form[String] =
-    Form(
-      "value" -> text("businessFindAddress.error.required")
-        .verifying(maxLength(100, "businessFindAddress.error.length"))
-    )
+    Form("country" -> text.verifying("businessSelectCountry.error.required", countries.contains _))
 
 }

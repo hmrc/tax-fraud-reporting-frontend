@@ -33,7 +33,7 @@
         configuration: Configuration
 )
 
-@(form: Form[String], index: Index, mode: Mode, countryJourney: CountryJourneyPart)(implicit request: Request[_], messages: Messages)
+@(form: Form[String], index: Index, mode: Mode, countryJourney: CountryJourneyPart, isBusinessDetails: Boolean)(implicit request: Request[_], messages: Messages)
 
 @countries = @{ configuration.get[Seq[String]]("countries") }
 
@@ -46,7 +46,13 @@
     }
 }
 
-@layout(pageTitle = title(form, messages("individualSelectCountry.title"))) {
+@layout(pageTitle = title(form, messages(
+        if(countryJourney != Business) {
+            if(isBusinessDetails)"businessSelectCountry.title" else "individualSelectCountry.title"
+            } else {
+                "businessSelectCountry.title"
+            } ))
+) {
 
     @formHelper(action = countryJourney.countrySubmit( index, mode), 'autoComplete -> "off") {
 
@@ -62,7 +68,11 @@
             isPageHint = false,
             hint = None,
             isPageHeading = true,
-            label = "individualSelectCountry.heading",
+            label = if(countryJourney != Business){
+                        if(isBusinessDetails)"businessSelectCountry.heading" else "individualSelectCountry.heading"
+                        } else
+                            {"businessSelectCountry.heading"
+                        },
             options = countries map AutocompleteOption.get(messages, "country")
         )
 
