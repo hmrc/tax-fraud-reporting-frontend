@@ -43,7 +43,7 @@ error.integer     = Rhowch ateb mewn rhifau cyfan
 error.non_numeric = Rhowch werth gan ddefnyddio rhifau yn unig
 error.number = Nodwch rif dilys
 error.required = Nodwch y math o weithgaredd rydych yn rhoi gwybod i CThEM amdano
-error.length = Rhaid i'r mewnbwn hwn fod yn 255 nod neu lai.
+error.length = Rhaid i'r mewnbwn hwn fod yn 255 nod neu lai
 error.summary.title = Mae problem wedi codi
 
 error.addressLines.required = Nodwch o leiaf un llinell cyfeiriad neu dref
@@ -337,7 +337,7 @@ activityType.title = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
 activityType.heading = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
 activityType.hint = Defnyddiwch eiriau allweddol sy’n gysylltiedig â’r gweithgaredd er mwyn awgrymu categorïau.
 activityType.checkYourAnswersLabel = Math o weithgaredd
-activityType.error.required = Nodwch y math o weithgaredd.
+activityType.error.required = Nodwch y math o weithgaredd
 activityType.change.hidden = Math o weithgaredd
 
 # Any non-HMRC activities here are associated with their corresponding department
@@ -730,7 +730,7 @@ activityType.synonym.fake           = Ffug
 activityType.title = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
 activityType.heading = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
 activityType.checkYourAnswersLabel = Math o weithgaredd
-activityType.error.required = Nodwch y math o weithgaredd.
+activityType.error.required = Nodwch y math o weithgaredd
 activityType.change.hidden = Math o weithgaredd
 
 # tobacco
@@ -882,16 +882,16 @@ doNotUseThisService.p4.activity-related-to-drugs = Ffonio 101 os nad yw’n argy
 doNotUseThisService.list1 = Ffonio 999 neu 112 os yw’n argyfwng
 doNotUseThisService.list2 = Ffonio 101 os nad yw’n argyfwng
 doNotUseThisService.p1.smuggling = Mae’r Swyddfa Gartref yn gyfrifol am droseddau wrth y ffin a rheolaethau tollau ar gyfer pobl a nwyddau sy’n dod i mewn i’r DU.
-doNotUseThisService.p2.smuggling = Dylech <a class="govuk-link" target="_blank" href="https://www.gov.uk/report-smuggling">roi gwybod i’r Swyddfa Gartref am smyglo (yn agor tab newydd)</a>.
+doNotUseThisService.p2.smuggling = Dylech <a class="govuk-link" target="_blank" href="https://www.gov.uk/report-smuggling" rel="noreferrer noopener">roi gwybod i’r Swyddfa Gartref am smyglo (yn agor tab newydd)</a>.
 doNotUseThisService.p1.benefit-and-universal-credit = Ni all CThEM ymchwilio i unrhyw dwyll budd-daliadau ar wahân i Fudd-dal Plant neu gredydau treth.
-doNotUseThisService.p2.benefit-and-universal-credit = Dylech <a class="govuk-link" target="_blank" class="govuk-link" href="https://www.gov.uk/report-benefit-fraud">roi gwybod i’r Adran Gwaith a Phensiynau am bob twyll arall o ran budd-daliadau (yn agor tab newydd)</a>.
+doNotUseThisService.p2.benefit-and-universal-credit = Dylech <a class="govuk-link" target="_blank" class="govuk-link" href="https://www.gov.uk/report-benefit-fraud" rel="noreferrer noopener">roi gwybod i’r Adran Gwaith a Phensiynau am bob twyll arall o ran budd-daliadau (yn agor tab newydd)</a>.
 doNotUseThisService.p1.human-trafficking = Ni all CThEM ymchwilio i fasnachu pobl.
 doNotUseThisService.p2.human-trafficking = Dylech ffonio’r heddlu i roi gwybod am fasnachu pobl. Gallwch wneud y canlynol:
 doNotUseThisService.p3.human-trafficking = Ffonio 999 neu 112 os yw’n argyfwng
 doNotUseThisService.p4.human-trafficking = Ffonio 101 os nad yw’n argyfwng
 doNotUseThisService.p1.immigration-border-crime = Mae’r Swyddfa Gartref yn gyfrifol am droseddau wrth y ffin a rheolaethau tollau ar gyfer pobl a nwyddau sy’n dod i mewn i’r DU.
-doNotUseThisService.p2.immigration-border-crime = Dylech <a class="govuk-link" href="https://www.gov.uk/report-immigration-crime"> roi gwybod i’r Swyddfa Gartref am fewnfudo neu droseddau wrth y ffin  (yn agor tab newydd)</a>.
-doNotUseThisService.p1.minimum-wages = I wneud cwyn am yr Isafswm Cyflog Cenedlaethol neu hawliau cyflog a gwaith, <a class="govuk-link" target="_blank" href="https://www.gov.uk/government/publications/pay-and-work-rights-complaints">defnyddiwch y gwasanaeth ar-lein hwn (yn agor tab newydd)</a>.
+doNotUseThisService.p2.immigration-border-crime = Dylech <a class="govuk-link" href="https://www.gov.uk/report-immigration-crime" rel="noreferrer noopener"> roi gwybod i’r Swyddfa Gartref am fewnfudo neu droseddau wrth y ffin  (yn agor tab newydd)</a>.
+doNotUseThisService.p1.minimum-wages = I wneud cwyn am yr Isafswm Cyflog Cenedlaethol neu hawliau cyflog a gwaith, <a class="govuk-link" target="_blank" href="https://www.gov.uk/government/publications/pay-and-work-rights-complaints" rel="noreferrer noopener">defnyddiwch y gwasanaeth ar-lein hwn (yn agor tab newydd)</a>.
 
 individualInformation.title = Beth ydych yn ei wybod am yr unigolyn?
 individualInformation.heading = Beth ydych yn ei wybod am yr unigolyn?
@@ -913,10 +913,10 @@ individualName.middleName = Enwau canol (dweisol)
 individualName.lastName = Enw olaf (dweisol)
 individualName.aliases = Ffugenwau neu lysenwau (dweisol)
 individualName.checkYourAnswersLabel = Enw
-individualName.error.firstName.length = Mae’n rhaid i enwau cyntaf fod yn 255 o gymeriadau neu lai.
-individualName.error.middleName.length = Mae’n rhaid i enwau canol fod yn 255 o gymeriadau neu lai.
-individualName.error.lastName.length = Mae’n rhaid i enwau olaf fod yn 255 o gymeriadau neu lai.
-individualName.error.aliases.length = Mae’n rhaid i ffugenwau neu lysenwau fod yn 255 o gymeriadau neu lai.
+individualName.error.firstName.length = Mae’n rhaid i enwau cyntaf fod yn 255 o gymeriadau neu lai
+individualName.error.middleName.length = Mae’n rhaid i enwau canol fod yn 255 o gymeriadau neu lai
+individualName.error.lastName.length = Mae’n rhaid i enwau olaf fod yn 255 o gymeriadau neu lai
+individualName.error.aliases.length = Mae’n rhaid i ffugenwau neu lysenwau fod yn 255 o gymeriadau neu lai
 individualName.firstName.change.hidden = Enw cyntaf
 individualName.middleName.change.hidden = Enwau canol
 individualName.lastName.change.hidden = Enw olaf
@@ -1034,8 +1034,8 @@ businessInformationCheck.change.hidden = Beth ydych yn ei wybod am y busnes?
 businessName.title = Beth yw enw’r busnes?
 businessName.heading = Beth yw enw’r busnes?
 businessName.checkYourAnswersLabel = EN’r busnes
-businessName.error.required = Nodwch enw''r busnes.
-businessName.error.length = Mae’n rhaid i enwau busnes fod yn 255 o gymeriadau neu lai.
+businessName.error.required = Nodwch enw''r busnes
+businessName.error.length = Mae’n rhaid i enwau busnes fod yn 255 o gymeriadau neu lai
 businessName.change.hidden = EN’r busnes
 
 descriptionActivity.title = Disgrifiwch y gweithgaredd rydych yn rhoi gwybod amdano
@@ -1095,7 +1095,6 @@ referenceNumbers.cya.cturn = CTUTR
 
 approximateValue.title = Beth yw cyfanswm gwerth y gweithgaredd?
 approximateValue.heading = ''{0}'', beth yw cyfanswm gwerth amcangyfrifedig y gweithgaredd?
-approximateValue.p1 = Nid oes angen union ffigur ar CThEM, bydd amcangyfrif yn dal i fod yn ddefnyddiol.
 approximateValue.hint = Nodwch y cyfanswm gwerth bras, mewn punnoedd.
 approximateValue.suffix = £
 approximateValue.checkYourAnswersLabel = Swm y gweithgaredd (£)
@@ -1112,8 +1111,8 @@ businessContactDetails.landlineNumber = Rhif ffôn llinell dir (dweisol)
 businessContactDetails.mobileNumber = Rhif ffôn symudol (dweisol)
 businessContactDetails.email = Cyfeiriad e-bost (dweisol)
 businessContactDetails.checkYourAnswersLabel = Manylion cyswllt y busnes
-businessContactDetails.error.landlineNumber.invalid = Nodwch rif ffôn llinell dir, megis 01632 960 001.
-businessContactDetails.error.mobileNumber.invalid = Nodwch rif ffôn symudol, megis 07700 900 982 neu +44 7700 900 982.
+businessContactDetails.error.landlineNumber.invalid = Nodwch rif ffôn llinell dir, megis 01632 960 001
+businessContactDetails.error.mobileNumber.invalid = Nodwch rif ffôn symudol, megis 07700 900 982 neu +44 7700 900 982
 businessContactDetails.error.email.length = Mae’n rhaid i gyfeiriadau e-bost fod yn {0} o gymeriadau neu lai
 businessContactDetails.error.email.invalid = Nodwch gyfeiriad e-bost yn y fformat cywir, megis enw@enghraifft.com
 businessContactDetails.change.hidden = Manylion cyswllt y busnes
@@ -1167,7 +1166,7 @@ activityTimePeriod.change.hidden = Cyfnod dechrau’r gweithgaredd
 
 howManyPeopleKnow.title = Faint o bobl eraill sy’n gwybod am y gweithgaredd?
 howManyPeopleKnow.heading = Faint o bobl eraill sy’n gwybod am y gweithgaredd?
-howManyPeopleKnow.hint = Dewiswch nifer yr unigolion sy’n gwybod am y gweithgaredd, ar wahân i chi a’r unigolion sy’n cymryd rhan.
+howManyPeopleKnow.hint = Nid yw hyn yn eich cynnwys chi na’r unigolion dan sylw.
 howManyPeopleKnow.myselfAndIndividual = Dim ond fi a’r unigolyn/unigolion sy’n cymryd rhan yn y gweithgaredd sy’n gwybod
 howManyPeopleKnow.oneToFiveIndividuals = 1 i 5 unigolyn
 howManyPeopleKnow.sixToTenIndividuals = 6 i 10 unigolyn
