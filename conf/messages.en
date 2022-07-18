@@ -43,7 +43,7 @@ error.integer = Give an answer in whole numbers
 error.non_numeric = Give a value using only numbers
 error.number = Please enter a valid number
 error.required = Enter the type of activity you are reporting to HMRC
-error.length = This input must be 255 characters or fewer.
+error.length = This input must be 255 characters or fewer
 error.summary.title = There is a problem
 
 error.addressLines.required = Enter at least one address line or a town
@@ -347,7 +347,7 @@ activityType.title = What type of activity are you reporting to HMRC?
 activityType.heading = What type of activity are you reporting to HMRC?
 activityType.hint = Use keywords related to activity to suggest categories.
 activityType.checkYourAnswersLabel = Activity type
-activityType.error.required = Enter the type of activity.
+activityType.error.required = Enter the type of activity
 activityType.change.hidden = Activity Type
 
 # Any non-HMRC activities here are associated with their corresponding department
@@ -778,16 +778,16 @@ doNotUseThisService.p2.activity-related-to-drugs = You should call the police to
 doNotUseThisService.p3.activity-related-to-drugs = Call 999 or 112 if is an emergency
 doNotUseThisService.p4.activity-related-to-drugs = Call 101 if it is not an emergency
 doNotUseThisService.p1.smuggling = The Home Office is responsible for border crime, and customs controls for people and goods entering the UK.
-doNotUseThisService.p2.smuggling = You should <a class="govuk-link" target="_blank" href="https://www.gov.uk/report-smuggling">report smuggling to the Home Office (opens in a new tab)</a>.
+doNotUseThisService.p2.smuggling = You should <a class="govuk-link" target="_blank" href="https://www.gov.uk/report-smuggling" rel="noreferrer noopener">report smuggling to the Home Office (opens in a new tab)</a>.
 doNotUseThisService.p1.benefit-and-universal-credit = HMRC cannot investigate any benefit fraud other than with Child Benefit or tax credits.
-doNotUseThisService.p2.benefit-and-universal-credit = You should <a class="govuk-link" target="_blank" href="https://www.gov.uk/report-benefit-fraud"> report all other benefit fraud to the Department of Work and Pensions (opens in a new tab)</a>.
+doNotUseThisService.p2.benefit-and-universal-credit = You should <a class="govuk-link" target="_blank" href="https://www.gov.uk/report-benefit-fraud" rel="noreferrer noopener"> report all other benefit fraud to the Department of Work and Pensions (opens in a new tab)</a>.
 doNotUseThisService.p1.human-trafficking = HMRC cannot investigate human trafficking.
 doNotUseThisService.p2.human-trafficking = You should call the police to report human trafficking. You can:
 doNotUseThisService.p3.human-trafficking = Call 999 or 112 if is an emergency
 doNotUseThisService.p4.human-trafficking = Call 101 if it is not an emergency
 doNotUseThisService.p1.immigration-border-crime = The Home Office is responsible for border crime, and customs controls for people and goods entering the UK.
-doNotUseThisService.p2.immigration-border-crime = You should <a class="govuk-link" target="_blank" href="https://www.gov.uk/report-immigration-crime">report immigration or border crime to the Home Office (opens in a new tab)</a>.
-doNotUseThisService.p1.minimum-wages = To make a complaint about National Minimum Wage or pay and work rights, <a class="govuk-link" target="_blank" href="https://www.gov.uk/government/publications/pay-and-work-rights-complaints">use this online service (opens in a new tab)</a>.
+doNotUseThisService.p2.immigration-border-crime = You should <a class="govuk-link" target="_blank" href="https://www.gov.uk/report-immigration-crime" rel="noreferrer noopener">report immigration or border crime to the Home Office (opens in a new tab)</a>.
+doNotUseThisService.p1.minimum-wages = To make a complaint about National Minimum Wage or pay and work rights, <a class="govuk-link" target="_blank" href="https://www.gov.uk/government/publications/pay-and-work-rights-complaints" rel="noreferrer noopener">use this online service (opens in a new tab)</a>.
 
 individualInformation.title = What do you know about the individual?
 individualInformation.heading = What do you know about the individual?
@@ -809,10 +809,10 @@ individualName.middleName = Middle names (optional)
 individualName.lastName = Last name (optional)
 individualName.aliases = Aliases or nicknames (optional)
 individualName.checkYourAnswersLabel = Name
-individualName.error.firstName.length = First names must be 255 characters or fewer.
-individualName.error.middleName.length = Middle names must be 255 characters or fewer.
-individualName.error.lastName.length = Last names must be 255 characters or fewer.
-individualName.error.aliases.length = Aliases or nicknames must be 255 characters or fewer.
+individualName.error.firstName.length = First names must be 255 characters or fewer
+individualName.error.middleName.length = Middle names must be 255 characters or fewer
+individualName.error.lastName.length = Last names must be 255 characters or fewer
+individualName.error.aliases.length = Aliases or nicknames must be 255 characters or fewer
 individualName.change.hidden = Individual''s name details
 
 individualContactDetails.title = What are the individual''s contact details?
@@ -837,7 +837,7 @@ individualNationalInsuranceNumber.checkYourAnswersLabel = National Insurance num
 individualNationalInsuranceNumber.error.required = Enter the individual''s National Insurance number
 individualNationalInsuranceNumber.error.invalid = Enter the individual''s National Insurance number in the correct format, like QQ123456C
 individualNationalInsuranceNumber.error.invalidCharacter = The individual’s National Insurance number must only include the letters a to z and numbers 0 to 9
-individualNationalInsuranceNumber.error.length = National Insurance numbers must be 9 characters or fewer.
+individualNationalInsuranceNumber.error.length = National Insurance numbers must be 9 characters or fewer
 individualNationalInsuranceNumber.change.hidden = National Insurance number
 
 individualConnection.title = How do you know the individual?
@@ -921,7 +921,7 @@ businessName.title = What is the business''s name?
 businessName.heading = What is the business''s name?
 businessName.checkYourAnswersLabel = Business name
 businessName.error.required = Enter the business''s name
-businessName.error.length = Business names must be {0} characters or fewer.
+businessName.error.length = Business names must be {0} characters or fewer
 businessName.change.hidden = Business name
 
 descriptionActivity.title = Describe the activity you are reporting
@@ -997,8 +997,8 @@ businessContactDetails.mobileNumber = Mobile number (optional)
 businessContactDetails.email = Email address (optional)
 businessContactDetails.checkYourAnswersLabel = Business contact details
 businessContactDetails.error.required = Enter businessContactDetails
-businessContactDetails.error.landlineNumber.invalid = Enter a landline number, like 01632 960 001.
-businessContactDetails.error.mobileNumber.invalid = Enter a mobile number, like 07700 900 982 or +44 808 157 0192.
+businessContactDetails.error.landlineNumber.invalid = Enter a landline number, like 01632 960 001
+businessContactDetails.error.mobileNumber.invalid = Enter a mobile number, like 07700 900 982 or +44 808 157 0192
 businessContactDetails.error.email.length = Email address must be {0} characters or fewer
 businessContactDetails.error.email.invalid = Enter an email address in the correct format, like name@example.com
 businessContactDetails.change.hidden = Business contact details
@@ -1049,7 +1049,7 @@ individualAddress.change.hidden = Home address
 
 howManyPeopleKnow.title = How many other people know about the activity?
 howManyPeopleKnow.heading = How many other people know about the activity?
-howManyPeopleKnow.hint = Select the number of individuals that know about the activity in addition to yourself and the individuals involved.
+howManyPeopleKnow.hint = This does not include you or the individuals involved.
 howManyPeopleKnow.myselfAndIndividual = Only myself and the individuals involved know
 howManyPeopleKnow.oneToFiveIndividuals = 1 to 5 individuals
 howManyPeopleKnow.sixToTenIndividuals = 6 to 10 individuals
