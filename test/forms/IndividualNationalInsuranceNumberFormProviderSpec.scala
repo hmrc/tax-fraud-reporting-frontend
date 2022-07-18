@@ -38,7 +38,6 @@ class IndividualNationalInsuranceNumberFormProviderSpec extends StringFieldBehav
     behave like mandatoryField(form, fieldName, requiredError = FormError(fieldName, requiredKey))
 
     "must fail to bind an with empty national insurance number" in {
-      val result = fieldName -> fieldName.isEmpty
       FormError(fieldName, "individualNationalInsuranceNumber.error.required")
     }
 

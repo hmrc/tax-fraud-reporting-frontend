@@ -135,7 +135,6 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     case BusinessSelectCountryPage(index)    => businessSelectCountryPageRoutes(_, index, UpdateIndividualMode)
     case ConfirmAddressPage(index)           => confirmAddressCheckModeRoutes(_, index, UpdateIndividualMode)
     case BusinessConfirmAddressPage(index)   => businessConfirmAddressCheckModeRoutes(_, index, UpdateIndividualMode)
-    case FindAddressPage(index)              => _ => routes.ChooseYourAddressController.onPageLoad(index, UpdateIndividualMode)
     case BusinessFindAddressPage(index) =>
       _ => routes.BusinessChooseYourAddressController.onPageLoad(index, UpdateIndividualMode)
     case p: IndexedConfirmationPage =>
@@ -151,7 +150,7 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
           routes.IndividualDateOfBirthController.onPageLoad(index, UpdateIndividualMode)
       case IndividualDateFormat.Age =>
         if (answers.get(IndividualAgePage(index)).isDefined)
-          routes.CheckYourAnswersController.onPageLoad
+          routes.IndividualCheckYourAnswersController.onPageLoad(index, UpdateIndividualMode)
         else
           routes.IndividualAgeController.onPageLoad(index, UpdateIndividualMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
@@ -469,12 +468,12 @@ class Navigator @Inject() (activityTypeService: ActivityTypeService) {
     answers.get(IndividualDateFormatPage(index)).map {
       case IndividualDateFormat.Date =>
         if (answers.get(IndividualDateOfBirthPage(index)).isDefined)
-          routes.CheckYourAnswersController.onPageLoad
+          routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
         else
           routes.IndividualDateOfBirthController.onPageLoad(index, CheckMode)
       case IndividualDateFormat.Age =>
         if (answers.get(IndividualAgePage(index)).isDefined)
-          routes.CheckYourAnswersController.onPageLoad
+          routes.IndividualCheckYourAnswersController.onPageLoad(index, CheckMode)
         else
           routes.IndividualAgeController.onPageLoad(index, CheckMode)
     }.getOrElse(routes.CheckYourAnswersController.onPageLoad)

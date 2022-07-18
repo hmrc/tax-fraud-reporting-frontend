@@ -56,7 +56,7 @@ class ChooseYourAddressController @Inject() (
     implicit request =>
       eventHelper.pageLoadEvent(request.path)
       request.userAnswers.get(FindAddressPage(index)) match {
-        case None => Future.successful(Redirect(routes.JourneyRecoveryController.onPageLoad()))
+        case None => Future.successful(Redirect(routes.IndividualAddressController.onPageLoad(index, mode)))
         case Some(value) =>
           addressLookUpHelper.addressLookUp(value) map {
             case ResultsList(addresses) =>
