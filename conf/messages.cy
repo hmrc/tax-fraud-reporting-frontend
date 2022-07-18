@@ -985,6 +985,7 @@ individualBusinessDetails.change.hidden = Mae gan yr unigolyn fanylion busnes
 
 dateFormat.title = Dewiswch fformat i nodi oedran yr unigolyn
 dateFormat.heading = Dewiswch fformat i nodi oedran yr unigolyn
+dateFormat.hint = Sut ydych chi am nodi oedran yr unigolyn?
 dateFormat.date = Dyddiad geni
 dateFormat.age = Oedran Bras
 dateFormat.checkYourAnswersLabel = Fformat oedran

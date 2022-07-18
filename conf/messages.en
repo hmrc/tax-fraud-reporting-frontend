@@ -874,6 +874,7 @@ individualBusinessDetails.change.hidden = Individual has business details
 
 dateFormat.title = Select a format to enter the individual''s age
 dateFormat.heading = Select a format to enter the individual''s age
+dateFormat.hint = How do you want to enter the individual''s age?
 dateFormat.date = Date of birth
 dateFormat.age = Approximate age
 dateFormat.checkYourAnswersLabel = Age format
