@@ -979,9 +979,7 @@ referenceNumbers.change.hidden = Business reference numbers
 
 approximateValue.title = what is your estimated total value of the activity?
 approximateValue.heading = ''{0}'', how much is the estimated total value of the activity, in pounds?
-approximateValue.p1 = HMRC does not require an exact figure, an estimation will still be useful.
 approximateValue.suffix = £
-approximateValue.hint = Enter an estimated total value in pounds.
 approximateValue.checkYourAnswersLabel = Activity value (£)
 approximateValue.error.nonNumeric = The estimated total value of the activity must only include numbers 0 to 9 and two decimal places
 approximateValue.error.required = Enter the estimate total value of the activity, in pounds

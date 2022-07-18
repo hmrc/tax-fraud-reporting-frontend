@@ -1095,7 +1095,6 @@ referenceNumbers.cya.cturn = CTUTR
 
 approximateValue.title = Beth yw cyfanswm gwerth y gweithgaredd?
 approximateValue.heading = ''{0}'', beth yw cyfanswm gwerth amcangyfrifedig y gweithgaredd?
-approximateValue.p1 = Nid oes angen union ffigur ar CThEM, bydd amcangyfrif yn dal i fod yn ddefnyddiol.
 approximateValue.hint = Nodwch y cyfanswm gwerth bras, mewn punnoedd.
 approximateValue.suffix = £
 approximateValue.checkYourAnswersLabel = Swm y gweithgaredd (£)

@@ -28,10 +28,6 @@
 
 @(form: Form[_], mode: Mode, whatActivityHappened: Object)(implicit request: Request[_], messages: Messages)
 
-@contentHint = {
-    <p class="govuk-hint">@messages("approximateValue.p1")</p>
-    <p class="govuk-hint">@messages("approximateValue.hint")</p>
-}
 
 @layout(pageTitle = title(form, messages("approximateValue.heading",messages(s"whenActivityHappen.$whatActivityHappened")))) {
 
@@ -46,7 +42,6 @@
                 field = form("value"),
                 label = LabelViewModel(messages("approximateValue.heading", messages(s"whenActivityHappen.$whatActivityHappened")  )).asPageHeading(LabelSize.ExtraLarge)
             )
-            .withHint(HintViewModel(HtmlContent(contentHint)))
             .withInputType("text")
             .withInputMode("numeric")
             .withPattern("[0-9]*")
