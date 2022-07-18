@@ -40,7 +40,7 @@ object BusinessSelectCountrySummary {
               "site.change",
               routes.BusinessSelectCountryController.onPageLoad(Index(index), mode).url
             )
-              .withVisuallyHiddenText(messages("individualSelectCountry.change.hidden"))
+              .withVisuallyHiddenText(messages("businessSelectCountry.change.hidden"))
           )
         )
     }
