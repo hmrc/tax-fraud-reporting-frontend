@@ -1365,8 +1365,8 @@ findAddress.property.change.hidden = Property
 individual.findAddress.title = Beth yw cyfeiriad yr unigolyn?
 individual.findAddress.heading = Beth yw cyfeiriad yr unigolyn?
 
-businessFindAddress.title = Dod o hyd i gyfeiriad
-businessFindAddress.heading = Dod o hyd i gyfeiriad
+businessFindAddress.title = Beth yw cyfeiriad y busnes?
+businessFindAddress.heading = Beth yw cyfeiriad y busnes?
 businessFindAddress.checkYourAnswersLabel = Dod o hyd i gyfeiriad
 businessFindAddress.error.required = Nodwch god post yr unigolyn
 businessFindAddress.error.length = Mae’n rhaid i god post eich cyfeiriad gynnwys y llythrennau a i z, y rhifau 0 i 9 a bwlch yn unig
