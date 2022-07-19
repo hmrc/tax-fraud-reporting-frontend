@@ -36,10 +36,10 @@ class AnalyticsRequestFactory @Inject() (config: FrontendAppConfig) extends Logg
     Seq(Event(s"activity_type", event.activity, s"activity_type", dimensions(event.activity)))
 
   def radioButtonEvent(event: RadioButtonEvent): Seq[Event] =
-    Seq(Event("rkss_radiobutton", event.path, s"rkss_radiobutton", dimensions(event.value)))
+    Seq(Event(event.path, event.value, s"rkss_radiobutton", dimensions(event.value)))
 
   def checkBoxEvent(event: CheckBoxEvent): Seq[Event] =
-    Seq(Event("rkss_checkbox", event.path, s"rkss_checkbox", dimensions(event.value)))
+    Seq(Event(event.path, event.value, s"rkss_checkbox", dimensions(event.value)))
 
   def approximateValue(event: ApproximateValueEvent): Seq[Event] =
     Seq(Event(s"approximate_value", event.action, s"approximate_value", dimensions(event.action)))
