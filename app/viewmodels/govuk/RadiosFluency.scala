@@ -54,6 +54,19 @@ trait RadiosFluency {
       apply(field = field, fieldset = fieldset, items = items)
     }
 
+    def trueFalse(field: Field, legend: Legend)(implicit messages: Messages): Radios =
+      trueFalse(field = field, fieldset = FieldsetViewModel(legend))
+
+    def trueFalse(field: Field, fieldset: Fieldset)(implicit messages: Messages): Radios = {
+
+      val items = Seq(
+        RadioItem(id = Some(field.id), value = Some("true"), content = Text(messages("zeroValidation.yes"))),
+        RadioItem(id = Some(s"${field.id}-no"), value = Some("false"), content = Text(messages("zeroValidation.no")))
+      )
+
+      apply(field = field, fieldset = fieldset, items = items)
+    }
+
   }
 
   implicit class FluentRadios(radios: Radios) {

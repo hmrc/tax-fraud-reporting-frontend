@@ -47,7 +47,7 @@
                 field  = form("value"),
                 legend = LegendViewModel(HtmlContent(contentHeader)).asPageHeading(LegendSize.ExtraLarge),
                 items  = IndividualDateFormat.options
-            ).withHint(HintViewModel(messages("dateFormat.hint")))
+            ).withHint(HintViewModel(HtmlContent(Html(messages("dateFormat.hint")))))
         )
 
         @govukButton(

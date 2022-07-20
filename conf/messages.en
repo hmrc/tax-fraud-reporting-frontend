@@ -345,7 +345,7 @@ unauthorised.heading = You can’t access this service with this account
 
 activityType.title = What type of activity are you reporting to HMRC?
 activityType.heading = What type of activity are you reporting to HMRC?
-activityType.hint = Use keywords related to activity to suggest categories.
+activityType.hint = <p>Use keywords related to activity to suggest categories.</p>
 activityType.checkYourAnswersLabel = Activity type
 activityType.error.required = Enter the type of activity
 activityType.change.hidden = Activity Type
@@ -803,7 +803,6 @@ individualInformation.change.hidden = What do you know about the individual?
 
 individualName.title = What is the individual’s name?
 individualName.heading = What is the individual’s name?
-individualName.hint = Enter as much as you are able to.
 individualName.firstName = First name (optional)
 individualName.middleName = Middle names (optional)
 individualName.lastName = Last name (optional)
@@ -874,7 +873,7 @@ individualBusinessDetails.change.hidden = Individual has business details
 
 dateFormat.title = Select a format to enter the individual’s age
 dateFormat.heading = Select a format to enter the individual’s age
-dateFormat.hint = How do you want to enter the individual’s age?
+dateFormat.hint = <p>How do you want to enter the individual’s age?</p>
 dateFormat.date = Date of birth
 dateFormat.age = Approximate age
 dateFormat.checkYourAnswersLabel = Age format
@@ -1090,7 +1089,7 @@ supportingDocument.change.hidden = Supporting information provided
 
 provideContactDetails.title = Do you want to give us your contact details?
 provideContactDetails.heading = Do you want to give us your contact details?
-provideContactDetails.hint = Your information will be proviate and confidential.
+provideContactDetails.hint = <p>Your information will be proviate and confidential.</p>
 provideContactDetails.yes = Yes, I will provide my contact details
 provideContactDetails.no = No, I want to report anonymously
 provideContactDetails.checkYourAnswersLabel = Details provided
@@ -1275,10 +1274,12 @@ canNotFindAddress.continue = Try a different postcode
 businessCanNotFindAddress.title = Postcode cannot be found
 businessCanNotFindAddress.heading = Postcode cannot be found
 
-zeroValidation.title = Are you sure there is no value for the activity?
-zeroValidation.heading = Are you sure there is no value for the activity?
-zeroValidation.hint = If you do not know the exact value, you can just give us your best guess.
+zeroValidation.title = Are you sure there is no value to the activity?
+zeroValidation.heading = Are you sure there is no value to the activity?
+zeroValidation.hint = If you do not know the exact amount, you can give your best guess.
 zeroValidation.error.required =  Select yes if you are sure there is no value for the activity
+zeroValidation.yes = I am sure there is no value
+zeroValidation.no = I need to add a value
 
 businessConfirmAddress.title = Is this address correct?
 businessConfirmAddress.heading = Is this address correct?
