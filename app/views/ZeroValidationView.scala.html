@@ -37,7 +37,7 @@
         }
 
         @govukRadios(
-            RadiosViewModel.yesNo(
+            RadiosViewModel.trueFalse(
                 field = form("value"),
                 legend = LegendViewModel(messages("zeroValidation.heading")).asPageHeading()
             ).withHint(HintViewModel(HtmlContent(contentHint)))

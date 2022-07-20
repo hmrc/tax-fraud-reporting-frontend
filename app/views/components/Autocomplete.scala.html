@@ -29,7 +29,7 @@
         isPageHint: Boolean = true,
         isPageHeading: Boolean = true,
         headingMessageArgs: Seq[String] = Seq(),
-        hint: Option[String],
+        hint: Option[String] =None,
         options: Seq[AutocompleteOption],
         labelClass: Boolean = false
 )(implicit messages: Messages)
@@ -46,7 +46,7 @@
     },
     describedBy = hint.map(_ => s"$id-hint"),
     errorMessage = field.error.map(fe ⇒ ErrorMessage(content = messages(fe.message),visuallyHiddenText = Some(messages("govukErrorMessage.visuallyHiddenText")))),
-    hint = hint.map(c => Hint(content = messages(c))),
+    hint = hint.map(hintHtml => Hint(content = HtmlContent(hintHtml))),
     items = SelectItem(attributes= Map("label" -> " ")) +: options.map {
         case AutocompleteOption(value, text, _) ⇒ SelectItem(
             value = Some(value),

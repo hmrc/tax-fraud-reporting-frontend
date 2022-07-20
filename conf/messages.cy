@@ -335,7 +335,7 @@ journeyRecovery.closed = Ffôn ar gau ar benwythnosau a gwyliau banc.
 
 activityType.title = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
 activityType.heading = Pa fath o weithgaredd rydych yn rhoi gwybod i CThEM amdano?
-activityType.hint = Defnyddiwch eiriau allweddol sy’n gysylltiedig â’r gweithgaredd er mwyn awgrymu categorïau.
+activityType.hint = <p>Defnyddiwch eiriau allweddol sy’n gysylltiedig â’r gweithgaredd er mwyn awgrymu categorïau.</p>
 activityType.checkYourAnswersLabel = Math o weithgaredd
 activityType.error.required = Nodwch y math o weithgaredd
 activityType.change.hidden = Math o weithgaredd
@@ -907,7 +907,6 @@ individualInformation.change.hidden = Beth ydych yn ei wybod am yr unigolyn
 
 individualName.title = Beth yw enw’r unigolyn?
 individualName.heading = Beth yw enw’r unigolyn?
-individualName.hint = Nodwch gymaint ag y gallwch.
 individualName.firstName = Enw cyntaf (dweisol)
 individualName.middleName = Enwau canol (dweisol)
 individualName.lastName = Enw olaf (dweisol)
@@ -985,7 +984,7 @@ individualBusinessDetails.change.hidden = Mae gan yr unigolyn fanylion busnes
 
 dateFormat.title = Dewiswch fformat i nodi oedran yr unigolyn
 dateFormat.heading = Dewiswch fformat i nodi oedran yr unigolyn
-dateFormat.hint = Sut ydych chi am nodi oedran yr unigolyn?
+dateFormat.hint = <p>Sut ydych chi am nodi oedran yr unigolyn?</p>
 dateFormat.date = Dyddiad geni
 dateFormat.age = Oedran Bras
 dateFormat.checkYourAnswersLabel = Fformat oedran
@@ -1213,7 +1212,7 @@ businessAddress.change.hidden = Cyfeiriad y busnes
 
 provideContactDetails.title = A ydych am roi’ch manylion cyswllt i ni?
 provideContactDetails.heading = A ydych am roi’ch manylion cyswllt i ni?
-provideContactDetails.hint = Bydd eich gwybodaeth yn breifat ac yn gyfrinachol.
+provideContactDetails.hint = <p>Bydd eich gwybodaeth yn breifat ac yn gyfrinachol.</p>
 provideContactDetails.yes = Iawn, byddaf yn rhoi fy manylion cyswllt
 provideContactDetails.no = Na, rwyf am roi’r wybodaeth yn ddienw
 provideContactDetails.checkYourAnswersLabel = Manylion a roddwyd
@@ -1400,5 +1399,7 @@ businessCanNotFindAddress.heading = Ni ellir dod o hyd i’r cod post
 
 zeroValidation.title = A ydych yn siŵr nad oes gwerth i’r gweithgaredd?
 zeroValidation.heading = A ydych yn siŵr nad oes gwerth i’r gweithgaredd?
-zeroValidation.hint = Os nad ydych yn gwybod yr union werth, gallwch roi’ch amcangyfrif gorau i ni.
+zeroValidation.hint = Os nad ydych yn gwybod yr union swm, gallwch roi’ch amcangyfrif gorau i ni.
 zeroValidation.error.required = Dewiswch ‘Iawn’ os ydych yn siŵr nad oes gwerth i’r gweithgaredd
+zeroValidation.yes = Rwy’n siŵr nad oes gwerth
+zeroValidation.no = Mae angen i mi ychwanegu gwerth
